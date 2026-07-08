@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Saha İlan Ekleme</title>
+
+<!-- Mapbox GL JS -->
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+	<script src="js/ilanlar.js"></script>
+
+<style>
+/* =========================
+   GENEL SAYFA STİLLERİ
+   ========================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Tahoma, sans-serif;
+  overflow-x: hidden; /* yatay scroll önleme */
+  overflow-y: auto;   /* düşey scroll gerekiyorsa göster */
+}
+
+#map {
+  width: 100%;
+  height: 100vh; /* body yerine viewport height kullan */
+  position: relative;
+}
+
+
+
+/* =========================
+   POPUP (LEVHA) İDEAL VE OKUNAKLI TASARIM
+   ========================= */
+.mapboxgl-popup-content {
+  background: transparent !important; 
+  border: 2px solid #fff;             
+  border-radius: 5px !important;      
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35) !important;
+  padding: 0 !important;              
+  overflow: hidden;
+}
+
+/* Ne çok geniş, ne çok sıkışık; tam okunabilir satır aralığı ve padding */
+.popup-ana-kutu {
+  padding: 6px 10px;                  /* Üst-alt 6px, sağ-sol 10px (İdeal denge) */
+  color: #fff !important;
+  font-family: Tahoma, Geneva, sans-serif; 
+  font-weight: 500 !important;
+  line-height: 1.35 !important;       /* Yazıların nefes alması için basıklık giderildi */
+}
+
+/* Renk Tonları */
+/* ===================================================
+   GLOBAL & PREMIUM POPUP (LEVHA) RENK PALETİ
+   =================================================== */
+
+/* ARSA: Doğayı andıran, olgun ve asil bir Zümrüt Yeşili */
+.popup-renk-arsa { 
+  background: linear-gradient(135deg, #1b4d3e, #113429) !important; 
+} 
+
+/* TARLA: Toprak tonlarında, mat ve ağırbaşlı bir Vizon/Haki */
+.popup-renk-tarla { 
+  background: linear-gradient(135deg, #706353, #4a4136) !important; 
+} 
+
+/* DAİRE: Kurumsal, güven veren ve derin bir Gece Mavisi */
+.popup-renk-daire { 
+  background: linear-gradient(135deg, #1e3a8a, #0f172a) !important; 
+} 
+
+/* VİLLA: Lüksü ve elitliği temsil eden şık bir Mürdüm / Şarap Rengi (Kiremit Çöp Oldu!) */
+.popup-renk-villa { 
+  background: linear-gradient(135deg, #581c87, #3b0764) !important; 
+} 
+
+/* DÜKKAN: Yatırımı ve kazancı simgeleyen Premium Gold / Zengin Kehribar */
+.popup-renk-dukkan { 
+  background: linear-gradient(135deg, #c29b38, #8a6515) !important; 
+} 
+
+/* İŞ MERKEZİ: Modern mimariyi andıran Premium Safir / Çelik Mavisi */
+.popup-renk-ismerkezi { 
+  background: linear-gradient(135deg, #0369a1, #0c4a6e) !important; 
+} 
+
+/* KAT KARŞILIĞI: Özel bir statü belirten koyu ve asil Platin / Kurşun Gri */
+.popup-renk-katkarsiligi { 
+  background: linear-gradient(135deg, #334155, #1e293b) !important; 
+} 
+
+/* VARSAYILAN: Koyu Antrasit */
+.popup-renk-varsayilan { 
+  background: linear-gradient(135deg, #1f2937, #111827) !important; 
+}
+
+/* Yazı boyutları net ve okunaklı seviyeye geri çekildi */
+.popup-baslik-text {
+  font-size: 12px !important;         /* 11px'den 12px'e çıkarıldı, net okunsun */
+  display: block;
+  margin-bottom: 2px;
+}
+
+.popup-fiyat {
+  color: #fff !important;   
+  font-size: 12px !important;         /* Fiyat boyutu büyütüldü */
+  border-top: 1px solid rgba(255,255,255,0.3);
+  margin-top: 3px;
+  padding-top: 3px;
+  display: block;
+}
+
+.popup-no {
+  display: block;
+  font-size: 10px !important;         /* İlan no rahat okunması için 10px yapıldı */
+  font-weight: 500;
+  margin-top: 2px;
+  color: #f1c40f !important; 
+}
+
+/* =========================
+   NETMAX ANA SAYFAYA DÖN BUTONU (SABİT & SADE)
+   ========================= */
+.enter-btn {
+  position: absolute;
+  bottom: 15px;                  /* Haritanın altından ideal yükseklik */
+  left: 50%;
+  transform: translateX(-50%);   /* Sadece yatayda ortalamak için sabit kalacak */
+  z-index: 10;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;            /* Hafif köşeli, kurumsal hatlar */
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;         
+  display: flex;
+  align-items: center;
+  gap: 8px;                      
+  transition: background-color 0.2s ease; /* Sadece renk değişimi yumuşak olsun diye */
+}
+
+.back-btn {
+  background-color: #334155;     /* Mat koyu gri/mavi */
+  color: #ffffff !important;
+}
+
+/* HOVER DURUMUNDA YUKARI ÇIKMA TAMAMEN KALDIRILDI - SABİT KALIR */
+.back-btn:hover { 
+  background-color: #1e293b;     /* Sadece renk mat bir tona dönüşür, buton kıpırdamaz */
+}
+
+/* Tıklandığında da milim oynamaz */
+.back-btn:active { 
+  background-color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .enter-btn {
+    bottom: 25px;
+    padding: 10px 22px;          /* İç boşluğu daralttık */
+    font-size: 11px;            /* Yazıyı 11px'e çekerek tek satıra sığdırdık */
+    white-space: nowrap;        /* 👈 KESİN ÇÖZÜM: Yazının asla 2. satıra geçmesine izin vermez */
+    gap: 5px;                   /* İkon ile yazı arasını sıkılaştırdık */
+    max-width: 95%;             /* Ekran kenarlarına çarpmaması için güvenli sınır */
+  }
+  .enter-btn i {
+    font-size: 11px;            /* İkon boyutu yazı ile eşitlendi */
+  }
+}
+/* =========================
+   SIDEBAR & FILTER BOX
+   ========================= */
+#sidebar {
+  position: absolute;
+  top: 10px;          /* 🚩 Üstten 15px nefes alma payı */
+  left: -240px;       /* 🚩 Gizliyken ekrandan tamamen çıkması için mesafeyi artırdık */
+  width: 170px;       
+  background: #2c3138; 
+  color: #fff;
+  z-index: 15;
+  padding: 0 0 15px 0; 
+  overflow-y: auto;
+  
+  /* 🚩 Boyunu 100vh yerine ekrandan taşmayacak şekilde (üstten ve alttan 15px düşerek) ayarladık */
+  max-height: calc(100vh - 20px); 
+  
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 4px 4px 15px rgba(0,0,0,0.4); /* Gölgeyi her yöne yaydık */
+  border-radius: 8px; /* 🚩 Menünün tüm köşelerini yumuşatarak havada asılı kutu hissi verdik */
+  transition: left 0.4s ease, opacity 0.4s ease; 
+}
+
+#sidebar.show {
+  /* 🚩 İŞTE SİHİRLİ DOKUNUŞ: Açıldığında sol kenara yapışmaz, tam 15px sağda asılı kalır */
+  left: 8px; 
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* H3 başlığı ve kapatma X */
+#sidebar h3 {
+  margin: 0 0 15px 0;  
+  font-size: 13px;
+  width: 100%;
+  /* Altın sarısı degradeyi daha asil ve okunaklı hale getirdim, yazı rengini koyu yaptık ki kontrast airsın */
+  background: linear-gradient(135deg, #d4af37, #f3e5ab);
+  color: #1e2327;
+  padding: 10px 35px 10px 15px; /* Kapat butonuna yer açmak için sağ boşluğu artırdım */
+  text-align: left;
+  box-sizing: border-box;
+  position: relative;
+  font-weight: 700; /* Başlık jilet gibi net ve kalın olsun */
+  font-family: Tahoma, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Label düzeni (Checkbox alanları) */
+#sidebar label {
+  display: flex;
+  align-items: center;      /* Kutu ve yazıyı dikeyde tam ortalar */
+  justify-content: flex-start; /* Her şeyi sola yaslar (Merkezleme iptal) */
+  margin-bottom: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+  font-weight: 500;         /* 👈 İLAN YAZILARININ YENİ KALINLIĞI (Okunurluk artırıldı) */
+  color: #e2e8f0;           /* Hafif yumuşak beyaz */
+  border-radius: 4px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* Checkboxların üzerine gelince hafif bir satır aydınlanması */
+#sidebar label:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+#sidebar label input[type="checkbox"] {
+  width: 16px;              /* Standart 12px'den 16px'e büyütüldü */
+  height: 16px;             /* En boy eşitlendi */
+  margin-right: 10px;       /* Sağındaki yazı ile arasına net bir mesafe konuldu */
+  cursor: pointer;
+  flex-shrink: 0;           /* Kutunun daralmasını engeller */
+}
+
+/* ===================================================
+   🆕 DİNAMİK AKTİF (SEÇİLİ) SATIR REKLENDİRMESİ
+   =================================================== */
+/* Eğer satırdaki checkbox işaretlendiyse, tüm satırı (label) yakala ve boya */
+#sidebar label:has(input[type="checkbox"]:checked) {
+  background: rgba(212, 175, 55, 0.15); 
+  color: #fff;                           
+  font-weight: 700;                      
+  
+  /* 🚩 İŞTE ÇÖZÜM: Genişliği değiştirmeden transparent olan rengi altın sarısına çeviriyoruz */
+  border-left-color: #d4af37;        
+  
+  /* padding-left: 9px; 👈 ESKİSİNİ SİLİYORUZ, ARTIK GEREK YOK */
+}
+
+/* ADET SAYILARI (Rakamlar) */
+#sidebar label span {
+  margin-left: auto;        /* Sadece rakamları satırın en sağına iter */
+  color: #a0aec0;           /* Normalde daha sakin dururlar */
+  font-size: 11px;
+  font-weight: normal;
+  position: relative;
+  top: 0;                   
+  float: none;              
+  transition: all 0.2s ease;
+}
+
+/* Seçili olan satırdaki rakam (adet) sarı renge dönsün ve canlansın */
+#sidebar label:has(input[type="checkbox"]:checked) span {
+  color: #f3e5ab;           /* Parlak fildişi/sarı tonu */
+  font-weight: 500;
+}
+
+/* YENİ ŞIK VE BÜYÜK KAPATMA X BUTONU */
+#closeBtn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 18px; 
+  cursor: pointer;
+  color: #1e2327;  
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+#closeBtn:hover {
+  color: #c0392b; 
+}
+
+/* =========================
+   TOGGLE BUTONU (☰)
+   ========================= */
+#toggleBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 20;
+  font-size: 20px;
+  background: linear-gradient(135deg, #d4af37, #f3e5ab);
+  color: #1e2327; /* İkon rengi de koyu kurumsal yapıldı */
+  border-radius: 4px; /* %10 yerine tam 4px ile kibarlaştı */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  line-height: 1;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+
+#toggleBtn:hover {
+  filter: brightness(1.1); /* Üzerine gelince hafifçe parlar */
+}
+
+/* =========================
+   FILTER BUTONU 🚫
+   ========================= */
+.filter-btn-wrapper {
+  display: flex;
+  justify-content: center; /* Butonu ortalayalım */
+  padding: 0 12px;
+}
+
+.filter-btn {
+  width: 100%; /* Sidebar genişliğine tam otursun */
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  background: #3a3f45;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: Tahoma, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #c0392b; /* Kapat butonuyla uyumlu şık kırmızı */
+  border-color: transparent;
+}
+
+
+/* home butonu */
+.home-btn {
+  position: absolute;
+  top: 10px;     /* üstten 10px */
+  right: 3px;    /* sağa iyice yapışık */
+  z-index: 20;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #111;
+  background: linear-gradient(135deg, #d4af37, #fff1a8);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.45);
+  transition: all 0.2s ease;
+}
+
+/* Hover ve active efektleri */
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212,175,55,0.65);
+}
+
+.home-btn:active {
+  transform: scale(0.96);
+}
+
+/* Mapbox sağ üst kontrolünü hedefle */
+.mapboxgl-ctrl-top-right {
+    margin-top: 70px !important;
+}
+
+/* Mobil */
+@media (max-width:768px){
+
+    .mapboxgl-ctrl-top-right{
+        top:10px !important;
+        right:60px !important;   /* Home butonunun soluna göre ayarla */
+        margin-top:0 !important;
+    }
+
+}
+
+
+.hizli-ilan-btn {
+  position: fixed;
+  bottom: 20px; /* Sağ alt köşeden yukarı payı */
+  right: 20px;  /* Sağ kenardan payı */
+  background-color: #c29b38; /* Dikkat çeken gold rengi */
+  color: #111;
+  border: 2px solid #fff;
+  padding: 6px 12px;
+  border-radius: 5px; /* Yuvarlak, modern buton tarzı */
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+.hizli-ilan-btn:hover {
+  background-color: #1b4d3e; /* Üzerine gelince NETmax yeşili */
+  color: #fff;
+  transform: scale(1.05);
+}
+
+
+.mapboxgl-popup-content{
+    background:#2b2b2b !important;
+    border:1px solid #c8a96a;
+    color:#fff;
+    opacity:1 !important;
+    border:none !important;
+    border-radius:10px !important;
+    padding:0 !important;
+    overflow:hidden;
+    box-shadow:0 6px 16px rgba(0,0,0,.35) !important;
+}
+.mapboxgl-popup{
+    max-width:250px !important;
+}
+
+.mapboxgl-popup-content{
+    padding:0 !important;
+    border-radius:5px !important;
+    overflow:hidden;
+    background:#fff;
+}
+
+.ilan-detay-popup{
+    width:230px;
+    font-family:Tahoma,sans-serif;
+}
+
+/* RESİM */
+
+.detay-slider{
+    position:relative;
+    width:100%;
+    height:150px;
+    overflow:hidden;
+    background:#ececec;
+}
+
+.detay-resim{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    display:block;
+}
+
+/* RESİM YOK */
+
+.resim-yok{
+    height:90px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#f2f2f2;
+    color:#777;
+    font-size:13px;
+    gap:6px;
+}
+
+.resim-yok i{
+    font-size:28px;
+}
+
+/* BAŞLIK */
+
+.detay-ust{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border-bottom:1px solid #ececec;
+}
+
+.detay-baslik{
+    flex:1;
+    font-size:13px;
+    font-weight:400;
+    color:#fff;
+    line-height:1.2;
+}
+
+.detay-fiyat{
+    white-space:nowrap;
+    font-size:12px;
+    font-weight:400;
+    color:#56d364;
+}
+
+/* ÖZELLİKLER */
+
+.detay-ozellikler{
+    padding:4px 12px 8px;
+}
+
+.ozellik{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px 0;
+    border-bottom:1px solid #f1f1f1;
+    font-size:12px;
+    line-height:1.15;
+}
+
+.ozellik span{
+    color:#cfcfcf;
+}
+
+.ozellik b{
+    color:#56d364;
+    font-weight:300;
+}
+
+.ozellik{
+    border-bottom:1px solid rgba(255,255,255,.12);
+}
+/* BUTONLAR */
+
+.slider-sol,
+.slider-sag{
+    position:absolute;
+    top:80%;
+    transform:translateY(-50%);
+    width:30px;
+    height:30px;
+    border:none;
+    border-radius:50%;
+    background:rgba(0,0,0,.55);
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.slider-sol{
+    left:8px;
+}
+
+.slider-sag{
+    right:8px;
+}
+
+.slider-sol:hover,
+.slider-sag:hover{
+    background:#2563eb;
+}
+
+.mapboxgl-popup-close-button{
+    position:absolute;
+    top:6px;
+    right:6px;
+    width:28px;
+    height:28px;
+    line-height:26px;
+    font-size:22px;
+    font-weight:bold;
+    color:#333;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:50%;
+    cursor:pointer;
+    z-index:9999;
+}
+
+.mapboxgl-popup-close-button:hover{
+    background:#f3f3f3;
+    color:#000;
+}
+
+.detay-btn{
+    width:100%;
+    height:30px;
+    margin-top:8px;
+    border:none;
+    border-radius:7px;
+    background:#2563eb;
+    color:#fff;
+    font-family:Tahoma,sans-serif;
+    font-size:13px;
+    font-weight:400;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.detay-btn:hover{
+    background:#1d4ed8;
+}
+
+.detay-btn:active{
+    transform:scale(.98);
+}
+
+@media(max-width:768px){
+
+.mapboxgl-popup{
+    max-width:210px !important;
+}
+
+.ilan-detay-popup{
+    width:200px;
+}
+
+.detay-slider,
+.detay-resim{
+    height:120px;
+}
+
+.detay-ust{
+    padding:7px 8px;
+}
+
+.detay-ozellikler{
+    padding:3px 8px 6px;
+}
+
+.ozellik{
+    padding:4px 0;
+    font-size:11px;
+}
+
+.detay-baslik{
+    font-size:12px;
+}
+
+.detay-fiyat{
+    font-size:11px;
+}
+
+.slider-sol,
+.slider-sag{
+    width:24px;
+    height:24px;
+    font-size:18px;
+}
+
+.mapboxgl-popup-close-button{
+    width:22px;
+    height:22px;
+    line-height:20px;
+    font-size:18px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HARITA -->
+<div id="map"></div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <h3>Filtrele <span id="closeBtn">✖</span></h3>
+<label><input type="checkbox" value="arsa" checked> Arsa <span id="count-arsa"></span></label>
+<label><input type="checkbox" value="daire" checked> Daire <span id="count-daire"></span></label>
+<label><input type="checkbox" value="tarla" checked> Tarla <span id="count-tarla"></span></label>
+<label><input type="checkbox" value="dukkan" checked> Dükkan <span id="count-dukkan"></span></label>
+<label><input type="checkbox" value="ismerkezi" checked> İş Merkezi <span id="count-ismerkezi"></span></label>
+<label><input type="checkbox" value="villa" checked> Villa <span id="count-villa"></span></label>
+<label><input type="checkbox" value="katkarsiligi" checked> Kat Karşılığı <span id="count-katkarsiligi"></span></label>
+  
+  <div style="height:5px"></div>  
+
+  <!-- WRAPPER EKLENDİ -->
+  <div class="filter-btn-wrapper">
+    <button id="hideAllBtn" class="filter-btn">
+      🚫 Hepsini Kapat
+    </button>
+  </div>
+  
+  <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+	<label id="baseMapLabel">
+	  <input type="checkbox" id="streetMapCheck">
+	  Sokak Haritası <span>Altlık</span>
+	</label>
+
+</div>
+
+
+<!-- TOGGLE BUTONU -->
+<div id="toggleBtn">☰</div>
+
+<!-- HOME BUTONU SAĞ ÜSTE -->
+<button id="homeBtn" class="home-btn" title="Ana Sayfaya Dön">
+  <i class="fa-solid fa-house"></i>
+</button>
+
+<button id="hizliIlanBtn" class="hizli-ilan-btn" title="Hızlı İlan Ekle" onclick="window.location.href='admin.html'">
+  <i class="fa-solid fa-plus"></i> Hızlı İlan Ekle
+</button>
+
+<script>
+// =========================
+// MAPBOX & MARKER
+// =========================
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VvZ3JhcGh5cHJvZiIsImEiOiJjanYxb2t1ZG8wNGU1NGFsNXVkcnhzNmFpIn0.M3qCJK8FYa06B-Irc6FD-g';
+
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: {
+    version: 8,
+    sources: {},
+    layers: [],
+    glyphs: 'https://api.mapbox.com/fonts/v1/mapbox/{fontstack}/{range}.pbf?access_token=' + mapboxgl.accessToken
+  },
+  center: [34.019852, 38.365887],
+  zoom: 12,
+  projection: 'globe'
+});
+
+map.addControl(
+  new mapboxgl.GeolocateControl({
+    positionOptions: { enableHighAccuracy: true },
+    trackUserLocation: true,
+    showUserHeading: true
+  }),
+  'top-right'
+);
+
+map.on('load', () => {
+
+ // 1. Google UYDU Kaynağı
+  map.addSource('google-tiles', {
+    type: 'raster',
+    tiles: ['https://mt1.google.com/vt/lyrs=s,h,traffic&x={x}&y={y}&z={z}'],
+    tileSize: 256,
+    maxzoom: 24
+  });
+
+  // 2. Google SOKAK HARİTASI Kaynağı (YENİ)
+  map.addSource('google-street', {
+    type: 'raster',
+    tiles: ['https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'], // lyrs=m standart sokak haritasıdır
+    tileSize: 256,
+    maxzoom: 24
+  });
+
+  // 3. Google UYDU Katmanı (Varsayılan olarak açık)
+  map.addLayer({
+    id: 'google-tiles-layer',
+    type: 'raster',
+    source: 'google-tiles',
+    minzoom: 0,
+    maxzoom: 24,
+    layout: { 'visibility': 'visible' }
+  });
+
+  // 4. Google SOKAK HARİTASI Katmanı (Varsayılan olarak kapalı/gizli)
+  map.addLayer({
+    id: 'google-street-layer',
+    type: 'raster',
+    source: 'google-street',
+    minzoom: 0,
+    maxzoom: 24,
+    layout: { 'visibility': 'none' } // İlk açılışta gizli tutuyoruz
+  });
+
+  // 5. KATMAN GEÇİŞ TETİKLEYİCİSİ (Dinamik Listener)
+  const streetCheck = document.getElementById('streetMapCheck');
+  if (streetCheck) {
+    streetCheck.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        // Tiklendiyse: Uyduyu gizle, Sokak haritasını göster
+        map.setLayoutProperty('google-tiles-layer', 'visibility', 'none');
+        map.setLayoutProperty('google-street-layer', 'visibility', 'visible');
+      } else {
+        // Tik kaldırıldıysa: Uyduyu göster, Sokak haritasını gizle (İlk haline dön)
+        map.setLayoutProperty('google-tiles-layer', 'visibility', 'visible');
+        map.setLayoutProperty('google-street-layer', 'visibility', 'none');
+      }
+    });
+  }
+
+ // Veriyi Mapbox'ın anlayacağı formata dönüştürme ve TÜRKÇE KARAKTER DÜZELTME
+ const ilanlar = ilanlarVerisi.map(item => {
+    
+    // 1. Koordinat Ayrıştırma
+    let koordinatDizisi = [34.019852, 38.365887]; 
+    if (item.koor) {
+      const parts = item.koor.split(',');
+      if (parts.length === 2) {
+        koordinatDizisi = [parseFloat(parts[0].trim()), parseFloat(parts[1].trim())];
+      }
+    }
+
+    // 2. ANA TİP VE ALT TİP UYUMU (DÜKKAN/İŞYERİ KRİTİK AYARI)
+    let haritaTipi = (item.tip || "").toLowerCase().trim();
+    let altTip = (item.konutSekli || item.konutTipi || "").toLowerCase().trim();
+    
+    // Eğer ana tip "konut" veya "isyeri" (işyeri) ise, alt tipe göre harita tipini netleştiriyoruz
+    if (haritaTipi === "konut" || haritaTipi === "isyeri" || haritaTipi === "işyeri" || haritaTipi === "") {
+      if (altTip.includes("dükkan") || altTip.includes("dukkan")) haritaTipi = "dukkan";
+      else if (altTip.includes("iş") || altTip.includes("is") || altTip.includes("merkez")) haritaTipi = "ismerkezi";
+      else if (altTip.includes("daire")) haritaTipi = "daire";
+      else if (altTip.includes("villa")) haritaTipi = "villa";
+      else if (altTip !== "") haritaTipi = altTip; // Başka spesifik bir alt tip varsa (Örn: ofis, depo)
+      else haritaTipi = "daire"; // Tamamen boşsa varsayılan
+    }
+    
+    // Klasör veya filtre uyuşmazlıkları için kelime temizliği
+    if (haritaTipi.includes("iş") || haritaTipi.includes("is")) haritaTipi = "ismerkezi";
+    if (haritaTipi.includes("dükkan") || haritaTipi.includes("dukkan")) haritaTipi = "dukkan";
+    if (haritaTipi.includes("kat")) haritaTipi = "katkarsiligi";
+
+    // 3. TÜRKÇE KARAKTER UYUMU (Satilik -> Satılık, Kiralik -> Kiralık)
+    let temizDurum = (item.durum || "").toLowerCase().trim();
+    if (temizDurum === "satilik" || temizDurum === "satılık") temizDurum = "Satılık";
+    else if (temizDurum === "kiralik" || temizDurum === "kiralık") temizDurum = "Kiralık";
+    else temizDurum = temizDurum.charAt(0).toUpperCase() + temizDurum.slice(1);
+
+    // 4. LEVHA METNİ OLUŞTURMA (Tam Nokta Atışı Emlak Adı)
+    let levhaYazisi = "";
+    if (haritaTipi === "arsa") levhaYazisi = `${temizDurum} Arsa`;
+    else if (haritaTipi === "tarla") levhaYazisi = `${temizDurum} Tarla`;
+    else if (haritaTipi === "katkarsiligi") levhaYazisi = `${temizDurum} Kat Karşılığı`;
+    else if (haritaTipi === "daire") levhaYazisi = `${temizDurum} Daire`;
+    else if (haritaTipi === "villa") levhaYazisi = `${temizDurum} Villa`;
+    else if (haritaTipi === "dukkan") levhaYazisi = `${temizDurum} Dükkan`; // İşte şimdi oldu!
+    else if (haritaTipi === "ismerkezi") levhaYazisi = `${temizDurum} İş Merkezi`;
+    else {
+      // Diğer durumlarda gelen alt tip adını düzgünce yazdır
+      const yedekYazi = altTip || haritaTipi;
+      levhaYazisi = `${temizDurum} ${yedekYazi.charAt(0).toUpperCase() + yedekYazi.slice(1)}`;
+    }
+
+	return {
+      coord: koordinatDizisi,
+      // ÖNCELİK "İlan No" ALANINDA: GitHub verisindeki gerçek ilan numarasını yakalar
+      id: item["İlan No"] || item.id || "---", 
+      tip: haritaTipi,
+      levhaText: levhaYazisi,
+      fiyat: item.fiyat + " " + item.paraBirimi,
+      data: item
+    };
+  });
+
+// ==========================================
+  // MARKER VE RENKLİ POPUP'LARIN BASILMASI
+  // ==========================================
+  const markersByType = {};
+
+  ilanlar.forEach(ilan => {
+    const el = document.createElement("div");
+    el.style.width = "14px"; 
+    el.style.height = "14px";
+    el.style.borderRadius = "50%";
+    el.style.border = "2px solid #fff";
+    el.style.cursor = "pointer";
+    el.style.boxShadow = "0 2px 6px rgba(0,0,0,0.6)";
+
+    // Yuvarlak harita noktalarının renk eşleştirmesi
+    // Küçük yuvarlak harita noktalarının yeni asil renk eşleştirmesi
+    el.style.backgroundColor =
+      ilan.tip === "arsa" ? "#1b4d3e" :         // Zümrüt Yeşili
+      ilan.tip === "daire" ? "#1e3a8a" :        // Gece Mavisi
+      ilan.tip === "tarla" ? "#706353" :         // Vizon / Haki
+      ilan.tip === "dukkan" ? "#c29b38" :        // Premium Gold / Kehribar
+      ilan.tip === "ismerkezi" ? "#0369a1" :     // Çelik Mavisi
+      ilan.tip === "villa" ? "#581c87" :         // Lüks Mürdüm
+      ilan.tip === "katkarsiligi" ? "#334155" :  // Kurşun Gri
+      "#1f2937";
+
+    // Dinamik renk sınıfını belirliyoruz
+    const renkSinifi = 
+      ilan.tip === "arsa" ? "popup-renk-arsa" :
+      ilan.tip === "tarla" ? "popup-renk-tarla" :
+      ilan.tip === "daire" ? "popup-renk-daire" :
+      ilan.tip === "villa" ? "popup-renk-villa" :
+      ilan.tip === "dukkan" ? "popup-renk-dukkan" :
+      ilan.tip === "ismerkezi" ? "popup-renk-ismerkezi" :
+      ilan.tip === "katkarsiligi" ? "popup-renk-katkarsiligi" : "popup-renk-varsayilan";
+
+    // Popup yapısına ilgili renk sınıfını enjekte ediyoruz
+	const popup = new mapboxgl.Popup({ 
+      offset: 14, // Noktaya olan ideal uzaklık
+      closeButton: false, 
+      closeOnClick: false,
+      focusAfterOpen: false 
+    })
+    .setHTML(`
+	  <div class="popup-ana-kutu ${renkSinifi}">
+
+		<span class="popup-baslik-text">
+		  ${ilan.levhaText}
+		</span>
+
+		<span class="popup-fiyat">
+		  ${ilan.fiyat}
+		</span>
+
+		<button class="detay-btn" id="detayBtn-${ilan.id}">
+		  Detay
+		</button>
+
+	  </div>
+	`)
+
+    const marker = new mapboxgl.Marker(el)
+      .setLngLat(ilan.coord)
+      .setPopup(popup)
+      .addTo(map);
+	  
+	  popup.on('open', () => {
+
+  const btn = document.getElementById("detayBtn-" + ilan.id);
+
+  if(btn){
+
+    btn.onclick = () => {
+
+      popup.remove();
+
+      setTimeout(()=>{
+        ilanDetayPopup(ilan);
+      },100);
+
+    };
+
+  }
+
+});
+
+    marker.togglePopup(); // Levhayı otomatik aç
+
+    if (!markersByType[ilan.tip]) markersByType[ilan.tip] = [];
+    markersByType[ilan.tip].push({ marker, popup });
+
+  });
+  
+  
+
+  // Sidebar sayaçlarını güncelleme
+  Object.keys(markersByType).forEach(tip => {
+    const el = document.getElementById(`count-${tip}`);
+    if (el) {
+      el.textContent = `(${markersByType[tip].length})`;
+    }
+  });
+
+  // Haritayı odakla
+  if (ilanlar.length > 0) {
+    const bounds = new mapboxgl.LngLatBounds();
+    ilanlar.forEach(ilan => bounds.extend(ilan.coord));
+    map.fitBounds(bounds, { padding: 60, maxZoom: 14 });
+  }
+
+  // CHECKBOX FİLTRELEME KONTROLLERİ
+  document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener("change", () => {
+      const tip = cb.value;
+      if (!markersByType[tip]) return;
+      markersByType[tip].forEach(o => {
+        if (cb.checked) { o.marker.addTo(map); o.popup.addTo(map); }
+        else { o.popup.remove(); o.marker.remove(); }
+      });
+    });
+  });
+  
+  // HEPSİNİ KAPAT BUTONU
+  document.getElementById("hideAllBtn").addEventListener("click", () => {
+    document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+    Object.values(markersByType).forEach(list => {
+      list.forEach(o => {
+        o.popup.remove();
+        o.marker.remove();
+      });
+    });
+  });
+
+  // ÜSTTEKİ SİLİNMİŞ OLAN KAPAT/X ve HOME EVENTLERİ
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleBtn');
+  const closeBtn = document.getElementById('closeBtn');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.add('show');
+    toggleBtn.style.display = 'none';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('show');
+    toggleBtn.style.display = 'flex';
+  });
+  
+  document.getElementById('homeBtn').addEventListener('click', () => {
+    if (ilanlar.length > 0) {
+      const bounds = new mapboxgl.LngLatBounds();
+      ilanlar.forEach(ilan => bounds.extend(ilan.coord));
+      map.fitBounds(bounds, { padding: 50 });
+    }
+  });
+  
+  
+  
+  function ilanDetayPopup(ilan){
+	const d = ilan.data;
+
+	let resimSlider = "";
+
+	if(d.resimler && d.resimler.length > 0){
+
+	resimSlider = `
+
+	<div class="detay-slider">
+
+	<img id="detayResim"
+	src="${d.resimler[0]}"
+	class="detay-resim">
+
+
+	${d.resimler.length > 1 ? `
+
+	<button class="slider-sol" onclick="detayOnceki()">
+	‹
+	</button>
+
+	<button class="slider-sag" onclick="detaySonraki()">
+	›
+	</button>
+
+	` : ""}
+
+
+	</div>
+
+	`;
+
+	window.detayResimler = d.resimler;
+	window.detayIndex = 0;
+
+
+	}else{
+
+	resimSlider = `
+
+	<div class="resim-yok">
+		<i class="fa-regular fa-image"></i>
+	<br>
+		Resim yok
+	</div>
+
+	`;
+
+	}
+
+	new mapboxgl.Popup({
+		offset: 20,
+		closeButton: true,
+		closeOnClick: false,
+		closeOnMove: false,
+		maxWidth: "250px"
+	})
+
+	.setLngLat(ilan.coord)
+
+	.setHTML(`
+
+	<div class="ilan-detay-popup">
+
+			${resimSlider}
+
+		<div class="detay-ust">
+			<div class="detay-baslik">${ilan.levhaText}</div>
+			<div class="detay-fiyat">${ilan.fiyat}</div>
+		</div>
+
+		<div class="detay-ozellikler">
+
+			${d["M²"] ? `
+			<div class="ozellik">
+				<span>M²</span>
+				<b>${d["M²"]}</b>
+			</div>
+			` : ""}
+			
+			${(d["Ada"] || d["Parsel"]) ? `
+			<div class="ozellik">
+				<span>Ada / Parsel</span>
+				<b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
+			</div>
+			` : ""}
+
+			${d["Oda Sayısı"] ? `
+			<div class="ozellik">
+				<span>Oda</span>
+				<b>${d["Oda Sayısı"]}</b>
+			</div>
+			` : ""}
+
+			${d["Bina Yaşı"] ? `
+			<div class="ozellik">
+				<span>Bina Yaşı</span>
+				<b>${d["Bina Yaşı"]}</b>
+			</div>
+			` : ""}
+
+			${d["Bulunduğu Kat"] ? `
+			<div class="ozellik">
+				<span>Kat</span>
+				<b>${d["Bulunduğu Kat"]}</b>
+			</div>
+			` : ""}
+
+			${d["Kat Sayısı"] ? `
+			<div class="ozellik">
+				<span>Kat Sayısı</span>
+				<b>${d["Kat Sayısı"]}</b>
+			</div>
+			` : ""}
+
+			${d["Isıtma"] ? `
+			<div class="ozellik">
+				<span>Isıtma</span>
+				<b>${d["Isıtma"]}</b>
+			</div>
+			` : ""}
+
+			${d["Eşyalı mı?"] ? `
+			<div class="ozellik">
+				<span>Eşyalı</span>
+				<b>${d["Eşyalı mı?"]}</b>
+			</div>
+			` : ""}
+
+			${d["Kullanım Durumu"] ? `
+			<div class="ozellik">
+				<span>Kullanım Durumu</span>
+				<b>${d["Kullanım Durumu"]}</b>
+			</div>
+			` : ""}
+
+		</div>
+
+
+
+	</div>
+
+	`).addTo(map);
+
+	}
+
+	});
+
+	function detaySonraki(){
+
+	if(!window.detayResimler) return;
+
+
+	window.detayIndex++;
+
+	if(window.detayIndex >= window.detayResimler.length){
+
+	window.detayIndex=0;
+
+	}
+
+	document.getElementById("detayResim").src =
+	window.detayResimler[window.detayIndex];
+
+	}
+
+	function detayOnceki(){
+
+	if(!window.detayResimler) return;
+
+	window.detayIndex--;
+
+	if(window.detayIndex < 0){
+
+	window.detayIndex =
+	window.detayResimler.length-1;
+
+	}
+	document.getElementById("detayResim").src =
+	window.detayResimler[window.detayIndex];
+
+
+	}
+
+
+
+</script>
+
+</body>
+</html>
