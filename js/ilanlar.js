@@ -1,1 +1,32 @@
-const ilanlarVerisi = [];
+const ilanlarVerisi = [
+    {
+        "id": 1783537411610,
+        "baslik": "deneme",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "",
+        "ilce": "",
+        "mahalle": "",
+        "fiyat": "",
+        "paraBirimi": "",
+        "aciklama": "",
+        "koor": "34.008780, 38.369677",
+        "klasorIsmi": "",
+        "resimler": [],
+        "videoUrl": "",
+        "İlan Tarihi": "",
+        "M²": "1500",
+        "Ada": "101",
+        "Parsel": "1",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
+    }
+];
