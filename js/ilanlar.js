@@ -1,1 +1,31 @@
-const ilanlarVerisi = [];
+const ilanlarVerisi = [
+    {
+        "id": 1783530132700,
+        "durum": "satilik",
+        "tip": "Konut",
+        "konutTipi": "Apartman Dairesi",
+        "konutSekli": "Daire",
+        "il": "",
+        "ilce": "",
+        "mahalle": "",
+        "fiyat": "",
+        "paraBirimi": "",
+        "aciklama": "",
+        "koor": "34.008972, 38.369623",
+        "klasorIsmi": "",
+        "resimler": [],
+        "videoUrl": "",
+        "İlan Tarihi": "",
+        "M²": "",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
+    }
+];
