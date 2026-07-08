@@ -637,6 +637,7 @@ function veriyiTemizle(rawContent) {
 }
 
 async function fetchGitHub(method, body = null) {
+	console.log("Kullanılan Token:", token);
     const options = {
         method: method,
         headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
