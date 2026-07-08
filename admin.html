@@ -621,7 +621,7 @@ button {
 
 <script>
 
-const token = "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";
+const token = "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";
 const repo = "ademcolak68-debug/saha_ilanlar"; 
 const filePath = "js/ilanlar.js";
 
@@ -637,7 +637,6 @@ function veriyiTemizle(rawContent) {
 }
 
 async function fetchGitHub(method, body = null) {
-	console.log("Kullanılan Token:", token);
     const options = {
         method: method,
         headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
