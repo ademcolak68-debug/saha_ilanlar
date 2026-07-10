@@ -621,32 +621,29 @@ button {
 
 <script>
 
-// const token = "github_pat_..."  <-- BUNU SİL
+// 1. Değişkenleri en üste global olarak tanımlıyoruz
+let token = ""; 
+const repo = "ademcolak68-debug/saha_ilanlar"; 
+const filePath = "js/ilanlar.js"; 
 
-// Token'ı çekip ana işlemleri başlatan fonksiyon
 async function baslat() {
     try {
-        // Klasör adın 'confic' olduğu için burası böyle kalmalı
         const response = await fetch("https://raw.githubusercontent.com/ademcolak68-debug/saha_ilanlar/main/confic/data.json");
         const json = await response.json();
-        const token = atob(json.part1 + json.part2);
-
-        const repo = "ademcolak68-debug/saha_ilanlar"; 
-        const filePath = "js/ilanlar.js"; 
+        
+        // 2. Fonksiyonun içinde tekrar "const" yazmıyoruz, yukarıdaki globali güncelliyoruz
+        token = atob(json.part1 + json.part2);
 
         console.log("Token yüklendi!");
-        
-        // Buradan sonra token, repo ve filePath değişkenlerini 
-        // kullanarak istediğin fonksiyonu çağırabilirsin.
-        // Örnek: ilaniGonder(token, repo, filePath);
         
     } catch (err) {
         console.error("Hata oluştu:", err);
     }
 }
 
+// 3. Sayfa yüklendiğinde token'ı çekmeyi başlat
 baslat();
-
+	
 let duzenlenenId = null;
 let geciciIlanlar = []; // Düzenleme için listeyi hafızada tutuyoruz
 let aktifDuzenlenenButon = null;
