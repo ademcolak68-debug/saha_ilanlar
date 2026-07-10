@@ -822,45 +822,61 @@ map.on('load', () => {
       }
     }
 
-// 2. ANA TİP VE ALT TİP UYUMU (FİLTRELEMEYİ BURADA SABİTLİYORUZ)
-    let rawTip = (item.tip || "").toLowerCase().trim();
+	    let rawTip = (item.tip || "").toLowerCase().trim();
     let altTip = (item.konutSekli || item.konutTipi || "").toLowerCase().trim();
-    let rawDurum = (item.durum || "").toLowerCase().trim();
-
-    // FİLTRELEME İÇİN TEKNİK TİP (Sidebar'daki value'lar ile BİREBİR AYNISI OLMALI)
+    
+    // Filtreleme için teknik anahtar (Bitişik olması şart çünkü sidebar'da böyle)
     let haritaTipi = "";
-
-    // 1. ÖNCELİK: Kat Karşılığı mı?
-    if (rawDurum === "kat-karsiligi" || rawDurum === "kat karşılığı" || rawTip.includes("kat") || altTip.includes("kat")) {
-        haritaTipi = "katkarsiligi"; // Sidebar'da <input value="katkarsiligi"> ile eşleşir
-    } 
-    // 2. ÖNCELİK: Diğerleri
-    else if (altTip.includes("dükkan") || altTip.includes("dukkan")) haritaTipi = "dukkan";
-    else if (altTip.includes("iş") || altTip.includes("is") || altTip.includes("merkez")) haritaTipi = "ismerkezi";
-    else if (altTip.includes("daire")) haritaTipi = "daire";
-    else if (altTip.includes("villa")) haritaTipi = "villa";
-    else if (altTip.includes("tarla")) haritaTipi = "tarla";
-    else if (altTip.includes("arsa")) haritaTipi = "arsa";
-    else haritaTipi = rawTip || "daire";
-
-    // 4. LEVHA METNİ (Burada asla 'kat-karsiligi' kelimesi geçmiyor, temiz yazıyor)
-    let levhaYazisi = "";
-    if (haritaTipi === "katkarsiligi") {
-        levhaYazisi = "Kat Karşılığı"; 
+    if (rawTip.includes("kat") || altTip.includes("kat") || item.durum === "kat-karsiligi") {
+        haritaTipi = "katkarsiligi";
+    } else if (rawTip === "konut" || rawTip === "isyeri" || rawTip === "işyeri" || rawTip === "") {
+        if (altTip.includes("dükkan") || altTip.includes("dukkan")) haritaTipi = "dukkan";
+        else if (altTip.includes("iş") || altTip.includes("is") || altTip.includes("merkez")) haritaTipi = "ismerkezi";
+        else if (altTip.includes("daire")) haritaTipi = "daire";
+        else if (altTip.includes("villa")) haritaTipi = "villa";
+        else if (altTip.includes("arsa")) haritaTipi = "arsa";
+        else if (altTip.includes("tarla")) haritaTipi = "tarla";
+        else haritaTipi = altTip || "daire";
     } else {
-        let temizDurum = rawDurum === "satilik" ? "Satılık" : (rawDurum === "kiralik" ? "Kiralık" : rawDurum.charAt(0).toUpperCase() + rawDurum.slice(1));
-        let temizTip = (altTip || rawTip).charAt(0).toUpperCase() + (altTip || rawTip).slice(1);
-        levhaYazisi = `${temizDurum} ${temizTip}`;
+        haritaTipi = rawTip;
+    }
+
+    // 3. TÜRKÇE KARAKTER UYUMU (Durum)
+    let rawDurum = (item.durum || "").toLowerCase().trim();
+    let temizDurum = "";
+    
+    if (rawDurum === "kat-karsiligi") temizDurum = "Kat Karşılığı";
+    else if (rawDurum === "satilik" || rawDurum === "satılık") temizDurum = "Satılık";
+    else if (rawDurum === "kiralik" || rawDurum === "kiralık") temizDurum = "Kiralık";
+    else temizDurum = rawDurum.charAt(0).toUpperCase() + rawDurum.slice(1);
+
+    // 4. LEVHA METNİ OLUŞTURMA (Tam istediğin format)
+    let levhaYazisi = "";
+    
+    // Tip metnini güzelleştiriyoruz (Kat-karsiligi gibi saçma sapan ifadeleri temizliyoruz)
+    let tipMetni = (altTip || rawTip).toLowerCase();
+    if (tipMetni.includes("kat")) tipMetni = "Arsa"; // Katla ilgili bir şeyse tip kısmına Arsa yazdırıyoruz
+    else tipMetni = tipMetni.charAt(0).toUpperCase() + tipMetni.slice(1);
+    
+    // EĞER KAT KARŞILIĞIYSA:
+    if (haritaTipi === "katkarsiligi") {
+        // Burada senin istediğin gibi "Kat Karşılığı Arsa" veya sadece "Kat Karşılığı" yazdırabilirsin
+        levhaYazisi = `Kat Karşılığı ${tipMetni}`; 
+    } else {
+        // Normal durum: "Satılık Daire", "Kiralık Dükkan"
+        levhaYazisi = `${temizDurum} ${tipMetni}`;
     }
 
     return {
-        coord: koordinatDizisi,
-        id: item["İlan No"] || item.id || "---", 
-        tip: haritaTipi, // BU DEĞER ARTIK KESİNLİKLE "katkarsiligi" DÖNER
-        levhaText: levhaYazisi, // BU DA KESİNLİKLE "Kat Karşılığı" DÖNER
-        fiyat: (item.fiyat || "") + " " + (item.paraBirimi || ""),
-        data: item
+      coord: koordinatDizisi,
+      id: item["İlan No"] || item.id || "---", 
+      tip: haritaTipi, // Filtre için bitişik "katkarsiligi"
+      levhaText: levhaYazisi, // Harita üzerinde görünecek: "Kat Karşılığı Daire"
+      fiyat: (item.fiyat || "") + " " + (item.paraBirimi || ""),
+      data: item
     };
+});
+
 // ==========================================
   // MARKER VE RENKLİ POPUP'LARIN BASILMASI
   // ==========================================
