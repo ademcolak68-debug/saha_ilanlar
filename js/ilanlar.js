@@ -1,1 +1,32 @@
-const ilanlarVerisi = [];
+const ilanlarVerisi = [
+    {
+        "id": 1783714997225,
+        "baslik": "deneme",
+        "durum": "kat-karsiligi",
+        "tip": "",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "",
+        "ilce": "",
+        "mahalle": "",
+        "fiyat": "",
+        "paraBirimi": "",
+        "aciklama": "",
+        "koor": "",
+        "klasorIsmi": "",
+        "resimler": [],
+        "videoUrl": "",
+        "İlan Tarihi": "",
+        "M²": "",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
+    }
+];
