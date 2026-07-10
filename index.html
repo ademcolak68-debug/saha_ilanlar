@@ -822,56 +822,45 @@ map.on('load', () => {
       }
     }
 
-// 2. ANA TİP VE ALT TİP UYUMU (DÜKKAN/İŞYERİ KRİTİK AYARI)
-    let haritaTipi = (item.tip || "").toLowerCase().trim();
+// 2. ANA TİP VE ALT TİP UYUMU (FİLTRELEMEYİ BURADA SABİTLİYORUZ)
+    let rawTip = (item.tip || "").toLowerCase().trim();
     let altTip = (item.konutSekli || item.konutTipi || "").toLowerCase().trim();
-    
-    // Eğer ana tip "konut" veya "isyeri" (işyeri) ise, alt tipe göre harita tipini netleştiriyoruz
-    if (haritaTipi === "konut" || haritaTipi === "isyeri" || haritaTipi === "işyeri" || haritaTipi === "") {
-      if (altTip.includes("dükkan") || altTip.includes("dukkan")) haritaTipi = "dukkan";
-      else if (altTip.includes("iş") || altTip.includes("is") || altTip.includes("merkez")) haritaTipi = "ismerkezi";
-      else if (altTip.includes("daire")) haritaTipi = "daire";
-      else if (altTip.includes("villa")) haritaTipi = "villa";
-      else if (altTip !== "") haritaTipi = altTip; // Başka spesifik bir alt tip varsa (Örn: ofis, depo)
-      else haritaTipi = "daire"; // Tamamen boşsa varsayılan
-    }
-    
-    // Klasör veya filtre uyuşmazlıkları için kelime temizliği
-    if (haritaTipi.includes("iş") || haritaTipi.includes("is")) haritaTipi = "ismerkezi";
-    if (haritaTipi.includes("dükkan") || haritaTipi.includes("dukkan")) haritaTipi = "dukkan";
-    if (haritaTipi.includes("kat")) haritaTipi = "katkarsiligi";
+    let rawDurum = (item.durum || "").toLowerCase().trim();
 
-    // 3. TÜRKÇE KARAKTER UYUMU (Satilik -> Satılık, Kiralik -> Kiralık)
-    let temizDurum = (item.durum || "").toLowerCase().trim();
-    if (temizDurum === "satilik" || temizDurum === "satılık") temizDurum = "Satılık";
-    else if (temizDurum === "kiralik" || temizDurum === "kiralık") temizDurum = "Kiralık";
-    else temizDurum = temizDurum.charAt(0).toUpperCase() + temizDurum.slice(1);
+    // FİLTRELEME İÇİN TEKNİK TİP (Sidebar'daki value'lar ile BİREBİR AYNISI OLMALI)
+    let haritaTipi = "";
 
-    // 4. LEVHA METNİ OLUŞTURMA (Tam Nokta Atışı Emlak Adı)
+    // 1. ÖNCELİK: Kat Karşılığı mı?
+    if (rawDurum === "kat-karsiligi" || rawDurum === "kat karşılığı" || rawTip.includes("kat") || altTip.includes("kat")) {
+        haritaTipi = "katkarsiligi"; // Sidebar'da <input value="katkarsiligi"> ile eşleşir
+    } 
+    // 2. ÖNCELİK: Diğerleri
+    else if (altTip.includes("dükkan") || altTip.includes("dukkan")) haritaTipi = "dukkan";
+    else if (altTip.includes("iş") || altTip.includes("is") || altTip.includes("merkez")) haritaTipi = "ismerkezi";
+    else if (altTip.includes("daire")) haritaTipi = "daire";
+    else if (altTip.includes("villa")) haritaTipi = "villa";
+    else if (altTip.includes("tarla")) haritaTipi = "tarla";
+    else if (altTip.includes("arsa")) haritaTipi = "arsa";
+    else haritaTipi = rawTip || "daire";
+
+    // 4. LEVHA METNİ (Burada asla 'kat-karsiligi' kelimesi geçmiyor, temiz yazıyor)
     let levhaYazisi = "";
-    if (haritaTipi === "arsa") levhaYazisi = `${temizDurum} Arsa`;
-    else if (haritaTipi === "tarla") levhaYazisi = `${temizDurum} Tarla`;
-    else if (haritaTipi === "katkarsiligi") levhaYazisi = `${temizDurum} Kat Karşılığı`;
-    else if (haritaTipi === "daire") levhaYazisi = `${temizDurum} Daire`;
-    else if (haritaTipi === "villa") levhaYazisi = `${temizDurum} Villa`;
-    else if (haritaTipi === "dukkan") levhaYazisi = `${temizDurum} Dükkan`; // İşte şimdi oldu!
-    else if (haritaTipi === "ismerkezi") levhaYazisi = `${temizDurum} İş Merkezi`;
-    else {
-      // Diğer durumlarda gelen alt tip adını düzgünce yazdır
-      const yedekYazi = altTip || haritaTipi;
-      levhaYazisi = `${temizDurum} ${yedekYazi.charAt(0).toUpperCase() + yedekYazi.slice(1)}`;
+    if (haritaTipi === "katkarsiligi") {
+        levhaYazisi = "Kat Karşılığı"; 
+    } else {
+        let temizDurum = rawDurum === "satilik" ? "Satılık" : (rawDurum === "kiralik" ? "Kiralık" : rawDurum.charAt(0).toUpperCase() + rawDurum.slice(1));
+        let temizTip = (altTip || rawTip).charAt(0).toUpperCase() + (altTip || rawTip).slice(1);
+        levhaYazisi = `${temizDurum} ${temizTip}`;
     }
 
-	return {
-      coord: koordinatDizisi,
-      // ÖNCELİK "İlan No" ALANINDA: GitHub verisindeki gerçek ilan numarasını yakalar
-      id: item["İlan No"] || item.id || "---", 
-      tip: haritaTipi,
-      levhaText: levhaYazisi,
-      fiyat: item.fiyat + " " + item.paraBirimi,
-      data: item
+    return {
+        coord: koordinatDizisi,
+        id: item["İlan No"] || item.id || "---", 
+        tip: haritaTipi, // BU DEĞER ARTIK KESİNLİKLE "katkarsiligi" DÖNER
+        levhaText: levhaYazisi, // BU DA KESİNLİKLE "Kat Karşılığı" DÖNER
+        fiyat: (item.fiyat || "") + " " + (item.paraBirimi || ""),
+        data: item
     };
-  });
 // ==========================================
   // MARKER VE RENKLİ POPUP'LARIN BASILMASI
   // ==========================================
