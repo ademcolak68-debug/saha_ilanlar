@@ -9,6 +9,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 	
 	
 <style>
@@ -645,6 +646,15 @@ async function baslat() {
 let duzenlenenId = null;
 let geciciIlanlar = []; // Düzenleme için listeyi hafızada tutuyoruz
 let aktifDuzenlenenButon = null;
+let mahalleGeojson = null;
+
+	fetch("data/mahalle_sinirlari.geojson")
+    .then(r => r.json())
+    .then(data => {
+        mahalleGeojson = data;
+        console.log("Mahalleler yüklendi:", mahalleGeojson.features.length);
+    });
+
 
 
 function veriyiTemizle(rawContent) {
@@ -1395,9 +1405,30 @@ function cihazKonumunuAl() {
 
         function(pos){
 
+            const lng = pos.coords.longitude;
+            const lat = pos.coords.latitude;
+
             document.getElementById("koor").value =
-                pos.coords.longitude.toFixed(6) + ", " +
-                pos.coords.latitude.toFixed(6);
+                lng.toFixed(6) + ", " + lat.toFixed(6);
+
+            // Mahalleyi bul
+            if (mahalleGeojson) {
+
+                const nokta = turf.point([lng, lat]);
+
+                for (const feature of mahalleGeojson.features) {
+
+                    if (turf.booleanPointInPolygon(nokta, feature)) {
+
+                        document.getElementById("mahalle").value =
+                            feature.properties.MAHALLE_AD;
+
+                        break;
+                    }
+
+                }
+
+            }
 
         },
 
@@ -1413,8 +1444,7 @@ function cihazKonumunuAl() {
 
     );
 
-}
-	   
+}	   
 </script>
 </body>
 </html>
