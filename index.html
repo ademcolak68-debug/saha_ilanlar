@@ -1229,7 +1229,22 @@ map.on('load', () => {
 
 	}
 
+	function ilanPaylas(id){
 
+    const link =
+        `${location.origin}${location.pathname.replace("index.html","")}ilan.html?id=${id}`;
+
+    const mesaj =
+`İlanı incelemek için aşağıdaki bağlantıya tıklayın.
+
+${link}`;
+
+    window.open(
+        `https://wa.me/?text=${encodeURIComponent(mesaj)}`,
+        "_blank"
+    );
+
+}
 
 </script>
 
