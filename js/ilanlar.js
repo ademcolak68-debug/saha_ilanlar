@@ -1,1 +1,32 @@
-const ilanlarVerisi = [];
+const ilanlarVerisi = [
+    {
+        "id": 1783857601389,
+        "baslik": "deneme",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "",
+        "ilce": "",
+        "mahalle": "Büyükbölcek",
+        "fiyat": "",
+        "paraBirimi": "",
+        "aciklama": "",
+        "koor": "34.008866, 38.369680",
+        "klasorIsmi": "",
+        "resimler": [],
+        "videoUrl": "",
+        "İlan Tarihi": "",
+        "M²": "",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
+    }
+];
