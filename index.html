@@ -684,6 +684,13 @@ html, body {
 
 }
 
+.detay-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
 </style>
 </head>
 
@@ -1188,9 +1195,9 @@ map.on('load', () => {
 
 	<div style="padding:10px 12px;">
 			<button class="detay-btn" onclick="ilanPaylas(${ilan.id})">
-			PAYLAŞ
-		</button>
-
+				<i class="fa-brands fa-whatsapp"></i>
+				PAYLAŞ
+			</button>
 	</div>
 
 	`).addTo(map);
