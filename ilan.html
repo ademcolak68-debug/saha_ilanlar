@@ -6,99 +6,251 @@
 
 <title>İlan Detay</title>
 
-<link rel="stylesheet" href="css/style.css">
+
 
 <style>
 
 body{
     margin:0;
-    padding:20px;
-    background:#f5f5f5;
+    padding:15px;
+    background:#dfe5ec;
     font-family:Tahoma,sans-serif;
 }
 
+:root { --primary-color: #d4af37; --dark-color: #1a1a1a; --light-bg: #f8f9fa; --white: #ffffff; --success-green: #27ae60; --brand-dark-green: #1b4d3e; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg); color: #333; line-height: 1.5; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #2b2f36; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffb300, #ff6f00); border-radius: 50px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ffc107, #ff8f00); }
+
+*{
+    scrollbar-width:thin;
+    scrollbar-color:#d4af37 #1f2329;
+}
+
+
+/* ANA İLAN KUTUSU */
+
 .ilan-detay-popup{
-    max-width:500px;
+    width:360px;
+    max-width:100%;
     margin:auto;
+    box-sizing:border-box;
     background:#2b2b2b;
     color:#fff;
-    border-radius:10px;
-    overflow:hidden;
+    border-radius:12px;
+    padding:10px;
 }
+
+
+/* RESİM ALANI */
 
 .detay-slider{
     position:relative;
     width:100%;
-    background:#ececec;
+    height:330px;
+    background:#f2f2f2;
+    border-radius:8px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:18px;
 }
+
 
 .detay-resim{
     width:100%;
-    max-height:500px;
+    height:100%;
     object-fit:contain;
     display:block;
-    background:#f2f2f2;
 }
+
+
+
+/* SLIDER BUTONLARI */
 
 .slider-sol,
 .slider-sag{
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    width:35px;
-    height:35px;
+    width:36px;
+    height:36px;
+    padding:0;
+    margin:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     border:none;
-    border-radius:50%;
-    background:#0009;
+    border-radius:30%;
+
+    background:rgba(0,0,0,.55);
     color:#fff;
-    font-size:24px;
+
+    font-family:Arial, sans-serif;
+    font-size:28px;
+    line-height:36px;
+
+    cursor:pointer;
 }
+
 
 .slider-sol{
-    left:10px;
+    left:5px;
 }
 
+
 .slider-sag{
-    right:10px;
+    right:5px;
 }
+
+
+
+/* BİLGİ BÖLÜMÜ */
 
 .detay-ust{
     display:flex;
     justify-content:space-between;
-    padding:12px;
+    align-items:center;
+    gap:8px;
+    padding:8px 5px 12px;
+    border-top:1px solid rgba(255,255,255,.15);
 }
+
+
+.detay-baslik{
+    font-size:18px;
+    font-weight:700;
+    color:#c8a96a;
+    line-height:1.3;
+    letter-spacing:.2px;
+}
+
 
 .detay-fiyat{
+    font-size:12px;
     color:#56d364;
+    white-space:nowrap;
 }
 
+
+
+/* ÖZELLİKLER */
+
 .detay-ozellikler{
-    padding:10px 12px;
+    padding:0 5px 5px;
 }
+
 
 .ozellik{
     display:flex;
     justify-content:space-between;
+    align-items:center;
     padding:7px 0;
-    border-bottom:1px solid #555;
+    font-size:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
 }
 
+
 .ozellik span{
-    color:#ccc;
+    color:#cfcfcf;
 }
+
 
 .ozellik b{
     color:#56d364;
     font-weight:400;
+    text-align:right;
 }
 
+
+
+/* RESİM YOK */
+
 .resim-yok{
-    height:200px;
+    height:180px;
     display:flex;
-    justify-content:center;
     align-items:center;
-    color:#777;
+    justify-content:center;
     background:#eee;
+    color:#777;
+    border-radius:8px;
+    margin-bottom:18px;
+}
+
+
+
+/* MOBİL */
+
+@media(max-width:768px){
+
+body{
+    padding:10px;
+}
+
+
+.ilan-detay-popup{
+    width:100%;
+    max-width:330px;
+    padding:8px;
+	box-sizing:border-box;
+}
+
+
+.detay-slider{
+    height:260px;
+    margin-bottom:15px;
+}
+
+
+.detay-baslik{
+    font-size:12px;
+}
+
+
+.detay-fiyat{
+    font-size:11px;
+}
+
+
+.ozellik{
+    font-size:11px;
+    padding:6px 0;
+}
+
+
+.slider-sol,
+.slider-sag{
+    width:28px;
+    height:28px;
+    font-size:18px;
+}
+
+}
+
+
+.ilan-konum{
+    margin-top:20px;
+}
+
+
+.ilan-konum h3{
+    font-size:14px;
+    color:#d4af37;
+    margin-bottom:10px;
+}
+
+
+.ilan-konum iframe{
+    width:100%;
+    height:240px;
+    border:0;
+    border-radius:10px;
 }
 
 </style>
@@ -113,7 +265,7 @@ body{
     Yükleniyor...
 </div>
 
-
+<script src="js/ilanlar.js"></script>
 
 <script>
 
@@ -123,25 +275,19 @@ let detayResimler = [];
 let detayIndex = 0;
 
 
-
-async function yukle(){
-
-
-    // BURAYI SENİN İLAN VERİ KAYNAĞINA GÖRE DEĞİŞTİRECEĞİZ
-
-    const cevap = await fetch("data/ilanlar.json");
-
-    ilanlar = await cevap.json();
+function yukle(){
 
 
-
-    const id =
-    Number(new URLSearchParams(location.search).get("id"));
-
+    // js/ilanlar.js içindeki const ilanlarVerisi kullanılır
+    ilanlar = ilanlarVerisi;
 
 
-    const ilan =
-    ilanlar.find(x=>x.id===id);
+    const id = Number(
+        new URLSearchParams(location.search).get("id")
+    );
+
+
+    const ilan = ilanlar.find(x => x.id === id);
 
 
 
@@ -151,11 +297,11 @@ async function yukle(){
         "İlan bulunamadı";
 
         return;
+
     }
 
 
     ilanGoster(ilan);
-
 
 }
 
@@ -164,59 +310,99 @@ async function yukle(){
 function ilanGoster(ilan){
 
 
-const d = ilan.data;
+const d = ilan;
+
+// KOORDİNAT AL
+let harita = "";
+
+if(d.koor){
+
+    const koordinat = d.koor.split(",");
+
+    const lng = koordinat[0];
+    const lat = koordinat[1];
 
 
-let resimSlider="";
+    harita = `
+
+    <div class="ilan-konum">
+
+        <h3>Konum</h3>
+
+        <iframe
+        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
+        loading="lazy">
+        </iframe>
+
+    </div>
+
+    `;
+
+}
 
 
-if(d.resimler && d.resimler.length){
+let resimSlider = "";
 
 
-detayResimler=d.resimler;
-detayIndex=0;
+if(d.resimler && d.resimler.length > 0){
 
 
-resimSlider=`
-
-<div class="detay-slider">
-
-<img id="detayResim"
-src="${d.resimler[0]}"
-class="detay-resim">
+    detayResimler = d.resimler;
+    detayIndex = 0;
 
 
-${d.resimler.length>1 ? `
+    resimSlider = `
 
-<button class="slider-sol" onclick="detayOnceki()">‹</button>
+    <div class="detay-slider">
 
-<button class="slider-sag" onclick="detaySonraki()">›</button>
-
-`:""}
-
-
-</div>
+        <img id="detayResim"
+        src="${d.resimler[0]}"
+        class="detay-resim">
 
 
-`;
+        ${d.resimler.length > 1 ? `
+
+		<button 
+		id="solOk"
+		class="slider-sol" 
+		style="display:none;"
+		onclick="detayOnceki()">
+		‹
+		</button>
+
+		<button 
+		id="sagOk"
+		class="slider-sag" 
+		onclick="detaySonraki()">
+		›
+		</button>
+
+		` : ""}
+
+
+    </div>
+
+    `;
 
 
 }else{
 
 
-resimSlider=`
+    resimSlider = `
 
-<div class="resim-yok">
-Resim yok
-</div>
+    <div class="resim-yok">
+        Resim yok
+    </div>
 
-`;
+    `;
+
 
 }
 
 
 
-document.getElementById("ilanDetay").innerHTML=`
+document.getElementById("ilanDetay").innerHTML = `
+
 
 <div class="ilan-detay-popup">
 
@@ -224,37 +410,43 @@ document.getElementById("ilanDetay").innerHTML=`
 ${resimSlider}
 
 
+
 <div class="detay-ust">
 
-<div>
-${ilan.levhaText || ""}
+    <div class="detay-baslik">
+		${d.durum === "satilik" ? "Satılık" : "Kiralık"}
+		${d.konutSekli || d.tip || ""}
+	</div>
+
+    <div class="detay-fiyat">
+        ${d.fiyat || ""} ${d.paraBirimi || ""}
+    </div>
+
 </div>
 
-
-<div class="detay-fiyat">
-${ilan.fiyat || ""}
-</div>
-
-
-</div>
 
 
 
 <div class="detay-ozellikler">
 
 
+
 ${d["M²"] ? `
 <div class="ozellik">
 <span>M²</span>
 <b>${d["M²"]}</b>
-</div>`:""}
+</div>
+` : ""}
+
 
 
 ${d["Ada"] || d["Parsel"] ? `
 <div class="ozellik">
 <span>Ada / Parsel</span>
 <b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
-</div>`:""}
+</div>
+` : ""}
+
 
 
 
@@ -262,26 +454,91 @@ ${d["Oda Sayısı"] ? `
 <div class="ozellik">
 <span>Oda</span>
 <b>${d["Oda Sayısı"]}</b>
-</div>`:""}
+</div>
+` : ""}
 
 
 
-${d["aciklama"] ? `
+
+${d["Bina Yaşı"] ? `
+<div class="ozellik">
+<span>Bina Yaşı</span>
+<b>${d["Bina Yaşı"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Bulunduğu Kat"] ? `
+<div class="ozellik">
+<span>Kat</span>
+<b>${d["Bulunduğu Kat"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Kat Sayısı"] ? `
+<div class="ozellik">
+<span>Kat Sayısı</span>
+<b>${d["Kat Sayısı"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Isıtma"] ? `
+<div class="ozellik">
+<span>Isıtma</span>
+<b>${d["Isıtma"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Eşyalı mı?"] ? `
+<div class="ozellik">
+<span>Eşyalı</span>
+<b>${d["Eşyalı mı?"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Kullanım Durumu"] ? `
+<div class="ozellik">
+<span>Kullanım Durumu</span>
+<b>${d["Kullanım Durumu"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d.aciklama ? `
 <div class="ozellik">
 <span>Açıklama</span>
-<b>${d["aciklama"]}</b>
-</div>`:""}
+<b>${d.aciklama}</b>
+</div>
+` : ""}
 
-
+${harita}
 
 </div>
 
 
 </div>
+
 
 `;
 
 }
+
 
 
 
@@ -290,16 +547,48 @@ function detaySonraki(){
 
 detayIndex++;
 
-if(detayIndex>=detayResimler.length)
-detayIndex=0;
+
+if(detayIndex >= detayResimler.length)
+detayIndex = 0;
+setTimeout(sliderOkGuncelle,50);
 
 
 document.getElementById("detayResim").src =
 detayResimler[detayIndex];
 
+sliderOkGuncelle();
 
 }
 
+
+function sliderOkGuncelle(){
+
+    const sol = document.getElementById("solOk");
+    const sag = document.getElementById("sagOk");
+
+    if(!sol || !sag) return;
+
+
+    if(detayIndex === 0){
+
+        sol.style.display = "none";
+        sag.style.display = "flex";
+
+    } 
+    else if(detayIndex === detayResimler.length - 1){
+
+        sol.style.display = "flex";
+        sag.style.display = "none";
+
+    }
+    else{
+
+        sol.style.display = "flex";
+        sag.style.display = "flex";
+
+    }
+
+}
 
 
 function detayOnceki(){
@@ -307,13 +596,15 @@ function detayOnceki(){
 
 detayIndex--;
 
-if(detayIndex<0)
-detayIndex=detayResimler.length-1;
+
+if(detayIndex < 0)
+detayIndex = detayResimler.length - 1;
 
 
 document.getElementById("detayResim").src =
 detayResimler[detayIndex];
 
+sliderOkGuncelle();
 
 }
 
