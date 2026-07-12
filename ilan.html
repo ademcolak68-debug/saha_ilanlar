@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>İlan Detay</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+    margin:0;
+    padding:20px;
+    background:#f5f5f5;
+    font-family:Tahoma,sans-serif;
+}
+
+.ilan-detay-popup{
+    max-width:500px;
+    margin:auto;
+    background:#2b2b2b;
+    color:#fff;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.detay-slider{
+    position:relative;
+    width:100%;
+    background:#ececec;
+}
+
+.detay-resim{
+    width:100%;
+    max-height:500px;
+    object-fit:contain;
+    display:block;
+    background:#f2f2f2;
+}
+
+.slider-sol,
+.slider-sag{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:50%;
+    background:#0009;
+    color:#fff;
+    font-size:24px;
+}
+
+.slider-sol{
+    left:10px;
+}
+
+.slider-sag{
+    right:10px;
+}
+
+.detay-ust{
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+}
+
+.detay-fiyat{
+    color:#56d364;
+}
+
+.detay-ozellikler{
+    padding:10px 12px;
+}
+
+.ozellik{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    border-bottom:1px solid #555;
+}
+
+.ozellik span{
+    color:#ccc;
+}
+
+.ozellik b{
+    color:#56d364;
+    font-weight:400;
+}
+
+.resim-yok{
+    height:200px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#777;
+    background:#eee;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="ilanDetay">
+    Yükleniyor...
+</div>
+
+
+
+<script>
+
+
+let ilanlar = [];
+let detayResimler = [];
+let detayIndex = 0;
+
+
+
+async function yukle(){
+
+
+    // BURAYI SENİN İLAN VERİ KAYNAĞINA GÖRE DEĞİŞTİRECEĞİZ
+
+    const cevap = await fetch("data/ilanlar.json");
+
+    ilanlar = await cevap.json();
+
+
+
+    const id =
+    Number(new URLSearchParams(location.search).get("id"));
+
+
+
+    const ilan =
+    ilanlar.find(x=>x.id===id);
+
+
+
+    if(!ilan){
+
+        document.getElementById("ilanDetay").innerHTML =
+        "İlan bulunamadı";
+
+        return;
+    }
+
+
+    ilanGoster(ilan);
+
+
+}
+
+
+
+function ilanGoster(ilan){
+
+
+const d = ilan.data;
+
+
+let resimSlider="";
+
+
+if(d.resimler && d.resimler.length){
+
+
+detayResimler=d.resimler;
+detayIndex=0;
+
+
+resimSlider=`
+
+<div class="detay-slider">
+
+<img id="detayResim"
+src="${d.resimler[0]}"
+class="detay-resim">
+
+
+${d.resimler.length>1 ? `
+
+<button class="slider-sol" onclick="detayOnceki()">‹</button>
+
+<button class="slider-sag" onclick="detaySonraki()">›</button>
+
+`:""}
+
+
+</div>
+
+
+`;
+
+
+}else{
+
+
+resimSlider=`
+
+<div class="resim-yok">
+Resim yok
+</div>
+
+`;
+
+}
+
+
+
+document.getElementById("ilanDetay").innerHTML=`
+
+<div class="ilan-detay-popup">
+
+
+${resimSlider}
+
+
+<div class="detay-ust">
+
+<div>
+${ilan.levhaText || ""}
+</div>
+
+
+<div class="detay-fiyat">
+${ilan.fiyat || ""}
+</div>
+
+
+</div>
+
+
+
+<div class="detay-ozellikler">
+
+
+${d["M²"] ? `
+<div class="ozellik">
+<span>M²</span>
+<b>${d["M²"]}</b>
+</div>`:""}
+
+
+${d["Ada"] || d["Parsel"] ? `
+<div class="ozellik">
+<span>Ada / Parsel</span>
+<b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
+</div>`:""}
+
+
+
+${d["Oda Sayısı"] ? `
+<div class="ozellik">
+<span>Oda</span>
+<b>${d["Oda Sayısı"]}</b>
+</div>`:""}
+
+
+
+${d["aciklama"] ? `
+<div class="ozellik">
+<span>Açıklama</span>
+<b>${d["aciklama"]}</b>
+</div>`:""}
+
+
+
+</div>
+
+
+</div>
+
+`;
+
+}
+
+
+
+function detaySonraki(){
+
+
+detayIndex++;
+
+if(detayIndex>=detayResimler.length)
+detayIndex=0;
+
+
+document.getElementById("detayResim").src =
+detayResimler[detayIndex];
+
+
+}
+
+
+
+function detayOnceki(){
+
+
+detayIndex--;
+
+if(detayIndex<0)
+detayIndex=detayResimler.length-1;
+
+
+document.getElementById("detayResim").src =
+detayResimler[detayIndex];
+
+
+}
+
+
+
+yukle();
+
+
+</script>
+
+
+</body>
+</html>
