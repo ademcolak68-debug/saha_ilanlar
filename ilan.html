@@ -386,9 +386,16 @@ function yukle(){
 
     if(!ilan){
 
-        document.getElementById("ilanDetay").innerHTML =
-        "İlan bulunamadı";
+    const yuklemeYazi = document.querySelector("#acilisEkrani p");
 
+    if(yuklemeYazi){
+
+        yuklemeYazi.innerHTML = "İlan bulunamadı";
+
+    }
+
+
+    setTimeout(() => {
 
         const acilis = document.getElementById("acilisEkrani");
 
@@ -404,10 +411,12 @@ function yukle(){
 
         }
 
+    },2000);
 
-        return;
 
-    }
+    return;
+
+}
 
 
 
