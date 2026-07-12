@@ -1412,24 +1412,26 @@ function cihazKonumunuAl() {
                 lng.toFixed(6) + ", " + lat.toFixed(6);
 
             // Mahalleyi bul
-            if (mahalleGeojson) {
+            // Mahalleyi bul
+if (mahalleGeojson) {
 
-                const nokta = turf.point([lng, lat]);
+    const nokta = turf.point([lng, lat]);
 
-                for (const feature of mahalleGeojson.features) {
+    document.getElementById("mahalle").value = "";
 
-                    if (turf.booleanPointInPolygon(nokta, feature)) {
+    for (const feature of mahalleGeojson.features) {
 
-                        document.getElementById("mahalle").value =
-                            feature.properties.MAHALLE_AD;
+        if (turf.booleanPointInPolygon(nokta, feature)) {
 
-                        break;
-                    }
+            document.getElementById("mahalle").value =
+                feature.properties.MAHALLE_AD;
 
-                }
+            break;
+        }
 
-            }
+    }
 
+}
         },
 
         function(err){
