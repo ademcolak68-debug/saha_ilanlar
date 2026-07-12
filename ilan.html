@@ -370,31 +370,49 @@ function yukle(){
 
     if(!ilan){
 
-        document.getElementById("ilanDetay").innerHTML =
-        "İlan bulunamadı";
+    document.getElementById("ilanDetay").innerHTML =
+    "İlan bulunamadı";
 
-        return;
+
+    const acilis = document.getElementById("acilisEkrani");
+
+    if(acilis){
+
+        acilis.style.opacity = "0";
+
+        setTimeout(() => {
+
+            acilis.style.display = "none";
+
+        },500);
 
     }
 
 
-    ilanGoster(ilan);
-			setTimeout(() => {
-
-		const acilis = document.getElementById("acilisEkrani");
-
-		acilis.style.opacity = "0";
-
-		setTimeout(() => {
-
-			acilis.style.display = "none";
-
-		},500);
-
-	},3000);
-
+    return;
 
 }
+
+
+ilanGoster(ilan);
+
+setTimeout(() => {
+
+    const acilis = document.getElementById("acilisEkrani");
+
+    if(acilis){
+
+        acilis.style.opacity = "0";
+
+        setTimeout(() => {
+
+            acilis.style.display = "none";
+
+        },500);
+
+    }
+
+},3000);
 
 
 
