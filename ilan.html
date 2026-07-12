@@ -347,15 +347,31 @@ body{
 <script>
 
 
+// Değişken tanımları
 let ilanlar = [];
 let detayResimler = [];
 let detayIndex = 0;
 
 
+// ilanlar.js dosyasını cache kullanmadan yükle
+const script = document.createElement('script');
+
+script.src = "js/ilanlar.js?t=" + new Date().getTime();
+
+
+script.onload = function(){
+
+    yukle();
+
+};
+
+
+document.head.appendChild(script);
+
+
+
 function yukle(){
 
-
-    // js/ilanlar.js içindeki const ilanlarVerisi kullanılır
     ilanlar = ilanlarVerisi;
 
 
@@ -370,50 +386,53 @@ function yukle(){
 
     if(!ilan){
 
-    document.getElementById("ilanDetay").innerHTML =
-    "İlan bulunamadı";
+        document.getElementById("ilanDetay").innerHTML =
+        "İlan bulunamadı";
 
 
-    const acilis = document.getElementById("acilisEkrani");
+        const acilis = document.getElementById("acilisEkrani");
 
-    if(acilis){
+        if(acilis){
 
-        acilis.style.opacity = "0";
+            acilis.style.opacity = "0";
 
-        setTimeout(() => {
+            setTimeout(() => {
 
-            acilis.style.display = "none";
+                acilis.style.display = "none";
 
-        },500);
+            },500);
+
+        }
+
+
+        return;
 
     }
 
 
-    return;
+
+    ilanGoster(ilan);
+
+
+    setTimeout(() => {
+
+        const acilis = document.getElementById("acilisEkrani");
+
+        if(acilis){
+
+            acilis.style.opacity = "0";
+
+            setTimeout(() => {
+
+                acilis.style.display = "none";
+
+            },500);
+
+        }
+
+    },3000);
 
 }
-
-
-ilanGoster(ilan);
-
-setTimeout(() => {
-
-    const acilis = document.getElementById("acilisEkrani");
-
-    if(acilis){
-
-        acilis.style.opacity = "0";
-
-        setTimeout(() => {
-
-            acilis.style.display = "none";
-
-        },500);
-
-    }
-
-},3000);
-
 
 
 function ilanGoster(ilan){
