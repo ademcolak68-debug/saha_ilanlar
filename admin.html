@@ -1226,13 +1226,15 @@ async function silIlan(id) {
     }
 
     // 3. İlanı listeden çıkar ve GitHub'a güncelle
-    list = list.filter(i => i.id !== id);
-    await guncelleGitHub(list, data.sha);
-    
-	// Ekrandaki listeyi anında yenile
+	list = list.filter(i => i.id !== id);
+	await guncelleGitHub(list, data.sha);
+	
+	// GitHub commit gecikmesi için bekle
+	await new Promise(r => setTimeout(r, 1500));
+	
 	await listeleVeSil();
-
-    gosterBildirim("İlan ve tüm medya dosyaları başarıyla silindi.");
+	
+	gosterBildirim("İlan ve tüm medya dosyaları başarıyla silindi.");
 }
 
 // Klasör içindeki her şeyi silen yardımcı fonksiyon
