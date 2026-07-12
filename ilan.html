@@ -288,6 +288,40 @@ body{
     font-size:15px;
 }
 
+.yukleme-kapsul{
+    width:220px;
+    height:6px;
+    background:#e5e5e5;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.yukleme-cubuk{
+    width:40%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #d4af37,
+        #27ae60,
+        #d4af37
+    );
+    border-radius:20px;
+    animation:yukleAnimasyon 1.3s infinite;
+}
+
+@keyframes yukleAnimasyon{
+
+    0%{
+        transform:translateX(-120%);
+    }
+
+    100%{
+        transform:translateX(300%);
+    }
+
+}
+
 </style>
 
 </head>
@@ -300,6 +334,10 @@ body{
     <img src="logo.png" alt="NETmax Gayrimenkul">
     <h2>NETmax Gayrimenkul</h2>
     <p>İlan yükleniyor...</p>
+
+    <div class="yukleme-kapsul">
+        <div class="yukleme-cubuk"></div>
+    </div>
 </div>
 
 <div id="ilanDetay"></div>
@@ -467,9 +505,18 @@ ${resimSlider}
 <div class="detay-ust">
 
     <div class="detay-baslik">
-		${d.durum === "satilik" ? "Satılık" : "Kiralık"}
-		${d.konutSekli || d.tip || ""}
-	</div>
+
+        <div class="ilan-ad">
+            ${d.baslik || ""}
+        </div>
+
+        <div>
+            ${d.durum === "satilik" ? "Satılık" : "Kiralık"}
+            ${d.konutSekli || d.tip || ""}
+        </div>
+
+    </div>
+
 
     <div class="detay-fiyat">
         ${d.fiyat || ""} ${d.paraBirimi || ""}
