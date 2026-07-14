@@ -6,142 +6,98 @@
     <title>NETmax Gayrimenkul</title>
     <style>
         body { margin: 0; background: #f4f4f4; font-family: 'Segoe UI', sans-serif; color: #333; }
-        .container { max-width: 600px; margin: auto; background: #fff; min-height: 100vh; }
+        .container { max-width: 600px; margin: auto; background: #fff; min-height: 100vh; padding-bottom: 20px; }
 
         /* Açılış Ekranı */
         #acilisEkrani { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
-        #acilisEkrani img { width: 230px; max-width: 80%; }
         .yukleme-kapsul { width: 220px; height: 6px; background: #e5e5e5; border-radius: 20px; overflow: hidden; margin-top: 15px; }
-        .yukleme-cubuk { width: 40%; height: 100%; background: linear-gradient(90deg, #d4af37, #27ae60, #d4af37); animation: yukleAnimasyon 1.3s infinite; }
-        @keyframes yukleAnimasyon { 0% { transform: translateX(-120%); } 100% { transform: translateX(300%); } }
+        .yukleme-cubuk { width: 100%; height: 100%; background: #d4af37; animation: yukleAnimasyon 4s linear forwards; }
+        @keyframes yukleAnimasyon { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* Başlık ve İmza */
+        .header-top { padding: 15px; font-weight: bold; font-size: 18px; text-align: center; border-bottom: 1px solid #eee; }
+        .firma-imza { font-size: 12px; color: #888; text-align: center; padding: 5px; background: #f9f9f9; }
 
         /* Slider */
         .detay-slider { position: relative; width: 100%; height: 350px; background: #eee; overflow: hidden; }
         .detay-resim { width: 100%; height: 100%; object-fit: cover; }
-        .resim-sayac { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 4px 15px; border-radius: 20px; font-size: 13px; }
+        .resim-sayac { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
         .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: #fff; padding: 15px 10px; cursor: pointer; }
 
-        /* Header */
-        .ilan-header { padding: 15px; border-bottom: 1px solid #eee; }
-        .ilan-baslik { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-        .ilan-fiyat { font-size: 24px; color: #1b4d3e; font-weight: 800; }
-
         /* Sekmeler */
-        .tabs { display: flex; border-bottom: 2px solid #eee; position: sticky; top: 0; background: #fff; z-index: 100; }
-        .tab-btn { flex: 1; padding: 15px 5px; border: none; background: #fff; cursor: pointer; font-weight: 600; color: #777; font-size: 14px; }
-        .tab-btn.active { color: #d4af37; border-bottom: 2px solid #d4af37; }
-        .tab-content { padding: 20px 15px; display: none; }
+        .tabs { display: flex; background: #eee; border-radius: 8px; margin: 15px; overflow: hidden; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: #e0e0e0; cursor: pointer; font-weight: bold; color: #555; }
+        .tab-btn.active { background: #d4af37; color: #fff; }
+        .tab-content { padding: 0 15px; display: none; }
         .tab-content.active { display: block; }
 
-        /* Özellik Listesi */
-        .ozellik { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f9f9f9; font-size: 14px; }
-        .ozellik span { color: #666; }
-        .ozellik b { color: #333; font-weight: 600; }
+        /* Liste ve Açıklama */
+        .ozellik { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .aciklama-item { padding: 8px 0; border-bottom: 1px solid #f9f9f9; }
+        .aciklama-item::before { content: "✔ "; color: #d4af37; margin-right: 8px; }
         
-        /* Harita */
-        .ilan-konum iframe { width: 100%; height: 240px; border: 0; border-radius: 10px; }
+        .ilan-konum iframe { width: 100%; height: 240px; border: 0; border-radius: 10px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div id="acilisEkrani">
-    <img src="logo.png" alt="NETmax Gayrimenkul">
-    <h2>NETmax Gayrimenkul</h2>
-    <p>İlan yükleniyor...</p>
+    <img src="logo.png" style="width:150px" alt="Logo">
+    <p>NETmax Gayrimenkul yükleniyor...</p>
     <div class="yukleme-kapsul"><div class="yukleme-cubuk"></div></div>
 </div>
 
 <div id="ilanDetay" class="container"></div>
 
 <script>
-    let detayResimler = [];
-    let detayIndex = 0;
-
     const script = document.createElement('script');
     script.src = "js/ilanlar.js?t=" + new Date().getTime();
     script.onload = () => {
         const id = Number(new URLSearchParams(location.search).get("id"));
         const d = (typeof ilanlarVerisi !== 'undefined' ? ilanlarVerisi : []).find(x => x.id === id);
-        
         if (d) {
             render(d);
-            setTimeout(() => document.getElementById("acilisEkrani").style.display = "none", 800);
-        } else {
-            document.getElementById("acilisEkrani").querySelector("p").innerText = "İlan bulunamadı.";
+            setTimeout(() => document.getElementById("acilisEkrani").style.display = "none", 4000);
         }
     };
     document.head.appendChild(script);
 
     function render(d) {
-        detayResimler = d.resimler || [];
-        
-        let harita = "";
-        if(d.koor){
-
-            const koordinat = d.koor.split(",");
-        
-            const lng = koordinat[0];
-            const lat = koordinat[1];
-        
-        
-            harita = `
-        
-            <div class="ilan-konum">
-        
-                <h3>Konum</h3>
-        
-                <iframe
-                src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
-                loading="lazy">
-                </iframe>
-        
-            </div>
-        
-            `;
-        
-        }
+        let harita = d.koor ? `<iframe src="https://maps.google.com/maps?q=${d.koor.split(',')[1]},${d.koor.split(',')[0]}&z=16&output=embed"></iframe>` : "Konum yok.";
+        let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama yok.";
 
         document.getElementById("ilanDetay").innerHTML = `
+            <div class="header-top">${d.baslik}</div>
             <div class="detay-slider">
-                <img src="${detayResimler[0]}" id="detayResim" class="detay-resim">
-                <div id="resimSayac" class="resim-sayac">1 / ${detayResimler.length}</div>
-                ${detayResimler.length > 1 ? `<button class="slider-btn" style="left:0" onclick="changeImage(-1)">❮</button><button class="slider-btn" style="right:0" onclick="changeImage(1)">❯</button>` : ""}
+                <img src="${d.resimler[0]}" id="detayResim" class="detay-resim">
+                <div class="resim-sayac">1 / ${d.resimler.length}</div>
             </div>
-            <div class="ilan-header">
-                <div class="ilan-baslik">${d.baslik || ""}</div>
-                <div class="ilan-fiyat">${d.fiyat || ""} ${d.paraBirimi || ""}</div>
-            </div>
+            <div class="firma-imza">NETmax Gayrimenkul</div>
+            
             <div class="tabs">
                 <button class="tab-btn active" onclick="openTab(event, 'bilgi')">İlan Bilgileri</button>
                 <button class="tab-btn" onclick="openTab(event, 'aciklama')">Açıklama</button>
                 <button class="tab-btn" onclick="openTab(event, 'konum')">Konum</button>
             </div>
+
             <div id="bilgi" class="tab-content active">
+                ${row("Fiyat", d.fiyat + " " + d.paraBirimi)}
                 ${row("İlan Tarihi", d["İlan Tarihi"])}
-                ${row("İlan No", d.id)}
-                ${row("Emlak Tipi", d.tip)}
                 ${row("M²", d["M²"])}
                 ${row("Oda Sayısı", d["Oda Sayısı"])}
-                ${row("Bina Yaşı", d["Bina Yaşı"])}
                 ${row("Isıtma", d["Isıtma"])}
-                ${row("Eşyalı", d["Eşyalı mı?"])}
             </div>
-            <div id="aciklama" class="tab-content">${d.aciklama ? d.aciklama.replace(/\n/g, '<br>') : "Açıklama girilmemiştir."}</div>
-            <div id="konum" class="tab-content">${harita || "Konum bilgisi mevcut değil."}</div>
+            <div id="aciklama" class="tab-content">${aciklamaList}</div>
+            <div id="konum" class="tab-content ilan-konum">${harita}</div>
         `;
     }
 
-    function row(label, val) { return val ? `<div class="ozellik"><span>${label}</span><b>${val}</b></div>` : ""; }
+    function row(label, val) { return `<div class="ozellik"><span>${label}</span><b>${val}</b></div>`; }
     function openTab(evt, id) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         evt.currentTarget.classList.add('active');
-    }
-    function changeImage(dir) {
-        detayIndex = (detayIndex + dir + detayResimler.length) % detayResimler.length;
-        document.getElementById("detayResim").src = detayResimler[detayIndex];
-        document.getElementById("resimSayac").innerText = (detayIndex + 1) + " / " + detayResimler.length;
     }
 </script>
 </body>
