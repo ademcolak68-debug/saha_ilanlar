@@ -113,6 +113,7 @@
             <div id="aciklama" class="tab-content">${aciklamaList}</div>
             <div id="konum" class="tab-content ilan-konum">${harita}</div>
         `;
+        sliderHazirla();
     }
 
     function row(label, val) { return `<div class="ozellik"><span>${label}</span><b>${val}</b></div>`; }
@@ -125,32 +126,36 @@
 
     let detayIndex=0;
 
-function move(dir){
-    const s=document.getElementById('slider');
-    const sayac=document.getElementById('sayac');
-    const resimler=document.querySelectorAll('.detay-resim');
-    if(!s||!resimler.length)return;
+function sliderHazirla(){
+    const s=document.getElementById("slider");
+    const sayac=document.getElementById("sayac");
+    const resimler=document.querySelectorAll(".detay-resim");
 
-    detayIndex+=dir;
-    if(detayIndex<0)detayIndex=resimler.length-1;
-    if(detayIndex>=resimler.length)detayIndex=0;
+    if(!s)return;
 
-    s.scrollTo({left:detayIndex*s.offsetWidth,behavior:'smooth'});
-    if(sayac)sayac.innerHTML=`${detayIndex+1} / ${resimler.length}`;
+    s.addEventListener("scroll",function(){
+
+        detayIndex=Math.round(s.scrollLeft / s.offsetWidth);
+
+        sayac.innerHTML=(detayIndex+1)+" / "+resimler.length;
+
+    });
 }
 
-setTimeout(()=>{
-    const s=document.getElementById('slider');
-    const sayac=document.getElementById('sayac');
-    const resimler=document.querySelectorAll('.detay-resim');
+function move(dir){
+    const s=document.getElementById("slider");
+    const resimler=document.querySelectorAll(".detay-resim");
 
-    if(s){
-        s.addEventListener('scroll',()=>{
-            detayIndex=Math.round(s.scrollLeft/s.offsetWidth);
-            if(sayac)sayac.innerHTML=`${detayIndex+1} / ${resimler.length}`;
-        });
-    }
-},100);
+    detayIndex+=dir;
+
+    if(detayIndex<0) detayIndex=resimler.length-1;
+    if(detayIndex>=resimler.length) detayIndex=0;
+
+    s.scrollTo({
+        left:detayIndex*s.offsetWidth,
+        behavior:"smooth"
+    });
+}
     
 </script>
 </body>
