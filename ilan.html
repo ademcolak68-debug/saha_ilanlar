@@ -8,109 +8,85 @@
         body { margin: 0; background: #f4f4f4; font-family: 'Tahoma', sans-serif; color: #333; }
         .container { max-width: 600px; margin: auto; background: #fff; min-height: 100vh; padding-bottom: 20px; }
 
-        /* Açılış Ekranı */
-        #acilisEkrani { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
-        #acilisEkrani img { width: 200px; margin-bottom: 20px; }
+        /* Yükleme Ekranı */
+        #acilisEkrani { position: fixed; inset: 0; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
         .yukleme-kapsul { width: 250px; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
         .yukleme-cubuk { width: 0%; height: 100%; background: #d4af37; animation: yukleAnimasyon 4s linear forwards; }
         @keyframes yukleAnimasyon { 100% { width: 100%; } }
 
-        /* Header */
-        .header-top { padding: 15px; font-weight: normal; font-size: 16px; text-align: center; border-bottom: 1px solid #eee; text-transform: uppercase; line-height: 1.4; }
-        .firma-imza { font-size: 16px; font-weight: bold; color: #1b4d3e; text-align: center; padding: 15px; background: #f9f9f9; border-bottom: 1px solid #eee; }
-
         /* Slider */
-        .slider-container { position: relative; width: 100%; height: 350px; overflow: hidden; }
-        .detay-slider { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
-        .detay-resim { min-width: 100%; height: 100%; object-fit: cover; }
-        .resim-sayac { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
-        
-        /* 768px üzeri için oklar */
-        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: #fff; padding: 15px 10px; cursor: pointer; z-index: 10; display: none; }
-        @media (min-width: 769px) { .slider-btn { display: block; } }
+        .slider-wrapper { position: relative; width: 100%; height: 350px; overflow: hidden; }
+        .slider-inner { display: flex; width: 100%; height: 100%; transition: transform 0.3s; }
+        .slide { min-width: 100%; height: 100%; object-fit: cover; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: #fff; padding: 15px; cursor: pointer; display: none; }
+        @media (min-width: 769px) { .nav-btn { display: block; } }
 
-        /* Sekmeler */
-        .tabs { display: flex; background: #eee; border-radius: 8px; margin: 15px; overflow: hidden; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: #e0e0e0; cursor: pointer; font-weight: bold; color: #555; }
+        /* Tab ve İçerik */
+        .tabs { display: flex; background: #eee; margin: 15px; border-radius: 8px; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: #e0e0e0; cursor: pointer; font-family: Tahoma; }
         .tab-btn.active { background: #d4af37; color: #fff; }
-        .tab-content { padding: 0 15px; display: none; }
+        .tab-content { display: none; padding: 15px; }
         .tab-content.active { display: block; }
-        .ozellik { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-        .aciklama-item::before { content: "✔ "; color: #d4af37; }
-        .ilan-konum iframe { width: 100%; height: 240px; border: 0; border-radius: 10px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div id="acilisEkrani">
-    <img src="logo.png" alt="Logo">
+    <img src="logo.png" style="width:150px">
     <div class="yukleme-kapsul"><div class="yukleme-cubuk"></div></div>
 </div>
 
-<div id="ilanDetay" class="container"></div>
+<div id="app" class="container"></div>
 
 <script>
-    let curIdx = 0;
-    const script = document.createElement('script');
-    script.src = "js/ilanlar.js?t=" + new Date().getTime();
-    script.onload = () => {
-        const id = Number(new URLSearchParams(location.search).get("id"));
-        const d = (typeof ilanlarVerisi !== 'undefined' ? ilanlarVerisi : []).find(x => x.id === id);
-        if (d) {
-            render(d);
-            setTimeout(() => document.getElementById("acilisEkrani").style.display = "none", 4000);
-        }
-    };
-    document.head.appendChild(script);
+    let idx = 0;
+    // Harita için Google'ın resmi embed formatı:
+    function getMap(koor) {
+        if(!koor) return "Konum yok.";
+        const [lng, lat] = koor.split(",");
+        // Harita linki en güvenli formatta:
+        return `<iframe width="100%" height="250" frameborder="0" src="https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed"></iframe>`;
+    }
 
-    function render(d) {
-        // Harita Linkini garantili oluşturma
-        let haritaIframe = "";
-        if(d.koor) {
-            const koorArr = d.koor.split(",");
-            const lat = koorArr[1]; 
-            const lng = koorArr[0];
-            haritaIframe = `<div class="ilan-konum"><h3>Konum</h3><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" allowfullscreen="" loading="lazy"></iframe></div>`;
-        }
+    fetch('js/ilanlar.js?t=' + Date.now()).then(() => {
+        const id = new URLSearchParams(window.location.search).get("id");
+        const d = ilanlarVerisi.find(x => x.id == id);
+        
+        if(!d) return document.body.innerHTML = "İlan bulunamadı.";
 
-        let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
-        const gosterilecekler = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma", "Eşyalı mı?", "Kullanım Durumu", "Site İçerisinde?"];
-        gosterilecekler.forEach(key => { if(d[key]) ozellikler += row(key, d[key]); });
+        let ozellikler = `<div class="ozellik"><span>Fiyat</span><b>${d.fiyat} ${d.paraBirimi}</b></div>`;
+        const list = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Isıtma"];
+        list.forEach(k => { if(d[k]) ozellikler += `<div class="ozellik"><span>${k}</span><b>${d[k]}</b></div>`; });
 
-        document.getElementById("ilanDetay").innerHTML = `
-            <div class="header-top">${d.baslik || ""}<br>${d.il || ""} / ${d.ilce || ""}</div>
-            <div class="slider-container">
-                <div class="detay-slider" id="slider">
-                    ${d.resimler.map(r => `<img src="${r}" class="detay-resim">`).join('')}
-                </div>
-                <div class="resim-sayac" id="sayac">1 / ${d.resimler.length}</div>
-                <button class="slider-btn" style="left:0" onclick="move(-1)">❮</button>
-                <button class="slider-btn" style="right:0" onclick="move(1)">❯</button>
+        document.getElementById('app').innerHTML = `
+            <div class="header-top">${d.baslik}<br>${d.il}/${d.ilce}</div>
+            <div class="slider-wrapper">
+                <div class="slider-inner" id="slider">${d.resimler.map(r => `<img src="${r}" class="slide">`).join('')}</div>
+                <button class="nav-btn" style="left:0" onclick="move(-1)">❮</button>
+                <button class="nav-btn" style="right:0" onclick="move(1)">❯</button>
             </div>
-            <div class="firma-imza">NETmax Gayrimenkul</div>
             <div class="tabs">
-                <button class="tab-btn active" onclick="openTab(event, 'bilgi')">İlan Bilgileri</button>
-                <button class="tab-btn" onclick="openTab(event, 'aciklama')">Açıklama</button>
-                <button class="tab-btn" onclick="openTab(event, 'konum')">Konum</button>
+                <button class="tab-btn active" onclick="go(event, 'bilgi')">Bilgi</button>
+                <button class="tab-btn" onclick="go(event, 'aciklama')">Açıklama</button>
+                <button class="tab-btn" onclick="go(event, 'konum')">Konum</button>
             </div>
             <div id="bilgi" class="tab-content active">${ozellikler}</div>
-            <div id="aciklama" class="tab-content">${d.aciklama ? d.aciklama.split(',').map(i => `<div class="aciklama-item">${i.trim()}</div>`).join('') : "Açıklama yok."}</div>
-            <div id="konum" class="tab-content">${haritaIframe || "Konum bilgisi girilmemiştir."}</div>
+            <div id="aciklama" class="tab-content">${d.aciklama}</div>
+            <div id="konum" class="tab-content">${getMap(d.koor)}</div>
         `;
-    }
+        setTimeout(() => document.getElementById('acilisEkrani').style.display = 'none', 4000);
+    });
 
-    function row(l, v) { return `<div class="ozellik"><span>${l}</span><b>${v}</b></div>`; }
     function move(d) {
         const s = document.getElementById('slider');
-        curIdx = Math.max(0, Math.min(s.children.length - 1, curIdx + d));
-        s.style.transform = `translateX(-${curIdx * 100}%)`;
-        document.getElementById('sayac').innerText = `${curIdx + 1} / ${s.children.length}`;
+        idx = Math.max(0, Math.min(s.children.length - 1, idx + d));
+        s.style.transform = `translateX(-${idx * 100}%)`;
     }
-    function openTab(e, id) {
+    function go(e, id) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        e.currentTarget.classList.add('active');
+        e.target.classList.add('active');
     }
 </script>
 </body>
