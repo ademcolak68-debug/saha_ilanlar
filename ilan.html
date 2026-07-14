@@ -66,6 +66,31 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
     margin-bottom:18px;
 }
 
+	.resim-sayac{
+
+    position:absolute;
+
+    bottom:10px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    background:rgba(0,0,0,0.55);
+
+    color:white;
+
+    padding:4px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-family:Tahoma, sans-serif;
+
+    z-index:5;
+
+}
 
 .detay-resim{
     width:100%;
@@ -477,6 +502,9 @@ if(d.resimler && d.resimler.length > 0){
         src="${d.resimler[0]}"
         class="detay-resim">
 
+		<div id="resimSayac" class="resim-sayac">
+    		1 / ${d.resimler.length}
+		</div>
 
         ${d.resimler.length > 1 ? `
 
@@ -684,6 +712,7 @@ document.getElementById("detayResim").src =
 detayResimler[detayIndex];
 
 sliderOkGuncelle();
+sayacGuncelle();
 
 }
 
@@ -732,12 +761,25 @@ document.getElementById("detayResim").src =
 detayResimler[detayIndex];
 
 sliderOkGuncelle();
+sayacGuncelle();
 
 }
 
 
 
 yukle();
+
+function sayacGuncelle(){
+
+    const sayac = document.getElementById("resimSayac");
+
+    if(!sayac) return;
+
+
+    sayac.innerHTML =
+    (detayIndex + 1) + " / " + detayResimler.length;
+
+}
 
 
 </script>
