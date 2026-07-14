@@ -70,24 +70,7 @@ if(d.koor){
 
     const lng = koordinat[0];
     const lat = koordinat[1];
-
-
-    harita = `
-
-    <div class="ilan-konum">
-
-        <h3>Konum</h3>
-
-        <iframe
-        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
-        loading="lazy">
-        </iframe>
-
-    </div>
-
-    `;
-
-}
+    harita = `<div class="ilan-konum"><h3>Konum</h3><iframesrc="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"loading="lazy"></iframe></div>`;}
         let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama girilmemiştir.";
         
         let ozellikler = "";
