@@ -31,5 +31,43 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "Hayır",
         "Kullanım Durumu": "Kiracılı",
         "Site İçerisinde?": "Evet"
+    },
+    {
+        "id": 1784039479315,
+        "baslik": "Hacılar Harmanı Tapan Rezidans ta",
+        "durum": "satilik",
+        "tip": "Konut",
+        "konutTipi": "Apartman Dairesi",
+        "konutSekli": "Daire",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Hacılarharmanı",
+        "fiyat": "3.500.000",
+        "paraBirimi": "TL",
+        "aciklama": "Çift Asansörlü,Açık Otopark,Batı-Ön Cephe",
+        "koor": "34.004923,38.362493",
+        "klasorIsmi": "tapan-rezidans",
+        "resimler": [
+            "images/tapan-rezidans/1.jpeg",
+            "images/tapan-rezidans/2.jpeg",
+            "images/tapan-rezidans/3.jpeg",
+            "images/tapan-rezidans/4.jpeg",
+            "images/tapan-rezidans/5.jpeg",
+            "images/tapan-rezidans/6.jpeg",
+            "images/tapan-rezidans/7.jpeg"
+        ],
+        "videoUrl": "",
+        "İlan Tarihi": "2026-07-14",
+        "M²": "60",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "2+0",
+        "Bina Yaşı": "2",
+        "Bulunduğu Kat": "2",
+        "Kat Sayısı": "8",
+        "Isıtma": "Merkezi",
+        "Eşyalı mı?": "Evet",
+        "Kullanım Durumu": "Boş",
+        "Site İçerisinde?": "Hayır"
     }
 ];
