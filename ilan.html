@@ -76,15 +76,19 @@
         detayResimler = d.resimler || [];
         
         let harita = "";
-        if(d.koor){
+        if (d.koor) {
             const koordinat = d.koor.split(",");
-            const lng = koordinat[0];
-            const lat = koordinat[1];
+            const lat = koordinat[0]; // Genellikle ilk değer enlem (lat)
+            const lng = koordinat[1]; // İkinci değer boylam (lng)
+        
             harita = `
-                <div class="ilan-konum">
-                    <h3>Konum</h3>
-                    <iframe src="https://maps.google.com/maps?q=$${lat},${lng}&z=16&output=embed" loading="lazy"></iframe>
-                </div>
+            <div class="ilan-konum">
+                <h3>Konum</h3>
+                <iframe 
+                    src="https://www.google.com/maps?q=${lat},${lng}&z=16&output=embed" 
+                    loading="lazy">
+                </iframe>
+            </div>
             `;
         }
 
