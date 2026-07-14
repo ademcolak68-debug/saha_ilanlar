@@ -42,7 +42,7 @@
 <body>
 
 <div id="acilisEkrani">
-    <img src="logo.png" style="width:150px">
+    <img src="logo.png" style="width:200px">
     <div class="yukleme-kapsul"><div class="yukleme-cubuk"></div></div>
 </div>
 
@@ -62,7 +62,30 @@
     document.head.appendChild(script);
 
     function render(d) {
-        let harita = d.koor ? `<iframe src="https://maps.google.com/maps?q=$${d.koor.split(',')[1]},${d.koor.split(',')[0]}&z=16&output=embed"></iframe>` : "Konum yok.";
+        if(d.koor){
+
+    const koordinat = d.koor.split(",");
+
+    const lng = koordinat[0];
+    const lat = koordinat[1];
+
+
+    harita = `
+
+    <div class="ilan-konum">
+
+        <h3>Konum</h3>
+
+        <iframe
+        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
+        loading="lazy">
+        </iframe>
+
+    </div>
+
+    `;
+
+}
         let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama girilmemiştir.";
         
         let ozellikler = "";
