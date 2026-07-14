@@ -554,41 +554,43 @@ if(d.resimler && d.resimler.length > 0){
 
 document.getElementById("ilanDetay").innerHTML = `
 
-
 <div class="ilan-detay-popup">
 
 
-${resimSlider}
+<div class="detay-baslik">
 
-
-
-<div class="detay-ust">
-
-    <div class="detay-baslik">
-
-        <div class="ilan-ad">
-            ${d.baslik || ""}
-        </div>
-
-        <div>
-            ${d.durum === "satilik" ? "Satılık" : "Kiralık"}
-            ${d.konutSekli || d.tip || ""}
-        </div>
-
+    <div class="ilan-ad">
+        ${d.baslik || ""}
     </div>
 
-
-    <div class="detay-fiyat">
-        ${d.fiyat || ""} ${d.paraBirimi || ""}
+    <div>
+        ${d.durum === "satilik" ? "Satılık" : "Kiralık"}
+        ${d.konutSekli || d.tip || ""}
     </div>
 
 </div>
 
 
 
+${resimSlider}
+
+
+
+<div class="detay-fiyat">
+    ${d.fiyat || ""} ${d.paraBirimi || ""}
+</div>
+
+
+
+<div class="ofis-adi">
+
+    NETmax Gayrimenkul
+
+</div>
+
+
 
 <div class="detay-ozellikler">
-
 
 
 ${d["M²"] ? `
@@ -609,14 +611,12 @@ ${d["Ada"] || d["Parsel"] ? `
 
 
 
-
 ${d["Oda Sayısı"] ? `
 <div class="ozellik">
 <span>Oda</span>
 <b>${d["Oda Sayısı"]}</b>
 </div>
 ` : ""}
-
 
 
 
@@ -629,14 +629,12 @@ ${d["Bina Yaşı"] ? `
 
 
 
-
 ${d["Bulunduğu Kat"] ? `
 <div class="ozellik">
 <span>Kat</span>
 <b>${d["Bulunduğu Kat"]}</b>
 </div>
 ` : ""}
-
 
 
 
@@ -649,14 +647,12 @@ ${d["Kat Sayısı"] ? `
 
 
 
-
 ${d["Isıtma"] ? `
 <div class="ozellik">
 <span>Isıtma</span>
 <b>${d["Isıtma"]}</b>
 </div>
 ` : ""}
-
 
 
 
@@ -669,34 +665,42 @@ ${d["Eşyalı mı?"] ? `
 
 
 
-
 ${d["Kullanım Durumu"] ? `
 <div class="ozellik">
-<span>Kullanım Durumu</span>
+<span>Kullanım</span>
 <b>${d["Kullanım Durumu"]}</b>
 </div>
 ` : ""}
 
 
 
-
-${d.aciklama ? `
-<div class="ozellik aciklama-alani">
-<span>Açıklama</span>
-<b>${d.aciklama
-.split(",")
-.map(x => "✓ " + x.trim())
-.join("\n")}</b>
+${d["Site İçerisinde?"] ? `
+<div class="ozellik">
+<span>Site</span>
+<b>${d["Site İçerisinde?"]}</b>
 </div>
 ` : ""}
 
+
+
+${d.aciklama ? `
+<div class="ozellik">
+<span>Açıklama</span>
+<b>${d.aciklama}</b>
+</div>
+` : ""}
+
+
+
+</div>
+
+
+
 ${harita}
 
-</div>
 
 
 </div>
-
 
 `;
 
