@@ -127,23 +127,40 @@
     let detayIndex=0;
 
 function sliderHazirla(){
-    const s=document.getElementById("slider");
+    const slider=document.getElementById("slider");
     const sayac=document.getElementById("sayac");
     const resimler=document.querySelectorAll(".detay-resim");
 
-    if(!s)return;
+    if(!slider || !sayac) return;
 
-    s.addEventListener("scroll",function(){
+    const observer=new IntersectionObserver(function(entries){
 
-        detayIndex=Math.round(s.scrollLeft / s.offsetWidth);
+        entries.forEach(function(entry){
 
-        sayac.innerHTML=(detayIndex+1)+" / "+resimler.length;
+            if(entry.isIntersecting){
 
+                detayIndex=Array.from(resimler).indexOf(entry.target);
+
+                sayac.innerHTML=(detayIndex+1)+" / "+resimler.length;
+
+            }
+
+        });
+
+    },{
+        root:slider,
+        threshold:0.7
+    });
+
+
+    resimler.forEach(function(resim){
+        observer.observe(resim);
     });
 }
 
+
 function move(dir){
-    const s=document.getElementById("slider");
+    const slider=document.getElementById("slider");
     const resimler=document.querySelectorAll(".detay-resim");
 
     detayIndex+=dir;
@@ -151,12 +168,11 @@ function move(dir){
     if(detayIndex<0) detayIndex=resimler.length-1;
     if(detayIndex>=resimler.length) detayIndex=0;
 
-    s.scrollTo({
-        left:detayIndex*s.offsetWidth,
+    slider.scrollTo({
+        left:detayIndex*slider.clientWidth,
         behavior:"smooth"
     });
-}
-    
+}    
 </script>
 </body>
 </html>
