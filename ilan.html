@@ -64,13 +64,22 @@
     function render(d) {
         let harita = "";
 
-if(d.koor){
-
+if (d.koor) {
     const koordinat = d.koor.split(",");
+    const lng = koordinat[0].trim(); // Boşlukları temizlemek için trim() eklendi
+    const lat = koordinat[1].trim();
 
-    const lng = koordinat[0];
-    const lat = koordinat[1];
-    harita = `<div class="ilan-konum"><h3>Konum</h3><iframesrc="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"loading="lazy"></iframe></div>`;
+    harita = `
+    <div class="ilan-konum">
+        <h3>Konum</h3>
+        <iframe 
+            src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed" 
+            loading="lazy" 
+            style="width:100%; height:240px; border:0;">
+        </iframe>
+    </div>
+    `;
+}
 }
         let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama girilmemiştir.";
         
