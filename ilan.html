@@ -91,7 +91,7 @@
         let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama girilmemiştir.";
         
         let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
-        const gosterilecekler = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma", "Eşyalı mı?", "Kullanım Durumu", "Site İçerisinde?"];
+        const gosterilecekler = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma", "Eşyalı mı", "Kullanım Durumu", "Site İçerisinde"];
         gosterilecekler.forEach(key => { if(d[key]) ozellikler += row(key, d[key]); });
 
         
