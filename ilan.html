@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NETmax Gayrimenkul</title>
+    
+	<title>NETmax Gayrimenkul</title>
 
 	<meta property="og:title" content="NETmax Gayrimenkul">
 	<meta property="og:description" content="Aksaray Satılık ve Kiralık Gayrimenkuller">
@@ -23,13 +23,50 @@ body{
     font-family:Tahoma,sans-serif;
 }
 
-:root { --primary-color: #d4af37; --dark-color: #1a1a1a; --light-bg: #f8f9fa; --white: #ffffff; --success-green: #27ae60; --brand-dark-green: #1b4d3e; }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg); color: #333; line-height: 1.5; }
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #2b2f36; }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffb300, #ff6f00); border-radius: 50px; }
-::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ffc107, #ff8f00); }
+
+:root{
+    --primary-color:#d4af37;
+    --dark-color:#1a1a1a;
+    --light-bg:#f8f9fa;
+    --white:#ffffff;
+    --success-green:#27ae60;
+    --brand-dark-green:#1b4d3e;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Tahoma, sans-serif;
+}
+
+
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+    background:#dfe5ec;
+    color:#333;
+    line-height:1.5;
+}
+
+
+::-webkit-scrollbar{
+    width:4px;
+}
+
+
+::-webkit-scrollbar-track{
+    background:#2b2f36;
+}
+
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg,#ffb300,#ff6f00);
+    border-radius:50px;
+}
+
 
 *{
     scrollbar-width:thin;
@@ -37,136 +74,179 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 }
 
 
+
 /* ANA İLAN KUTUSU */
 
 .ilan-detay-popup{
+
     width:360px;
     max-width:100%;
     margin:auto;
-    box-sizing:border-box;
+
     background:#2b2b2b;
-    color:#fff;
+    color:white;
+
     border-radius:12px;
+
     padding:10px;
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.25);
+
 }
+
 
 
 /* RESİM ALANI */
 
 .detay-slider{
+
     position:relative;
+
     width:100%;
     height:330px;
+
     background:#f2f2f2;
+
     border-radius:8px;
+
     overflow:hidden;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
-    margin-bottom:18px;
-}
 
-	.resim-sayac{
-
-    position:absolute;
-
-    bottom:10px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    background:rgba(0,0,0,0.55);
-
-    color:white;
-
-    padding:4px 12px;
-
-    border-radius:20px;
-
-    font-size:13px;
-
-    font-family:Tahoma, sans-serif;
-
-    z-index:5;
+    margin-bottom:15px;
 
 }
+
+
 
 .detay-resim{
+
     width:100%;
     height:100%;
+
     object-fit:contain;
+
     display:block;
+
 }
 
 
 
-/* SLIDER BUTONLARI */
+/* SLIDER OKLARI */
 
 .slider-sol,
 .slider-sag{
+
     position:absolute;
+
     top:50%;
+
     transform:translateY(-50%);
+
     width:36px;
     height:36px;
-    padding:0;
-    margin:0;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     border:none;
-    border-radius:30%;
+
+    border-radius:50%;
 
     background:rgba(0,0,0,.55);
-    color:#fff;
 
-    font-family:Arial, sans-serif;
+    color:white;
+
     font-size:28px;
+
     line-height:36px;
 
     cursor:pointer;
+
 }
+
 
 
 .slider-sol{
+
     left:5px;
+
 }
+
 
 
 .slider-sag{
+
     right:5px;
+
 }
 
 
 
-/* BİLGİ BÖLÜMÜ */
+/* ÜST BİLGİ */
 
 .detay-ust{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     gap:8px;
+
     padding:8px 5px 12px;
+
     border-top:1px solid rgba(255,255,255,.15);
+
 }
+
 
 
 .detay-baslik{
-    font-size:18px;
+
+    font-size:16px;
+
     font-weight:700;
+
     color:#c8a96a;
+
     line-height:1.3;
-    letter-spacing:.2px;
+
 }
 
 
+
+.ilan-ad{
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#d4af37;
+
+    margin-bottom:5px;
+
+}
+
+
+
 .detay-fiyat{
-    font-size:12px;
+
+    font-size:13px;
+
     color:#56d364;
+
     white-space:nowrap;
+
+    font-weight:bold;
+
 }
 
 
@@ -174,29 +254,51 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 /* ÖZELLİKLER */
 
 .detay-ozellikler{
+
     padding:0 5px 5px;
+
 }
+
 
 
 .ozellik{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
+    gap:10px;
+
     padding:7px 0;
+
     font-size:12px;
+
     border-bottom:1px solid rgba(255,255,255,.12);
+
 }
+
 
 
 .ozellik span{
+
     color:#cfcfcf;
+
 }
 
 
+
 .ozellik b{
+
     color:#56d364;
+
     font-weight:400;
+
     text-align:right;
+
+    max-width:65%;
+
 }
 
 
@@ -204,136 +306,161 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 /* RESİM YOK */
 
 .resim-yok{
+
     height:180px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     background:#eee;
+
     color:#777;
+
     border-radius:8px;
-    margin-bottom:18px;
-}
 
-
-
-/* MOBİL */
-
-@media(max-width:768px){
-
-body{
-    padding:10px;
-}
-
-
-.ilan-detay-popup{
-    width:100%;
-    max-width:300px;
-    padding:8px;
-	box-sizing:border-box;
-}
-
-
-.detay-slider{
-    height:260px;
     margin-bottom:15px;
-}
-
-
-.detay-baslik{
-    font-size:12px;
-}
-
-
-.detay-fiyat{
-    font-size:11px;
-}
-
-
-.ozellik{
-    font-size:11px;
-    padding:6px 0;
-}
-
-
-.slider-sol,
-.slider-sag{
-    width:28px;
-    height:28px;
-    font-size:18px;
-}
 
 }
 
+
+
+/* KONUM */
 
 .ilan-konum{
+
     margin-top:20px;
+
 }
+
 
 
 .ilan-konum h3{
+
     font-size:14px;
+
     color:#d4af37;
+
     margin-bottom:10px;
+
 }
+
 
 
 .ilan-konum iframe{
+
     width:100%;
+
     height:240px;
+
     border:0;
+
     border-radius:10px;
+
 }
+
+
+
+/* AÇILIŞ EKRANI */
 
 #acilisEkrani{
+
     position:fixed;
+
     inset:0;
-    background:#ffffff;
+
+    background:white;
+
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
+
     z-index:99999;
+
     transition:opacity .5s;
+
 }
+
+
 
 #acilisEkrani img{
-    width:230px;
-    max-width:80%;
+
+    width:150px;
+
+    max-width:70%;
+
 }
+
+
 
 #acilisEkrani h2{
+
     margin-top:20px;
+
     font-size:24px;
+
     color:#1b4d3e;
+
 }
+
+
 
 #acilisEkrani p{
+
     margin-top:12px;
+
     color:#666;
+
     font-size:15px;
+
 }
+
+
 
 .yukleme-kapsul{
+
     width:220px;
+
     height:6px;
+
     background:#e5e5e5;
+
     border-radius:20px;
+
     overflow:hidden;
+
     margin-top:15px;
+
 }
 
+
+
 .yukleme-cubuk{
+
     width:40%;
+
     height:100%;
+
     background:linear-gradient(
         90deg,
         #d4af37,
         #27ae60,
         #d4af37
     );
+
     border-radius:20px;
+
     animation:yukleAnimasyon 1.3s infinite;
+
 }
+
+
 
 @keyframes yukleAnimasyon{
 
@@ -347,19 +474,103 @@ body{
 
 }
 
-.aciklama-alani b{
-    white-space: pre-line;
-    line-height:1.8;
-    display:block;
+
+
+/* MOBİL */
+
+@media(max-width:768px){
+
+
+body{
+
+    padding:10px;
+
 }
-	
+
+
+
+.ilan-detay-popup{
+
+    width:100%;
+
+    max-width:330px;
+
+    padding:8px;
+
+}
+
+
+
+.detay-slider{
+
+    height:260px;
+
+}
+
+
+
+.detay-baslik{
+
+    font-size:12px;
+
+}
+
+
+
+.ilan-ad{
+
+    font-size:13px;
+
+}
+
+
+
+.detay-fiyat{
+
+    font-size:11px;
+
+}
+
+
+
+.ozellik{
+
+    font-size:11px;
+
+    padding:6px 0;
+
+}
+
+
+
+.slider-sol,
+.slider-sag{
+
+    width:28px;
+
+    height:28px;
+
+    font-size:18px;
+
+}
+
+
+
+.ilan-konum iframe{
+
+    height:200px;
+
+}
+
+
+}
+
 </style>
 
 </head>
 
 
 <body>
-
 
 <div id="acilisEkrani">
     <img src="logo.png" alt="NETmax Gayrimenkul">
@@ -374,421 +585,213 @@ body{
 <div id="ilanDetay"></div>
 
 
+
+
 <script>
 
+let ilanlar=[];
+let detayResimler=[];
+let detayIndex=0;
 
-// Değişken tanımları
-let ilanlar = [];
-let detayResimler = [];
-let detayIndex = 0;
+const script=document.createElement('script');
+script.src="js/ilanlar.js?t="+new Date().getTime();
 
-
-// ilanlar.js dosyasını cache kullanmadan yükle
-const script = document.createElement('script');
-
-script.src = "js/ilanlar.js?t=" + new Date().getTime();
-
-
-script.onload = function(){
-
+script.onload=function(){
     yukle();
-
 };
-
 
 document.head.appendChild(script);
 
-
-
 function yukle(){
+    ilanlar=ilanlarVerisi;
 
-    ilanlar = ilanlarVerisi;
-
-
-    const id = Number(
-        new URLSearchParams(location.search).get("id")
-    );
-
-
-    const ilan = ilanlar.find(x => x.id === id);
-
-
+    const id=Number(new URLSearchParams(location.search).get("id"));
+    const ilan=ilanlar.find(x=>x.id===id);
 
     if(!ilan){
-
-    const yuklemeYazi = document.querySelector("#acilisEkrani p");
-
-    if(yuklemeYazi){
-
-        yuklemeYazi.innerHTML = "İlan bulunamadı";
-
+        const yuklemeYazi=document.querySelector("#acilisEkrani p");
+        if(yuklemeYazi){
+            yuklemeYazi.innerHTML="İlan bulunamadı";
+        }
+        return;
     }
-
-
-    return;
-
-}
-
-
 
     ilanGoster(ilan);
 
-
-    setTimeout(() => {
-
-        const acilis = document.getElementById("acilisEkrani");
+    setTimeout(()=>{
+        const acilis=document.getElementById("acilisEkrani");
 
         if(acilis){
+            acilis.style.opacity="0";
 
-            acilis.style.opacity = "0";
-
-            setTimeout(() => {
-
-                acilis.style.display = "none";
-
+            setTimeout(()=>{
+                acilis.style.display="none";
             },500);
-
         }
-
     },3000);
-
 }
 
+function ilanGoster(d){
 
-function ilanGoster(ilan){
+document.title=d.baslik?`${d.baslik} | NETmax Gayrimenkul`:"NETmax Gayrimenkul";
 
-
-const d = ilan;
-
-// KOORDİNAT AL
-let harita = "";
+let harita="";
 
 if(d.koor){
+    const koordinat=d.koor.split(",");
+    const lng=koordinat[0];
+    const lat=koordinat[1];
 
-    const koordinat = d.koor.split(",");
-
-    const lng = koordinat[0];
-    const lat = koordinat[1];
-
-
-    harita = `
-
+    harita=`
     <div class="ilan-konum">
-
         <h3>Konum</h3>
-
-        <iframe
-        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
-        loading="lazy">
-        </iframe>
-
-    </div>
-
-    `;
-
+        <iframe src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed" loading="lazy"></iframe>
+    </div>`;
 }
 
+let resimSlider="";
 
-let resimSlider = "";
+if(d.resimler&&d.resimler.length>0){
 
+    detayResimler=d.resimler;
+    detayIndex=0;
 
-if(d.resimler && d.resimler.length > 0){
-
-
-    detayResimler = d.resimler;
-    detayIndex = 0;
-
-
-    resimSlider = `
-
+    resimSlider=`
     <div class="detay-slider">
+        <img id="detayResim" src="${d.resimler[0]}" class="detay-resim">
 
-        <img id="detayResim"
-        src="${d.resimler[0]}"
-        class="detay-resim">
-
-		<div id="resimSayac" class="resim-sayac">
-    		1 / ${d.resimler.length}
-		</div>
-
-        ${d.resimler.length > 1 ? `
-
-		<button 
-		id="solOk"
-		class="slider-sol" 
-		style="display:none;"
-		onclick="detayOnceki()">
-		‹
-		</button>
-
-		<button 
-		id="sagOk"
-		class="slider-sag" 
-		onclick="detaySonraki()">
-		›
-		</button>
-
-		` : ""}
-
-
-    </div>
-
-    `;
-
+        ${d.resimler.length>1?`
+        <button id="solOk" class="slider-sol" style="display:none;" onclick="detayOnceki()">‹</button>
+        <button id="sagOk" class="slider-sag" onclick="detaySonraki()">›</button>
+        `:""}
+    </div>`;
 
 }else{
 
-
-    resimSlider = `
-
+    resimSlider=`
     <div class="resim-yok">
         Resim yok
-    </div>
-
-    `;
-
-
+    </div>`;
 }
 
+let ozellikler="";
 
+const gizli=[
+"id",
+"resimler",
+"videoUrl",
+"koor",
+"baslik",
+"fiyat",
+"paraBirimi"
+];
 
-document.getElementById("ilanDetay").innerHTML = `
+for(const key in d){
 
+    if(gizli.includes(key)) continue;
+
+    if(d[key]!==""&&d[key]!==null&&d[key]!==undefined){
+
+        ozellikler+=`
+        <div class="ozellik">
+            <span>${key}</span>
+            <b>${d[key]}</b>
+        </div>`;
+    }
+}
+
+document.getElementById("ilanDetay").innerHTML=`
 
 <div class="ilan-detay-popup">
 
-
 ${resimSlider}
-
-
 
 <div class="detay-ust">
 
-    <div class="detay-baslik">
+<div class="detay-baslik">
 
-        <div class="ilan-ad">
-            ${d.baslik || ""}
-        </div>
+<div class="ilan-ad">
+${d.baslik||""}
+</div>
 
-        <div>
-            ${d.durum === "satilik" ? "Satılık" : "Kiralık"}
-            ${d.konutSekli || d.tip || ""}
-        </div>
-
-    </div>
-
-
-    <div class="detay-fiyat">
-        ${d.fiyat || ""} ${d.paraBirimi || ""}
-    </div>
+<div>
+${d.durum==="satilik"?"Satılık":"Kiralık"}
+${d.konutSekli||d.tip||""}
+</div>
 
 </div>
 
+<div class="detay-fiyat">
+${d.fiyat||""} ${d.paraBirimi||""}
+</div>
 
-
+</div>
 
 <div class="detay-ozellikler">
 
-
-
-${d["M²"] ? `
-<div class="ozellik">
-<span>M²</span>
-<b>${d["M²"]}</b>
-</div>
-` : ""}
-
-
-
-${d["Ada"] || d["Parsel"] ? `
-<div class="ozellik">
-<span>Ada / Parsel</span>
-<b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Oda Sayısı"] ? `
-<div class="ozellik">
-<span>Oda</span>
-<b>${d["Oda Sayısı"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Bina Yaşı"] ? `
-<div class="ozellik">
-<span>Bina Yaşı</span>
-<b>${d["Bina Yaşı"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Bulunduğu Kat"] ? `
-<div class="ozellik">
-<span>Kat</span>
-<b>${d["Bulunduğu Kat"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Kat Sayısı"] ? `
-<div class="ozellik">
-<span>Kat Sayısı</span>
-<b>${d["Kat Sayısı"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Isıtma"] ? `
-<div class="ozellik">
-<span>Isıtma</span>
-<b>${d["Isıtma"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Eşyalı mı?"] ? `
-<div class="ozellik">
-<span>Eşyalı</span>
-<b>${d["Eşyalı mı?"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d["Kullanım Durumu"] ? `
-<div class="ozellik">
-<span>Kullanım Durumu</span>
-<b>${d["Kullanım Durumu"]}</b>
-</div>
-` : ""}
-
-
-
-
-${d.aciklama ? `
-<div class="ozellik aciklama-alani">
-<span>Açıklama</span>
-<b>${d.aciklama
-.split(",")
-.map(x => "✓ " + x.trim())
-.join("\n")}</b>
-</div>
-` : ""}
+${ozellikler}
 
 ${harita}
 
 </div>
 
-
-</div>
-
-
-`;
+</div>`;
 
 }
-
-
-
 
 function detaySonraki(){
 
-
 detayIndex++;
 
+if(detayIndex>=detayResimler.length){
+    detayIndex=0;
+}
 
-if(detayIndex >= detayResimler.length)
-detayIndex = 0;
-setTimeout(sliderOkGuncelle,50);
-
-
-document.getElementById("detayResim").src =
-detayResimler[detayIndex];
+document.getElementById("detayResim").src=detayResimler[detayIndex];
 
 sliderOkGuncelle();
-sayacGuncelle();
 
 }
-
-
-function sliderOkGuncelle(){
-
-    const sol = document.getElementById("solOk");
-    const sag = document.getElementById("sagOk");
-
-    if(!sol || !sag) return;
-
-
-    if(detayIndex === 0){
-
-        sol.style.display = "none";
-        sag.style.display = "flex";
-
-    } 
-    else if(detayIndex === detayResimler.length - 1){
-
-        sol.style.display = "flex";
-        sag.style.display = "none";
-
-    }
-    else{
-
-        sol.style.display = "flex";
-        sag.style.display = "flex";
-
-    }
-
-}
-
 
 function detayOnceki(){
 
-
 detayIndex--;
 
+if(detayIndex<0){
+    detayIndex=detayResimler.length-1;
+}
 
-if(detayIndex < 0)
-detayIndex = detayResimler.length - 1;
-
-
-document.getElementById("detayResim").src =
-detayResimler[detayIndex];
+document.getElementById("detayResim").src=detayResimler[detayIndex];
 
 sliderOkGuncelle();
-sayacGuncelle();
 
 }
 
+function sliderOkGuncelle(){
 
+const sol=document.getElementById("solOk");
+const sag=document.getElementById("sagOk");
 
+if(!sol||!sag)return;
 
+if(detayIndex===0){
 
-function sayacGuncelle(){
+    sol.style.display="none";
+    sag.style.display="flex";
 
-    const sayac = document.getElementById("resimSayac");
+}else if(detayIndex===detayResimler.length-1){
 
-    if(!sayac) return;
+    sol.style.display="flex";
+    sag.style.display="none";
 
+}else{
 
-    sayac.innerHTML =
-    (detayIndex + 1) + " / " + detayResimler.length;
+    sol.style.display="flex";
+    sag.style.display="flex";
 
 }
 
+}
 
 </script>
 
