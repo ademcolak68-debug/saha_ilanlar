@@ -122,7 +122,36 @@
         document.getElementById(id).classList.add('active');
         evt.currentTarget.classList.add('active');
     }
-    let detayIndex=0;function move(dir){const s=document.getElementById('slider'),sayac=document.getElementById('sayac'),resimler=document.querySelectorAll('.detay-resim');detayIndex+=dir;if(detayIndex<0)detayIndex=resimler.length-1;if(detayIndex>=resimler.length)detayIndex=0;s.scrollTo({left:detayIndex*s.offsetWidth,behavior:'smooth'});if(sayac)sayac.innerHTML=`${detayIndex+1} / ${resimler.length}`;}
+
+    let detayIndex=0;
+
+function move(dir){
+    const s=document.getElementById('slider');
+    const sayac=document.getElementById('sayac');
+    const resimler=document.querySelectorAll('.detay-resim');
+    if(!s||!resimler.length)return;
+
+    detayIndex+=dir;
+    if(detayIndex<0)detayIndex=resimler.length-1;
+    if(detayIndex>=resimler.length)detayIndex=0;
+
+    s.scrollTo({left:detayIndex*s.offsetWidth,behavior:'smooth'});
+    if(sayac)sayac.innerHTML=`${detayIndex+1} / ${resimler.length}`;
+}
+
+setTimeout(()=>{
+    const s=document.getElementById('slider');
+    const sayac=document.getElementById('sayac');
+    const resimler=document.querySelectorAll('.detay-resim');
+
+    if(s){
+        s.addEventListener('scroll',()=>{
+            detayIndex=Math.round(s.scrollLeft/s.offsetWidth);
+            if(sayac)sayac.innerHTML=`${detayIndex+1} / ${resimler.length}`;
+        });
+    }
+},100);
+    
 </script>
 </body>
 </html>
