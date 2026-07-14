@@ -10,7 +10,9 @@
 
         /* Açılış Ekranı */
         #acilisEkrani { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
-        .yukleme-cubuk { width: 0%; height: 6px; background: #d4af37; animation: yukleAnimasyon 4s linear forwards; }
+        #acilisEkrani img { width: 200px; margin-bottom: 20px; }
+        .yukleme-kapsul { width: 250px; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+        .yukleme-cubuk { width: 0%; height: 100%; background: #d4af37; animation: yukleAnimasyon 4s linear forwards; }
         @keyframes yukleAnimasyon { 100% { width: 100%; } }
 
         /* Header */
@@ -19,14 +21,15 @@
 
         /* Slider */
         .slider-container { position: relative; width: 100%; height: 350px; overflow: hidden; }
-        .detay-slider { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease-in-out; }
+        .detay-slider { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
         .detay-resim { min-width: 100%; height: 100%; object-fit: cover; }
         .resim-sayac { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
         
+        /* 768px üzeri için oklar */
         .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: #fff; padding: 15px 10px; cursor: pointer; z-index: 10; display: none; }
         @media (min-width: 769px) { .slider-btn { display: block; } }
 
-        /* Sekmeler ve İçerik */
+        /* Sekmeler */
         .tabs { display: flex; background: #eee; border-radius: 8px; margin: 15px; overflow: hidden; }
         .tab-btn { flex: 1; padding: 12px; border: none; background: #e0e0e0; cursor: pointer; font-weight: bold; color: #555; }
         .tab-btn.active { background: #d4af37; color: #fff; }
@@ -40,8 +43,8 @@
 <body>
 
 <div id="acilisEkrani">
-    <h2>NETmax Gayrimenkul</h2>
-    <div class="yukleme-cubuk"></div>
+    <img src="logo.png" alt="Logo">
+    <div class="yukleme-kapsul"><div class="yukleme-cubuk"></div></div>
 </div>
 
 <div id="ilanDetay" class="container"></div>
@@ -61,13 +64,13 @@
     document.head.appendChild(script);
 
     function render(d) {
-        // Konum Mantığı
-        let harita = "";
-        if(d.koor){
-            const koordinat = d.koor.split(",");
-            const lng = koordinat[0];
-            const lat = koordinat[1];
-            harita = `<div class="ilan-konum"><h3>Konum</h3><iframe src="https://maps.google.com/maps?q=$${lat},${lng}&z=16&output=embed" loading="lazy"></iframe></div>`;
+        // Harita Linkini garantili oluşturma
+        let haritaIframe = "";
+        if(d.koor) {
+            const koorArr = d.koor.split(",");
+            const lat = koorArr[1]; 
+            const lng = koorArr[0];
+            haritaIframe = `<div class="ilan-konum"><h3>Konum</h3><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" allowfullscreen="" loading="lazy"></iframe></div>`;
         }
 
         let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
@@ -91,8 +94,8 @@
                 <button class="tab-btn" onclick="openTab(event, 'konum')">Konum</button>
             </div>
             <div id="bilgi" class="tab-content active">${ozellikler}</div>
-            <div id="aciklama" class="tab-content">${d.aciklama ? d.aciklama.split(',').map(i => `<div class="aciklama-item">${i.trim()}</div>`).join('') : "Açıklama girilmemiştir."}</div>
-            <div id="konum" class="tab-content">${harita || "Konum bilgisi mevcut değil."}</div>
+            <div id="aciklama" class="tab-content">${d.aciklama ? d.aciklama.split(',').map(i => `<div class="aciklama-item">${i.trim()}</div>`).join('') : "Açıklama yok."}</div>
+            <div id="konum" class="tab-content">${haritaIframe || "Konum bilgisi girilmemiştir."}</div>
         `;
     }
 
