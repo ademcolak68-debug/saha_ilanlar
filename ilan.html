@@ -92,6 +92,7 @@
         const gosterilecekler = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma", "Eşyalı mı?", "Kullanım Durumu", "Site İçerisinde?"];
         gosterilecekler.forEach(key => { if(d[key]) ozellikler += row(key, d[key]); });
 
+        detayIndex = 0;
         document.getElementById("ilanDetay").innerHTML = `
             <div class="header-top">${d.baslik || "İLAN DETAYI"}<br>${d.il || ""} / ${d.ilce || ""}</div>
             <div class="detay-slider" id="slider">
@@ -121,10 +122,7 @@
         document.getElementById(id).classList.add('active');
         evt.currentTarget.classList.add('active');
     }
-    function move(dir) {
-        const s = document.getElementById('slider');
-        s.scrollBy({ left: dir * s.offsetWidth, behavior: 'smooth' });
-    }
+    let detayIndex=0;function move(dir){const s=document.getElementById('slider'),sayac=document.getElementById('sayac'),resimler=document.querySelectorAll('.detay-resim');detayIndex+=dir;if(detayIndex<0)detayIndex=resimler.length-1;if(detayIndex>=resimler.length)detayIndex=0;s.scrollTo({left:detayIndex*s.offsetWidth,behavior:'smooth'});if(sayac)sayac.innerHTML=`${detayIndex+1} / ${resimler.length}`;}
 </script>
 </body>
 </html>
