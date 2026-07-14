@@ -76,27 +76,19 @@
 
     const lng = koordinat[0];
     const lat = koordinat[1];
-
-
-    harita = `
-
-    <div class="ilan-konum">
-
-        <h3>Konum</h3>
-
-        <iframe
-        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
-        loading="lazy">
-        </iframe>
-
-    </div>
-
-    `;
-
-}
+            harita = `
+            <div class="ilan-konum">
+                <h3>Konum</h3>
+                <iframe
+                src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
+                loading="lazy">
+                </iframe>
+            </div>
+            `;
+        }
         let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama girilmemiştir.";
         
-        let ozellikler = "";
+        let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
         const gosterilecekler = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma", "Eşyalı mı?", "Kullanım Durumu", "Site İçerisinde?"];
         gosterilecekler.forEach(key => { if(d[key]) ozellikler += row(key, d[key]); });
 
@@ -108,7 +100,7 @@
                 <button class="slider-btn" style="left:0" onclick="move(-1)">❮</button>
                 <button class="slider-btn" style="right:0" onclick="move(1)">❯</button>
             </div>
-            <div class="firma-imza">NETmax Gayrimenkul - ${d.fiyat} ${d.paraBirimi}</div>
+            <div class="firma-imza">NETmax GAYRİMENKUL</div>
             
             <div class="tabs">
                 <button class="tab-btn active" onclick="openTab(event, 'bilgi')">İlan Bilgileri</button>
