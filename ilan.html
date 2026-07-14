@@ -72,110 +72,183 @@
     document.head.appendChild(script);
 
     function render(d) {
-        if(d.koor){
 
-    const koordinat = d.koor.split(",");
+    let harita = "";
 
-    const lng = koordinat[0];
-    const lat = koordinat[1];
-            harita = `
-            <div class="ilan-konum">
-                <h3>Konum</h3>
-                <iframe
-                src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
-                loading="lazy">
-                </iframe>
-            </div>
-            `;
-        }
-        let aciklamaList = d.aciklama ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('') : "Açıklama girilmemiştir.";
-        
-        let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
-        const gosterilecekler = ["İlan Tarihi", "M²", "Ada", "Parsel", "Oda Sayısı", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma", "Eşyalı mı", "Kullanım Durumu", "Site İçerisinde"];
-        gosterilecekler.forEach(key => { if(d[key]) ozellikler += row(key, d[key]); });
+    if(d.koor){
+        const koordinat = d.koor.split(",");
+        const lng = koordinat[0];
+        const lat = koordinat[1];
 
-        
-        document.getElementById("ilanDetay").innerHTML = `
-    <div class="header-top">${d.baslik || "İLAN DETAYI"}<br>${d.il || ""} / ${d.ilce || ""}</div>
+        harita = `
+        <div class="ilan-konum">
+            <h3>Konum</h3>
+            <iframe
+            src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
+            loading="lazy">
+            </iframe>
+        </div>`;
+    }
+
+    let aciklamaList = d.aciklama 
+        ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('')
+        : "Açıklama girilmemiştir.";
+
+    let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
+
+    const gosterilecekler = [
+        "İlan Tarihi",
+        "M²",
+        "Ada",
+        "Parsel",
+        "Oda Sayısı",
+        "Bina Yaşı",
+        "Bulunduğu Kat",
+        "Kat Sayısı",
+        "Isıtma",
+        "Eşyalı mı",
+        "Kullanım Durumu",
+        "Site İçerisinde"
+    ];
+
+    gosterilecekler.forEach(key=>{
+        if(d[key]) ozellikler += row(key,d[key]);
+    });
+
+
+    detayIndex = 0;
+
+    document.getElementById("ilanDetay").innerHTML = `
+
+    <div class="header-top">
+        ${d.baslik || "İLAN DETAYI"}<br>
+        ${d.il || ""} / ${d.ilce || ""}
+    </div>
 
     <div class="slider-kapsul">
+
         <div class="detay-slider" id="slider">
-            ${d.resimler.map(r => `<img src="${r}" class="detay-resim">`).join('')}
+            ${d.resimler.map(r=>`<img src="${r}" class="detay-resim">`).join('')}
+
             <button class="slider-btn" style="left:0" onclick="move(-1)">❮</button>
             <button class="slider-btn" style="right:0" onclick="move(1)">❯</button>
         </div>
 
-        <div class="resim-sayac" id="sayac">1 / ${d.resimler.length}</div>
+        <div class="resim-sayac" id="sayac">
+            1 / ${d.resimler.length}
+        </div>
+
     </div>
 
-    <div class="firma-imza">NETmax GAYRİMENKUL</div>
+
+    <div class="firma-imza">
+        NETmax GAYRİMENKUL
+    </div>
+
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="openTab(event, 'bilgi')">İlan Bilgileri</button>
-        <button class="tab-btn" onclick="openTab(event, 'aciklama')">Açıklama</button>
-        <button class="tab-btn" onclick="openTab(event, 'konum')">Konum</button>
+
+        <button class="tab-btn active" onclick="openTab(event,'bilgi')">
+        İlan Bilgileri
+        </button>
+
+        <button class="tab-btn" onclick="openTab(event,'aciklama')">
+        Açıklama
+        </button>
+
+        <button class="tab-btn" onclick="openTab(event,'konum')">
+        Konum
+        </button>
+
     </div>
 
-    <div id="bilgi" class="tab-content active">${ozellikler}</div>
-    <div id="aciklama" class="tab-content">${aciklamaList}</div>
-    <div id="konum" class="tab-content ilan-konum">${harita}</div>
-`;
 
-sliderHazirla();
+    <div id="bilgi" class="tab-content active">
+        ${ozellikler}
+    </div>
+
+    <div id="aciklama" class="tab-content">
+        ${aciklamaList}
+    </div>
+
+    <div id="konum" class="tab-content ilan-konum">
+        ${harita}
+    </div>
+
+    `;
 
 
-function row(label, val) {
+    sliderHazirla();
+
+}
+
+
+
+function row(label,val){
     return `<div class="ozellik"><span>${label}</span><b>${val}</b></div>`;
 }
 
 
-function openTab(evt, id) {
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+function openTab(evt,id){
+
+    document.querySelectorAll('.tab-content')
+    .forEach(c=>c.classList.remove('active'));
+
+    document.querySelectorAll('.tab-btn')
+    .forEach(b=>b.classList.remove('active'));
 
     document.getElementById(id).classList.add('active');
+
     evt.currentTarget.classList.add('active');
+
 }
-        
+
+
+
 function sliderHazirla(){
 
-    const slider = document.getElementById("slider");
-    const sayac = document.getElementById("sayac");
-    const resimler = document.querySelectorAll(".detay-resim");
+    const slider=document.getElementById("slider");
+    const sayac=document.getElementById("sayac");
+    const resimler=document.querySelectorAll(".detay-resim");
 
     if(!slider || !sayac) return;
 
 
-    slider.addEventListener("scroll", function(){
+    slider.addEventListener("scroll",()=>{
 
-        detayIndex = Math.round(slider.scrollLeft / slider.clientWidth);
+        detayIndex=Math.round(slider.scrollLeft / slider.clientWidth);
 
-        sayac.innerHTML = (detayIndex + 1) + " / " + resimler.length;
+        sayac.innerHTML=
+        `${detayIndex+1} / ${resimler.length}`;
 
     });
 
 }
+
 
 
 function move(dir){
 
-    const slider = document.getElementById("slider");
-    const resimler = document.querySelectorAll(".detay-resim");
+    const slider=document.getElementById("slider");
+    const resimler=document.querySelectorAll(".detay-resim");
 
     detayIndex += dir;
 
+
     if(detayIndex < 0)
-        detayIndex = resimler.length - 1;
+        detayIndex=resimler.length-1;
+
 
     if(detayIndex >= resimler.length)
-        detayIndex = 0;
+        detayIndex=0;
 
 
     slider.scrollTo({
-        left: detayIndex * slider.clientWidth,
+        left:detayIndex * slider.clientWidth,
         behavior:"smooth"
     });
-}
+
 }
 </script>
 </body>
