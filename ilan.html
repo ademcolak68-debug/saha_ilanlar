@@ -14,7 +14,7 @@
         #acilisEkrani h2 { margin-top:20px; font-size:24px; color:#1b4d3e; }
         #acilisEkrani p { margin-top:12px; color:#666; font-size:15px; }
         .yukleme-kapsul { width: 220px; height: 6px; background: #e5e5e5; border-radius: 20px; overflow: hidden; margin-top: 15px; }
-        .yukleme-cubuk { width: 0%; height: 100%; background: #d4af37; animation: yukleAnimasyon 4s linear forwards; }
+        .yukleme-cubuk { width: 0%; height: 100%; background: #d4af37; animation: yukleAnimasyon 2.5s linear forwards; }
         @keyframes yukleAnimasyon { 100% { width: 100%; } }
 
         /* Header & İmza */
@@ -24,6 +24,19 @@
         /* Slider */
         .detay-slider { position: relative; width: 100%; height: 350px; background: #eee; overflow-x: auto; display: flex; scroll-snap-type: x mandatory; }
         .detay-resim { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+        .slider-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,0.5);
+    border:none;
+    color:white;
+    padding:15px 10px;
+    cursor:pointer;
+    font-size:22px;
+    z-index:10;
+    display:none;
+}
         .resim-sayac { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
         .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: #fff; padding: 15px 10px; cursor: pointer; display: none; }
         .slider-kapsul{ position:relative;}
