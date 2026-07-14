@@ -18,13 +18,9 @@
 
 body{
     margin:0;
-    padding:0; /* Body padding'ini kaldırdık */
+    padding:15px;
     background:#dfe5ec;
     font-family:Tahoma,sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Ekranı kaplaması için */
 }
 
 :root { --primary-color: #d4af37; --dark-color: #1a1a1a; --light-bg: #f8f9fa; --white: #ffffff; --success-green: #27ae60; --brand-dark-green: #1b4d3e; }
@@ -44,62 +40,14 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 /* ANA İLAN KUTUSU */
 
 .ilan-detay-popup{
-    width: calc(100% - 20px); /* Ekran genişliğinden 20px (10px her iki taraf) çıkarıyoruz */
-    max-width: 1200px; /* Çok geniş ekranlarda çok yayılmaması için üst sınır */
-    height: calc(100vh - 20px); /* Ekran yüksekliğinden 20px çıkarıyoruz */
-    margin: 10px auto; /* Üst ve alttan 10px boşluk, yatayda ortala */
+    width:360px;
+    max-width:100%;
+    margin:auto;
     box-sizing:border-box;
     background:#2b2b2b;
     color:#fff;
     border-radius:12px;
-    padding: 20px; /* İçerik boşluğunu artırdık */
-    display: flex;
-    flex-direction: column; /* İçeriği dikey sırala */
-    overflow-y: auto; /* İçerik taşarsa kaydır */
-}
-
-
-/* YENİ BAŞLIK ALANI (ÜSTTE) */
-
-.detay-baslik-ust {
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,.15);
-    margin-bottom: 20px;
-}
-
-.detay-baslik{
-    font-size:24px; /* Başlık boyutunu büyüttük */
-    font-weight:700;
-    color:#c8a96a;
-    line-height:1.3;
-    letter-spacing:.2px;
-}
-
-.detay-fiyat-ust {
-    font-size: 18px;
-    color: #56d364;
-    margin-top: 5px;
-}
-
-
-/* İÇERİK DÜZENİ */
-
-.detay-icerik {
-    display: flex;
-    gap: 20px;
-    flex: 1; /* Kalan dikey alanı kapla */
-}
-
-.detay-sol {
-    flex: 2; /* Resim alanı daha geniş */
-    display: flex;
-    flex-direction: column;
-}
-
-.detay-sag {
-    flex: 1; /* Özellikler alanı daha dar */
-    display: flex;
-    flex-direction: column;
+    padding:10px;
 }
 
 
@@ -108,13 +56,14 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 .detay-slider{
     position:relative;
     width:100%;
-    height: 100%; /* Sol alanın yüksekliğini kapla */
+    height:330px;
     background:#f2f2f2;
     border-radius:8px;
     overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
+    margin-bottom:18px;
 }
 
 
@@ -134,8 +83,8 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
     position:absolute;
     top:50%;
     transform:translateY(-50%);
-    width:40px; /* Biraz büyüttük */
-    height:40px;
+    width:36px;
+    height:36px;
     padding:0;
     margin:0;
 
@@ -144,41 +93,63 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
     justify-content:center;
 
     border:none;
-    border-radius:50%; /* Tam yuvarlak */
+    border-radius:30%;
 
-    background:rgba(0,0,0,.65); /* Biraz daha belirgin */
+    background:rgba(0,0,0,.55);
     color:#fff;
 
     font-family:Arial, sans-serif;
-    font-size:32px;
-    line-height:40px;
+    font-size:28px;
+    line-height:36px;
 
     cursor:pointer;
-    transition: background 0.3s;
-}
-
-.slider-sol:hover,
-.slider-sag:hover {
-    background:rgba(0,0,0,.8);
 }
 
 
 .slider-sol{
-    left:10px;
+    left:5px;
 }
 
 
 .slider-sag{
-    right:10px;
+    right:5px;
 }
 
 
 
-/* ÖZELLİKLER VE HARİTA */
+/* BİLGİ BÖLÜMÜ */
+
+.detay-ust{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    padding:8px 5px 12px;
+    border-top:1px solid rgba(255,255,255,.15);
+}
+
+
+.detay-baslik{
+    font-size:18px;
+    font-weight:700;
+    color:#c8a96a;
+    line-height:1.3;
+    letter-spacing:.2px;
+}
+
+
+.detay-fiyat{
+    font-size:12px;
+    color:#56d364;
+    white-space:nowrap;
+}
+
+
+
+/* ÖZELLİKLER */
 
 .detay-ozellikler{
-    padding:0;
-    overflow-y: auto; /* Özellikler çoksa kendi içinde kaydır */
+    padding:0 5px 5px;
 }
 
 
@@ -186,8 +157,8 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:10px 0; /* Boşluğu artırdık */
-    font-size:14px; /* Boyutu artırdık */
+    padding:7px 0;
+    font-size:12px;
     border-bottom:1px solid rgba(255,255,255,.12);
 }
 
@@ -208,27 +179,74 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 /* RESİM YOK */
 
 .resim-yok{
-    height: 100%;
+    height:180px;
     display:flex;
     align-items:center;
     justify-content:center;
     background:#eee;
     color:#777;
     border-radius:8px;
+    margin-bottom:18px;
 }
 
 
 
-/* HARİTA */
+/* MOBİL */
+
+@media(max-width:768px){
+
+body{
+    padding:10px;
+}
+
+
+.ilan-detay-popup{
+    width:100%;
+    max-width:300px;
+    padding:8px;
+	box-sizing:border-box;
+}
+
+
+.detay-slider{
+    height:260px;
+    margin-bottom:15px;
+}
+
+
+.detay-baslik{
+    font-size:12px;
+}
+
+
+.detay-fiyat{
+    font-size:11px;
+}
+
+
+.ozellik{
+    font-size:11px;
+    padding:6px 0;
+}
+
+
+.slider-sol,
+.slider-sag{
+    width:28px;
+    height:28px;
+    font-size:18px;
+}
+
+}
+
 
 .ilan-konum{
-    margin-top: auto; /* En alta yasla */
-    padding-top: 20px;
+    margin-top:20px;
 }
 
 
 .ilan-konum h3{
-    font-size:16px;
+    font-size:14px;
     color:#d4af37;
     margin-bottom:10px;
 }
@@ -236,74 +254,11 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 
 .ilan-konum iframe{
     width:100%;
-    height:200px; /* Yüksekliği biraz azalttık */
+    height:240px;
     border:0;
     border-radius:10px;
 }
 
-
-/* MOBİL DÜZENLEME */
-
-@media(max-width:768px){
-
-.ilan-detay-popup{
-    height: auto; /* Mobilde dikey kaydırma body üzerinden olsun */
-    margin: 10px;
-    width: calc(100% - 20px);
-    padding: 15px;
-}
-
-.detay-baslik-ust {
-    margin-bottom: 15px;
-}
-
-.detay-baslik{
-    font-size:18px;
-}
-
-.detay-fiyat-ust {
-    font-size: 16px;
-}
-
-.detay-icerik {
-    flex-direction: column; /* Mobilde alt alta */
-    gap: 15px;
-}
-
-.detay-sol, .detay-sag {
-    flex: none;
-    width: 100%;
-}
-
-.detay-slider{
-    height: 260px; /* Mobilde sabit yükseklik daha iyi */
-}
-
-.ozellik{
-    font-size:12px;
-    padding:8px 0;
-}
-
-
-.slider-sol,
-.slider-sag{
-    width:32px;
-    height:32px;
-    font-size:24px;
-}
-
-.ilan-konum {
-    margin-top: 15px;
-}
-
-.ilan-konum iframe {
-    height: 180px;
-}
-
-}
-
-
-/* AÇILIŞ EKRANI STİLLERİ (Değişmedi) */
 #acilisEkrani{
     position:fixed;
     inset:0;
@@ -387,6 +342,8 @@ html, body { width: 100%; overflow-x: hidden; background-color: var(--light-bg);
 
 <div id="ilanDetay"></div>
 
+<script src="js/ilanlar.js"></script>
+
 <script>
 
 
@@ -415,10 +372,7 @@ document.head.appendChild(script);
 
 function yukle(){
 
-    // ilanlar.js yüklendiğinde global ilanlarVerisi değişkenini kullan
-    if (typeof ilanlarVerisi !== 'undefined') {
-        ilanlar = ilanlarVerisi;
-    }
+    ilanlar = ilanlarVerisi;
 
 
     const id = Number(
@@ -432,14 +386,13 @@ function yukle(){
 
     if(!ilan){
 
-        const yuklemeYazi = document.querySelector("#acilisEkrani p");
-        const yuklemeKapsul = document.querySelector(".yukleme-kapsul");
+    const yuklemeYazi = document.querySelector("#acilisEkrani p");
 
-        if(yuklemeYazi){
-            yuklemeYazi.innerHTML = "İlan bulunamadı";
-            yuklemeYazi.style.color = "red";
-        }
-        if(yuklemeKapsul) yuklemeKapsul.style.display = "none";
+    if(yuklemeYazi){
+
+        yuklemeYazi.innerHTML = "İlan bulunamadı";
+
+    }
 
 
     return;
@@ -467,7 +420,7 @@ function yukle(){
 
         }
 
-    }, 1500); // Bekleme süresini biraz azalttık
+    },3000);
 
 }
 
@@ -495,7 +448,7 @@ if(d.koor){
         <h3>Konum</h3>
 
         <iframe
-        src="https://www.google.com/maps/embed/v1/view?key=API_KEY&center=$${lat},${lng}&zoom=16"
+        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
         loading="lazy">
         </iframe>
 
@@ -571,108 +524,140 @@ document.getElementById("ilanDetay").innerHTML = `
 
 <div class="ilan-detay-popup">
 
-    <div class="detay-baslik-ust">
-        <div class="detay-baslik">
-            <div class="ilan-ad">
-                ${d.baslik || ""}
-            </div>
-            <div>
-                ${d.durum === "satilik" ? "Satılık" : "Kiralık"}
-                ${d.konutSekli || d.tip || ""}
-            </div>
-        </div>
-        <div class="detay-fiyat-ust">
-            ${d.fiyat || ""} ${d.paraBirimi || ""}
-        </div>
-    </div>
 
-    <div class="detay-icerik">
+${resimSlider}
 
-        <div class="detay-sol">
-            ${resimSlider}
+
+
+<div class="detay-ust">
+
+    <div class="detay-baslik">
+
+        <div class="ilan-ad">
+            ${d.baslik || ""}
         </div>
 
-        <div class="detay-sag">
-
-            <div class="detay-ozellikler">
-
-                ${d["M²"] ? `
-                <div class="ozellik">
-                <span>M²</span>
-                <b>${d["M²"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Ada"] || d["Parsel"] ? `
-                <div class="ozellik">
-                <span>Ada / Parsel</span>
-                <b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
-                </div>
-                ` : ""}
-
-                ${d["Oda Sayısı"] ? `
-                <div class="ozellik">
-                <span>Oda</span>
-                <b>${d["Oda Sayısı"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Bina Yaşı"] ? `
-                <div class="ozellik">
-                <span>Bina Yaşı</span>
-                <b>${d["Bina Yaşı"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Bulunduğu Kat"] ? `
-                <div class="ozellik">
-                <span>Kat</span>
-                <b>${d["Bulunduğu Kat"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Kat Sayısı"] ? `
-                <div class="ozellik">
-                <span>Kat Sayısı</span>
-                <b>${d["Kat Sayısı"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Isıtma"] ? `
-                <div class="ozellik">
-                <span>Isıtma</span>
-                <b>${d["Isıtma"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Eşyalı mı?"] ? `
-                <div class="ozellik">
-                <span>Eşyalı</span>
-                <b>${d["Eşyalı mı?"]}</b>
-                </div>
-                ` : ""}
-
-                ${d["Kullanım Durumu"] ? `
-                <div class="ozellik">
-                <span>Kullanım Durumu</span>
-                <b>${d["Kullanım Durumu"]}</b>
-                </div>
-                ` : ""}
-
-                ${d.aciklama ? `
-                <div class="ozellik" style="flex-direction: column; align-items: flex-start; gap: 5px;">
-                <span>Açıklama</span>
-                <b style="text-align: left; color: #eee; font-size: 13px;">${d.aciklama}</b>
-                </div>
-                ` : ""}
-
-            </div>
-
-            ${harita}
-
+        <div>
+            ${d.durum === "satilik" ? "Satılık" : "Kiralık"}
+            ${d.konutSekli || d.tip || ""}
         </div>
 
     </div>
+
+
+    <div class="detay-fiyat">
+        ${d.fiyat || ""} ${d.paraBirimi || ""}
+    </div>
+
+</div>
+
+
+
+
+<div class="detay-ozellikler">
+
+
+
+${d["M²"] ? `
+<div class="ozellik">
+<span>M²</span>
+<b>${d["M²"]}</b>
+</div>
+` : ""}
+
+
+
+${d["Ada"] || d["Parsel"] ? `
+<div class="ozellik">
+<span>Ada / Parsel</span>
+<b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Oda Sayısı"] ? `
+<div class="ozellik">
+<span>Oda</span>
+<b>${d["Oda Sayısı"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Bina Yaşı"] ? `
+<div class="ozellik">
+<span>Bina Yaşı</span>
+<b>${d["Bina Yaşı"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Bulunduğu Kat"] ? `
+<div class="ozellik">
+<span>Kat</span>
+<b>${d["Bulunduğu Kat"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Kat Sayısı"] ? `
+<div class="ozellik">
+<span>Kat Sayısı</span>
+<b>${d["Kat Sayısı"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Isıtma"] ? `
+<div class="ozellik">
+<span>Isıtma</span>
+<b>${d["Isıtma"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Eşyalı mı?"] ? `
+<div class="ozellik">
+<span>Eşyalı</span>
+<b>${d["Eşyalı mı?"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d["Kullanım Durumu"] ? `
+<div class="ozellik">
+<span>Kullanım Durumu</span>
+<b>${d["Kullanım Durumu"]}</b>
+</div>
+` : ""}
+
+
+
+
+${d.aciklama ? `
+<div class="ozellik">
+<span>Açıklama</span>
+<b>${d.aciklama}</b>
+</div>
+` : ""}
+
+${harita}
+
+</div>
+
 
 </div>
 
@@ -692,6 +677,7 @@ detayIndex++;
 
 if(detayIndex >= detayResimler.length)
 detayIndex = 0;
+setTimeout(sliderOkGuncelle,50);
 
 
 document.getElementById("detayResim").src =
@@ -707,7 +693,7 @@ function sliderOkGuncelle(){
     const sol = document.getElementById("solOk");
     const sag = document.getElementById("sagOk");
 
-  0  if(!sol || !sag) return;
+    if(!sol || !sag) return;
 
 
     if(detayIndex === 0){
@@ -750,8 +736,9 @@ sliderOkGuncelle();
 }
 
 
-// Sayfa yüklendiğinde script.onload tetiklenecek, 
-// o yüzden burada yukle(); çağırmaya gerek yok.
+
+yukle();
+
 
 </script>
 
