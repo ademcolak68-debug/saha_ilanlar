@@ -140,18 +140,19 @@
 
     <div class="slider-kapsul">
 
-        <div class="detay-slider" id="slider">
-            ${d.resimler.map(r=>`<img src="${r}" class="detay-resim">`).join('')}
-
-            <button class="slider-btn" style="left:0" onclick="move(-1)">❮</button>
-            <button class="slider-btn" style="right:0" onclick="move(1)">❯</button>
-        </div>
-
-        <div class="resim-sayac" id="sayac">
-            1 / ${d.resimler.length}
-        </div>
-
+    <div class="detay-slider" id="slider">
+        ${d.resimler.map(r=>`<img src="${r}" class="detay-resim">`).join('')}
     </div>
+
+    <button class="slider-btn" style="left:0" onclick="move(-1)">❮</button>
+    <button class="slider-btn" style="right:0" onclick="move(1)">❯</button>
+
+
+    <div class="resim-sayac" id="sayac">
+        1 / ${d.resimler.length}
+    </div>
+
+</div>
 
 
     <div class="firma-imza">
