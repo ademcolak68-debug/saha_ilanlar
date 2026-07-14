@@ -9,7 +9,10 @@
         .container { max-width: 600px; margin: auto; background: #fff; min-height: 100vh; padding-bottom: 20px; }
 
         /* Açılış Ekranı */
-        #acilisEkrani { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
+        #acilisEkrani { position: fixed; inset: 0; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; transition:opacity .5s; }
+        #acilisEkrani img { width:230px; max-width:80%; }
+        #acilisEkrani h2 { margin-top:20px; font-size:24px; color:#1b4d3e; }
+        #acilisEkrani p { margin-top:12px; color:#666; font-size:15px; }
         .yukleme-kapsul { width: 220px; height: 6px; background: #e5e5e5; border-radius: 20px; overflow: hidden; margin-top: 15px; }
         .yukleme-cubuk { width: 0%; height: 100%; background: #d4af37; animation: yukleAnimasyon 4s linear forwards; }
         @keyframes yukleAnimasyon { 100% { width: 100%; } }
@@ -42,8 +45,13 @@
 <body>
 
 <div id="acilisEkrani">
-    <img src="logo.png" style="width:200px">
-    <div class="yukleme-kapsul"><div class="yukleme-cubuk"></div></div>
+    <img src="logo.png" alt="NETmax Gayrimenkul">
+    <h2>NETmax Gayrimenkul</h2>
+    <p>İlan yükleniyor...</p>
+
+    <div class="yukleme-kapsul">
+        <div class="yukleme-cubuk"></div>
+    </div>
 </div>
 
 <div id="ilanDetay" class="container"></div>
