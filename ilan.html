@@ -347,6 +347,12 @@ body{
 
 }
 
+.aciklama-alani b{
+    white-space: pre-line;
+    line-height:1.8;
+    display:block;
+}
+	
 </style>
 
 </head>
@@ -676,9 +682,12 @@ ${d["Kullanım Durumu"] ? `
 
 
 ${d.aciklama ? `
-<div class="ozellik">
+<div class="ozellik aciklama-alani">
 <span>Açıklama</span>
-<b>${d.aciklama}</b>
+<b>${d.aciklama
+.split(",")
+.map(x => "✓ " + x.trim())
+.join("\n")}</b>
 </div>
 ` : ""}
 
