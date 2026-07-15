@@ -447,7 +447,6 @@ html, body {
     /* Yeni eklenen özellikler */
     max-height: 450px;    /* İsteğe bağlı yükseklik limiti */
     overflow-y: auto;     /* İçerik taşarsa dikey kaydırma çubuğu çıkar */
-	width: 300px !important;
 }
 
 .mapboxgl-popup {
@@ -457,6 +456,15 @@ html, body {
 .ilan-detay-popup {
     font-family: Tahoma, sans-serif;
     border-radius: 5px !important;
+	width: 300px !important;
+}
+
+.ilan-detay-popup::-webkit-scrollbar {
+    width: 6px;
+}
+.ilan-detay-popup::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
 }
 
 /* RESİM */
@@ -1183,9 +1191,9 @@ map.on('load', () => {
 			` : ""}
 
 			${d["aciklama"] ? `
-		    <div class="ozellik" style="flex-direction: column; align-items: flex-start;">
-		        <span style="margin-bottom: 5px;">Açıklama</span>
-		        <b style="text-align: left; width: 100%;">
+		    <div class="ozellik" style="flex-direction: column; align-items: flex-start; padding: 8px 0;">
+		        <span style="margin-bottom: 4px; font-size: 11px;">Açıklama</span>
+		        <b style="text-align: left; width: 100%; font-size: 11px; line-height: 1.8; font-weight: 300;">
 		            ${d["aciklama"].replace(/,/g, '<br>')}
 		        </b>
 		    </div>` : ""}
