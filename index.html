@@ -493,34 +493,21 @@ html, body {
     box-sizing:border-box;
 }
 
-.ilan-detay-popup::-webkit-scrollbar{
-    width:8px;
-}
-
-.ilan-detay-popup::-webkit-scrollbar-track{
-    background:#1b1b1b;
-}
-
-.ilan-detay-popup::-webkit-scrollbar-thumb{
-    background:#2563eb;
-    border-radius:10px;
-}
-
-.ilan-detay-popup::-webkit-scrollbar-thumb:hover{
-    background:#1d4ed8;
-}
-
 .mapboxgl-popup-content::-webkit-scrollbar{
     width:8px;
 }
 
 .mapboxgl-popup-content::-webkit-scrollbar-track{
-    background:#1b1b1b;
+    background:#2b2f36;
 }
 
 .mapboxgl-popup-content::-webkit-scrollbar-thumb{
-    background:#2563eb;
-    border-radius:10px;
+    background:linear-gradient(180deg,#ffb300,#ff6f00);
+    border-radius:50px;
+}
+
+.mapboxgl-popup-content::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(180deg,#ffc107,#ff8f00);
 }
 
 
@@ -649,7 +636,7 @@ html, body {
     width:30px;
     height:30px;
     border:none;
-    border-radius:50%;
+    border-radius:10%;
     background:rgba(0,0,0,.55);
     color:#fff;
     font-size:20px;
@@ -668,7 +655,7 @@ html, body {
 
 .slider-sol:hover,
 .slider-sag:hover{
-    background:#2563eb;
+    background:#d4af37;
 }
 
 
@@ -804,6 +791,19 @@ html, body {
         font-size:12px;
     }
 
+}
+
+.resim-sayac{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    padding:4px 10px;
+    background:rgba(0,0,0,.65);
+    color:#fff;
+    font-size:12px;
+    font-family:Tahoma,sans-serif;
+    border-radius:20px;
+    z-index:20;
 }
 
 </style>
@@ -1178,6 +1178,9 @@ map.on('load', () => {
 	src="${d.resimler[0]}"
 	class="detay-resim">
 
+	<div class="resim-sayac" id="resimSayac">
+        1 / ${d.resimler.length}
+    </div>
 
 	${d.resimler.length > 1 ? `
 
@@ -1339,6 +1342,9 @@ map.on('load', () => {
 	document.getElementById("detayResim").src =
 	window.detayResimler[window.detayIndex];
 
+	document.getElementById("resimSayac").textContent =
+    `${window.detayIndex + 1} / ${window.detayResimler.length}`;
+
 	}
 
 	function detayOnceki(){
@@ -1356,7 +1362,9 @@ map.on('load', () => {
 	document.getElementById("detayResim").src =
 	window.detayResimler[window.detayIndex];
 
-
+	document.getElementById("resimSayac").textContent =
+    `${window.detayIndex + 1} / ${window.detayResimler.length}`;
+		
 	}
 
 	function ilanPaylas(id){
