@@ -56,18 +56,189 @@ html, body {
    3. SIDEBAR & FİLTRE & BUTONLAR
    =================================================== */
 #sidebar {
-  position: absolute; top: 10px; left: -240px; width: 170px; background: #2c3138;
-  color: #fff; z-index: 15; padding: 0 0 15px 0; max-height: calc(100vh - 20px);
-  pointer-events: none; opacity: 0; box-shadow: 4px 4px 15px rgba(0,0,0,0.4);
-  border-radius: 8px; transition: left 0.4s ease, opacity 0.4s ease;
+  position: absolute;
+  top: 10px;          /* 🚩 Üstten 15px nefes alma payı */
+  left: -240px;       /* 🚩 Gizliyken ekrandan tamamen çıkması için mesafeyi artırdık */
+  width: 170px;       
+  background: #2c3138; 
+  color: #fff;
+  z-index: 15;
+  padding: 0 0 15px 0; 
+  overflow-y: auto;
+  
+  /* 🚩 Boyunu 100vh yerine ekrandan taşmayacak şekilde (üstten ve alttan 15px düşerek) ayarladık */
+  max-height: calc(100vh - 20px); 
+  
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 4px 4px 15px rgba(0,0,0,0.4); /* Gölgeyi her yöne yaydık */
+  border-radius: 8px; /* 🚩 Menünün tüm köşelerini yumuşatarak havada asılı kutu hissi verdik */
+  transition: left 0.4s ease, opacity 0.4s ease; 
 }
-#sidebar.show { left: 8px; opacity: 1; pointer-events: auto; }
-#sidebar h3 { 
-  margin: 0 0 15px 0; font-size: 13px; background: linear-gradient(135deg, #d4af37, #f3e5ab);
-  color: #1e2327; padding: 10px 35px 10px 15px; font-weight: 700;
+
+#sidebar.show {
+  /* 🚩 İŞTE SİHİRLİ DOKUNUŞ: Açıldığında sol kenara yapışmaz, tam 15px sağda asılı kalır */
+  left: 8px; 
+  opacity: 1;
+  pointer-events: auto;
 }
-#sidebar label { display: flex; align-items: center; margin-bottom: 6px; padding: 6px 12px; cursor: pointer; font-size: 12px; border-left: 3px solid transparent; }
-#sidebar label:has(input[type="checkbox"]:checked) { background: rgba(212, 175, 55, 0.15); border-left-color: #d4af37; font-weight: 700; }
+
+/* H3 başlığı ve kapatma X */
+#sidebar h3 {
+  margin: 0 0 15px 0;  
+  font-size: 13px;
+  width: 100%;
+  /* Altın sarısı degradeyi daha asil ve okunaklı hale getirdim, yazı rengini koyu yaptık ki kontrast airsın */
+  background: linear-gradient(135deg, #d4af37, #f3e5ab);
+  color: #1e2327;
+  padding: 10px 35px 10px 15px; /* Kapat butonuna yer açmak için sağ boşluğu artırdım */
+  text-align: left;
+  box-sizing: border-box;
+  position: relative;
+  font-weight: 700; /* Başlık jilet gibi net ve kalın olsun */
+  font-family: Tahoma, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Label düzeni (Checkbox alanları) */
+#sidebar label {
+  display: flex;
+  align-items: center;      /* Kutu ve yazıyı dikeyde tam ortalar */
+  justify-content: flex-start; /* Her şeyi sola yaslar (Merkezleme iptal) */
+  margin-bottom: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+  font-weight: 500;         /* 👈 İLAN YAZILARININ YENİ KALINLIĞI (Okunurluk artırıldı) */
+  color: #e2e8f0;           /* Hafif yumuşak beyaz */
+  border-radius: 4px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* Checkboxların üzerine gelince hafif bir satır aydınlanması */
+#sidebar label:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+#sidebar label input[type="checkbox"] {
+  width: 16px;              /* Standart 12px'den 16px'e büyütüldü */
+  height: 16px;             /* En boy eşitlendi */
+  margin-right: 10px;       /* Sağındaki yazı ile arasına net bir mesafe konuldu */
+  cursor: pointer;
+  flex-shrink: 0;           /* Kutunun daralmasını engeller */
+}
+
+/* ===================================================
+   🆕 DİNAMİK AKTİF (SEÇİLİ) SATIR REKLENDİRMESİ
+   =================================================== */
+/* Eğer satırdaki checkbox işaretlendiyse, tüm satırı (label) yakala ve boya */
+#sidebar label:has(input[type="checkbox"]:checked) {
+  background: rgba(212, 175, 55, 0.15); 
+  color: #fff;                           
+  font-weight: 700;                      
+  
+  /* 🚩 İŞTE ÇÖZÜM: Genişliği değiştirmeden transparent olan rengi altın sarısına çeviriyoruz */
+  border-left-color: #d4af37;        
+  
+  /* padding-left: 9px; 👈 ESKİSİNİ SİLİYORUZ, ARTIK GEREK YOK */
+}
+
+/* ADET SAYILARI (Rakamlar) */
+#sidebar label span {
+  margin-left: auto;        /* Sadece rakamları satırın en sağına iter */
+  color: #a0aec0;           /* Normalde daha sakin dururlar */
+  font-size: 11px;
+  font-weight: normal;
+  position: relative;
+  top: 0;                   
+  float: none;              
+  transition: all 0.2s ease;
+}
+
+/* Seçili olan satırdaki rakam (adet) sarı renge dönsün ve canlansın */
+#sidebar label:has(input[type="checkbox"]:checked) span {
+  color: #f3e5ab;           /* Parlak fildişi/sarı tonu */
+  font-weight: 500;
+}
+
+/* YENİ ŞIK VE BÜYÜK KAPATMA X BUTONU */
+#closeBtn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 18px; 
+  cursor: pointer;
+  color: #1e2327;  
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+#closeBtn:hover {
+  color: #c0392b; 
+}
+
+/* =========================
+   TOGGLE BUTONU (☰)
+   ========================= */
+#toggleBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 20;
+  font-size: 20px;
+  background: linear-gradient(135deg, #d4af37, #f3e5ab);
+  color: #1e2327; /* İkon rengi de koyu kurumsal yapıldı */
+  border-radius: 4px; /* %10 yerine tam 4px ile kibarlaştı */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  line-height: 1;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+
+#toggleBtn:hover {
+  filter: brightness(1.1); /* Üzerine gelince hafifçe parlar */
+}
+
+/* =========================
+   FILTER BUTONU 🚫
+   ========================= */
+.filter-btn-wrapper {
+  display: flex;
+  justify-content: center; /* Butonu ortalayalım */
+  padding: 0 12px;
+}
+
+.filter-btn {
+  width: 100%; /* Sidebar genişliğine tam otursun */
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  background: #3a3f45;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: Tahoma, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #c0392b; /* Kapat butonuyla uyumlu şık kırmızı */
+  border-color: transparent;
+}
 
 .enter-btn {
   position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
