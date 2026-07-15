@@ -637,57 +637,12 @@ html, body {
     transform:scale(.98);
 }
 
-@media(max-width:768px){
-
-.mapboxgl-popup{
-    max-width:210px !important;
-}
-
-.ilan-detay-popup{
-    width:200px;
-}
-
-.detay-slider,
-.detay-resim{
-    height:220px;
-}
-
-.detay-ust{
-    padding:7px 8px;
-}
-
-.detay-ozellikler{
-    padding:3px 8px 6px;
-}
-
-.ozellik{
-    padding:4px 0;
-    font-size:11px;
-}
-
-.detay-baslik{
-    font-size:12px;
-}
-
-.detay-fiyat{
-    font-size:11px;
-}
-
-.slider-sol,
-.slider-sag{
-    width:24px;
-    height:24px;
-    font-size:18px;
-}
-
-.mapboxgl-popup-close-button{
-    width:22px;
-    height:22px;
-    line-height:20px;
-    font-size:18px;
-}
-
-}
+.mapboxgl-popup-content {
+        max-height: 80vh !important; /* Ekran yüksekliğinin %80'i ile sınırla */
+        width: 210px !important;     /* Senin verdiğin 210px'e sabitle */
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
 
 .detay-btn{
     display:flex;
