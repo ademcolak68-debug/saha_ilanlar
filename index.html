@@ -712,8 +712,8 @@ html, body {
     }
 
     .ilan-detay-popup{
-        width:320px;
-        max-width:320px;
+        width:300px;
+        max-width:300px;
     }
 
     .detay-slider{
@@ -725,7 +725,7 @@ html, body {
     }
 
     .detay-resim{
-        width:calc(100% - 12px);
+        width:100%;
         height:100%;
         object-fit:cover;
         object-position:center;
@@ -815,6 +815,28 @@ html, body {
     border-radius:8px;
     z-index:20;
     line-height:1.2;
+}
+
+.detay-video{
+    width:100%;
+    margin:8px 0;
+    overflow:hidden;
+    border-radius:8px;
+}
+
+.detay-video video{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    display:block;
+    border-radius:8px;
+}
+@media (max-width:768px){
+
+    .detay-video video{
+        height:220px;
+    }
+
 }
 
 </style>
@@ -1178,6 +1200,19 @@ map.on('load', () => {
 	const d = ilan.data;
 
 	let resimSlider = "";
+	let videoAlan = "";
+
+	if(d.videoUrl){
+	
+	    videoAlan = `
+	    <div class="detay-video">
+	        <video controls playsinline>
+	            <source src="${d.videoUrl}" type="video/mp4">
+	        </video>
+	    </div>
+	    `;
+	
+	}
 
 	if(d.resimler && d.resimler.length > 0){
 
@@ -1243,6 +1278,7 @@ map.on('load', () => {
 	<div class="ilan-detay-popup">
 
 			${resimSlider}
+			${videoAlan}
 
 		<div class="detay-ust">
 			<div class="detay-baslik">${ilan.levhaText}</div>
