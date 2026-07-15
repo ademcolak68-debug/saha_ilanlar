@@ -685,7 +685,6 @@ html, body {
 }
 
 
-/* Modalın genel yapısı */
 /* Modal Genel Yapısı */
 .ilan-modal {
     position: fixed;
@@ -701,63 +700,69 @@ html, body {
 .ilan-modal.aktif { display: flex; }
 
 .ilan-modal-icerik {
-    width: 90%;
-    max-width: 450px; /* Modal artık daha dar ve odaklı */
+    width: 95%;          /* Mobilde ekranı tam sarsın */
+    max-width: 400px;    /* Masaüstünde çok genişleyip çirkinleşmesin */
     max-height: 90vh;
     background: #fff;
     border-radius: 16px;
     position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;    /* İçerik taşarsa kaydırılsın */
 }
 
 /* Kapat Butonu */
 .modal-kapat {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 35px;
-    height: 35px;
+    position: sticky;    /* İçerikle beraber kaymaması için sticky yaptık */
+    top: 10px;
+    left: 90%;           /* Sağ tarafa hizala */
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: none;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     color: #fff;
     cursor: pointer;
-    font-size: 16px;
-    z-index: 10;
+    font-size: 18px;
+    z-index: 20;
+    margin-bottom: -46px; /* İçeriğin üzerine oturması için */
 }
 
-/* Özellikler - Tamamen dikey Liste */
+/* İçerik Paddingleri */
+.detay-ust { padding: 20px 20px 10px; }
+.detay-baslik { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 5px; line-height: 1.3; }
+.detay-fiyat { font-size: 16px; font-weight: 600; color: #0369a1; }
+
+/* Özellikler - Dikey Liste */
 .detay-ozellikler {
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     display: flex;
-    flex-direction: column; /* Alt alta sıralar */
-    gap: 8px; /* Aralarındaki boşluk */
+    flex-direction: column;
 }
 
 .ozellik {
     display: flex;
-    justify-content: space-between; /* Sağlı sollu yazı için */
-    padding: 10px 0;
-    border-bottom: 1px solid #f1f5f9;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.ozellik span { color: #64748b; font-size: 14px; }
-.ozellik b { color: #1e293b; font-size: 14px; font-weight: 600; }
+.ozellik span { color: #777; font-size: 13px; }
+.ozellik b { color: #333; font-size: 13px; font-weight: 600; text-align: right; margin-left: 10px;}
 
 /* Açıklama Kutusu */
 .ozellik-aciklama {
-    margin-top: 10px;
-    padding: 15px;
-    background: #f8fafc;
-    border-radius: 8px;
-    color: #475569;
+    margin-top: 15px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    color: #555;
     font-size: 13px;
     line-height: 1.5;
-}
-	
+    border-left: 3px solid #0369a1; /* Şık bir vurgu */
+}	
 
 </style>
 </head>
@@ -1130,221 +1135,95 @@ map.on('load', () => {
 
 });
   
-  function ilanDetayPopup(ilan){
-	const d = ilan.data;
+ function ilanDetayPopup(ilan) {
+    const d = ilan.data;
 
-	let resimSlider = "";
+    // 1. Resim Slider Alanı
+    let resimSlider = "";
+    if (d.resimler && d.resimler.length > 0) {
+        resimSlider = `
+            <div class="detay-slider">
+                <img id="detayResim" src="${d.resimler[0]}" class="detay-resim">
+                ${d.resimler.length > 1 ? `
+                    <button class="slider-sol" onclick="detayOnceki()">‹</button>
+                    <button class="slider-sag" onclick="detaySonraki()">›</button>
+                ` : ""}
+            </div>`;
+        window.detayResimler = d.resimler;
+        window.detayIndex = 0;
+    } else {
+        resimSlider = `<div class="resim-yok"><i class="fa-regular fa-image"></i><br>Resim yok</div>`;
+    }
 
-	if(d.resimler && d.resimler.length > 0){
+    // 2. Özellikleri Dikey Listeye Çevir
+    // Sadece değeri olanları ekleyerek boşlukları yok ediyoruz
+    const ozellikler = [
+        { label: "M²", val: d["M²"] },
+        { label: "Ada / Parsel", val: (d["Ada"] || d["Parsel"]) ? `${d["Ada"] || "-"} / ${d["Parsel"] || "-"}` : null },
+        { label: "Oda Sayısı", val: d["Oda Sayısı"] },
+        { label: "Bina Yaşı", val: d["Bina Yaşı"] },
+        { label: "Kat", val: d["Bulunduğu Kat"] },
+        { label: "Kat Sayısı", val: d["Kat Sayısı"] },
+        { label: "Isıtma", val: d["Isıtma"] },
+        { label: "Eşyalı", val: d["Eşyalı mı?"] },
+        { label: "Durum", val: d["Kullanım Durumu"] }
+    ];
 
-	resimSlider = `
+    let ozelliklerHTML = "";
+    ozellikler.forEach(o => {
+        if (o.val) {
+            ozelliklerHTML += `<div class="ozellik"><span>${o.label}</span><b>${o.val}</b></div>`;
+        }
+    });
 
-	<div class="detay-slider">
-
-	<img id="detayResim"
-	src="${d.resimler[0]}"
-	class="detay-resim">
-
-
-	${d.resimler.length > 1 ? `
-
-	<button class="slider-sol" onclick="detayOnceki()">
-	‹
-	</button>
-
-	<button class="slider-sag" onclick="detaySonraki()">
-	›
-	</button>
-
-	` : ""}
-
-
-	</div>
-
-	`;
-
-	window.detayResimler = d.resimler;
-	window.detayIndex = 0;
-
-
-	}else{
-
-	resimSlider = `
-
-	<div class="resim-yok">
-		<i class="fa-regular fa-image"></i>
-	<br>
-		Resim yok
-	</div>
-
-	`;
-
-	}
-
-	modalAc(`
-
-	<div class="ilan-detay-popup">
-
-			${resimSlider}
-
-		<div class="detay-ust">
-			<div class="detay-baslik">${ilan.levhaText}</div>
-			<div class="detay-fiyat">${ilan.fiyat}</div>
-		</div>
-
-		<div class="detay-ozellikler">
-
-			${d["M²"] ? `
-			<div class="ozellik">
-				<span>M²</span>
-				<b>${d["M²"]}</b>
-			</div>
-			` : ""}
-			
-			${(d["Ada"] || d["Parsel"]) ? `
-			<div class="ozellik">
-				<span>Ada / Parsel</span>
-				<b>${d["Ada"] || "-"} / ${d["Parsel"] || "-"}</b>
-			</div>
-			` : ""}
-
-			${d["Oda Sayısı"] ? `
-			<div class="ozellik">
-				<span>Oda</span>
-				<b>${d["Oda Sayısı"]}</b>
-			</div>
-			` : ""}
-
-			${d["Bina Yaşı"] ? `
-			<div class="ozellik">
-				<span>Bina Yaşı</span>
-				<b>${d["Bina Yaşı"]}</b>
-			</div>
-			` : ""}
-
-			${d["Bulunduğu Kat"] ? `
-			<div class="ozellik">
-				<span>Kat</span>
-				<b>${d["Bulunduğu Kat"]}</b>
-			</div>
-			` : ""}
-
-			${d["Kat Sayısı"] ? `
-			<div class="ozellik">
-				<span>Kat Sayısı</span>
-				<b>${d["Kat Sayısı"]}</b>
-			</div>
-			` : ""}
-
-			${d["Isıtma"] ? `
-			<div class="ozellik">
-				<span>Isıtma</span>
-				<b>${d["Isıtma"]}</b>
-			</div>
-			` : ""}
-
-			${d["Eşyalı mı?"] ? `
-			<div class="ozellik">
-				<span>Eşyalı</span>
-				<b>${d["Eşyalı mı?"]}</b>
-			</div>
-			` : ""}
-
-			${d["Kullanım Durumu"] ? `
-			<div class="ozellik">
-				<span>Kullanım Durumu</span>
-				<b>${d["Kullanım Durumu"]}</b>
-			</div>
-			` : ""}
-
-			${d["aciklama"] ? `
-      		<div class="ozellik">
-            	<span>Açıklama</span>
-            	<b>${d["aciklama"]}</b>
-       		 </div>` : ""}
-
-		</div>
-
-	<div style="padding:10px 12px;">
-			<button class="detay-btn" onclick="ilanPaylas(${ilan.id})">
-				<i class="fa-brands fa-whatsapp"></i>
-				PAYLAŞ
-			</button>
-	</div>
-
-	`);
-
-	}
-
-	
-
-	function detaySonraki(){
-
-	if(!window.detayResimler) return;
-
-
-	window.detayIndex++;
-
-	if(window.detayIndex >= window.detayResimler.length){
-
-	window.detayIndex=0;
-
-	}
-
-	document.getElementById("detayResim").src =
-	window.detayResimler[window.detayIndex];
-
-	}
-
-	function detayOnceki(){
-
-	if(!window.detayResimler) return;
-
-	window.detayIndex--;
-
-	if(window.detayIndex < 0){
-
-	window.detayIndex =
-	window.detayResimler.length-1;
-
-	}
-	document.getElementById("detayResim").src =
-	window.detayResimler[window.detayIndex];
-
-
-	}
-
-
-	function modalAc(html){
-
-    document.getElementById("ilanModalBody").innerHTML = html;
-    document.getElementById("ilanModal").classList.add("aktif");
-
+    // 3. Modalı Oluştur
+    modalAc(`
+        <div class="ilan-detay-popup">
+            ${resimSlider}
+            <div class="detay-ust">
+                <div class="detay-baslik">${ilan.levhaText}</div>
+                <div class="detay-fiyat">${ilan.fiyat}</div>
+            </div>
+            <div class="detay-ozellikler">
+                ${ozelliklerHTML}
+                ${d.aciklama ? `<div class="ozellik-aciklama"><b>Açıklama:</b><br>${d.aciklama}</div>` : ""}
+            </div>
+            <div style="padding:15px;">
+                <button class="detay-btn" style="width:100%; padding:12px; cursor:pointer;" onclick="ilanPaylas('${ilan.id}')">
+                    WHATSAPP İLE PAYLAŞ
+                </button>
+            </div>
+        </div>
+    `);
 }
 
-function modalKapat(){
+// Global Slider ve Modal Kontrolleri
+function detaySonraki() {
+    if(!window.detayResimler) return;
+    window.detayIndex = (window.detayIndex + 1) % window.detayResimler.length;
+    document.getElementById("detayResim").src = window.detayResimler[window.detayIndex];
+}
 
+function detayOnceki() {
+    if(!window.detayResimler) return;
+    window.detayIndex = (window.detayIndex - 1 + window.detayResimler.length) % window.detayResimler.length;
+    document.getElementById("detayResim").src = window.detayResimler[window.detayIndex];
+}
+
+function modalAc(html) {
+    const modal = document.getElementById("ilanModal");
+    modal.querySelector("#ilanModalBody").innerHTML = html;
+    modal.classList.add("aktif");
+}
+
+function modalKapat() {
     document.getElementById("ilanModal").classList.remove("aktif");
     document.getElementById("ilanModalBody").innerHTML = "";
-
 }
-	
 
-	function ilanPaylas(id){
-
-    const link =
-        `${location.origin}${location.pathname.replace("index.html","")}ilan.html?id=${id}`;
-
-    const mesaj =
-`İlanı incelemek için aşağıdaki bağlantıya tıklayın.
-
-${link}`;
-
-    window.open(
-        `https://wa.me/?text=${encodeURIComponent(mesaj)}`,
-        "_blank"
-    );
-
+function ilanPaylas(id) {
+    const link = `${location.origin}${location.pathname.replace("index.html","")}ilan.html?id=${id}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent("İlanı incele: " + link)}`, "_blank");
 }
 
 	 
