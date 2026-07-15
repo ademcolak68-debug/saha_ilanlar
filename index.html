@@ -558,29 +558,21 @@ html, body {
 }
 /* BUTONLAR */
 
-.slider-sol,
-.slider-sag{
-    position:absolute;
-    top:60%;
-    transform:translateY(-50%);
-    width:30px;
-    height:30px;
-    border:none;
-    border-radius:50%;
-    background:rgba(0,0,0,.55);
-    color:#fff;
-    font-size:22px;
-    cursor:pointer;
-    transition:.2s;
+.slider-sol, .slider-sag {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
 }
-
-.slider-sol{
-    left:8px;
-}
-
-.slider-sag{
-    right:8px;
-}
+.slider-sol { left: 10px; }
+.slider-sag { right: 10px; }
 
 .slider-sol:hover,
 .slider-sag:hover{
@@ -693,47 +685,102 @@ html, body {
 }
 
 
-/* Modalın genel yapısı */
+/* Modal Arka Planı (Buzlu Cam Etkisi) */
 .ilan-modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.65);
-    display: none; /* JS ile 'aktif' sınıfı eklenince flex olur */
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px); /* Modern blur efekti */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 99999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .ilan-modal.aktif {
     display: flex;
+    opacity: 1;
 }
 
-/* İçerik kutusu */
+/* Modal İçerik Kutusu */
 .ilan-modal-icerik {
-    width: 95%;
-    max-width: 700px;
-    max-height: 90vh; /* Ekranın dışına taşmaması için */
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
     background: #fff;
-    border-radius: 12px;
-    overflow-y: auto; /* Dikey kaydırma çubuğu için */
+    border-radius: 20px;
     position: relative;
-    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
 }
 
+@keyframes slideUp {
+    from { transform: translateY(50px); }
+    to { transform: translateY(0); }
+}
+
+/* Kapat Butonu */
 .modal-kapat {
-    position: sticky; /* Kapat düğmesi yukarıda sabit kalsın */
-    float: right;
-    margin: 10px;
-    width: 38px;
-    height: 38px;
-    border: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: #eee;
-    font-size: 20px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
     cursor: pointer;
-    z-index: 999;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    z-index: 10;
+    transition: all 0.2s;
 }
 
+.modal-kapat:hover { background: #eee; }
+
+/* Resim Slider Alanı */
+.detay-slider {
+    width: 100%;
+    height: 250px;
+    position: relative;
+    background: #f0f0f0;
+}
+
+.detay-resim {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Detay Yazıları */
+.detay-ust { padding: 20px 20px 10px; }
+.detay-baslik { font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 5px; }
+.detay-fiyat { font-size: 18px; font-weight: 600; color: #0369a1; }
+
+.detay-ozellikler {
+    padding: 0 20px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.ozellik {
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ozellik span { font-size: 12px; color: #64748b; }
+.ozellik b { font-size: 14px; color: #334155; }
 	
 
 </style>
