@@ -934,7 +934,7 @@ map.on('load', () => {
     source: 'google-tiles',
     minzoom: 0,
     maxzoom: 24,
-    layout: { 'visibility': 'visible' }
+    layout: { 'visibility': 'none' }
   });
 
   // 4. Google SOKAK HARİTASI Katmanı (Varsayılan olarak kapalı/gizli)
@@ -944,22 +944,26 @@ map.on('load', () => {
     source: 'google-street',
     minzoom: 0,
     maxzoom: 24,
-    layout: { 'visibility': 'none' } // İlk açılışta gizli tutuyoruz
+    layout: { 'visibility': 'visible' } // İlk açılışta gizli tutuyoruz
   });
 
   // 5. KATMAN GEÇİŞ TETİKLEYİCİSİ (Dinamik Listener)
   const streetCheck = document.getElementById('streetMapCheck');
-  if (streetCheck) {
-    streetCheck.addEventListener('change', (e) => {
-      if (e.target.checked) {
-        // Tiklendiyse: Uyduyu gizle, Sokak haritasını göster
-        map.setLayoutProperty('google-tiles-layer', 'visibility', 'none');
-        map.setLayoutProperty('google-street-layer', 'visibility', 'visible');
-      } else {
-        // Tik kaldırıldıysa: Uyduyu göster, Sokak haritasını gizle (İlk haline dön)
-        map.setLayoutProperty('google-tiles-layer', 'visibility', 'visible');
-        map.setLayoutProperty('google-street-layer', 'visibility', 'none');
-      }
+		  if (streetCheck) {
+		    streetCheck.addEventListener('change', (e) => {
+		      if (e.target.checked) {
+		
+		    // Tik varsa uyduya geç
+		    map.setLayoutProperty('google-street-layer', 'visibility', 'none');
+		    map.setLayoutProperty('google-tiles-layer', 'visibility', 'visible');
+		
+		} else {
+		
+		    // Tik yoksa sokak haritası
+		    map.setLayoutProperty('google-street-layer', 'visibility', 'visible');
+		    map.setLayoutProperty('google-tiles-layer', 'visibility', 'none');
+		
+		}
     });
   }
 
