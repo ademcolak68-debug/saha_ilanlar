@@ -1200,35 +1200,29 @@ map.on('load', () => {
 	const d = ilan.data;
 
 	let resimSlider = "";
-	let videoAlan = "";
-
-	if(d.videoUrl){
-	
-	    videoAlan = `
-	    <div class="detay-video">
-	        <video controls playsinline>
-	            <source src="${d.videoUrl}" type="video/mp4">
-	        </video>
-	    </div>
-	    `;
-	
-	}
+	let medyaListesi = [];
 
 	if(d.resimler && d.resimler.length > 0){
+	    medyaListesi = [...d.resimler];
+	}
+	
+	if(d.videoUrl){
+	    medyaListesi.push(d.videoUrl);
+	}
+
+	if(medyaListesi.length > 0){
 
 	resimSlider = `
 
 	<div class="detay-slider">
 
-	<img id="detayResim"
-	src="${d.resimler[0]}"
-	class="detay-resim">
+	<div id="detayMedyaAlan"></div>
 
 	<div class="resim-sayac" id="resimSayac">
-        1 / ${d.resimler.length}
+       1 / ${medyaListesi.length}
     </div>
 
-	${d.resimler.length > 1 ? `
+	${medyaListesi.length > 1 ? `
 
 	<button class="slider-sol" onclick="detayOnceki()">
 	‹
@@ -1245,9 +1239,11 @@ map.on('load', () => {
 
 	`;
 
-	window.detayResimler = d.resimler;
+	window.detayMedya = medyaListesi;
 	window.detayIndex = 0;
-
+	setTimeout(()=>{
+	    medyaGoster();
+	},100);
 
 	}else{
 
@@ -1278,7 +1274,6 @@ map.on('load', () => {
 	<div class="ilan-detay-popup">
 
 			${resimSlider}
-			${videoAlan}
 
 		<div class="detay-ust">
 			<div class="detay-baslik">${ilan.levhaText}</div>
@@ -1373,46 +1368,66 @@ map.on('load', () => {
 
 	});
 
+	function medyaGoster(){
+
+    const alan = document.getElementById("detayMedyaAlan");
+
+    if(!alan || !window.detayMedya) return;
+
+    let medya = window.detayMedya[window.detayIndex];
+
+    if(medya.endsWith(".mp4")){
+
+        alan.innerHTML = `
+        <video class="detay-resim" controls playsinline>
+            <source src="${medya}" type="video/mp4">
+        </video>
+        `;
+
+    }else{
+
+        alan.innerHTML = `
+        <img 
+        src="${medya}"
+        class="detay-resim">
+        `;
+
+    }
+
+
+    document.getElementById("resimSayac").textContent =
+    `${window.detayIndex + 1} / ${window.detayMedya.length}`;
+
+}
+
 	function detaySonraki(){
 
-	if(!window.detayResimler) return;
+    if(!window.detayMedya) return;
 
+    window.detayIndex++;
 
-	window.detayIndex++;
+    if(window.detayIndex >= window.detayMedya.length){
+        window.detayIndex=0;
+    }
 
-	if(window.detayIndex >= window.detayResimler.length){
+    medyaGoster();
 
-	window.detayIndex=0;
-
-	}
-
-	document.getElementById("detayResim").src =
-	window.detayResimler[window.detayIndex];
-
-	document.getElementById("resimSayac").textContent =
-    `${window.detayIndex + 1} / ${window.detayResimler.length}`;
-
-	}
+}
 
 	function detayOnceki(){
 
-	if(!window.detayResimler) return;
+    if(!window.detayMedya) return;
 
-	window.detayIndex--;
+    window.detayIndex--;
 
-	if(window.detayIndex < 0){
+    if(window.detayIndex < 0){
+        window.detayIndex =
+        window.detayMedya.length-1;
+    }
 
-	window.detayIndex =
-	window.detayResimler.length-1;
+    medyaGoster();
 
-	}
-	document.getElementById("detayResim").src =
-	window.detayResimler[window.detayIndex];
-
-	document.getElementById("resimSayac").textContent =
-    `${window.detayIndex + 1} / ${window.detayResimler.length}`;
-		
-	}
+}
 
 	function ilanPaylas(id){
 
