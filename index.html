@@ -496,16 +496,20 @@ html, body {
 }
 
 .ilan-detay-popup::-webkit-scrollbar{
-    width:5px;
+    width:8px;
 }
 
 .ilan-detay-popup::-webkit-scrollbar-track{
-    background:transparent;
+    background:#1b1b1b;
 }
 
 .ilan-detay-popup::-webkit-scrollbar-thumb{
-    background:#555;
-    border-radius:5px;
+    background:#2563eb;
+    border-radius:10px;
+}
+
+.ilan-detay-popup::-webkit-scrollbar-thumb:hover{
+    background:#1d4ed8;
 }
 
 
@@ -531,7 +535,7 @@ html, body {
     width:100%;
     height:100%;
     display:block;
-    object-fit:contain;
+    object-fit: cover;
     object-position:center;
     user-select:none;
 }
@@ -599,24 +603,26 @@ html, body {
 }
 
 .ozellik{
-    display:flex;
-    justify-content:space-between;
+    display:grid;
+    grid-template-columns:110px 1fr;
     align-items:center;
     gap:8px;
     padding:6px 0;
     border-bottom:1px solid rgba(255,255,255,.12);
     font-size:12px;
-    line-height:1.2;
+    line-height:1.3;
 }
 
 .ozellik span{
     color:#cfcfcf;
+    white-space:nowrap;
 }
 
 .ozellik b{
     color:#56d364;
     font-weight:400;
     text-align:right;
+    word-break:break-word;
 }
 
 
