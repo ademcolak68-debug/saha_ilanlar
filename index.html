@@ -13,31 +13,22 @@
 	<script src="js/ilanlar.js"></script>
 
 <style>
-/* =========================
-   GENEL SAYFA STİLLERİ
-   ========================= */
 /* ===================================================
-   1. GENEL & SAYFA YAPISI
+   1. GENEL & HARİTA YAPISI
    =================================================== */
-html, body {
-  margin: 0; padding: 0; height: 100%; font-family: Tahoma, sans-serif;
-  overflow-x: hidden; overflow-y: auto;
-}
-
+html, body { margin: 0; padding: 0; height: 100%; font-family: Tahoma, sans-serif; overflow-x: hidden; overflow-y: auto; }
 #map { width: 100%; height: 100vh; position: relative; }
 
 /* ===================================================
-   2. HARİTA POPUP (Küçük İlan Bilgisi)
+   2. HARİTA POPUP (SABİT KALACAK)
    =================================================== */
-.mapboxgl-popup-content {
-  background: #2b2b2b !important;
-  border-radius: 5px !important;
-  padding: 0 !important;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.35) !important;
-}
-
-.popup-ana-kutu { padding: 6px 10px; color: #fff; line-height: 1.35; font-weight: 500; }
+.mapboxgl-popup-content { background: #2b2b2b !important; border-radius: 10px !important; padding: 0 !important; overflow: hidden; box-shadow: 0 6px 16px rgba(0,0,0,.35) !important; }
+.mapboxgl-popup { max-width: 250px !important; }
+.ilan-detay-popup { width: 230px; }
+.popup-ana-kutu { padding: 6px 10px; color: #fff; font-weight: 500; line-height: 1.35; }
+.popup-baslik-text { font-size: 12px; display: block; margin-bottom: 2px; }
+.popup-fiyat { color: #fff; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.3); margin-top: 3px; padding-top: 3px; display: block; }
+.popup-no { display: block; font-size: 10px; margin-top: 2px; color: #f1c40f; }
 
 /* Renk Paletleri */
 .popup-renk-arsa { background: linear-gradient(135deg, #1b4d3e, #113429) !important; }
@@ -48,245 +39,47 @@ html, body {
 .popup-renk-ismerkezi { background: linear-gradient(135deg, #0369a1, #0c4a6e) !important; }
 .popup-renk-katkarsiligi { background: linear-gradient(135deg, #334155, #1e293b) !important; }
 
-.popup-baslik-text { font-size: 12px; display: block; margin-bottom: 2px; }
-.popup-fiyat { color: #fff; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.3); margin-top: 3px; padding-top: 3px; display: block; }
-.popup-no { display: block; font-size: 10px; margin-top: 2px; color: #f1c40f; }
+/* ===================================================
+   3. SIDEBAR (SENİN GÖNDERDİĞİN ORİJİNAL KOD)
+   =================================================== */
+#sidebar { position: absolute; top: 10px; left: -240px; width: 170px; background: #2c3138; color: #fff; z-index: 15; padding: 0 0 15px 0; overflow-y: auto; max-height: calc(100vh - 20px); pointer-events: none; opacity: 0; box-shadow: 4px 4px 15px rgba(0,0,0,0.4); border-radius: 8px; transition: left 0.4s ease, opacity 0.4s ease; }
+#sidebar.show { left: 8px; opacity: 1; pointer-events: auto; }
+#sidebar h3 { margin: 0 0 15px 0; font-size: 13px; width: 100%; background: linear-gradient(135deg, #d4af37, #f3e5ab); color: #1e2327; padding: 10px 35px 10px 15px; box-sizing: border-box; position: relative; font-weight: 700; font-family: Tahoma, sans-serif; letter-spacing: 0.5px; }
+#sidebar label { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 6px; padding: 6px 12px; cursor: pointer; font-family: Tahoma, sans-serif; font-size: 12px; font-weight: 500; color: #e2e8f0; border-radius: 4px; border-left: 3px solid transparent; transition: all 0.2s ease; }
+#sidebar label:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+#sidebar label input[type="checkbox"] { width: 16px; height: 16px; margin-right: 10px; cursor: pointer; flex-shrink: 0; }
+#sidebar label:has(input[type="checkbox"]:checked) { background: rgba(212, 175, 55, 0.15); color: #fff; font-weight: 700; border-left-color: #d4af37; }
+#sidebar label span { margin-left: auto; color: #a0aec0; font-size: 11px; font-weight: normal; position: relative; transition: all 0.2s ease; }
+#sidebar label:has(input[type="checkbox"]:checked) span { color: #f3e5ab; font-weight: 500; }
+#closeBtn { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); font-size: 18px; cursor: pointer; color: #1e2327; user-select: none; transition: color 0.2s ease; }
+#closeBtn:hover { color: #c0392b; }
+#toggleBtn { position: absolute; top: 10px; left: 10px; z-index: 20; font-size: 20px; background: linear-gradient(135deg, #d4af37, #f3e5ab); color: #1e2327; border-radius: 4px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; padding: 6px 10px; transition: opacity 0.2s ease; }
+#toggleBtn:hover { filter: brightness(1.1); }
+.filter-btn-wrapper { display: flex; justify-content: center; padding: 0 12px; }
+.filter-btn { width: 100%; padding: 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; background: #3a3f45; color: #fff; font-weight: 600; cursor: pointer; font-size: 11px; font-family: Tahoma, sans-serif; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s ease; }
+.filter-btn:hover { background: #c0392b; border-color: transparent; }
+.home-btn { position: absolute; top: 10px; right: 3px; z-index: 20; width: 40px; height: 40px; border: none; border-radius: 50%; font-size: 18px; font-weight: 700; cursor: pointer; color: #111; background: linear-gradient(135deg, #d4af37, #fff1a8); box-shadow: 0 4px 12px rgba(212,175,55,0.45); transition: all 0.2s ease; }
+.home-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(212,175,55,0.65); }
+.home-btn:active { transform: scale(0.96); }
+.mapboxgl-ctrl-top-right { margin-top: 70px !important; }
 
 /* ===================================================
-   3. SIDEBAR & FİLTRE & BUTONLAR
+   4. İLAN DETAY MODAL (TİK YAPISI KORUNDU)
    =================================================== */
-#sidebar {
-  position: absolute;
-  top: 10px;          /* 🚩 Üstten 15px nefes alma payı */
-  left: -240px;       /* 🚩 Gizliyken ekrandan tamamen çıkması için mesafeyi artırdık */
-  width: 170px;       
-  background: #2c3138; 
-  color: #fff;
-  z-index: 15;
-  padding: 0 0 15px 0; 
-  overflow-y: auto;
-  
-  /* 🚩 Boyunu 100vh yerine ekrandan taşmayacak şekilde (üstten ve alttan 15px düşerek) ayarladık */
-  max-height: calc(100vh - 20px); 
-  
-  pointer-events: none;
-  opacity: 0;
-  box-shadow: 4px 4px 15px rgba(0,0,0,0.4); /* Gölgeyi her yöne yaydık */
-  border-radius: 8px; /* 🚩 Menünün tüm köşelerini yumuşatarak havada asılı kutu hissi verdik */
-  transition: left 0.4s ease, opacity 0.4s ease; 
-}
-
-#sidebar.show {
-  /* 🚩 İŞTE SİHİRLİ DOKUNUŞ: Açıldığında sol kenara yapışmaz, tam 15px sağda asılı kalır */
-  left: 8px; 
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* H3 başlığı ve kapatma X */
-#sidebar h3 {
-  margin: 0 0 15px 0;  
-  font-size: 13px;
-  width: 100%;
-  /* Altın sarısı degradeyi daha asil ve okunaklı hale getirdim, yazı rengini koyu yaptık ki kontrast airsın */
-  background: linear-gradient(135deg, #d4af37, #f3e5ab);
-  color: #1e2327;
-  padding: 10px 35px 10px 15px; /* Kapat butonuna yer açmak için sağ boşluğu artırdım */
-  text-align: left;
-  box-sizing: border-box;
-  position: relative;
-  font-weight: 700; /* Başlık jilet gibi net ve kalın olsun */
-  font-family: Tahoma, sans-serif;
-  letter-spacing: 0.5px;
-}
-
-/* Label düzeni (Checkbox alanları) */
-#sidebar label {
-  display: flex;
-  align-items: center;      /* Kutu ve yazıyı dikeyde tam ortalar */
-  justify-content: flex-start; /* Her şeyi sola yaslar (Merkezleme iptal) */
-  margin-bottom: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-family: Tahoma, sans-serif;
-  font-size: 12px;
-  font-weight: 500;         /* 👈 İLAN YAZILARININ YENİ KALINLIĞI (Okunurluk artırıldı) */
-  color: #e2e8f0;           /* Hafif yumuşak beyaz */
-  border-radius: 4px;
-  border-left: 3px solid transparent;
-  transition: all 0.2s ease;
-}
-
-/* Checkboxların üzerine gelince hafif bir satır aydınlanması */
-#sidebar label:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-}
-
-#sidebar label input[type="checkbox"] {
-  width: 16px;              /* Standart 12px'den 16px'e büyütüldü */
-  height: 16px;             /* En boy eşitlendi */
-  margin-right: 10px;       /* Sağındaki yazı ile arasına net bir mesafe konuldu */
-  cursor: pointer;
-  flex-shrink: 0;           /* Kutunun daralmasını engeller */
-}
-
-/* ===================================================
-   🆕 DİNAMİK AKTİF (SEÇİLİ) SATIR REKLENDİRMESİ
-   =================================================== */
-/* Eğer satırdaki checkbox işaretlendiyse, tüm satırı (label) yakala ve boya */
-#sidebar label:has(input[type="checkbox"]:checked) {
-  background: rgba(212, 175, 55, 0.15); 
-  color: #fff;                           
-  font-weight: 700;                      
-  
-  /* 🚩 İŞTE ÇÖZÜM: Genişliği değiştirmeden transparent olan rengi altın sarısına çeviriyoruz */
-  border-left-color: #d4af37;        
-  
-  /* padding-left: 9px; 👈 ESKİSİNİ SİLİYORUZ, ARTIK GEREK YOK */
-}
-
-/* ADET SAYILARI (Rakamlar) */
-#sidebar label span {
-  margin-left: auto;        /* Sadece rakamları satırın en sağına iter */
-  color: #a0aec0;           /* Normalde daha sakin dururlar */
-  font-size: 11px;
-  font-weight: normal;
-  position: relative;
-  top: 0;                   
-  float: none;              
-  transition: all 0.2s ease;
-}
-
-/* Seçili olan satırdaki rakam (adet) sarı renge dönsün ve canlansın */
-#sidebar label:has(input[type="checkbox"]:checked) span {
-  color: #f3e5ab;           /* Parlak fildişi/sarı tonu */
-  font-weight: 500;
-}
-
-/* YENİ ŞIK VE BÜYÜK KAPATMA X BUTONU */
-#closeBtn {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  font-size: 18px; 
-  cursor: pointer;
-  color: #1e2327;  
-  user-select: none;
-  transition: color 0.2s ease;
-}
-
-#closeBtn:hover {
-  color: #c0392b; 
-}
-
-/* =========================
-   TOGGLE BUTONU (☰)
-   ========================= */
-#toggleBtn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 20;
-  font-size: 20px;
-  background: linear-gradient(135deg, #d4af37, #f3e5ab);
-  color: #1e2327; /* İkon rengi de koyu kurumsal yapıldı */
-  border-radius: 4px; /* %10 yerine tam 4px ile kibarlaştı */
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  line-height: 1;
-  user-select: none;
-  transition: opacity 0.2s ease;
-}
-
-#toggleBtn:hover {
-  filter: brightness(1.1); /* Üzerine gelince hafifçe parlar */
-}
-
-/* =========================
-   FILTER BUTONU 🚫
-   ========================= */
-.filter-btn-wrapper {
-  display: flex;
-  justify-content: center; /* Butonu ortalayalım */
-  padding: 0 12px;
-}
-
-.filter-btn {
-  width: 100%; /* Sidebar genişliğine tam otursun */
-  padding: 8px;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 4px;
-  background: #3a3f45;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 11px;
-  font-family: Tahoma, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  transition: background 0.2s ease;
-}
-
-.filter-btn:hover {
-  background: #c0392b; /* Kapat butonuyla uyumlu şık kırmızı */
-  border-color: transparent;
-}
-
-.enter-btn {
-  position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-  z-index: 10; padding: 10px 24px; border-radius: 4px; font-size: 13px; cursor: pointer;
-  display: flex; align-items: center; gap: 8px; border: none; background-color: #334155; color: #fff;
-}
-.home-btn {
-  position: absolute; top: 10px; right: 3px; z-index: 20; width: 40px; height: 40px;
-  border-radius: 50%; border: none; background: linear-gradient(135deg, #d4af37, #fff1a8); cursor: pointer;
-}
-.hizli-ilan-btn {
-  position: fixed; bottom: 20px; right: 20px; background-color: #c29b38; padding: 6px 12px;
-  border-radius: 5px; font-weight: 700; cursor: pointer; z-index: 999; display: flex; align-items: center; gap: 8px;
-}
-
-/* ===================================================
-   4. İLAN DETAY MODAL (Tıklandığında Açılan)
-   =================================================== */
-.ilan-modal {
-  position: fixed; inset: 0; background: rgba(0,0,0,.65);
-  backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; z-index: 99999;
-}
+.ilan-modal { position: fixed; inset: 0; background: rgba(0,0,0,.65); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; z-index: 99999; }
 .ilan-modal.aktif { display: flex; }
-.ilan-modal-icerik { width: 100%; max-width: 420px; max-height: 92vh; background: #fff; border-radius: 20px; overflow-y: auto; position: relative; }
-
-.modal-kapat {
-  position: absolute; right: 12px; top: 12px; width: 38px; height: 38px; border-radius: 50%;
-  border: none; background: rgba(0,0,0,.65); color: white; font-size: 20px; z-index: 20; cursor: pointer;
-}
-
-/* Modal İçerik Stilleri */
-.detay-slider { width: 100%; height: 260px; position: relative; background: #111; overflow: hidden; border-radius: 20px 20px 0 0; }
+.ilan-modal-icerik { width: 100%; max-width: 420px; max-height: 92vh; background: #fff; border-radius: 20px; overflow-y: auto; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.modal-kapat { position: absolute; right: 12px; top: 12px; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(0,0,0,.65); color: white; cursor: pointer; z-index: 20; }
+.detay-slider { width: 100%; height: 260px; position: relative; background: #111; border-radius: 20px 20px 0 0; overflow: hidden; }
 .detay-resim { width: 100%; height: 100%; object-fit: cover; }
 .detay-ust { padding: 18px 18px 10px; }
-.detay-baslik { font-size: 20px; font-weight: 700; color: #111; }
+.detay-baslik { font-size: 20px; font-weight: 700; }
 .detay-fiyat { margin-top: 8px; font-size: 18px; font-weight: bold; color: #0369a1; }
 .detay-ozellikler { padding: 0 18px; }
 .ozellik { display: flex; align-items: center; gap: 10px; padding: 13px 0; border-bottom: 1px solid #eee; }
+.ozellik i { width: 22px; color: #16a34a; font-size: 15px; } 
 .ozellik span { flex: 1; color: #777; font-size: 14px; }
-.ozellik b { color: #222; font-size: 14px; }
-.ozellik-aciklama { margin: 18px; padding: 15px; background: #f7f7f7; border-radius: 12px; border-left: 4px solid #0369a1; font-size: 14px; }
-.detay-paylas button { width: 90%; margin: 0 5% 18px; padding: 13px; border: none; border-radius: 12px; background: #25D366; color: white; font-weight: bold; cursor: pointer; }
-
-/* Mobil Düzenlemeler */
-@media(max-width:768px) {
-  .mapboxgl-ctrl-top-right { top: 10px !important; right: 60px !important; }
-  .detay-slider { height: 220px; }
-}
+.ozellik b { color: #222; font-size: 14px; font-weight: 600; text-align: right; }
 </style>
 </head>
 
