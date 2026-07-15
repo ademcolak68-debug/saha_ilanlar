@@ -23,7 +23,7 @@ const ilanlarVerisi = [
             "images/tapan-rezidans/6.jpeg",
             "images/tapan-rezidans/7.jpeg"
         ],
-        "videoUrl": "",
+        "videoUrl": "images/tapan-rezidans/tanitim.mp4",
         "İlan Tarihi": "2026-07-14",
         "M²": "60",
         "Ada": "",
