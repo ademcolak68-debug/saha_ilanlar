@@ -686,84 +686,77 @@ html, body {
 
 
 /* Modalın genel yapısı */
+/* Modal Genel Yapısı */
 .ilan-modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.65);
-    display: none; /* JS ile 'aktif' sınıfı eklenince flex olur */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 99999;
 }
 
-.ilan-modal.aktif {
-    display: flex;
-}
+.ilan-modal.aktif { display: flex; }
 
-/* İçerik kutusu */
 .ilan-modal-icerik {
-    width: 95%;
-    max-width: 700px;
-    max-height: 90vh; /* Ekranın dışına taşmaması için */
+    width: 90%;
+    max-width: 450px; /* Modal artık daha dar ve odaklı */
+    max-height: 90vh;
     background: #fff;
-    border-radius: 12px;
-    overflow-y: auto; /* Dikey kaydırma çubuğu için */
+    border-radius: 16px;
     position: relative;
-    box-shadow: 0 15px 40px rgba(0,0,0,.35);
-}
-
-.modal-kapat {
-    position: sticky; /* Kapat düğmesi yukarıda sabit kalsın */
-    float: right;
-    margin: 10px;
-    width: 38px;
-    height: 38px;
-    border: none;
-    border-radius: 50%;
-    background: #eee;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 999;
-}
-
-.modal-kapat:hover { background: #eee; }
-
-/* Resim Slider Alanı */
-.detay-slider {
-    width: 100%;
-    height: 250px;
-    position: relative;
-    background: #f0f0f0;
-}
-
-.detay-resim {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Detay Yazıları */
-.detay-ust { padding: 20px 20px 10px; }
-.detay-baslik { font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 5px; }
-.detay-fiyat { font-size: 18px; font-weight: 600; color: #0369a1; }
-
-.detay-ozellikler {
-    padding: 0 20px 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.ozellik {
-    background: #f8fafc;
-    padding: 10px;
-    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-.ozellik span { font-size: 12px; color: #64748b; }
-.ozellik b { font-size: 14px; color: #334155; }
+/* Kapat Butonu */
+.modal-kapat {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 10;
+}
+
+/* Özellikler - Tamamen dikey Liste */
+.detay-ozellikler {
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Alt alta sıralar */
+    gap: 8px; /* Aralarındaki boşluk */
+}
+
+.ozellik {
+    display: flex;
+    justify-content: space-between; /* Sağlı sollu yazı için */
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ozellik span { color: #64748b; font-size: 14px; }
+.ozellik b { color: #1e293b; font-size: 14px; font-weight: 600; }
+
+/* Açıklama Kutusu */
+.ozellik-aciklama {
+    margin-top: 10px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+}
 	
 
 </style>
