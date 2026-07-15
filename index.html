@@ -692,6 +692,60 @@ html, body {
     gap:8px;
 }
 
+
+.ilan-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+.ilan-modal.aktif{
+    display:flex;
+}
+
+.ilan-modal-icerik{
+    width:95%;
+    max-width:700px;
+    max-height:95vh;
+    background:#fff;
+    border-radius:12px;
+    overflow:auto;
+    position:relative;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.modal-kapat{
+    position:absolute;
+    right:12px;
+    top:12px;
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:#fff;
+    font-size:24px;
+    cursor:pointer;
+    z-index:999;
+}
+
+@media(max-width:768px){
+
+.ilan-modal-icerik{
+    width:100%;
+    height:100%;
+    max-width:none;
+    max-height:none;
+    border-radius:0;
+}
+
+}
+
+	
+
 </style>
 </head>
 
@@ -740,6 +794,20 @@ html, body {
 <button id="hizliIlanBtn" class="hizli-ilan-btn" title="Hızlı İlan Ekle" onclick="window.location.href='admin.html'">
   <i class="fa-solid fa-plus"></i> İlan Ekle / Sil
 </button>
+
+
+<div id="ilanModal" class="ilan-modal">
+
+    <div class="ilan-modal-icerik">
+
+        <button class="modal-kapat" onclick="modalKapat()">✕</button>
+
+        <div id="ilanModalBody"></div>
+
+    </div>
+
+</div>
+	
 
 <script>
 // =========================
@@ -1242,6 +1310,22 @@ map.on('load', () => {
 
 
 	}
+
+
+	function modalAc(html){
+
+    document.getElementById("ilanModalBody").innerHTML = html;
+    document.getElementById("ilanModal").classList.add("aktif");
+
+}
+
+function modalKapat(){
+
+    document.getElementById("ilanModal").classList.remove("aktif");
+    document.getElementById("ilanModalBody").innerHTML = "";
+
+}
+	
 
 	function ilanPaylas(id){
 
