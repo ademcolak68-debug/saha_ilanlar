@@ -693,55 +693,45 @@ html, body {
 }
 
 
-.ilan-modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
+/* Modalın genel yapısı */
+.ilan-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    display: none; /* JS ile 'aktif' sınıfı eklenince flex olur */
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
 }
 
-.ilan-modal.aktif{
-    display:flex;
+.ilan-modal.aktif {
+    display: flex;
 }
 
-.ilan-modal-icerik{
-    width:95%;
-    max-width:700px;
-    max-height:95vh;
-    background:#fff;
-    border-radius:12px;
-    overflow:auto;
-    position:relative;
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
+/* İçerik kutusu */
+.ilan-modal-icerik {
+    width: 95%;
+    max-width: 700px;
+    max-height: 90vh; /* Ekranın dışına taşmaması için */
+    background: #fff;
+    border-radius: 12px;
+    overflow-y: auto; /* Dikey kaydırma çubuğu için */
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0,0,0,.35);
 }
 
-.modal-kapat{
-    position:absolute;
-    right:12px;
-    top:12px;
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:#fff;
-    font-size:24px;
-    cursor:pointer;
-    z-index:999;
-}
-
-@media(max-width:768px){
-
-.ilan-modal-icerik{
-    width:100%;
-    height:100%;
-    max-width:none;
-    max-height:none;
-    border-radius:0;
-}
-
+.modal-kapat {
+    position: sticky; /* Kapat düğmesi yukarıda sabit kalsın */
+    float: right;
+    margin: 10px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #eee;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 999;
 }
 
 	
@@ -1114,6 +1104,8 @@ map.on('load', () => {
       map.fitBounds(bounds, { padding: 50 });
     }
   });
+
+});
   
   function ilanDetayPopup(ilan){
 	const d = ilan.data;
@@ -1314,7 +1306,7 @@ function modalKapat(){
 
 }
 	
-});
+
 	function ilanPaylas(id){
 
     const link =
