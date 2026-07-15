@@ -434,68 +434,108 @@ html, body {
 }
 
 
-.mapboxgl-popup-content {
-    background: #2b2b2b !important;
-    color: #fff;
-    opacity: 1 !important;
-    border: none !important;
-    border-radius: 10px !important;
-    padding: 0 !important;
-    overflow: hidden; /* Dış çerçeve için hidden */
-    box-shadow: 0 6px 16px rgba(0,0,0,.35) !important;
-    
-    /* Yeni eklenen özellikler */
-    max-height: 450px;    /* İsteğe bağlı yükseklik limiti */
-    overflow-y: auto;     /* İçerik taşarsa dikey kaydırma çubuğu çıkar */
+/* ===========================
+   MAPBOX POPUP
+=========================== */
+
+.mapboxgl-popup{
+    max-width:320px !important;
 }
 
-.mapboxgl-popup {
-    max-width: 320px !important; /* Genişliği biraz artırdık */
+.mapboxgl-popup-content{
+    background:#2b2b2b !important;
+    color:#fff;
+    border:none !important;
+    border-radius:10px !important;
+    padding:0 !important;
+    width:300px !important;
+    max-height:80vh !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    box-shadow:0 6px 16px rgba(0,0,0,.35) !important;
 }
 
-.ilan-detay-popup {
-    font-family: Tahoma, sans-serif;
-    border-radius: 5px !important;
-	width: 300px !important;
+.mapboxgl-popup-close-button{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:26px;
+    height:26px;
+    line-height:20px;
+    font-size:18px;
+    font-weight:bold;
+    color:#333;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:4px;
+    cursor:pointer;
+    opacity:.7;
+    z-index:9999;
+    transition:.2s;
 }
 
-.ilan-detay-popup::-webkit-scrollbar {
-    width: 6px;
-}
-.ilan-detay-popup::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 3px;
+.mapboxgl-popup-close-button:hover{
+    opacity:1;
+    background:#f3f3f3;
+    color:#000;
 }
 
-/* RESİM */
 
-.detay-slider {
-    position: relative;
-    width: calc(100% - 24px);
-    height: 200px; /* 320px'den 200px'e düşürdük */
-    margin: 12px auto 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f2f2f2;
-    border-radius: 10px;
-    overflow: hidden;
+/* ===========================
+   POPUP
+=========================== */
+
+.ilan-detay-popup{
+    width:100%;
+    font-family:Tahoma,sans-serif;
+    border-radius:5px;
+}
+
+.ilan-detay-popup::-webkit-scrollbar{
+    width:6px;
+}
+
+.ilan-detay-popup::-webkit-scrollbar-thumb{
+    background:#555;
+    border-radius:3px;
+}
+
+
+/* ===========================
+   RESİM
+=========================== */
+
+.detay-slider{
+    position:relative;
+    width:calc(100% - 24px);
+    height:200px;
+    margin:12px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f2f2f2;
+    border-radius:10px;
+    overflow:hidden;
 }
 
 .detay-resim{
     width:100%;
+    height:100%;
     object-fit:contain;
     display:block;
 }
 
-/* RESİM YOK */
+
+/* ===========================
+   RESİM YOK
+=========================== */
 
 .resim-yok{
     height:90px;
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     background:#f2f2f2;
     color:#777;
     font-size:13px;
@@ -506,7 +546,10 @@ html, body {
     font-size:28px;
 }
 
-/* BAŞLIK */
+
+/* ===========================
+   BAŞLIK
+=========================== */
 
 .detay-ust{
     display:flex;
@@ -514,38 +557,41 @@ html, body {
     align-items:center;
     gap:10px;
     padding:10px 12px;
-    border-bottom:1px solid #ececec;
+    border-bottom:1px solid rgba(255,255,255,.12);
 }
 
 .detay-baslik{
     flex:1;
+    color:#fff;
     font-size:13px;
     font-weight:400;
-    color:#fff;
-    line-height:1.2;
+    line-height:1.3;
 }
 
 .detay-fiyat{
     white-space:nowrap;
+    color:#56d364;
     font-size:12px;
     font-weight:400;
-    color:#56d364;
 }
 
-/* ÖZELLİKLER */
+
+/* ===========================
+   ÖZELLİKLER
+=========================== */
 
 .detay-ozellikler{
-    padding:4px 12px 8px;
+    padding:4px 12px 10px;
 }
 
 .ozellik{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:5px 0;
-    border-bottom:1px solid #f1f1f1;
+    padding:6px 0;
     font-size:12px;
-    line-height:1.15;
+    line-height:1.2;
+    border-bottom:1px solid rgba(255,255,255,.12);
 }
 
 .ozellik span{
@@ -554,18 +600,18 @@ html, body {
 
 .ozellik b{
     color:#56d364;
-    font-weight:300;
+    font-weight:400;
 }
 
-.ozellik{
-    border-bottom:1px solid rgba(255,255,255,.12);
-}
-/* BUTONLAR */
+
+/* ===========================
+   SLIDER BUTONLARI
+=========================== */
 
 .slider-sol,
 .slider-sag{
     position:absolute;
-    top:60%;
+    top:50%;
     transform:translateY(-50%);
     width:30px;
     height:30px;
@@ -573,7 +619,7 @@ html, body {
     border-radius:50%;
     background:rgba(0,0,0,.55);
     color:#fff;
-    font-size:22px;
+    font-size:20px;
     cursor:pointer;
     transition:.2s;
 }
@@ -591,32 +637,14 @@ html, body {
     background:#2563eb;
 }
 
-.mapboxgl-popup-close-button{
-    position:absolute;
-    top:12px;
-    right:15px;
-    width:26px;
-    height:22px;
-    line-height:6px;
-    font-size:20px;
-    font-weight:bold;
-    color:#333;
-    background:#fff;
-    border:1px solid #ddd;
-    border-radius:10%;
-    cursor:pointer;
-    z-index:9999;
-	opacity: 0.6;
-}
 
-.mapboxgl-popup-close-button:hover{
-    background:#f3f3f3;
-    color:#000;
-}
+/* ===========================
+   DETAY BUTONU
+=========================== */
 
 .detay-btn{
     width:100%;
-    height:30px;
+    height:32px;
     margin-top:8px;
     border:none;
     border-radius:7px;
@@ -627,6 +655,10 @@ html, body {
     font-weight:400;
     cursor:pointer;
     transition:.2s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
 }
 
 .detay-btn:hover{
@@ -637,18 +669,50 @@ html, body {
     transform:scale(.98);
 }
 
-.mapboxgl-popup-content {
-        max-height: 80vh !important; /* Ekran yüksekliğinin %80'i ile sınırla */
-        width: 210px !important;     /* Senin verdiğin 210px'e sabitle */
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
+
+/* ===========================
+   TABLET / MOBİL
+=========================== */
+
+@media (max-width:768px){
+
+    .mapboxgl-popup{
+        max-width:280px !important;
     }
 
-.detay-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
+    .mapboxgl-popup-content{
+        width:260px !important;
+        max-height:75vh !important;
+    }
+
+    .detay-slider{
+        height:170px;
+    }
+
+    .detay-baslik{
+        font-size:12px;
+    }
+
+    .detay-fiyat{
+        font-size:11px;
+    }
+
+    .ozellik{
+        font-size:11px;
+    }
+
+    .detay-btn{
+        height:30px;
+        font-size:12px;
+    }
+
+    .slider-sol,
+    .slider-sag{
+        width:28px;
+        height:28px;
+        font-size:18px;
+    }
+
 }
 
 </style>
