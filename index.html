@@ -1168,17 +1168,7 @@ map.on('load', () => {
 
 	}
 
-	new mapboxgl.Popup({
-		offset: 20,
-		closeButton: true,
-		closeOnClick: false,
-		closeOnMove: false,
-		maxWidth: "250px"
-	})
-
-	.setLngLat(ilan.coord)
-
-	.setHTML(`
+	modalAc(`
 
 	<div class="ilan-detay-popup">
 
@@ -1269,11 +1259,11 @@ map.on('load', () => {
 			</button>
 	</div>
 
-	`).addTo(map);
+	`);
 
 	}
 
-	});
+	
 
 	function detaySonraki(){
 
