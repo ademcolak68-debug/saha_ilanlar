@@ -434,47 +434,44 @@ html, body {
 }
 
 
-.mapboxgl-popup-content{
-    background:#2b2b2b !important;
-    border:1px solid #c8a96a;
-    color:#fff;
-    opacity:1 !important;
-    border:none !important;
-    border-radius:10px !important;
-    padding:0 !important;
-    overflow:hidden;
-    box-shadow:0 6px 16px rgba(0,0,0,.35) !important;
-}
-.mapboxgl-popup{
-    max-width:250px !important;
-}
-
-.mapboxgl-popup-content{
-    padding:0 !important;
-    border-radius:5px !important;
-    overflow:hidden;
-    background:#fff;
+.mapboxgl-popup-content {
+    background: #2b2b2b !important;
+    color: #fff;
+    opacity: 1 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+    overflow: hidden; /* Dış çerçeve için hidden */
+    box-shadow: 0 6px 16px rgba(0,0,0,.35) !important;
+    
+    /* Yeni eklenen özellikler */
+    max-height: 450px;    /* İsteğe bağlı yükseklik limiti */
+    overflow-y: auto;     /* İçerik taşarsa dikey kaydırma çubuğu çıkar */
 }
 
-.ilan-detay-popup{
-    width:230px;
-    font-family:Tahoma,sans-serif;
-	border-radius:5px !important;
+.mapboxgl-popup {
+    max-width: 320px !important; /* Genişliği biraz artırdık */
+}
+
+.ilan-detay-popup {
+    width: 320px; /* Genişliği biraz artırdık */
+    font-family: Tahoma, sans-serif;
+    border-radius: 5px !important;
 }
 
 /* RESİM */
 
-.detay-slider{
-    position:relative;
-    width:calc(100% - 24px);
-    height:320px;
-    margin:12px auto 15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#f2f2f2;
-    border-radius:10px;
-    overflow:hidden;
+.detay-slider {
+    position: relative;
+    width: calc(100% - 24px);
+    height: 200px; /* 320px'den 200px'e düşürdük */
+    margin: 12px auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .detay-resim{
