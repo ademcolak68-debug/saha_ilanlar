@@ -824,19 +824,11 @@ html, body {
     border-radius:8px;
 }
 
-.detay-video video{
+.detay-video{
     width:100%;
-    height:260px;
+    height:100%;
     object-fit:cover;
     display:block;
-    border-radius:8px;
-}
-@media (max-width:768px){
-
-    .detay-video video{
-        height:220px;
-    }
-
 }
 
 </style>
@@ -1376,15 +1368,15 @@ map.on('load', () => {
 
     let medya = window.detayMedya[window.detayIndex];
 
-    if(medya.endsWith(".mp4")){
-
-        alan.innerHTML = `
-        <video class="detay-resim" controls playsinline>
-            <source src="${medya}" type="video/mp4">
-        </video>
-        `;
-
-    }else{
+    if(medya.toLowerCase().endsWith(".mp4")){
+	
+	    alan.innerHTML = `
+	    <video class="detay-video" controls playsinline>
+	        <source src="${medya}" type="video/mp4">
+	    </video>
+	    `;
+	
+	}else{
 
         alan.innerHTML = `
         <img 
