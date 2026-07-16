@@ -72,6 +72,31 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 
     z-index:15;
 }
+
+body.harita-acik .tabs,
+body.harita-acik .tab-content:not(#konum),
+body.harita-acik .firma-imza,
+body.harita-acik .header-top{
+    display:none;
+}
+
+
+body.harita-acik #konum{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    z-index:9999;
+    background:#fff;
+}
+
+
+body.harita-acik #konum iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
 </style>
 </head>
 <body>
@@ -207,9 +232,9 @@ const medyaSayisi =
         Açıklama
         </button>
 
-        <button class="tab-btn" onclick="openTab(event,'konum')">
-        Konum
-        </button>
+        <button class="tab-btn" onclick="openTab(event,'konum'); haritaTamEkran()">
+		Konum
+		</button>
 
     </div>
 
@@ -255,7 +280,11 @@ function openTab(evt,id){
 
 }
 
+function haritaTamEkran(){
 
+    document.body.classList.add("harita-acik");
+
+}
 
 function sliderHazirla(){
 
