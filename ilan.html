@@ -142,17 +142,17 @@ body.harita-acik #konum iframe{
     let harita = "";
 
     if(d.koor){
-        const koordinat = d.koor.split(",");
-        const lng = koordinat[0];
-        const lat = koordinat[1];
-
-        harita = `
-		<div class="ilan-konum">
-		    <button onclick="googleHaritaAc(${lat},${lng})">
-		        Konumu Aç
-		    </button>
-		</div>`;
-    }
+	    const koordinat = d.koor.split(",");
+	    const lng = koordinat[0];
+	    const lat = koordinat[1];
+	
+	    window.ilanLat = lat;
+	    window.ilanLng = lng;
+	
+	    harita = `
+	    <div class="ilan-konum">
+	    </div>`;
+	}
 
     let aciklamaList = d.aciklama 
         ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('')
@@ -240,7 +240,7 @@ const medyaSayisi =
         Açıklama
         </button>
 
-        <button class="tab-btn" onclick="openTab(event,'konum'); haritaTamEkran()">
+        <button class="tab-btn" onclick="openTab(event,'konum'); googleHaritaAc()">
 		Konum
 		</button>
 
@@ -354,10 +354,12 @@ function move(dir){
 
 }
 
-function googleHaritaAc(lat,lng){
+function googleHaritaAc(){
+
+    if(!window.ilanLat || !window.ilanLng) return;
 
     window.open(
-        `https://www.google.com/maps?q=${lat},${lng}`,
+        `https://www.google.com/maps?q=${window.ilanLat},${window.ilanLng}`,
         "_blank"
     );
 
