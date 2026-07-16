@@ -125,6 +125,23 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 
     detayIndex = 0;
 
+	let medyaHtml = d.resimler
+    .map(r => `<img src="${r}" class="detay-resim">`)
+    .join("");
+
+if (d.videoUrl && d.videoUrl.trim() !== "") {
+
+    medyaHtml += `
+    <video class="detay-resim" controls playsinline preload="metadata">
+        <source src="${d.videoUrl}" type="video/mp4">
+    </video>
+    `;
+
+}
+
+const medyaSayisi =
+    d.resimler.length + (d.videoUrl && d.videoUrl.trim() !== "" ? 1 : 0);
+
     document.getElementById("ilanDetay").innerHTML = `
 
     <div class="header-top">
@@ -135,7 +152,7 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     <div class="slider-kapsul">
 
     <div class="detay-slider" id="slider">
-        ${d.resimler.map(r=>`<img src="${r}" class="detay-resim">`).join('')}
+        ${medyaHtml}
     </div>
 
     <button class="slider-btn" style="left:0" onclick="move(-1)">❮</button>
@@ -143,7 +160,7 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 
 
     <div class="resim-sayac" id="sayac">
-        1 / ${d.resimler.length}
+         1 / ${medyaSayisi}
     </div>
 
 </div>
