@@ -147,13 +147,11 @@ body.harita-acik #konum iframe{
         const lat = koordinat[1];
 
         harita = `
-        <div class="ilan-konum">
-            <h3>Konum</h3>
-            <iframe
-			src="https://www.google.com/maps?q=${lat},${lng}&z=16&output=embed"
-			loading="lazy">
-			</iframe>
-        </div>`;
+		<div class="ilan-konum">
+		    <button onclick="googleHaritaAc(${lat},${lng})">
+		        Konumu Aç
+		    </button>
+		</div>`;
     }
 
     let aciklamaList = d.aciklama 
@@ -353,6 +351,15 @@ function move(dir){
         left:detayIndex * slider.clientWidth,
         behavior:"smooth"
     });
+
+}
+
+function googleHaritaAc(lat,lng){
+
+    window.open(
+        `https://www.google.com/maps?q=${lat},${lng}`,
+        "_blank"
+    );
 
 }
 </script>
