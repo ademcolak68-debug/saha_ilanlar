@@ -60,7 +60,7 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     transform:translate(-50%,-50%) rotate(-28deg);
 
     font-family:Tahoma,sans-serif;
-    font-size:32px;
+    font-size:28px;
     font-weight:bold;
 
     color:rgba(255,255,255,.16);
@@ -262,9 +262,23 @@ function sliderHazirla(){
     const slider=document.getElementById("slider");
     const sayac=document.getElementById("sayac");
     const resimler=document.querySelectorAll(".detay-resim");
+    const filigran=document.getElementById("filigran");
 
     if(!slider || !sayac) return;
 
+    function filigranDurumu(){
+
+        const aktif = resimler[detayIndex];
+
+        if(aktif && aktif.tagName==="VIDEO"){
+            filigran.style.display="none";
+        }else{
+            filigran.style.display="block";
+        }
+
+    }
+
+    filigranDurumu();
 
     slider.addEventListener("scroll",()=>{
 
@@ -273,10 +287,11 @@ function sliderHazirla(){
         sayac.innerHTML=
         `${detayIndex+1} / ${resimler.length}`;
 
+        filigranDurumu();
+
     });
 
 }
-
 
 
 function move(dir){
