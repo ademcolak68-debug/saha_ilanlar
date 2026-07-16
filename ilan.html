@@ -48,6 +48,30 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 .aciklama-item::before{content:"✔ ";color:#d4af37}
 
 .ilan-konum iframe{width:100%;height:240px;border:0;border-radius:10px;margin-top:10px}
+
+.slider-kapsul{
+    position:relative;
+}
+
+.filigran{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-28deg);
+
+    font-family:Tahoma,sans-serif;
+    font-size:32px;
+    font-weight:bold;
+
+    color:rgba(255,255,255,.16);
+    text-shadow:0 2px 5px rgba(0,0,0,.45);
+
+    white-space:nowrap;
+    pointer-events:none;
+    user-select:none;
+
+    z-index:15;
+}
 </style>
 </head>
 <body>
@@ -150,6 +174,9 @@ const medyaSayisi =
     </div>
 
     <div class="slider-kapsul">
+	<div class="filigran" id="filigran">
+        NETmax Gayrimenkul
+    </div>
 
     <div class="detay-slider" id="slider">
         ${medyaHtml}
