@@ -73,40 +73,7 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     z-index:15;
 }
 
-body.harita-acik .tabs,
-body.harita-acik .tab-content:not(#konum),
-body.harita-acik .firma-imza,
-body.harita-acik .header-top{
-    display:none;
-}
 
-
-body.harita-acik #konum{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    z-index:9999;
-    background:#fff;
-    padding:0;
-}
-
-
-body.harita-acik #konum .ilan-konum{
-    width:100%;
-    height:100vh;
-    margin:0;
-    padding:0;
-}
-
-
-body.harita-acik #konum iframe{
-    width:100%;
-    height:100vh;
-    border:0;
-    display:block;
-}
 </style>
 </head>
 <body>
@@ -142,18 +109,19 @@ body.harita-acik #konum iframe{
     let harita = "";
 
     if(d.koor){
-	    const koordinat = d.koor.split(",");
-	    const lng = koordinat[0];
-	    const lat = koordinat[1];
-	
-	    window.ilanLat = lat;
-	    window.ilanLng = lng;
-	
-	    harita = `
-	    <div class="ilan-konum">
-	        <p>Konum için sekmeye tıklayınız.</p>
-	    </div>`;
-	}
+		    const koordinat = d.koor.split(",");
+		    const lng = koordinat[0];
+		    const lat = koordinat[1];
+		
+		    harita = `
+		    <div class="ilan-konum">
+		        <h3>Konum</h3>
+		        <iframe
+		        src="https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed"
+		        loading="lazy">
+		        </iframe>
+		    </div>`;
+		}
 
     let aciklamaList = d.aciklama 
         ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('')
@@ -241,7 +209,7 @@ const medyaSayisi =
         Açıklama
         </button>
 
-        <button class="tab-btn" onclick="googleHaritaAc()">
+        <button class="tab-btn" onclick="openTab(event,'konum')">
 		Konum
 		</button>
 
@@ -355,16 +323,7 @@ function move(dir){
 
 }
 
-function googleHaritaAc(){
 
-    if(!window.ilanLat || !window.ilanLng) return;
-
-    window.open(
-        `https://maps.google.com/maps?q=${window.ilanLat},${window.ilanLng}&z=16`,
-        "_blank"
-    );
-
-}
 </script>
 </body>
 </html>
