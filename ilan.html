@@ -73,6 +73,78 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     z-index:15;
 }
 
+.ust-bar{
+    height:52px;
+    background:#1b4d3e;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    font-family:Tahoma,sans-serif;
+    font-size:17px;
+    font-weight:bold;
+    letter-spacing:.5px;
+}
+
+.menu-btn{
+    position:absolute;
+    left:15px;
+    font-size:24px;
+    cursor:pointer;
+    user-select:none;
+}
+
+.menu-panel{
+    position:fixed;
+    top:0;
+    left:-260px;
+    width:250px;
+    height:100%;
+    background:#fff;
+    box-shadow:3px 0 15px rgba(0,0,0,.25);
+    transition:.3s;
+    z-index:999999;
+    overflow:auto;
+}
+
+.menu-panel.acik{
+    left:0;
+}
+
+.menu-header{
+    background:#1b4d3e;
+    color:#fff;
+    padding:18px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.menu-link{
+    display:block;
+    padding:15px 18px;
+    color:#333;
+    text-decoration:none;
+    border-bottom:1px solid #eee;
+    font-size:15px;
+}
+
+.menu-link:hover{
+    background:#f5f5f5;
+}
+
+.menu-kapat{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.35);
+    display:none;
+    z-index:999998;
+}
+
+.menu-kapat.acik{
+    display:block;
+}
+
 
 </style>
 </head>
@@ -87,6 +159,28 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
         <div class="yukleme-cubuk"></div>
     </div>
 </div>
+
+<div class="ust-bar">
+
+    <div class="menu-btn" onclick="menuAc()">☰</div>
+
+    İLAN DETAYI
+
+</div>
+
+<div class="menu-panel" id="menuPanel">
+
+    <div class="menu-header">
+        NETmax Gayrimenkul
+    </div>
+
+    <a href="index.html" class="menu-link">
+        🏠 Sitemiz
+    </a>
+
+</div>
+
+<div class="menu-kapat" id="menuKapat" onclick="menuKapat()"></div>
 
 <div id="ilanDetay" class="container"></div>
 
@@ -340,6 +434,23 @@ function move(dir){
         left:detayIndex * slider.clientWidth,
         behavior:"smooth"
     });
+
+}
+
+
+function menuAc(){
+
+    document.getElementById("menuPanel").classList.add("acik");
+
+    document.getElementById("menuKapat").classList.add("acik");
+
+}
+
+function menuKapat(){
+
+    document.getElementById("menuPanel").classList.remove("acik");
+
+    document.getElementById("menuKapat").classList.remove("acik");
 
 }
 
