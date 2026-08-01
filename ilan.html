@@ -172,7 +172,8 @@ const medyaSayisi =
 
     <div class="header-top">
         ${d.baslik || "İLAN DETAYI"}<br>
-        ${d.il || ""} / ${d.ilce || ""}
+        ${(d.durum || "").toUpperCase()} • ${d.konutSekli || ""} • ${d["Oda Sayısı"] || ""}
+
     </div>
 
     <div class="slider-kapsul">
