@@ -107,6 +107,17 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     function render(d) {
 
     let harita = "";
+	let altBaslik = d.durum || "";
+
+    if (d.konutSekli) {
+        altBaslik += " • " + d.konutSekli;
+    } else if (d.tip) {
+        altBaslik += " • " + d.tip;
+    }
+
+    if (d["Oda Sayısı"]) {
+        altBaslik += " • " + d["Oda Sayısı"];
+    }
 
     if(d.koor){
 		    const koordinat = d.koor.split(",");
@@ -172,7 +183,7 @@ const medyaSayisi =
 
     <div class="header-top">
         ${d.baslik || "İLAN DETAYI"}<br>
-        ${(d.durum || "").toUpperCase()} • ${d.konutSekli || ""} • ${d["Oda Sayısı"] || ""}
+        ${altBaslik}
 
     </div>
 
