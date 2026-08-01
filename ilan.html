@@ -179,6 +179,19 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
+.share-btn{
+    position:absolute;
+    right:15px;
+    font-size:22px;
+    cursor:pointer;
+    color:#fff;
+    transition:.25s;
+}
+
+.share-btn:hover{
+    transform:scale(1.08);
+}
+
 </style>
 </head>
 <body>
@@ -198,6 +211,10 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     <div class="menu-btn" onclick="menuAc()">☰</div>
 
     İLAN DETAYI
+
+	<div class="share-btn" onclick="ilanPaylas()">
+        <i class="fa-solid fa-share-nodes"></i>
+    </div>
 
 </div>
 
@@ -493,6 +510,40 @@ function menuKapat(){
     document.getElementById("menuPanel").classList.remove("acik");
 
     document.getElementById("menuKapat").classList.remove("acik");
+
+}
+
+async function ilanPaylas(){
+
+    const baslik = document.title;
+
+    const metin = document.querySelector(".header-top").innerText;
+
+    const link = window.location.href;
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share({
+
+                title: baslik,
+
+                text: metin,
+
+                url: link
+
+            });
+
+        }catch(e){}
+
+    }else{
+
+        navigator.clipboard.writeText(link);
+
+        alert("İlan bağlantısı kopyalandı.");
+
+    }
 
 }
 
