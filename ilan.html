@@ -82,7 +82,9 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     align-items:center;
     justify-content:center;
 
-    position:relative;
+    position:sticky;
+    top:0;
+    z-index:9999;
 
     font-family:'Titillium Web',sans-serif;
     font-size:20px;
@@ -165,6 +167,16 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     color:#1b4d3e;
     width:30px;
     text-align:center;
+}
+
+.header-sabit{
+    position:sticky;
+    top:52px;          /* .ust-bar yüksekliği */
+    z-index:9998;
+
+    background:#fff;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 </style>
@@ -305,11 +317,12 @@ const medyaSayisi =
 
     document.getElementById("ilanDetay").innerHTML = `
 
+<div class="header-sabit">
     <div class="header-top">
         ${d.baslik || "İLAN DETAYI"}<br>
         ${altBaslik}
-
     </div>
+</div>
 
     <div class="slider-kapsul">
 	<div class="filigran" id="filigran">
