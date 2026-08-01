@@ -107,17 +107,25 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     function render(d) {
 
     let harita = "";
-	let altBaslik = d.durum || "";
+	let altBaslik = "";
 
-    if (d.konutSekli) {
-        altBaslik += " • " + d.konutSekli;
-    } else if (d.tip) {
-        altBaslik += " • " + d.tip;
-    }
-
-    if (d["Oda Sayısı"]) {
-        altBaslik += " • " + d["Oda Sayısı"];
-    }
+	if (d.durum === "satilik") {
+	    altBaslik = "SATILIK";
+	} else if (d.durum === "kiralik") {
+	    altBaslik = "KİRALIK";
+	} else {
+	    altBaslik = d.durum || "";
+	}
+	
+	if (d.konutSekli) {
+	    altBaslik += " • " + d.konutSekli;
+	} else if (d.tip) {
+	    altBaslik += " • " + d.tip;
+	}
+	
+	if (d["Oda Sayısı"]) {
+	    altBaslik += " • " + d["Oda Sayısı"];
+	}
 
     if(d.koor){
 		    const koordinat = d.koor.split(",");
