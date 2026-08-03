@@ -1202,8 +1202,10 @@ map.on('load', () => {
 	    medyaListesi = [...d.resimler];
 	}
 	
-	if(d.videoUrl){
-	    medyaListesi.push(d.videoUrl);
+	if (Array.isArray(d.videoUrl)) {
+    medyaListesi.push(...d.videoUrl);
+	} else if (d.videoUrl) {
+    medyaListesi.push(d.videoUrl);
 	}
 
 	if(medyaListesi.length > 0){
@@ -1371,10 +1373,6 @@ map.on('load', () => {
     if(!alan || !window.detayMedya) return;
 
     let medya = window.detayMedya[window.detayIndex];
-
-	console.log(medya);
-console.log(typeof medya);
-console.log(Array.isArray(medya));
 
     if(medya.toLowerCase().endsWith(".mp4")){
 	
