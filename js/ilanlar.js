@@ -36,5 +36,47 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "Evet",
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": "Hayır"
+    },
+    {
+        "id": 1785784345315,
+        "baslik": "Küçük Bölcek Mahallesinde ",
+        "durum": "kiralik",
+        "tip": "Konut",
+        "konutTipi": "Apartman Dairesi",
+        "konutSekli": "Daire",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Küçükbölcek",
+        "fiyat": "15.000",
+        "paraBirimi": "TL",
+        "aciklama": "Görüntülü Diyafon,Çelik Kapı,Lake İç Kapılar,Laminant Parke,Kaliteli Duvar Kağıdı,Mutfak Dolabı,Beko Marka Ankastre,Şık Banyo Dolabı,Duşakabin",
+        "koor": "33.998914, 38.37867",
+        "klasorIsmi": "Bayram Kav Kiralık",
+        "resimler": [
+            "images/Bayram Kav Kiralık/1.jpeg",
+            "images/Bayram Kav Kiralık/2.jpeg",
+            "images/Bayram Kav Kiralık/3.jpeg",
+            "images/Bayram Kav Kiralık/4.jpeg",
+            "images/Bayram Kav Kiralık/5.jpeg",
+            "images/Bayram Kav Kiralık/6.jpeg",
+            "images/Bayram Kav Kiralık/7.jpeg",
+            "images/Bayram Kav Kiralık/8.jpeg",
+            "images/Bayram Kav Kiralık/9.jpeg"
+        ],
+        "videoUrl": [
+            "images/Bayram Kav Kiralık/video_1785784362822_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-03",
+        "M²": "40",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "1+1",
+        "Bina Yaşı": "1",
+        "Bulunduğu Kat": "4 ve 5",
+        "Kat Sayısı": "5",
+        "Isıtma": "Kombi",
+        "Eşyalı mı?": "Evet",
+        "Kullanım Durumu": "Boş",
+        "Site İçerisinde?": "Hayır"
     }
 ];
