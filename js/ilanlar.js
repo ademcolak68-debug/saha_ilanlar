@@ -86,5 +86,39 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-2026-0002"
         }
+    },
+    {
+        "id": 1785799151423,
+        "baslik": "Deneme",
+        "durum": "kiralik",
+        "tip": "isyeri",
+        "konutTipi": "Dükkan",
+        "konutSekli": "",
+        "il": "",
+        "ilce": "",
+        "mahalle": "Büyükbölcek",
+        "fiyat": "",
+        "paraBirimi": "",
+        "aciklama": "",
+        "koor": "34.008786, 38.369883",
+        "klasorIsmi": "",
+        "resimler": [],
+        "videoUrl": "",
+        "İlan Tarihi": "",
+        "yetki": {
+            "durum": false,
+            "yetkiNo": "NET-YTK-1785799151423"
+        },
+        "M²": "",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
     }
 ];
