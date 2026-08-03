@@ -348,7 +348,10 @@ if (Array.isArray(d.videoUrl)) {
 }
 
 const medyaSayisi =
-    d.resimler.length + (d.videoUrl && d.videoUrl.trim() !== "" ? 1 : 0);
+    d.resimler.length +
+    (Array.isArray(d.videoUrl)
+        ? d.videoUrl.length
+        : (typeof d.videoUrl === "string" && d.videoUrl.trim() !== "" ? 1 : 0));
 
     document.getElementById("ilanDetay").innerHTML = `
 
