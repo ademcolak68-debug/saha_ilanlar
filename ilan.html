@@ -321,7 +321,11 @@ if (d.yetki && d.yetki.durum) {
 
 }
 
-let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
+let ozellikler = "";
+
+if(d.fiyat){
+    ozellikler += row("Fiyat", d.fiyat + " " + (d.paraBirimi || ""));
+}
 
     const gosterilecekler = [
         "İlan Tarihi",
@@ -468,7 +472,13 @@ const medyaSayisi =
 
 
 function row(label,val){
-    return `<div class="ozellik"><span>${label}</span><span>${val}</span></div>`;
+
+    if(!val) return "";
+
+    return `<div class="ozellik">
+        <span>${label}</span>
+        <span>${val}</span>
+    </div>`;
 }
 
 
