@@ -541,6 +541,14 @@ button {
 			<label>İlan Tarihi</label>
 			<input id="ilanTarihi" type="date">
 		</div>
+
+		<div class="field">
+		    <label>İlan Yetki Durumu</label>
+		    <select id="yetkiDurumu">
+		        <option value="true">Yetkili</option>
+		        <option value="false">Pasif</option>
+		    </select>
+		</div>
 		
 		<div class="field">
 			<label>M²</label>
@@ -706,6 +714,10 @@ function getFormData() {
         resimler: [], 
         videoUrl: "", 
         "İlan Tarihi": document.getElementById('ilanTarihi').value,
+		yetki: {
+		    durum: document.getElementById('yetkiDurumu').value === "true",
+		    yetkiNo: "NET-YTK-" + (duzenlenenId || Date.now())
+		},
         "M²": document.getElementById('m2').value,
 		"Ada": document.getElementById('ada').value,
         "Parsel": document.getElementById('parsel').value,
