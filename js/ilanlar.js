@@ -86,39 +86,5 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-2026-0002"
         }
-    },
-    {
-        "id": 1785798422581,
-        "baslik": "Deneme",
-        "durum": "satilik",
-        "tip": "Arsa",
-        "konutTipi": "",
-        "konutSekli": "",
-        "il": "",
-        "ilce": "",
-        "mahalle": "Büyükbölcek",
-        "fiyat": "",
-        "paraBirimi": "",
-        "aciklama": "",
-        "koor": "34.008803, 38.369855",
-        "klasorIsmi": "",
-        "resimler": [],
-        "videoUrl": "",
-        "İlan Tarihi": "",
-        "yetki": {
-            "durum": true,
-            "yetkiNo": "NET-YTK-1785798422586"
-        },
-        "M²": "",
-        "Ada": "",
-        "Parsel": "",
-        "Oda Sayısı": "",
-        "Bina Yaşı": "",
-        "Bulunduğu Kat": "",
-        "Kat Sayısı": "",
-        "Isıtma": "",
-        "Eşyalı mı?": "",
-        "Kullanım Durumu": "",
-        "Site İçerisinde?": ""
     }
 ];
