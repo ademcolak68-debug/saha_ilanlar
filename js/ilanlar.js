@@ -35,7 +35,11 @@ const ilanlarVerisi = [
         "Isıtma": "Merkezi",
         "Eşyalı mı?": "Evet",
         "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Hayır"
+        "Site İçerisinde?": "Hayır",
+        "yetki": {
+        "durum": false,
+        "yetkiNo": "NET-YTK-2026-0001"
+        }
     },
     {
         "id": 1785784345315,
@@ -80,7 +84,7 @@ const ilanlarVerisi = [
         "Site İçerisinde?": "Hayır",
         "yetki": {
             "durum": true,
-            "yetkiNo": "NET-YTK-2026-0001"
+            "yetkiNo": "NET-YTK-2026-0002"
         }
     }
 ];
