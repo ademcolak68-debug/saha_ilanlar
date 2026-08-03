@@ -1427,23 +1427,53 @@ map.on('load', () => {
 
 }
 
-	function ilanPaylas(id){
+	async function ilanPaylas(id){
+
+    const ilan = ilanlarVerisi.find(x => x.id === id);
+
+    if(!ilan) return;
+
+
+    const baslik = "NETmax Gayrimenkul";
+
+
+    const metin =
+`${ilan.baslik || "İlan Detayı"}
+
+${ilan.durum ? ilan.durum.toUpperCase() : ""} ${ilan.tip ? ilan.tip.toUpperCase() : ""}
+
+${ilan.il || ""} ${ilan.ilce || ""} ${ilan.mahalle || ""}`;
+
 
     const link =
-        `${location.origin}${location.pathname.replace("index.html","")}ilan.html?id=${id}`;
+    `${location.origin}${location.pathname.replace("index.html","")}ilan.html?id=${id}`;
 
-    const mesaj =
-`İlanı incelemek için aşağıdaki bağlantıya tıklayın.
 
-${link}`;
+    if(navigator.share){
 
-    window.open(
-        `https://wa.me/?text=${encodeURIComponent(mesaj)}`,
-        "_blank"
-    );
+        try{
+
+            await navigator.share({
+
+                title: baslik,
+
+                text: metin,
+
+                url: link
+
+            });
+
+        }catch(e){}
+
+    }else{
+
+        navigator.clipboard.writeText(link);
+
+        alert("İlan bağlantısı kopyalandı.");
+
+    }
 
 }
-
 </script>
 
 </body>
