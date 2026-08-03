@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Yetki Doğrulama</title>
+</head>
+
+<body>
+
+<div id="sonuc">
+Kontrol ediliyor...
+</div>
+
+
+<script src="js/ilanlar.js"></script>
+
+
+<script>
+
+const id =
+Number(new URLSearchParams(location.search).get("id"));
+
+
+const ilan =
+ilanlarVerisi.find(x => x.id === id);
+
+
+const sonuc =
+document.getElementById("sonuc");
+
+
+if(ilan && ilan.yetki && ilan.yetki.durum){
+
+    sonuc.innerHTML = `
+
+    <h2>NETmax Gayrimenkul</h2>
+
+    <h3 style="color:green">
+    ✓ Yetkili İlan Doğrulandı
+    </h3>
+
+    <p>
+    <b>İlan:</b><br>
+    ${ilan.baslik}
+    </p>
+
+    <p>
+    <b>Yetki No:</b><br>
+    ${ilan.yetki.yetkiNo}
+    </p>
+
+    `;
+
+}else{
+
+    sonuc.innerHTML = `
+    <h3>Yetki Bulunamadı</h3>
+    `;
+
+}
+
+</script>
+
+</body>
+</html>
