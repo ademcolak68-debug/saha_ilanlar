@@ -120,5 +120,39 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "",
         "Kullanım Durumu": "",
         "Site İçerisinde?": ""
+    },
+    {
+        "id": 1785799387664,
+        "baslik": "",
+        "durum": "",
+        "tip": "",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "",
+        "ilce": "",
+        "mahalle": "Büyükbölcek",
+        "fiyat": "",
+        "paraBirimi": "",
+        "aciklama": "",
+        "koor": "34.008735, 38.370012",
+        "klasorIsmi": "",
+        "resimler": [],
+        "videoUrl": "",
+        "İlan Tarihi": "",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1785799387664"
+        },
+        "M²": "",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
     }
 ];
