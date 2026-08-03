@@ -296,10 +296,25 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 		}
 
     let aciklamaList = d.aciklama 
-        ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('')
-        : "Açıklama girilmemiştir.";
+    ? d.aciklama.split(',').map(item => `<div class="aciklama-item">${item.trim()}</div>`).join('')
+    : "Açıklama girilmemiştir.";
 
-    let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
+let yetkiHtml = "";
+
+if (d.yetki && d.yetki.durum) {
+
+    yetkiHtml = `
+    <div class="yetkili-ilan">
+        <i class="fa-solid fa-circle-check"></i>
+        Yetkili İlan
+        <br>
+        Yetki No: ${d.yetki.yetkiNo}
+    </div>
+    `;
+
+}
+
+let ozellikler = row("Fiyat", d.fiyat + " " + d.paraBirimi);
 
     const gosterilecekler = [
         "İlan Tarihi",
@@ -381,10 +396,11 @@ const medyaSayisi =
 
 </div>
 
-
+	
     <div class="firma-imza">
         NETmax GAYRİMENKUL
     </div>
+	${yetkiHtml}
 
     <div class="tabs">
 
