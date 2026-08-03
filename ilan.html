@@ -193,6 +193,13 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     transform:scale(1.08);
 }
 
+.yetki-bilgi{
+    margin-top:5px;
+    font-family:inherit;
+    font-size:inherit;
+    font-weight:inherit;
+}
+
 </style>
 </head>
 <body>
@@ -304,10 +311,8 @@ let yetkiHtml = "";
 if (d.yetki && d.yetki.durum) {
 
     yetkiHtml = `
-    <div class="yetkili-ilan">
-        <i class="fa-solid fa-circle-check"></i>
-        Yetkili İlan
-        <br>
+    <div class="yetki-bilgi">
+        ✓ Yetkili İlan<br>
         Yetki No: ${d.yetki.yetkiNo}
     </div>
     `;
@@ -399,8 +404,8 @@ const medyaSayisi =
 	
     <div class="firma-imza">
         NETmax GAYRİMENKUL
+		${yetkiHtml}
     </div>
-	${yetkiHtml}
 
     <div class="tabs">
 
