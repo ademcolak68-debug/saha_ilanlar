@@ -1372,6 +1372,10 @@ map.on('load', () => {
 
     let medya = window.detayMedya[window.detayIndex];
 
+	console.log(medya);
+console.log(typeof medya);
+console.log(Array.isArray(medya));
+
     if(medya.toLowerCase().endsWith(".mp4")){
 	
 	    alan.innerHTML = `
