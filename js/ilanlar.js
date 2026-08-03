@@ -77,6 +77,10 @@ const ilanlarVerisi = [
         "Isıtma": "Kombi",
         "Eşyalı mı?": "Evet",
         "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Hayır"
+        "Site İçerisinde?": "Hayır",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-2026-0001"
+        }
     }
 ];
