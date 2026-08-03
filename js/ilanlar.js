@@ -49,7 +49,7 @@ const ilanlarVerisi = [
         "mahalle": "Küçükbölcek",
         "fiyat": "15.000",
         "paraBirimi": "TL",
-        "aciklama": "Görüntülü Diyafon,Çelik Kapı,Lake İç Kapılar,Laminant Parke,Kaliteli Duvar Kağıdı,Mutfak Dolabı,Beko Marka Ankastre,Şık Banyo Dolabı,Duşakabin",
+        "aciklama": "Daireler 4 ve 5 ci katlarda,Muhtelif metrekarelerde eşyalı ve esyasız, Eşyalı olanlar 15000 eşyasızlar 11000 TL,Görüntülü Diyafon,Çelik Kapı,Lake İç Kapılar,Laminant Parke,Kaliteli Duvar Kağıdı,Mutfak Dolabı,Beko Marka Ankastre,Şık Banyo Dolabı,Duşakabin",
         "koor": "33.998914, 38.37867",
         "klasorIsmi": "Bayram Kav Kiralık",
         "resimler": [
