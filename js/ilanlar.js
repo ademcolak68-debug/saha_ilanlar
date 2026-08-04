@@ -134,53 +134,6 @@ const ilanlarVerisi = [
         "Site İçerisinde?": "Hayır"
     },
     {
-        "id": 1785872632085,
-        "baslik": "Paşacık Mahallesinde",
-        "durum": "kiralik",
-        "tip": "Konut",
-        "konutTipi": "Apartman Dairesi",
-        "konutSekli": "Daire",
-        "il": "Aksaray",
-        "ilce": "Merkez",
-        "mahalle": "Paşacık",
-        "fiyat": "20.000",
-        "paraBirimi": "TL",
-        "aciklama": "Gülümsepark Civarında",
-        "koor": " 34.018629,38.355606",
-        "klasorIsmi": "gulumsepark",
-        "resimler": [
-            "images/gulumsepark/1.jpeg",
-            "images/gulumsepark/2.jpeg",
-            "images/gulumsepark/3.jpeg",
-            "images/gulumsepark/4.jpeg",
-            "images/gulumsepark/5.jpeg",
-            "images/gulumsepark/6.jpeg",
-            "images/gulumsepark/7.jpeg",
-            "images/gulumsepark/8.jpeg",
-            "images/gulumsepark/9.jpeg",
-            "images/gulumsepark/10.jpeg"
-        ],
-        "videoUrl": [
-            "images/gulumsepark/video_1785872650267_0.mp4"
-        ],
-        "İlan Tarihi": "2026-08-04",
-        "yetki": {
-            "durum": false,
-            "yetkiNo": "NET-YTK-1785872632085"
-        },
-        "M²": "80",
-        "Ada": "",
-        "Parsel": "",
-        "Oda Sayısı": "2+1",
-        "Bina Yaşı": "1",
-        "Bulunduğu Kat": "1",
-        "Kat Sayısı": "5",
-        "Isıtma": "Kombi",
-        "Eşyalı mı?": "Hayır",
-        "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Hayır"
-    },
-    {
         "id": 1785872829217,
         "baslik": "Paşacık Mahallesinde",
         "durum": "kiralik",
