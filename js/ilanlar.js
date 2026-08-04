@@ -38,7 +38,7 @@ const ilanlarVerisi = [
         "Site İçerisinde?": "Hayır",
         "yetki": {
             "durum": false,
-            "yetkiNo": "NET-YTK-2026-0001"
+            "yetkiNo": "NET-YTK-1784039479315"
         }
     },
     {
@@ -84,7 +84,7 @@ const ilanlarVerisi = [
         "Site İçerisinde?": "Hayır",
         "yetki": {
             "durum": true,
-            "yetkiNo": "NET-YTK-2026-0002"
+            "yetkiNo": "NET-YTK-1785784345315"
         }
     }
 ];
