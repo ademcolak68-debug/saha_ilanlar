@@ -145,7 +145,7 @@ const ilanlarVerisi = [
         "mahalle": "Paşacıkk",
         "fiyat": "20.000",
         "paraBirimi": "TL",
-        "aciklama": "Gülümse Parkı Civarında",
+        "aciklama": "Gülümse Parkı Civarında,Zemin kat üstü ",
         "koor": "34.018623, 38.355615",
         "klasorIsmi": "gulumsepark",
         "resimler": [
@@ -165,8 +165,8 @@ const ilanlarVerisi = [
         ],
         "İlan Tarihi": "2026-08-04",
         "yetki": {
-            "durum": false,
-            "yetkiNo": "NET-YTK-1785874099366"
+            "durum": true,
+            "yetkiNo": "NET-YTK-1785874099365"
         },
         "M²": "80",
         "Ada": "",
