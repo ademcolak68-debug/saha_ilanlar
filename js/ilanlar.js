@@ -86,5 +86,51 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1785784345315"
         }
+    },
+    {
+        "id": 1785871007246,
+        "baslik": "Küçük Bölcek Mahallesinde ",
+        "durum": "satilik",
+        "tip": "Konut",
+        "konutTipi": "Apartman Dairesi",
+        "konutSekli": "Daire",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Küçükbölcek",
+        "fiyat": "2.100.000",
+        "paraBirimi": "TL",
+        "aciklama": "Daireler 4 ve 5 ci katlarda,Muhtelif metrekarelerde ,Görüntülü Diyafon,Çelik Kapı,Lake İç Kapılar,Laminant Parke,Kaliteli Duvar Kağıdı,Mutfak Dolabı,Beko Marka Ankastre,Şık Banyo Dolabı,Duşakabin",
+        "koor": "33.999011, 38.378726",
+        "klasorIsmi": "Bayram Kav Satılık",
+        "resimler": [
+            "images/Bayram Kav Satılık/1.jpeg",
+            "images/Bayram Kav Satılık/2.jpeg",
+            "images/Bayram Kav Satılık/3.jpeg",
+            "images/Bayram Kav Satılık/4.jpeg",
+            "images/Bayram Kav Satılık/5.jpeg",
+            "images/Bayram Kav Satılık/6.jpeg",
+            "images/Bayram Kav Satılık/7.jpeg",
+            "images/Bayram Kav Satılık/8.jpeg",
+            "images/Bayram Kav Satılık/9.jpeg"
+        ],
+        "videoUrl": [
+            "images/Bayram Kav Satılık/video_1785871027653_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-04",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1785871007247"
+        },
+        "M²": "40",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "1+1",
+        "Bina Yaşı": "1",
+        "Bulunduğu Kat": "4 ve 5",
+        "Kat Sayısı": "5",
+        "Isıtma": "Kombi",
+        "Eşyalı mı?": "Hayır",
+        "Kullanım Durumu": "Boş",
+        "Site İçerisinde?": "Hayır"
     }
 ];
