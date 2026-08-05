@@ -166,9 +166,20 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 
 .menu-link i{
     font-size:24px;
-    color:#1b4d3e;
     width:30px;
     text-align:center;
+}
+.menu-site{
+    color:#1976d2;
+}
+
+.menu-konum{
+    color:#e53935;
+}
+
+.menu-paylas{
+    color:#43a047;
+    font-size:18px;
 }
 
 .header-sabit{
@@ -203,7 +214,7 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 }
 
 .menu-link .fa-share-nodes{
-    font-size:18px;
+    font-size:20px;
     color:#666;
     cursor:pointer;
     transition:.2s;
@@ -246,18 +257,19 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     </div>
 
 <a href="https://netmaxgayrimenkul-ctrl.github.io/ilanlar-site/" class="menu-link">
-    <i class="fa-solid fa-house"></i>
+    <i class="fa-solid fa-house menu-site"></i>
     <span>Sitemiz</span>
 </a>
+
 <a href="https://www.google.com/maps?q=NETmax+Gayrimenkul+Aksaray"
    target="_blank"
    class="menu-link">
 
-    <i class="fa-solid fa-location-dot"></i>
+    <i class="fa-solid fa-location-dot menu-konum"></i>
 
     <span style="flex:1;">Konumumuz</span>
 
-    <i class="fa-solid fa-share-nodes"
+    <i class="fa-solid fa-share-nodes menu-paylas"
        onclick="event.preventDefault();event.stopPropagation();konumPaylas();">
     </i>
 
