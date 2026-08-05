@@ -202,6 +202,17 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     font-weight:inherit;
 }
 
+.menu-link .fa-share-nodes{
+    font-size:18px;
+    color:#666;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu-link .fa-share-nodes:hover{
+    color:#1b4d3e;
+}
+
 </style>
 </head>
 <body>
@@ -239,11 +250,17 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     <span>Sitemiz</span>
 </a>
 <a href="https://www.google.com/maps?q=NETmax+Gayrimenkul+Aksaray"
-   class="menu-link"
    target="_blank"
-   rel="noopener">
+   class="menu-link">
+
     <i class="fa-solid fa-location-dot"></i>
-    <span>Konumumuz</span>
+
+    <span style="flex:1;">Konumumuz</span>
+
+    <i class="fa-solid fa-share-nodes"
+       onclick="event.preventDefault();event.stopPropagation();konumPaylas();">
+    </i>
+
 </a>
 
 </div>
@@ -609,6 +626,32 @@ async function ilanPaylas(){
         navigator.clipboard.writeText(link);
 
         alert("İlan bağlantısı kopyalandı.");
+
+    }
+
+}
+
+async function konumPaylas(){
+
+    const url="https://www.google.com/maps?q=NETmax+Gayrimenkul+Aksaray";
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share({
+                title:"NETmax Gayrimenkul",
+                text:"NETmax Gayrimenkul Konumu",
+                url:url
+            });
+
+        }catch(e){}
+
+    }else{
+
+        navigator.clipboard.writeText(url);
+
+        alert("Konum bağlantısı panoya kopyalandı.");
 
     }
 
