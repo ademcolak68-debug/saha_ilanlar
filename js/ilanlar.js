@@ -192,7 +192,7 @@ const ilanlarVerisi = [
         "mahalle": "Bahçesaray",
         "fiyat": "10.700.000",
         "paraBirimi": "TL",
-        "aciklama": "Kiracılı ",
+        "aciklama": "",
         "koor": "33.998987, 38.311604",
         "klasorIsmi": "Sanayide dukkan",
         "resimler": [
