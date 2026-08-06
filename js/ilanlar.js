@@ -179,5 +179,41 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "Hayır",
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": "Hayır"
+    },
+    {
+        "id": 1786029925787,
+        "baslik": "Küçük Sanayide ",
+        "durum": "satilik",
+        "tip": "isyeri",
+        "konutTipi": "Dükkan",
+        "konutSekli": "",
+        "il": "Aksaray ",
+        "ilce": "Merkez",
+        "mahalle": "Bahçesaray",
+        "fiyat": "12.000.000",
+        "paraBirimi": "TL",
+        "aciklama": "Kiracılı ",
+        "koor": "33.998987, 38.311604",
+        "klasorIsmi": "Sanayide dukkan",
+        "resimler": [
+            "images/Sanayide dukkan/1.jpg"
+        ],
+        "videoUrl": "",
+        "İlan Tarihi": "2026-08-06",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1786029925789"
+        },
+        "M²": "200",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
     }
 ];
