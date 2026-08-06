@@ -190,7 +190,7 @@ const ilanlarVerisi = [
         "il": "Aksaray ",
         "ilce": "Merkez",
         "mahalle": "Bahçesaray",
-        "fiyat": "12.000.000",
+        "fiyat": "10.700.000",
         "paraBirimi": "TL",
         "aciklama": "Kiracılı ",
         "koor": "33.998987, 38.311604",
@@ -202,7 +202,7 @@ const ilanlarVerisi = [
         "İlan Tarihi": "2026-08-06",
         "yetki": {
             "durum": true,
-            "yetkiNo": "NET-YTK-1786029925789"
+            "yetkiNo": "NET-YTK-1786029925787"
         },
         "M²": "200",
         "Ada": "",
@@ -213,7 +213,7 @@ const ilanlarVerisi = [
         "Kat Sayısı": "",
         "Isıtma": "",
         "Eşyalı mı?": "",
-        "Kullanım Durumu": "",
+        "Kullanım Durumu": "Kiracılı",
         "Site İçerisinde?": ""
     }
 ];
