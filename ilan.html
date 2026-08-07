@@ -258,6 +258,38 @@ font-size:28px;
 cursor:pointer;
 }
 
+.ilan-kart{
+display:flex;
+gap:12px;
+padding:12px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+background:#fff;
+}
+
+.ilan-kart img{
+width:110px;
+height:80px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.ilan-kart-bilgi{
+flex:1;
+font-family:Tahoma,sans-serif;
+}
+
+.ilan-kart-baslik{
+font-weight:bold;
+font-size:15px;
+margin-bottom:8px;
+}
+
+.ilan-kart-fiyat{
+color:#1b4d3e;
+font-weight:bold;
+}
+
 </style>
 </head>
 <body>
@@ -728,10 +760,56 @@ async function konumPaylas(){
 
 function ilanlariAc(){
 
-    document.getElementById("ilanlarPanel")
-    .classList.add("acik");
+    const panel=document.getElementById("ilanlarPanel");
+
+    panel.classList.add("acik");
 
     menuKapat();
+
+
+    let html=`
+    <div class="ilanlar-ust">
+        <span>İlanlarımız</span>
+
+        <i class="fa-solid fa-xmark"
+           onclick="ilanlarKapat()">
+        </i>
+    </div>
+    `;
+
+
+    ilanlarVerisi.forEach(d=>{
+
+        html+=`
+
+        <div class="ilan-kart"
+        onclick="location.href='ilan.html?id=${d.id}'">
+
+
+            <img src="${d.resimler[0]}">
+
+
+            <div class="ilan-kart-bilgi">
+
+                <div class="ilan-kart-baslik">
+                    ${d.baslik || ""}
+                </div>
+
+                <div class="ilan-kart-fiyat">
+                    ${d.fiyat || ""}
+                </div>
+
+            </div>
+
+
+        </div>
+
+        `;
+
+    });
+
+
+    panel.innerHTML=html;
 
 }
 function ilanlarKapat(){
