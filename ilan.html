@@ -760,56 +760,86 @@ async function konumPaylas(){
 
 function ilanlariAc(){
 
-    const panel=document.getElementById("ilanlarPanel");
+const panel=document.getElementById("ilanlarPanel");
 
-    panel.classList.add("acik");
+panel.classList.add("acik");
 
-    menuKapat();
-
-
-    let html=`
-    <div class="ilanlar-ust">
-        <span>İlanlarımız</span>
-
-        <i class="fa-solid fa-xmark"
-           onclick="ilanlarKapat()">
-        </i>
-    </div>
-    `;
+menuKapat();
 
 
-    ilanlarVerisi.forEach(d=>{
+let html=`
+<div class="ilanlar-ust">
+    <span>İlanlarımız</span>
 
-        html+=`
-
-        <div class="ilan-kart"
-        onclick="location.href='ilan.html?id=${d.id}'">
-
-
-            <img src="${d.resimler[0]}">
-
-
-            <div class="ilan-kart-bilgi">
-
-                <div class="ilan-kart-baslik">
-                    ${d.baslik || ""}
-                </div>
-
-                <div class="ilan-kart-fiyat">
-                    ${d.fiyat || ""}
-                </div>
-
-            </div>
+    <i class="fa-solid fa-xmark"
+       onclick="ilanlarKapat()">
+    </i>
+</div>
+`;
 
 
+ilanlarVerisi.forEach(d=>{
+
+
+let kartBaslik = "";
+
+kartBaslik += d.baslik || "";
+
+if(d.durum === "satilik"){
+    kartBaslik += " SATILIK";
+}
+else if(d.durum === "kiralik"){
+    kartBaslik += " KİRALIK";
+}
+
+
+if(d.konutSekli){
+    kartBaslik += " " + d.konutSekli;
+}
+else if(d.konutTipi){
+    kartBaslik += " " + d.konutTipi;
+}
+
+
+if(d["Oda Sayısı"]){
+    kartBaslik += " " + d["Oda Sayısı"];
+}
+
+
+
+html+=`
+
+<div class="ilan-kart"
+onclick="location.href='ilan.html?id=${d.id}'">
+
+
+    <img src="${d.resimler[0]}">
+
+
+    <div class="ilan-kart-bilgi">
+
+
+        <div class="ilan-kart-baslik">
+            ${kartBaslik}
         </div>
 
-        `;
 
-    });
+        <div class="ilan-kart-fiyat">
+            ${d.fiyat ? d.fiyat + " " + (d.paraBirimi || "") : ""}
+        </div>
 
 
-    panel.innerHTML=html;
+    </div>
+
+
+</div>
+
+`;
+
+});
+
+
+panel.innerHTML=html;
 
 }
 function ilanlarKapat(){
