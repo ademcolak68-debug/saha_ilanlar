@@ -240,6 +240,24 @@ overflow:auto;
 display:block;
 }
 
+.ilanlar-ust{
+height:52px;
+background:#1b4d3e;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+font-family:'Titillium Web',sans-serif;
+font-size:22px;
+font-weight:600;
+}
+
+.ilanlar-ust i{
+font-size:28px;
+cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -305,7 +323,17 @@ display:block;
 
 <div id="ilanDetay" class="container"></div>
 
-<div id="ilanlarPanel" class="ilanlar-panel"></div>
+<div id="ilanlarPanel" class="ilanlar-panel">
+
+    <div class="ilanlar-ust">
+        <span>İlanlarımız</span>
+
+        <i class="fa-solid fa-xmark"
+           onclick="ilanlarKapat()">
+        </i>
+    </div>
+
+</div>
 
 <script>
     let detayIndex = 0;
@@ -704,6 +732,12 @@ function ilanlariAc(){
     .classList.add("acik");
 
     menuKapat();
+
+}
+function ilanlarKapat(){
+
+    document.getElementById("ilanlarPanel")
+    .classList.remove("acik");
 
 }
 
