@@ -235,6 +235,22 @@ z-index:999999;
 display:none;
 overflow:auto;
 }
+.ilanlar-panel::-webkit-scrollbar{
+    width:8px;
+}
+
+.ilanlar-panel::-webkit-scrollbar-track{
+    background:#f1f1f1;
+}
+
+.ilanlar-panel::-webkit-scrollbar-thumb{
+    background:#1b4d3e;
+    border-radius:10px;
+}
+
+.ilanlar-panel::-webkit-scrollbar-thumb:hover{
+    background:#d4af37;
+}
 
 .ilanlar-panel.acik{
 display:block;
@@ -296,6 +312,18 @@ color:#1b4d3e;
 font-weight:bold;
 }
 
+.diger-ilanlar-btn{
+    position:absolute;
+    right:-5px;
+    font-size:22px;
+    cursor:pointer;
+    color:#fff;
+    transition:.25s;
+}
+.diger-ilanlar-btn:hover{
+    transform:scale(1.08);
+}
+
 </style>
 </head>
 <body>
@@ -319,6 +347,9 @@ font-weight:bold;
 	<div class="share-btn" onclick="ilanPaylas()">
         <i class="fa-solid fa-share-nodes"></i>
     </div>
+		<div class="diger-ilanlar-btn" onclick="ilanlariAc()">
+	    <i class="fa-solid fa-building"></i>
+	</div>
 
 </div>
 
