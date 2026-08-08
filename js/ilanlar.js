@@ -257,7 +257,7 @@ const ilanlarVerisi = [
     },
     {
         "id": 1786219230924,
-        "baslik": "Küçük Bölcek Mahallesinde Kiralık",
+        "baslik": "Küçük Bölcek Mahallesinde",
         "durum": "kiralik",
         "tip": "isyeri",
         "konutTipi": "Dükkan",
