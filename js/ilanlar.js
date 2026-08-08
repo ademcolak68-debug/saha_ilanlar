@@ -237,7 +237,7 @@ const ilanlarVerisi = [
             "images/yenisanayi-arsa/3.png",
             "images/yenisanayi-arsa/4.png"
         ],
-        "videoUrl": "",
+        "videoUrl": "images/yenisanayi-arsa/parsel-tanitim.mp4",
         "İlan Tarihi": "2026-08-08",
         "yetki": {
             "durum": true,
