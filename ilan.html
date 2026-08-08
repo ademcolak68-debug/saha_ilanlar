@@ -1470,56 +1470,70 @@ function kategoriIlanlariniAc(durum, kategori){
 
 
 	       let kartBaslik = "";
-	
-	kartBaslik += d.baslik || "";
-	
-	
-	if(d.durum === "satilik"){
-	
-	    kartBaslik += " SATILIK";
-	
-	}
-	else if(d.durum === "kiralik"){
-	
-	    kartBaslik += " KİRALIK";
-	
-	}
-	
-	
-	// DAİRE
-	if(d.konutSekli){
-	
-	    kartBaslik +=
-	        " " + d.konutSekli;
-	
-	}
-	
-	
-	// DÜKKAN
-	else if(d.konutTipi){
-	
-	    kartBaslik +=
-	        " " + d.konutTipi;
-	
-	}
-	
-	
-	// ARSA / TARLA
-	if(d.tip){
-	
-	    kartBaslik +=
-	        " " + d.tip;
-	
-	}
-	
-	
-	// ODA SAYISI
-	if(d["Oda Sayısı"]){
-	
-	    kartBaslik +=
-	        " " + d["Oda Sayısı"];
-	
-	}
+
+			kartBaslik += d.baslik || "";
+			
+			
+			if(d.durum === "satilik"){
+			
+			    kartBaslik += " SATILIK";
+			
+			}
+			else if(d.durum === "kiralik"){
+			
+			    kartBaslik += " KİRALIK";
+			
+			}
+			
+			
+			// DAİRE
+			if(d.konutSekli){
+			
+			    kartBaslik +=
+			        " " + d.konutSekli;
+			
+			}
+			
+			
+			// DÜKKAN
+			else if(d.konutTipi){
+			
+			    if(
+			        d.konutTipi.toLowerCase().includes("iş yeri") ||
+			        d.konutTipi.toLowerCase().includes("isyeri") ||
+			        d.konutTipi.toLowerCase().includes("dükkan") ||
+			        d.konutTipi.toLowerCase().includes("dukkan")
+			    ){
+			
+			        kartBaslik += " DÜKKAN";
+			
+			    }
+			    else{
+			
+			        kartBaslik +=
+			            " " + d.konutTipi;
+			
+			    }
+			
+			}
+			
+			
+			// ARSA / TARLA
+			if(d.tip){
+			
+			    kartBaslik +=
+			        " " + d.tip;
+			
+			}
+			
+			
+			// ODA SAYISI
+			if(d["Oda Sayısı"]){
+			
+			    kartBaslik +=
+			        " " + d["Oda Sayısı"];
+			
+			}
 
 
         html += `
