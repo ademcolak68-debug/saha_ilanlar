@@ -325,16 +325,27 @@ font-weight:bold;
 }
 
 /* =========================================
-   İLAN KATEGORİ ALANI
+   İLANLAR GENEL
+========================================= */
+
+.ilanlar-panel,
+.ilanlar-panel *{
+    font-family:Tahoma, sans-serif !important;
+}
+
+
+/* =========================================
+   KATEGORİ ALANI
 ========================================= */
 
 .ilan-kategori-listesi{
     width:100%;
     max-width:700px;
     margin:0 auto;
+
     padding:15px 12px 40px;
+
     box-sizing:border-box;
-    font-family:Tahoma,sans-serif;
 }
 
 
@@ -354,76 +365,91 @@ font-weight:bold;
     padding:0 18px;
     margin-bottom:7px;
 
-    background:#8b2635;
-
-    border:1px solid rgba(255,255,255,.25);
     border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.3);
 
     color:#ffffff !important;
 
-    font-family:Tahoma,sans-serif !important;
-    font-size:16px;
-    font-weight:bold;
+    font-family:Tahoma, sans-serif !important;
+    font-size:16px !important;
+    font-weight:bold !important;
 
     cursor:pointer;
 
     box-shadow:
-        0 3px 10px rgba(0,0,0,.15);
+        0 3px 10px rgba(0,0,0,.18);
 
     transition:
-        background .25s ease,
+        filter .2s ease,
         transform .2s ease,
-        box-shadow .25s ease;
+        box-shadow .2s ease;
 }
 
 
-/* ANA KATEGORİ İÇİNDEKİ YAZI */
+/* =========================================
+   SATILIK
+========================================= */
+
+.ana-ilan-kategori:nth-of-type(1){
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b1e2d,
+            #c0394b
+        ) !important;
+}
+
+
+/* =========================================
+   KİRALIK
+========================================= */
+
+.ana-ilan-kategori:nth-of-type(3){
+
+    background:
+        linear-gradient(
+            135deg,
+            #075985,
+            #0891b2
+        ) !important;
+}
+
+
+/* =========================================
+   ANA BAŞLIK YAZISI
+========================================= */
 
 .ana-ilan-kategori span{
+
     display:block;
+
     width:100%;
 
     color:#ffffff !important;
 
-    font-family:Tahoma,sans-serif !important;
-    font-size:16px;
-    font-weight:bold;
+    font-family:Tahoma, sans-serif !important;
+    font-size:16px !important;
+    font-weight:bold !important;
 }
 
 
-/* SATILIK */
-
-.ana-ilan-kategori.satilik{
-    background:linear-gradient(
-        135deg,
-        #8b2635,
-        #b83245
-    );
-}
-
-
-/* KİRALIK */
-
-.ana-ilan-kategori.kiralik{
-    background:linear-gradient(
-        135deg,
-        #176b87,
-        #238ca8
-    );
-}
-
-
-/* HOVER */
+/* =========================================
+   HOVER
+========================================= */
 
 .ana-ilan-kategori:hover{
-    filter:brightness(1.08);
+
+    filter:brightness(1.10);
 
     box-shadow:
-        0 5px 14px rgba(0,0,0,.22);
+        0 5px 14px rgba(0,0,0,.24);
 }
 
 
 .ana-ilan-kategori:active{
+
     transform:scale(.985);
 }
 
@@ -433,10 +459,13 @@ font-weight:bold;
 ========================================= */
 
 .alt-kategori-listesi{
-    margin:0 0 12px 0;
-    padding:4px 0 5px 14px;
 
-    font-family:Tahoma,sans-serif;
+    margin:0 0 12px 0;
+
+    padding:
+        4px 0 5px 14px;
+
+    box-sizing:border-box;
 }
 
 
@@ -445,6 +474,7 @@ font-weight:bold;
 ========================================= */
 
 .alt-ilan-kategori{
+
     min-height:43px;
 
     display:flex;
@@ -452,22 +482,23 @@ font-weight:bold;
 
     padding:0 15px;
 
-    margin-bottom:5px;
+    margin-bottom:6px;
 
     box-sizing:border-box;
 
-    background:#f5f6f8;
+    background:#f5f6f8 !important;
 
     border:1px solid #e1e4e8;
-    border-left:4px solid #8b2635;
+
+    border-left:4px solid #8b1e2d;
 
     border-radius:7px;
 
     color:#333333 !important;
 
-    font-family:Tahoma,sans-serif !important;
-    font-size:14px;
-    font-weight:bold;
+    font-family:Tahoma, sans-serif !important;
+    font-size:14px !important;
+    font-weight:bold !important;
 
     cursor:pointer;
 
@@ -482,94 +513,70 @@ font-weight:bold;
 /* ALT KATEGORİ YAZISI */
 
 .alt-ilan-kategori span{
+
     color:#333333 !important;
 
-    font-family:Tahoma,sans-serif !important;
-    font-size:14px;
-    font-weight:bold;
-}
-
-
-/* SATILIK ALT KATEGORİLER */
-
-.ana-ilan-kategori.satilik
-+ .alt-kategori-listesi
-.alt-ilan-kategori{
-
-    border-left-color:#b83245;
-}
-
-
-.ana-ilan-kategori.satilik
-+ .alt-kategori-listesi
-.alt-ilan-kategori:hover{
-
-    background:#fff1f3;
-    color:#a52638 !important;
-}
-
-
-/* SATILIK ALT YAZI */
-
-.ana-ilan-kategori.satilik
-+ .alt-kategori-listesi
-.alt-ilan-kategori:hover span{
-
-    color:#a52638 !important;
-}
-
-
-/* KİRALIK ALT KATEGORİLER */
-
-.ana-ilan-kategori.kiralik
-+ .alt-kategori-listesi
-.alt-ilan-kategori{
-
-    border-left-color:#238ca8;
-}
-
-
-.ana-ilan-kategori.kiralik
-+ .alt-kategori-listesi
-.alt-ilan-kategori:hover{
-
-    background:#edfafd;
-    color:#176b87 !important;
-}
-
-
-/* KİRALIK ALT YAZI */
-
-.ana-ilan-kategori.kiralik
-+ .alt-kategori-listesi
-.alt-ilan-kategori:hover span{
-
-    color:#176b87 !important;
-}
-
-
-/* ALT KATEGORİ HOVER */
-
-.alt-ilan-kategori:hover{
-
-    padding-left:19px;
-
-    box-shadow:
-        0 3px 8px rgba(0,0,0,.10);
+    font-family:Tahoma, sans-serif !important;
+    font-size:14px !important;
+    font-weight:bold !important;
 }
 
 
 /* =========================================
-   ALT KATEGORİ İKONU
-   Kullanılıyorsa Tahoma düzeni bozulmasın
+   SATILIK ALT KATEGORİLER
 ========================================= */
 
-.alt-ilan-kategori i{
-    margin-right:10px;
+#alt-kategori-satilik
+.alt-ilan-kategori{
 
-    font-size:11px;
+    border-left-color:#c0394b;
+}
 
-    color:#8b2635;
+
+#alt-kategori-satilik
+.alt-ilan-kategori:hover{
+
+    background:#fff0f2 !important;
+
+    color:#a52638 !important;
+
+    padding-left:19px;
+}
+
+
+#alt-kategori-satilik
+.alt-ilan-kategori:hover span{
+
+    color:#a52638 !important;
+}
+
+
+/* =========================================
+   KİRALIK ALT KATEGORİLER
+========================================= */
+
+#alt-kategori-kiralik
+.alt-ilan-kategori{
+
+    border-left-color:#0891b2;
+}
+
+
+#alt-kategori-kiralik
+.alt-ilan-kategori:hover{
+
+    background:#ecfeff !important;
+
+    color:#075985 !important;
+
+    padding-left:19px;
+}
+
+
+#alt-kategori-kiralik
+.alt-ilan-kategori:hover span{
+
+    color:#075985 !important;
 }
 
 
@@ -578,16 +585,11 @@ font-weight:bold;
 ========================================= */
 
 .kategori-ilanlari{
-    padding:4px 0 10px 10px;
 
-    font-family:Tahoma,sans-serif;
-}
+    padding:
+        4px 0 10px 10px;
 
-
-/* Kart içindeki tüm yazılar */
-
-.kategori-ilanlari *{
-    font-family:Tahoma,sans-serif;
+    box-sizing:border-box;
 }
 
 
@@ -598,51 +600,59 @@ font-weight:bold;
 @media(max-width:600px){
 
     .ilan-kategori-listesi{
+
         padding:
             12px 9px 35px;
     }
 
 
     .ana-ilan-kategori{
+
         min-height:50px;
 
         padding:0 15px;
 
-        font-size:15px;
+        font-size:15px !important;
 
         border-radius:9px;
     }
 
 
     .ana-ilan-kategori span{
-        font-size:15px;
+
+        font-size:15px !important;
     }
 
 
     .alt-kategori-listesi{
+
         padding-left:9px;
     }
 
 
     .alt-ilan-kategori{
+
         min-height:42px;
 
         padding:0 13px;
 
-        font-size:14px;
+        font-size:14px !important;
     }
 
 
     .alt-ilan-kategori span{
-        font-size:14px;
+
+        font-size:14px !important;
     }
 
 
     .kategori-ilanlari{
+
         padding-left:4px;
     }
 
 }
+
 </style>
 </head>
 <body>
