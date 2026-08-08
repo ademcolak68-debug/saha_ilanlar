@@ -254,5 +254,58 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "",
         "Kullanım Durumu": "",
         "Site İçerisinde?": ""
+    },
+    {
+        "id": 1786219230924,
+        "baslik": "Küçük Bölcek Mahallesinde Kiralık",
+        "durum": "kiralik",
+        "tip": "isyeri",
+        "konutTipi": "Dükkan",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Küçükbölcek",
+        "fiyat": "38.000",
+        "paraBirimi": "TL",
+        "aciklama": "Eski Sanayi Karşısı,Mektebim Koleji (Eski Tofaş) Yakını,Haluk Aydın Kuruyemiş Karşısı",
+        "koor": "33.998853, 38.378648",
+        "klasorIsmi": "bayram-kav-dukkan",
+        "resimler": [
+            "images/bayram-kav-dukkan/1.jpeg",
+            "images/bayram-kav-dukkan/2.jpeg",
+            "images/bayram-kav-dukkan/3.jpeg",
+            "images/bayram-kav-dukkan/4.jpeg",
+            "images/bayram-kav-dukkan/5.jpeg",
+            "images/bayram-kav-dukkan/6.jpeg",
+            "images/bayram-kav-dukkan/7.jpeg",
+            "images/bayram-kav-dukkan/8.jpeg",
+            "images/bayram-kav-dukkan/9.jpeg",
+            "images/bayram-kav-dukkan/10.jpeg",
+            "images/bayram-kav-dukkan/11.jpeg",
+            "images/bayram-kav-dukkan/12.jpeg",
+            "images/bayram-kav-dukkan/13.jpeg",
+            "images/bayram-kav-dukkan/14.jpeg",
+            "images/bayram-kav-dukkan/15.jpeg",
+            "images/bayram-kav-dukkan/16.jpeg"
+        ],
+        "videoUrl": [
+            "images/bayram-kav-dukkan/video_1786219258548_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-08",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1786219230924"
+        },
+        "M²": "136",
+        "Ada": "",
+        "Parsel": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "1",
+        "Bulunduğu Kat": "Zemin",
+        "Kat Sayısı": "",
+        "Isıtma": "Kombi",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "Boş",
+        "Site İçerisinde?": ""
     }
 ];
