@@ -804,14 +804,14 @@ font-weight:bold;
     let detayIndex = 0;
     const script = document.createElement('script');
     script.src = "js/ilanlar.js?t=" + new Date().getTime();
-    script.onload = () => {
+	script.onload = () => {
 
     const id = Number(
         new URLSearchParams(location.search).get("id")
     );
 
     const d = (
-        typeof ilanlarVerisi !== 'undefined'
+        typeof ilanlarVerisi !== "undefined"
             ? ilanlarVerisi
             : []
     ).find(x => x.id === id);
@@ -820,28 +820,28 @@ font-weight:bold;
 
         render(d);
 
-        // 2.5 saniye sonra açılış ekranını kapat
         setTimeout(() => {
 
-            document.getElementById(
-                "acilisEkrani"
-            ).style.display = "none";
+            const acilisEkrani =
+                document.getElementById("acilisEkrani");
 
+            if (acilisEkrani) {
 
-            // Açılış ekranı kapandıktan 2 saniye sonra balon
+                acilisEkrani.style.display = "none";
+
+            }
+
+            // Açılış ekranı kapandıktan 2 saniye sonra
             setTimeout(() => {
 
                 const bilgi =
-                    document.getElementById(
-                        "digerIlanlarBilgi"
-                    );
+                    document.getElementById("digerIlanlarBilgi");
 
                 if (!bilgi) return;
 
                 bilgi.classList.add("goster");
 
-
-                // 5 saniye sonra kaybolsun
+                // 5 saniye sonra kaybol
                 setTimeout(() => {
 
                     bilgi.classList.remove("goster");
