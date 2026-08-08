@@ -590,6 +590,13 @@ font-weight:bold;
     font-family:Tahoma,sans-serif;
 }
 
+.ilan-kategori-listesi .ana-ilan-kategori.satilik + .alt-kategori-listesi .alt-ilan-kategori {
+    border-left-color:#b83245;
+}
+
+.ilan-kategori-listesi .ana-ilan-kategori.kiralik + .alt-kategori-listesi .alt-ilan-kategori {
+    border-left-color:#238ca8;
+}
 
 /* =========================================
    MOBİL
@@ -1169,8 +1176,8 @@ function ilanlariAc(){
 
         html += `
 
-            <div class="ana-ilan-kategori"
-                 onclick="altKategorileriAc('${durum}', this)">
+				<div class="ana-ilan-kategori ${durum}"
+     			onclick="altKategorileriAc('${durum}', this)">
 
                 <span>
                     ${durumAdi}
