@@ -231,9 +231,7 @@ const ilanlarVerisi = [
         "aciklama": "Satılık & Kat Karşılığı,8346/1 ve 8346/2 ( 2500 m2 ) Nolu Parseller",
         "koor": "33.991672, 38.378655",
         "klasorIsmi": "yenisanayi-arsa",
-        "resimler": [
-            "images/yenisanayi-arsa/4.png"
-        ],
+        "resimler": [],
         "videoUrl": "",
         "İlan Tarihi": "2026-08-08",
         "yetki": {
