@@ -215,5 +215,46 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "",
         "Kullanım Durumu": "Kiracılı",
         "Site İçerisinde?": ""
+    },
+    {
+        "id": 1786193103508,
+        "baslik": "Yeni Sanayi Mahallesinde İmarlı",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Yeni Sanayi",
+        "fiyat": "600",
+        "paraBirimi": "EUR/m²",
+        "aciklama": "Satılık & Kat Karşılığı,8346/1 ve 8346/2 ( 2500 m2 ) Nolu Parseller",
+        "koor": "33.991672, 38.378655",
+        "klasorIsmi": "yenisanayi-arsa",
+        "resimler": [
+            "images/yenisanayi-arsa/1.png",
+            "images/yenisanayi-arsa/2.png",
+            "images/yenisanayi-arsa/3.png",
+            "images/yenisanayi-arsa/4.png"
+        ],
+        "videoUrl": [
+            "images/yenisanayi-arsa/video_1786193110097_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-08",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1786193103508"
+        },
+        "M²": "3374",
+        "Ada": "8346",
+        "Parsel": "1",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
     }
 ];
