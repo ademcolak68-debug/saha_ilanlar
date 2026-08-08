@@ -334,7 +334,7 @@ font-weight:bold;
     margin:0 auto;
     padding:15px 12px 40px;
     box-sizing:border-box;
-    font-family:Tahoma,sans-serif;
+    font-family:Tahoma,sans-serif !important;
 }
 
 
@@ -354,14 +354,12 @@ font-weight:bold;
     padding:0 18px;
     margin-bottom:7px;
 
-    background:#8b2635;
-
     border:1px solid rgba(255,255,255,.25);
     border-radius:10px;
 
-    color:#ffffff !important;
+    color:#fff !important;
 
-    font-family:Tahoma;
+    font-family:Tahoma,sans-serif !important;
     font-size:16px;
     font-weight:bold;
 
@@ -374,20 +372,6 @@ font-weight:bold;
         background .25s ease,
         transform .2s ease,
         box-shadow .25s ease;
-}
-
-
-/* ANA KATEGORİ İÇİNDEKİ YAZI */
-
-.ana-ilan-kategori span{
-    display:block;
-    width:100%;
-
-    color:#ffffff !important;
-
-    font-family:Tahoma,sans-serif !important;
-    font-size:16px;
-    font-weight:bold;
 }
 
 
@@ -413,6 +397,20 @@ font-weight:bold;
 }
 
 
+/* ANA BAŞLIK YAZISI */
+
+.ana-ilan-kategori span{
+    display:block;
+    width:100%;
+
+    color:#fff !important;
+
+    font-family:Tahoma,sans-serif !important;
+    font-size:16px;
+    font-weight:bold;
+}
+
+
 /* HOVER */
 
 .ana-ilan-kategori:hover{
@@ -422,6 +420,8 @@ font-weight:bold;
         0 5px 14px rgba(0,0,0,.22);
 }
 
+
+/* BASMA */
 
 .ana-ilan-kategori:active{
     transform:scale(.985);
@@ -436,7 +436,7 @@ font-weight:bold;
     margin:0 0 12px 0;
     padding:4px 0 5px 14px;
 
-    font-family:Tahoma,sans-serif;
+    font-family:Tahoma,sans-serif !important;
 }
 
 
@@ -463,7 +463,7 @@ font-weight:bold;
 
     border-radius:7px;
 
-    color:#333333 !important;
+    color:#333 !important;
 
     font-family:Tahoma,sans-serif !important;
     font-size:14px;
@@ -475,14 +475,15 @@ font-weight:bold;
         background .2s ease,
         color .2s ease,
         border-color .2s ease,
-        padding-left .2s ease;
+        padding-left .2s ease,
+        box-shadow .2s ease;
 }
 
 
 /* ALT KATEGORİ YAZISI */
 
 .alt-ilan-kategori span{
-    color:#333333 !important;
+    color:#333 !important;
 
     font-family:Tahoma,sans-serif !important;
     font-size:14px;
@@ -490,8 +491,11 @@ font-weight:bold;
 }
 
 
-/* SATILIK ALT KATEGORİLER */
+/* =========================================
+   SATILIK ALT KATEGORİLER
+========================================= */
 
+.ilan-kategori-listesi
 .ana-ilan-kategori.satilik
 + .alt-kategori-listesi
 .alt-ilan-kategori{
@@ -500,17 +504,24 @@ font-weight:bold;
 }
 
 
+/* SATILIK HOVER */
+
+.ilan-kategori-listesi
 .ana-ilan-kategori.satilik
 + .alt-kategori-listesi
 .alt-ilan-kategori:hover{
 
     background:#fff1f3;
+
     color:#a52638 !important;
+
+    border-left-color:#b83245;
 }
 
 
-/* SATILIK ALT YAZI */
+/* SATILIK YAZI HOVER */
 
+.ilan-kategori-listesi
 .ana-ilan-kategori.satilik
 + .alt-kategori-listesi
 .alt-ilan-kategori:hover span{
@@ -519,8 +530,11 @@ font-weight:bold;
 }
 
 
-/* KİRALIK ALT KATEGORİLER */
+/* =========================================
+   KİRALIK ALT KATEGORİLER
+========================================= */
 
+.ilan-kategori-listesi
 .ana-ilan-kategori.kiralik
 + .alt-kategori-listesi
 .alt-ilan-kategori{
@@ -529,17 +543,24 @@ font-weight:bold;
 }
 
 
+/* KİRALIK HOVER */
+
+.ilan-kategori-listesi
 .ana-ilan-kategori.kiralik
 + .alt-kategori-listesi
 .alt-ilan-kategori:hover{
 
     background:#edfafd;
+
     color:#176b87 !important;
+
+    border-left-color:#176b87;
 }
 
 
-/* KİRALIK ALT YAZI */
+/* KİRALIK YAZI HOVER */
 
+.ilan-kategori-listesi
 .ana-ilan-kategori.kiralik
 + .alt-kategori-listesi
 .alt-ilan-kategori:hover span{
@@ -548,7 +569,9 @@ font-weight:bold;
 }
 
 
-/* ALT KATEGORİ HOVER */
+/* =========================================
+   ALT KATEGORİ GENEL HOVER
+========================================= */
 
 .alt-ilan-kategori:hover{
 
@@ -561,10 +584,10 @@ font-weight:bold;
 
 /* =========================================
    ALT KATEGORİ İKONU
-   Kullanılıyorsa Tahoma düzeni bozulmasın
 ========================================= */
 
 .alt-ilan-kategori i{
+
     margin-right:10px;
 
     font-size:11px;
@@ -578,25 +601,18 @@ font-weight:bold;
 ========================================= */
 
 .kategori-ilanlari{
+
     padding:4px 0 10px 10px;
 
-    font-family:Tahoma,sans-serif;
+    font-family:Tahoma,sans-serif !important;
 }
 
-
-/* Kart içindeki tüm yazılar */
 
 .kategori-ilanlari *{
-    font-family:Tahoma,sans-serif;
+
+    font-family:Tahoma,sans-serif !important;
 }
 
-.ilan-kategori-listesi .ana-ilan-kategori.satilik + .alt-kategori-listesi .alt-ilan-kategori {
-    border-left-color:#b83245;
-}
-
-.ilan-kategori-listesi .ana-ilan-kategori.kiralik + .alt-kategori-listesi .alt-ilan-kategori {
-    border-left-color:#238ca8;
-}
 
 /* =========================================
    MOBİL
@@ -605,12 +621,14 @@ font-weight:bold;
 @media(max-width:600px){
 
     .ilan-kategori-listesi{
+
         padding:
             12px 9px 35px;
     }
 
 
     .ana-ilan-kategori{
+
         min-height:50px;
 
         padding:0 15px;
@@ -622,16 +640,19 @@ font-weight:bold;
 
 
     .ana-ilan-kategori span{
+
         font-size:15px;
     }
 
 
     .alt-kategori-listesi{
+
         padding-left:9px;
     }
 
 
     .alt-ilan-kategori{
+
         min-height:42px;
 
         padding:0 13px;
@@ -641,11 +662,13 @@ font-weight:bold;
 
 
     .alt-ilan-kategori span{
+
         font-size:14px;
     }
 
 
     .kategori-ilanlari{
+
         padding-left:4px;
     }
 
