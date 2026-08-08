@@ -232,6 +232,7 @@ const ilanlarVerisi = [
         "koor": "33.991672, 38.378655",
         "klasorIsmi": "yenisanayi-arsa",
         "resimler": [
+            "images/yenisanayi-arsa/1.png",
             "images/yenisanayi-arsa/2.png",
             "images/yenisanayi-arsa/3.png",
             "images/yenisanayi-arsa/4.png"
