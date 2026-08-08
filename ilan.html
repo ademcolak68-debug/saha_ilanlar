@@ -334,57 +334,72 @@ font-weight:bold;
     margin:0 auto;
     padding:15px 12px 40px;
     box-sizing:border-box;
+    font-family:Tahoma, sans-serif;
 }
 
 
-/* =========================================
-   SATILIK / KİRALIK ANA BAŞLIK
-========================================= */
+/* ================================
+   ANA KATEGORİLER
+================================ */
 
 .ana-ilan-kategori{
     width:100%;
-    min-height:52px;
+    min-height:54px;
+
     display:flex;
     align-items:center;
-    box-sizing:border-box;
 
     padding:0 18px;
-
     margin-bottom:7px;
 
-    background:linear-gradient(
-        135deg,
-        #7b1e1e,
-        #a52a2a
-    );
+    box-sizing:border-box;
 
-    border:1px solid rgba(255,255,255,.25);
     border-radius:10px;
+    border:1px solid rgba(255,255,255,.25);
 
     color:#fff;
 
-    font-family:Tahoma,sans-serif;
+    font-family:Tahoma, sans-serif;
     font-size:16px;
-    font-weight:700;
+    font-weight:bold;
 
     cursor:pointer;
 
-    box-shadow:
-        0 3px 10px rgba(0,0,0,.15);
+    box-shadow:0 3px 10px rgba(0,0,0,.16);
 
     transition:
-        background .25s ease,
         transform .2s ease,
-        box-shadow .25s ease;
+        filter .2s ease,
+        box-shadow .2s ease;
 }
 
 
-.ana-ilan-kategori:hover{
+/* SATILIK */
+
+.ana-ilan-kategori.satilik{
     background:linear-gradient(
         135deg,
-        #922626,
-        #bd3838
+        #8b1e1e,
+        #c0392b
     );
+}
+
+
+/* KİRALIK */
+
+.ana-ilan-kategori.kiralik{
+    background:linear-gradient(
+        135deg,
+        #155e75,
+        #0891b2
+    );
+}
+
+
+/* Hover */
+
+.ana-ilan-kategori:hover{
+    filter:brightness(1.1);
 
     box-shadow:
         0 5px 14px rgba(0,0,0,.22);
@@ -396,57 +411,47 @@ font-weight:bold;
 }
 
 
-/* ANA BAŞLIK YAZISI */
-
-.ana-ilan-kategori span{
-    display:flex;
-    align-items:center;
-    width:100%;
-}
-
-
-/* =========================================
+/* ================================
    ALT KATEGORİ ALANI
-========================================= */
+================================ */
 
 .alt-kategori-listesi{
-    margin:
-        0 0 12px
-        0;
-
-    padding:
-        4px 0 5px 14px;
+    margin:0 0 12px;
+    padding:4px 0 5px 14px;
 }
 
 
-/* =========================================
-   DAİRE / DÜKKAN / ARSA / TARLA
-========================================= */
+/* ================================
+   ALT KATEGORİ
+================================ */
 
 .alt-ilan-kategori{
-    min-height:43px;
+    min-height:44px;
 
     display:flex;
     align-items:center;
 
     padding:0 15px;
+    margin-bottom:6px;
 
-    margin-bottom:5px;
+    box-sizing:border-box;
 
-    background:#f3f4f6;
+    background:#f5f7fa;
 
-    border-left:4px solid #b52b2b;
-    border-radius:7px;
+    border-radius:8px;
 
-    color:#333;
+    border:1px solid #e1e5ea;
+    border-left:4px solid #64748b;
 
-    font-family:Tahoma,sans-serif;
+    color:#263238;
+
+    font-family:Tahoma, sans-serif;
     font-size:14px;
-    font-weight:600;
+    font-weight:bold;
 
     cursor:pointer;
 
-    box-sizing:border-box;
+    box-shadow:0 2px 5px rgba(0,0,0,.06);
 
     transition:
         background .2s ease,
@@ -456,82 +461,103 @@ font-weight:bold;
 }
 
 
+/* SATILIK ALT KATEGORİLER */
+
+.ana-ilan-kategori.satilik
++ .alt-kategori-listesi
+.alt-ilan-kategori{
+
+    border-left-color:#c0392b;
+}
+
+
+.ana-ilan-kategori.satilik
++ .alt-kategori-listesi
 .alt-ilan-kategori:hover{
-    background:#e9ecef;
 
-    color:#9d2424;
+    background:#fff1f0;
+    color:#a93226;
+}
 
+
+/* KİRALIK ALT KATEGORİLER */
+
+.ana-ilan-kategori.kiralik
++ .alt-kategori-listesi
+.alt-ilan-kategori{
+
+    border-left-color:#0891b2;
+}
+
+
+.ana-ilan-kategori.kiralik
++ .alt-kategori-listesi
+.alt-ilan-kategori:hover{
+
+    background:#ecfeff;
+    color:#0e7490;
+}
+
+
+/* ================================
+   ALT KATEGORİ HOVER
+================================ */
+
+.alt-ilan-kategori:hover{
     padding-left:19px;
 
-    border-left-color:#7b1e1e;
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.10);
 }
 
 
-/* ALT KATEGORİ İKONU */
-
-.alt-ilan-kategori i{
-    margin-right:10px;
-
-    font-size:11px;
-
-    color:#a52a2a;
-
-    transition:
-        transform .2s ease;
-}
-
-
-/* =========================================
+/* ================================
    İLAN KARTLARI
-========================================= */
+================================ */
 
 .kategori-ilanlari{
-    padding:
-        4px 0 10px 10px;
+    padding:4px 0 10px 10px;
 }
 
 
-/* =========================================
+/* Kartların yazıları da Tahoma */
+
+.kategori-ilanlari,
+.kategori-ilanlari *{
+    font-family:Tahoma, sans-serif;
+}
+
+
+/* ================================
    MOBİL
-========================================= */
+================================ */
 
 @media(max-width:600px){
 
     .ilan-kategori-listesi{
-        padding:
-            12px 9px 35px;
+        padding:12px 9px 35px;
     }
-
 
     .ana-ilan-kategori{
         min-height:50px;
-
         padding:0 15px;
-
         font-size:15px;
-
         border-radius:9px;
     }
 
-
     .alt-kategori-listesi{
-        padding-left:9px;
+        padding-left:8px;
     }
-
 
     .alt-ilan-kategori{
         min-height:42px;
-
         padding:0 13px;
-
         font-size:14px;
     }
-
 
     .kategori-ilanlari{
         padding-left:4px;
     }
-
 }
 
 </style>
