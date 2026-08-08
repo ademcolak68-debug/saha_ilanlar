@@ -654,7 +654,7 @@ font-weight:bold;
 .diger-ilanlar-bilgi{
     position:fixed;
 
-    top:54px;
+    top:44px;
     right:10px;
 
     background:#1976d2;
@@ -804,39 +804,31 @@ font-weight:bold;
     let detayIndex = 0;
     const script = document.createElement('script');
     script.src = "js/ilanlar.js?t=" + new Date().getTime();
-   script.onload = () => {
+    script.onload = () => {
 
-    const id =
-        Number(
-            new URLSearchParams(location.search).get("id")
-        );
+    const id = Number(
+        new URLSearchParams(location.search).get("id")
+    );
 
-    const d =
-        (typeof ilanlarVerisi !== 'undefined'
+    const d = (
+        typeof ilanlarVerisi !== 'undefined'
             ? ilanlarVerisi
             : []
-        ).find(x => x.id === id);
+    ).find(x => x.id === id);
 
-
-    if(d){
+    if (d) {
 
         render(d);
 
-
-        // Açılış ekranı 2.5 saniye sonra kapansın
+        // 2.5 saniye sonra açılış ekranını kapat
         setTimeout(() => {
 
-            const acilis =
-                document.getElementById("acilisEkrani");
-
-            if(acilis){
-
-                acilis.style.display = "none";
-
-            }
+            document.getElementById(
+                "acilisEkrani"
+            ).style.display = "none";
 
 
-            // İlan açıldıktan 2 saniye sonra bilgi balonu
+            // Açılış ekranı kapandıktan 2 saniye sonra balon
             setTimeout(() => {
 
                 const bilgi =
@@ -844,8 +836,7 @@ font-weight:bold;
                         "digerIlanlarBilgi"
                     );
 
-                if(!bilgi) return;
-
+                if (!bilgi) return;
 
                 bilgi.classList.add("goster");
 
@@ -855,17 +846,17 @@ font-weight:bold;
 
                     bilgi.classList.remove("goster");
 
-                },5000);
+                }, 5000);
 
-            },2000);
+            }, 2000);
 
-
-        },2500);
+        }, 2500);
 
     }
 
 };
-    document.head.appendChild(script);
+
+document.head.appendChild(script);
 
     function render(d) {
 
