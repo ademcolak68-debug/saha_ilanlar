@@ -232,14 +232,12 @@ const ilanlarVerisi = [
         "koor": "33.991672, 38.378655",
         "klasorIsmi": "yenisanayi-arsa",
         "resimler": [
-            
             "images/yenisanayi-arsa/2.png",
             "images/yenisanayi-arsa/3.png",
+            "images/yenisanayi-arsa/4.png",
             "images/yenisanayi-arsa/4.png"
         ],
-        "videoUrl": [
-            "images/yenisanayi-arsa/video_1786193110097_0.mp4"
-        ],
+        "videoUrl": "",
         "İlan Tarihi": "2026-08-08",
         "yetki": {
             "durum": true,
