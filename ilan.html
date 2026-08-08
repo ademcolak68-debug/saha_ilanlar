@@ -647,7 +647,71 @@ font-weight:bold;
 
 }
 
+/* =========================================
+   DİĞER İLANLAR BİLGİ BALONU
+========================================= */
 
+.diger-ilanlar-bilgi{
+    position:fixed;
+
+    top:62px;
+    right:10px;
+
+    background:#1976d2;
+    color:#fff;
+
+    padding:7px 11px;
+
+    border-radius:6px;
+
+    font-family:Tahoma,sans-serif;
+    font-size:12px;
+    font-weight:bold;
+
+    white-space:nowrap;
+
+    z-index:100000;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(-5px);
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease,
+        visibility .3s ease;
+}
+
+
+/* ÜSTTEKİ OK */
+
+.diger-ilanlar-bilgi::before{
+    content:"";
+
+    position:absolute;
+
+    top:-7px;
+    right:17px;
+
+    width:0;
+    height:0;
+
+    border-left:7px solid transparent;
+    border-right:7px solid transparent;
+    border-bottom:7px solid #1976d2;
+}
+
+
+/* GÖSTER */
+
+.diger-ilanlar-bilgi.goster{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
 	
 </style>
 </head>
@@ -675,6 +739,13 @@ font-weight:bold;
 		<div class="diger-ilanlar-btn" onclick="ilanlariAc()">
 	    <i class="fa-solid fa-building"></i>
 	</div>
+
+</div>
+
+<div id="digerIlanlarBilgi"
+     class="diger-ilanlar-bilgi">
+
+    Diğer İlanlarımız için tıklayın
 
 </div>
 
@@ -1585,6 +1656,28 @@ function ilanlarKapat(){
     document.body.style.overflow = "";
 
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    setTimeout(function(){
+
+        const bilgi =
+            document.getElementById("digerIlanlarBilgi");
+
+        if(!bilgi) return;
+
+        bilgi.classList.add("goster");
+
+
+        setTimeout(function(){
+
+            bilgi.classList.remove("goster");
+
+        },5000);
+
+    },2000);
+
+});
 
 
 </script>
