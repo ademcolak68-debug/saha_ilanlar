@@ -187,11 +187,6 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
     top:52px;
     z-index:9998;
 
-    height:110px;
-    min-height:110px;
-
-    box-sizing:border-box;
-
     background:#fff;
 
     box-shadow:0 2px 8px rgba(0,0,0,.08);
@@ -1474,45 +1469,57 @@ function kategoriIlanlariniAc(durum, kategori){
     filtreliIlanlar.forEach(d => {
 
 
-        let kartBaslik = "";
-
-
-        kartBaslik +=
-            d.baslik || "";
-
-
-        if(d.durum === "satilik"){
-
-            kartBaslik += " SATILIK";
-
-        }
-        else if(d.durum === "kiralik"){
-
-            kartBaslik += " KİRALIK";
-
-        }
-
-
-        if(d.konutSekli){
-
-            kartBaslik +=
-                " " + d.konutSekli;
-
-        }
-        else if(d.konutTipi){
-
-            kartBaslik +=
-                " " + d.konutTipi;
-
-        }
-
-
-        if(d["Oda Sayısı"]){
-
-            kartBaslik +=
-                " " + d["Oda Sayısı"];
-
-        }
+	       let kartBaslik = "";
+	
+	kartBaslik += d.baslik || "";
+	
+	
+	if(d.durum === "satilik"){
+	
+	    kartBaslik += " SATILIK";
+	
+	}
+	else if(d.durum === "kiralik"){
+	
+	    kartBaslik += " KİRALIK";
+	
+	}
+	
+	
+	// DAİRE
+	if(d.konutSekli){
+	
+	    kartBaslik +=
+	        " " + d.konutSekli;
+	
+	}
+	
+	
+	// DÜKKAN
+	else if(d.konutTipi){
+	
+	    kartBaslik +=
+	        " " + d.konutTipi;
+	
+	}
+	
+	
+	// ARSA / TARLA
+	if(d.tip){
+	
+	    kartBaslik +=
+	        " " + d.tip;
+	
+	}
+	
+	
+	// ODA SAYISI
+	if(d["Oda Sayısı"]){
+	
+	    kartBaslik +=
+	        " " + d["Oda Sayısı"];
+	
+	}
 
 
         html += `
