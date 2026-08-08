@@ -1469,18 +1469,20 @@ function kategoriIlanlariniAc(durum, kategori){
     filtreliIlanlar.forEach(d => {
 
 
-	       let kartBaslik = "";
+	     let kartBaslik = "";
+
+kartBaslik += d.baslik || "";
 
 
 // DURUM
 if(d.durum === "satilik"){
 
-    kartBaslik = "SATILIK";
+    kartBaslik += " SATILIK";
 
 }
 else if(d.durum === "kiralik"){
 
-    kartBaslik = "KİRALIK";
+    kartBaslik += " KİRALIK";
 
 }
 
@@ -1535,7 +1537,6 @@ if(
         " " + d["Oda Sayısı"];
 
 }
-
 
         html += `
 
