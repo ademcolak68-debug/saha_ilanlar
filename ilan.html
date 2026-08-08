@@ -797,89 +797,435 @@ async function konumPaylas(){
 
 function ilanlariAc(){
 
-const panel=document.getElementById("ilanlarPanel");
+    const panel = document.getElementById("ilanlarPanel");
 
-panel.classList.add("acik");
-document.body.style.overflow = "hidden";
+    panel.classList.add("acik");
+    document.body.style.overflow = "hidden";
 
-menuKapat();
-
-
-let html=`
-<div class="ilanlar-ust">
-    <span>İlanlarımız</span>
-
-    <i class="fa-solid fa-xmark"
-       onclick="ilanlarKapat()">
-    </i>
-</div>
-`;
+    menuKapat();
 
 
-ilanlarVerisi.forEach(d=>{
+    let html = `
 
+        <div class="ilanlar-ust">
 
-let kartBaslik = "";
+            <span>İlanlarım</span>
 
-kartBaslik += d.baslik || "";
+            <i class="fa-solid fa-xmark"
+               onclick="ilanlarKapat()">
+            </i>
 
-if(d.durum === "satilik"){
-    kartBaslik += " SATILIK";
-}
-else if(d.durum === "kiralik"){
-    kartBaslik += " KİRALIK";
-}
-
-
-if(d.konutSekli){
-    kartBaslik += " " + d.konutSekli;
-}
-else if(d.konutTipi){
-    kartBaslik += " " + d.konutTipi;
-}
-
-
-if(d["Oda Sayısı"]){
-    kartBaslik += " " + d["Oda Sayısı"];
-}
-
-
-
-html+=`
-
-<div class="ilan-kart"
-onclick="location.href='ilan.html?id=${d.id}'">
-
-
-    <img src="${d.resimler[0]}">
-
-
-    <div class="ilan-kart-bilgi">
-
-
-        <div class="ilan-kart-baslik">
-            ${kartBaslik}
         </div>
 
+        <div class="ilan-kategori-listesi">
+    `;
 
-        <div class="ilan-kart-fiyat">
-            ${d.fiyat ? d.fiyat + " " + (d.paraBirimi || "") : ""}
+
+    // =========================================
+    // SATILIK / KİRALIK DURUMLARINI BUL
+    // =========================================
+
+    const durumlar = [...new Set(
+
+        ilanlarVerisi
+            .map(d => d.durum)
+            .filter(Boolean)
+
+    )];
+
+
+    // =========================================
+    // ANA KATEGORİLER
+    // =========================================
+
+    durumlar.forEach(durum => {
+
+        const durumAdi =
+            durum === "satilik"
+                ? "SATILIK"
+                : durum === "kiralik"
+                    ? "KİRALIK"
+                    : durum.toUpperCase();
+
+
+        html += `
+
+            <div class="ana-ilan-kategori"
+                 onclick="altKategorileriAc('${durum}', this)">
+
+                <span>
+                    <i class="fa-solid fa-chevron-right kategori-ok"></i>
+                    ${durumAdi}
+                </span>
+
+            </div>
+
+            <div class="alt-kategori-listesi"
+                 id="alt-kategori-${durum}"
+                 style="display:none;">
+            </div>
+
+        `;
+
+    });
+
+
+    html += `
+
         </div>
 
-
-    </div>
-
-
-</div>
-
-`;
-
-});
+    `;
 
 
-panel.innerHTML=html;
+    panel.innerHTML = html;
 
 }
+
+function altKategorileriAc(durum, element){
+
+    const alan =
+        document.getElementById(
+            "alt-kategori-" + durum
+        );
+
+
+    if(!alan) return;
+
+
+    // Zaten açıksa kapat
+    if(alan.style.display === "block"){
+
+        alan.style.display = "none";
+
+        const ok =
+            element.querySelector(".kategori-ok");
+
+        if(ok){
+            ok.style.transform = "rotate(0deg)";
+        }
+
+        return;
+    }
+
+
+    // =========================================
+    // BU DURUMA AİT İLANLARI AL
+    // =========================================
+
+    const ilanlar =
+        ilanlarVerisi.filter(
+            d => d.durum === durum
+        );
+
+
+    const kategoriler = [];
+
+
+    // =========================================
+    // DAİRE
+    // durum + konutSekli
+    // =========================================
+
+    ilanlar.forEach(d => {
+
+        if(
+            d.konutSekli &&
+            d.konutSekli.toLowerCase() === "daire"
+        ){
+
+            if(!kategoriler.includes("Daire")){
+                kategoriler.push("Daire");
+            }
+
+        }
+
+    });
+
+
+    // =========================================
+    // DÜKKAN
+    // durum + konutTipi
+    // =========================================
+
+    ilanlar.forEach(d => {
+
+        if(
+            d.konutTipi &&
+            d.konutTipi.toLowerCase().includes("dükkan")
+        ){
+
+            if(!kategoriler.includes("Dükkan")){
+                kategoriler.push("Dükkan");
+            }
+
+        }
+
+    });
+
+
+    // =========================================
+    // ARSA / TARLA
+    // durum + tip
+    // =========================================
+
+    ilanlar.forEach(d => {
+
+        if(d.tip){
+
+            const tip =
+                d.tip.toLowerCase();
+
+
+            if(
+                tip === "arsa" &&
+                !kategoriler.includes("Arsa")
+            ){
+                kategoriler.push("Arsa");
+            }
+
+
+            if(
+                tip === "tarla" &&
+                !kategoriler.includes("Tarla")
+            ){
+                kategoriler.push("Tarla");
+            }
+
+        }
+
+    });
+
+
+    // =========================================
+    // ALT KATEGORİLERİ OLUŞTUR
+    // =========================================
+
+    let html = "";
+
+
+    kategoriler.forEach(kategori => {
+
+        html += `
+
+            <div class="alt-ilan-kategori"
+                 onclick="event.stopPropagation();
+                          kategoriIlanlariniAc(
+                              '${durum}',
+                              '${kategori}'
+                          );">
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+                <span>${kategori}</span>
+
+            </div>
+
+            <div
+                class="kategori-ilanlari"
+                id="ilanlar-${durum}-${kategori}"
+                style="display:none;">
+            </div>
+
+        `;
+
+    });
+
+
+    alan.innerHTML = html;
+
+    alan.style.display = "block";
+
+
+    const ok =
+        element.querySelector(".kategori-ok");
+
+    if(ok){
+        ok.style.transform = "rotate(90deg)";
+    }
+
+}
+
+function kategoriIlanlariniAc(durum, kategori){
+
+    const alan =
+        document.getElementById(
+            "ilanlar-" + durum + "-" + kategori
+        );
+
+
+    if(!alan) return;
+
+
+    // Açık ise kapat
+    if(alan.style.display === "block"){
+
+        alan.style.display = "none";
+
+        return;
+
+    }
+
+
+    let filtreliIlanlar = [];
+
+
+    // =========================================
+    // DAİRE
+    // durum + konutSekli
+    // =========================================
+
+    if(kategori === "Daire"){
+
+        filtreliIlanlar =
+            ilanlarVerisi.filter(d =>
+
+                d.durum === durum &&
+
+                d.konutSekli &&
+
+                d.konutSekli.toLowerCase() === "daire"
+
+            );
+
+    }
+
+
+    // =========================================
+    // DÜKKAN
+    // durum + konutTipi
+    // =========================================
+
+    else if(kategori === "Dükkan"){
+
+        filtreliIlanlar =
+            ilanlarVerisi.filter(d =>
+
+                d.durum === durum &&
+
+                d.konutTipi &&
+
+                d.konutTipi.toLowerCase().includes("dükkan")
+
+            );
+
+    }
+
+
+    // =========================================
+    // ARSA / TARLA
+    // durum + tip
+    // =========================================
+
+    else if(
+        kategori === "Arsa" ||
+        kategori === "Tarla"
+    ){
+
+        filtreliIlanlar =
+            ilanlarVerisi.filter(d =>
+
+                d.durum === durum &&
+
+                d.tip &&
+
+                d.tip.toLowerCase() ===
+                kategori.toLowerCase()
+
+            );
+
+    }
+
+
+    // =========================================
+    // KARTLARI OLUŞTUR
+    // =========================================
+
+    let html = "";
+
+
+    filtreliIlanlar.forEach(d => {
+
+
+        let kartBaslik = "";
+
+
+        kartBaslik +=
+            d.baslik || "";
+
+
+        if(d.durum === "satilik"){
+
+            kartBaslik += " SATILIK";
+
+        }
+        else if(d.durum === "kiralik"){
+
+            kartBaslik += " KİRALIK";
+
+        }
+
+
+        if(d.konutSekli){
+
+            kartBaslik +=
+                " " + d.konutSekli;
+
+        }
+        else if(d.konutTipi){
+
+            kartBaslik +=
+                " " + d.konutTipi;
+
+        }
+
+
+        if(d["Oda Sayısı"]){
+
+            kartBaslik +=
+                " " + d["Oda Sayısı"];
+
+        }
+
+
+        html += `
+
+            <div class="ilan-kart"
+                 onclick="location.href='ilan.html?id=${d.id}'">
+
+                <img src="${d.resimler[0]}">
+
+                <div class="ilan-kart-bilgi">
+
+                    <div class="ilan-kart-baslik">
+                        ${kartBaslik}
+                    </div>
+
+                    <div class="ilan-kart-fiyat">
+
+                        ${
+                            d.fiyat
+                                ? d.fiyat + " " +
+                                  (d.paraBirimi || "")
+                                : ""
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    alan.innerHTML = html;
+
+    alan.style.display = "block";
+
+}
+	
 function ilanlarKapat(){
 
     document.getElementById("ilanlarPanel")
