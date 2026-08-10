@@ -1377,6 +1377,33 @@ function altKategorileriAc(durum, element){
 
     });
 
+	// =========================================
+	// VİLLA
+	// durum + konutTipi / konutSekli
+	// =========================================
+	
+	ilanlar.forEach(d => {
+	
+	    if(
+	        (
+	            d.konutTipi &&
+	            d.konutTipi.toLowerCase() === "villa"
+	        )
+	        ||
+	        (
+	            d.konutSekli &&
+	            d.konutSekli.toLowerCase() === "villa"
+	        )
+	    ){
+	
+	        if(!kategoriler.includes("Villa")){
+	            kategoriler.push("Villa");
+	        }
+	
+	    }
+	
+	});
+
 
     // =========================================
     // ARSA / TARLA
@@ -1442,6 +1469,26 @@ kategoriler.forEach(kategori => {
         ).length;
 
     }
+
+	// VİLLA
+	else if(kategori === "Villa"){
+	
+	    adet = ilanlarVerisi.filter(d =>
+	        d.durum === durum &&
+	        (
+	            (
+	                d.konutTipi &&
+	                d.konutTipi.toLowerCase() === "villa"
+	            )
+	            ||
+	            (
+	                d.konutSekli &&
+	                d.konutSekli.toLowerCase() === "villa"
+	            )
+	        )
+	    ).length;
+	
+	}
 
     // ARSA
     else if(kategori === "Arsa"){
@@ -1572,6 +1619,34 @@ function kategoriIlanlariniAc(durum, kategori){
             );
 
     }
+
+	// =========================================
+	// VİLLA
+	// durum + konutTipi / konutSekli
+	// =========================================
+	
+	else if(kategori === "Villa"){
+	
+	    filtreliIlanlar =
+	        ilanlarVerisi.filter(d =>
+	
+	            d.durum === durum &&
+	
+	            (
+	                (
+	                    d.konutTipi &&
+	                    d.konutTipi.toLowerCase() === "villa"
+	                )
+	                ||
+	                (
+	                    d.konutSekli &&
+	                    d.konutSekli.toLowerCase() === "villa"
+	                )
+	            )
+	
+	        );
+	
+	}
 
 
     // =========================================
