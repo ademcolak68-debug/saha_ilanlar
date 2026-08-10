@@ -307,5 +307,45 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "",
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": ""
+    },
+    {
+        "id": 1786391842022,
+        "baslik": "Yeni Sanayi Mahallesinde İmarlı",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Yeni Sanayi",
+        "fiyat": "350",
+        "paraBirimi": "EUR/m²",
+        "aciklama": "",
+        "koor": "33.991957, 38.380363",
+        "klasorIsmi": "4778-6",
+        "resimler": [
+            "images/4778-6/1.png",
+            "images/4778-6/2.png",
+            "images/4778-6/3.png"
+        ],
+        "videoUrl": [
+            "images/4778-6/video_1786391847551_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-10",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1786391842022"
+        },
+        "M²": "1071",
+        "Ada": "4778",
+        "Parsel": "6",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
     }
 ];
