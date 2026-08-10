@@ -855,7 +855,11 @@ document.head.appendChild(script);
 	    altBaslik += " • " + d.tip;
 	}
 	
-	if (d["Oda Sayısı"]) {
+	if (
+	    d.konutSekli &&
+	    d.konutSekli.toLowerCase() === "daire" &&
+	    d["Oda Sayısı"]
+	) {
 	    altBaslik += " • " + d["Oda Sayısı"];
 	}
 
