@@ -1260,34 +1260,35 @@ function ilanlariAc(){
 
     durumlar.forEach(durum => {
 
-        const durumAdi =
-            durum === "satilik"
-                ? "SATILIK"
-                : durum === "kiralik"
-                    ? "KİRALIK"
+    const durumAdi =
+        durum === "satilik"
+            ? "SATILIK"
+            : durum === "kiralik"
+                ? "KİRALIK"
+                : durum === "kat-karsiligi"
+                    ? "KAT KARŞILIĞI"
                     : durum.toUpperCase();
 
 
-        html += `
+    html += `
 
-				<div class="ana-ilan-kategori ${durum}"
-     			onclick="altKategorileriAc('${durum}', this)">
+        <div class="ana-ilan-kategori ${durum}"
+             onclick="altKategorileriAc('${durum}', this)">
 
-                <span>
-                    ${durumAdi}
-                </span>
+            <span>
+                ${durumAdi}
+            </span>
 
-            </div>
+        </div>
 
-            <div class="alt-kategori-listesi"
-                 id="alt-kategori-${durum}"
-                 style="display:none;">
-            </div>
+        <div class="alt-kategori-listesi"
+             id="alt-kategori-${durum}"
+             style="display:none;">
+        </div>
 
-        `;
+    `;
 
-    });
-
+});
 
     html += `
 
@@ -1702,6 +1703,11 @@ if(d.durum === "satilik"){
 else if(d.durum === "kiralik"){
 
     kartBaslik += " KİRALIK";
+
+}
+else if(d.durum === "kat-karsiligi"){
+
+    kartBaslik += " KAT KARŞILIĞI";
 
 }
 
