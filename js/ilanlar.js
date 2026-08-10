@@ -360,7 +360,7 @@ const ilanlarVerisi = [
         "mahalle": "Çiftlik",
         "fiyat": "13.000.000",
         "paraBirimi": "TL",
-        "aciklama": "\"Modern taş kaplama dış cephe,Müstakil kullanım alanı,Geniş ve ferah salon,Şık ada mutfak tasarımı,Modern banyo & duş sistemi,Giyinme dolabı & geniş depolama alanları,Kaliteli işçilik & lüks malzeme,Taşınmaya hazır",
+        "aciklama": "Modern taş kaplama dış cephe,Müstakil kullanım alanı,Geniş ve ferah salon,Şık ada mutfak tasarımı,Modern banyo & duş sistemi,Giyinme dolabı & geniş depolama alanları,Kaliteli işçilik & lüks malzeme,Taşınmaya hazır",
         "koor": "34.002347, 38.394934",
         "klasorIsmi": "hamza-aktürk-villa",
         "resimler": [
