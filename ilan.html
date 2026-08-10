@@ -1723,6 +1723,22 @@ else if(
 
 }
 
+// VİLLA
+else if(
+    (
+        d.konutTipi &&
+        d.konutTipi.toLowerCase() === "villa"
+    )
+    ||
+    (
+        d.konutSekli &&
+        d.konutSekli.toLowerCase() === "villa"
+    )
+){
+
+    kartBaslik += " Villa";
+}
+
 
 // ARSA / TARLA
 else if(
