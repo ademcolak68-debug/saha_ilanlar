@@ -717,13 +717,13 @@ font-weight:bold;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    opacity:0.7;
 }
 
 .kategori-adet{
     margin-left:auto;
     font-size:12px;
-    font-weight:600;
-	opacity:0.8;
+    opacity:0.7;
 }
 	
 </style>
@@ -1409,34 +1409,83 @@ function altKategorileriAc(durum, element){
     // ALT KATEGORİLERİ OLUŞTUR
     // =========================================
 
-    let html = "";
+   	let html = "";
+
+kategoriler.forEach(kategori => {
+
+    let adet = 0;
+
+    // DAİRE
+    if(kategori === "Daire"){
+
+        adet = ilanlarVerisi.filter(d =>
+            d.durum === durum &&
+            d.konutSekli &&
+            d.konutSekli.toLowerCase() === "daire"
+        ).length;
+
+    }
+
+    // DÜKKAN
+    else if(kategori === "Dükkan"){
+
+        adet = ilanlarVerisi.filter(d =>
+            d.durum === durum &&
+            d.konutTipi &&
+            d.konutTipi.toLowerCase().includes("dükkan")
+        ).length;
+
+    }
+
+    // ARSA
+    else if(kategori === "Arsa"){
+
+        adet = ilanlarVerisi.filter(d =>
+            d.durum === durum &&
+            d.tip &&
+            d.tip.toLowerCase() === "arsa"
+        ).length;
+
+    }
+
+    // TARLA
+    else if(kategori === "Tarla"){
+
+        adet = ilanlarVerisi.filter(d =>
+            d.durum === durum &&
+            d.tip &&
+            d.tip.toLowerCase() === "tarla"
+        ).length;
+
+    }
 
 
-    kategoriler.forEach(kategori => {
+    html += `
 
-        html += `
+        <div class="alt-ilan-kategori"
+             onclick="event.stopPropagation();
+                      kategoriIlanlariniAc(
+                          '${durum}',
+                          '${kategori}'
+                      );">
 
-            <div class="alt-ilan-kategori"
-                 onclick="event.stopPropagation();
-                          kategoriIlanlariniAc(
-                              '${durum}',
-                              '${kategori}'
-                          );">
+            <span>${kategori}</span>
 
+            <span class="kategori-adet">
+                ${adet}
+            </span>
 
-                <span>${kategori}</span>
+        </div>
 
-            </div>
+        <div
+            class="kategori-ilanlari"
+            id="ilanlar-${durum}-${kategori}"
+            style="display:none;">
+        </div>
 
-            <div
-                class="kategori-ilanlari"
-                id="ilanlar-${durum}-${kategori}"
-                style="display:none;">
-            </div>
+    `;
 
-        `;
-
-    });
+});
 
 
     alan.innerHTML = html;
