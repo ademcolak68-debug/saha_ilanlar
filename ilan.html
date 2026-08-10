@@ -604,6 +604,58 @@ font-weight:bold;
     font-family:Tahoma,sans-serif !important;
 }
 
+/* =========================================
+   KAT KARŞILIĞI ANA KATEGORİ
+   ========================================= */
+
+.ana-ilan-kategori.kat-karsiligi{
+    background:linear-gradient(
+        135deg,
+        #8a6418,
+        #b88b29
+    );
+}
+
+/* KAT KARŞILIĞI ANA YAZI */
+
+.ana-ilan-kategori.kat-karsiligi span{
+    color:#fff !important;
+}
+
+/* =========================================
+   KAT KARŞILIĞI ALT KATEGORİLER
+   ========================================= */
+
+.ilan-kategori-listesi
+.ana-ilan-kategori.kat-karsiligi
++ .alt-kategori-listesi
+.alt-ilan-kategori{
+
+    border-left-color:#b88b29;
+}
+
+/* KAT KARŞILIĞI ALT HOVER */
+
+.ilan-kategori-listesi
+.ana-ilan-kategori.kat-karsiligi
++ .alt-kategori-listesi
+.alt-ilan-kategori:hover{
+
+    background:#fff8e6;
+    color:#8a6418 !important;
+    border-left-color:#8a6418;
+}
+
+/* KAT KARŞILIĞI ALT YAZI HOVER */
+
+.ilan-kategori-listesi
+.ana-ilan-kategori.kat-karsiligi
++ .alt-kategori-listesi
+.alt-ilan-kategori:hover span{
+
+    color:#8a6418 !important;
+}
+
 
 /* =========================================
    MOBİL
