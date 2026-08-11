@@ -10,113 +10,484 @@
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
-    padding:15px;
-    background:#f3f4f6;
-    font-family:Tahoma, Arial, sans-serif;
+    padding:20px 12px;
+    background:#f1f3f5;
+    font-family:Tahoma,Arial,sans-serif;
+    color:#333;
 }
 
-.kutu{
-    max-width:420px;
-    margin:30px auto;
+
+/* =========================================
+   ANA BELGE
+   ========================================= */
+
+.belge-kutu{
+
+    width:100%;
+    max-width:850px;
+
+    margin:25px auto;
+
     background:#fff;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+
+    border-radius:8px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.12);
+
+    overflow:hidden;
+
+    border:1px solid #e2e5e8;
+}
+
+
+/* =========================================
+   ÜST BAŞLIK
+   ========================================= */
+
+.belge-ust{
+
+    padding:28px 35px 22px;
+
+    text-align:right;
+
+    border-bottom:1px solid #eee;
+}
+
+
+.logo-yazi{
+
+    font-size:30px;
+
+    font-weight:500;
+
+    letter-spacing:1px;
+
+    color:#777;
+
+}
+
+
+.logo-yazi span{
+
+    color:#9b7020;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================================
+   KİŞİ ALANI
+   ========================================= */
+
+.kisi-alani{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:45px;
+
+    padding:35px 55px;
+
+}
+
+
+.kisi-resim{
+
+    width:240px;
+    height:190px;
+
+    background:#eef0f1;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+
+.kisi-resim img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+
+.kisi-adi{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+    color:#333;
+
+}
+
+
+/* =========================================
+   BELGE NUMARASI
+   ========================================= */
+
+.belge-no{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 45px;
+
+    border-top:1px solid #eee;
+
+    border-bottom:1px solid #eee;
+
+}
+
+
+.belge-no-baslik{
+
+    font-size:28px;
+
+    color:#666;
+
+}
+
+
+.belge-no-deger{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#555;
+
+    letter-spacing:1px;
+
+}
+
+
+/* =========================================
+   EİDS ALANI
+   ========================================= */
+
+.eids-alani{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:40px;
+
+    padding:35px 55px;
+
+}
+
+
+.eids-logo{
+
+    width:135px;
+
+    height:135px;
+
+    border-radius:50%;
+
+    flex-shrink:0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0084ad,
+            #006b91
+        );
+
+    border:7px solid #fff;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.15);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#fff;
+
+    font-weight:bold;
+
     text-align:center;
+
+    position:relative;
+
 }
 
-.logo{
-    font-size:26px;
+
+.eids-logo::before{
+
+    content:"✓";
+
+    width:58px;
+    height:58px;
+
+    background:#fff;
+
+    color:#222;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:48px;
+
+    line-height:1;
+
+    margin-bottom:5px;
+
+}
+
+
+.eids-logo span{
+
+    font-size:10px;
+
+    letter-spacing:.5px;
+
+}
+
+
+.eids-yazi{
+
+    font-size:25px;
+
+    line-height:1.35;
+
+    color:#666;
+
+}
+
+
+.eids-yazi strong{
+
+    color:#16708d;
+
     font-weight:bold;
-    color:#1f2937;
-    margin-bottom:20px;
+
 }
 
-.onay{
-    background:#dcfce7;
-    color:#15803d;
-    padding:15px;
-    border-radius:10px;
-    font-size:19px;
+
+/* =========================================
+   ALT BİLGİ
+   ========================================= */
+
+.belge-alt{
+
+    padding:18px;
+
+    text-align:center;
+
+    background:#fafafa;
+
+    border-top:1px solid #eee;
+
+    color:#999;
+
+    font-size:13px;
+
+}
+
+
+/* =========================================
+   YETKİ PASİF
+   ========================================= */
+
+.pasif-kutu{
+
+    max-width:500px;
+
+    margin:80px auto;
+
+    padding:45px 30px;
+
+    background:#fff;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.12);
+
+    border-top:5px solid #b83245;
+}
+
+
+.pasif-baslik{
+
+    color:#b83245;
+
+    font-size:25px;
+
     font-weight:bold;
-    margin-bottom:25px;
+
+    margin-bottom:18px;
+
 }
 
-.bilgi{
-    text-align:left;
-    font-size:17px;
-    line-height:1.8;
-    color:#374151;
-}
 
-.yetki-no{
-    margin-top:20px;
-    padding:15px;
-    background:#fef3c7;
-    border-radius:10px;
-    color:#92400e;
-    font-size:18px;
-    font-weight:bold;
-}
+.pasif-aciklama{
 
-.alt{
-    margin-top:25px;
-    font-size:14px;
-    color:#6b7280;
-}
+    color:#777;
 
-.hata{
-    color:#dc2626;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.belge{
-    background:#eff6ff;
-    color:#1e40af;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:20px;
     font-size:16px;
-    line-height:1.5;
+
+    line-height:1.6;
 
 }
 
-@media(max-width:480px){
+
+/* =========================================
+   MOBİL
+   ========================================= */
+
+@media(max-width:600px){
 
     body{
-        padding:10px;
+        padding:10px 8px;
     }
 
-    .kutu{
-        margin:15px auto;
-        padding:20px;
+
+    .belge-kutu{
+
+        margin:10px auto;
+
     }
 
-    .logo{
-        font-size:23px;
+
+    .belge-ust{
+
+        padding:22px 18px 18px;
+
+        text-align:center;
+
     }
 
-    .bilgi{
-        font-size:16px;
+
+    .logo-yazi{
+
+        font-size:22px;
+
     }
 
-    .onay{
+
+    .kisi-alani{
+
+        flex-direction:column;
+
+        gap:20px;
+
+        padding:25px 20px;
+
+        text-align:center;
+
+    }
+
+
+    .kisi-resim{
+
+        width:240px;
+        height:180px;
+
+    }
+
+
+    .kisi-adi{
+
+        font-size:27px;
+
+    }
+
+
+    .belge-no{
+
+        padding:18px 20px;
+
+        gap:10px;
+
+    }
+
+
+    .belge-no-baslik{
+
         font-size:17px;
+
+    }
+
+
+    .belge-no-deger{
+
+        font-size:20px;
+
+    }
+
+
+    .eids-alani{
+
+        flex-direction:column;
+
+        gap:20px;
+
+        padding:28px 20px;
+
+        text-align:center;
+
+    }
+
+
+    .eids-logo{
+
+        width:120px;
+        height:120px;
+
+    }
+
+
+    .eids-yazi{
+
+        font-size:18px;
+
     }
 
 }
 
-
 </style>
+
 </head>
+
+
 <body>
 
-<div class="kutu" id="sonuc">
 
-Kontrol ediliyor...
+<div id="sonuc">
+
+    Kontrol ediliyor...
 
 </div>
 
@@ -126,101 +497,167 @@ Kontrol ediliyor...
 
 <script>
 
-const id =
 
-Number(new URLSearchParams(location.search).get("id"));
-
+const id = Number(
+    new URLSearchParams(location.search).get("id")
+);
 
 
 const ilan =
+    ilanlarVerisi.find(x => x.id === id);
 
-ilanlarVerisi.find(x => x.id === id);
 
 const sonuc =
-
-document.getElementById("sonuc");
-
-if(ilan && ilan.yetki && ilan.yetki.durum){
-
-    sonuc.innerHTML = `
-
-    <div class="logo">
-
-        NETmax Gayrimenkul
-
-    </div>
-
-    <div class="belge">
-
-        Taşınmaz Ticareti Yetki Belgesi No:<br>
-        <b>6800330</b>
-    
-    </div>
-
-    <div class="onay">
-
-        ✓ Yetkili İlan Doğrulandı
-
-    </div>
-
-    <div class="bilgi">
-        <b>İlan No:</b><br>
-        ${ilan.id}
-
-        <br><br>
-
-        <b>İlan:</b><br>
-
-        ${ilan.baslik}
+    document.getElementById("sonuc");
 
 
-        <div class="yetki-no">
+/* =========================================
+   YETKİLİ İLAN
+   ========================================= */
 
-            Yetki No:<br>
-            ${ilan.yetki.yetkiNo}
-        
-        </div>
-               
-        <div class="bilgi">
-        
-            <b>Yetkilendirme Tarihi:</b><br>
-            ${ilan["İlan Tarihi"]}
-        
-        </div>
-
-    </div>
-
-    <div class="alt">
-
-        Bu ilan NETmax Gayrimenkul tarafından yetkilendirilmiştir.
-
-    </div>
-
-    `;
-
-
-}else{
+if(
+    ilan &&
+    ilan.yetki &&
+    ilan.yetki.durum
+){
 
     sonuc.innerHTML = `
 
-    <div class="hata">
+        <div class="belge-kutu">
 
-        ✗ Yetki Pasif
-    
-    </div>
-    
-    <p>
-    
-    Bu ilan için aktif yetkilendirme kaydı bulunmamaktadır.
-    
-    </p>
+
+            <!-- ÜST -->
+
+            <div class="belge-ust">
+
+                <div class="logo-yazi">
+
+                    EN <span>NET MAX</span> GAYRİMENKUL
+
+                </div>
+
+            </div>
+
+
+            <!-- KİŞİ -->
+
+            <div class="kisi-alani">
+
+                <div class="kisi-resim">
+
+                    <img
+                        src="images/nedim-deniz.jpg"
+                        alt="Nedim Deniz"
+                        onerror="this.style.display='none';"
+                    >
+
+                </div>
+
+
+                <div class="kisi-adi">
+
+                    Nedim Deniz
+
+                </div>
+
+            </div>
+
+
+            <!-- BELGE NO -->
+
+            <div class="belge-no">
+
+                <div class="belge-no-baslik">
+
+                    Taşınmaz Ticareti Yetki Belge No
+
+                </div>
+
+
+                <div class="belge-no-deger">
+
+                    6800330
+
+                </div>
+
+            </div>
+
+
+            <!-- EİDS -->
+
+            <div class="eids-alani">
+
+
+                <div class="eids-logo">
+
+                    <span>
+                        EİDS
+                    </span>
+
+                </div>
+
+
+                <div class="eids-yazi">
+
+                    Bu gayrimenkul için
+                    <strong>Ticaret Bakanlığı</strong>
+                    EİDS sisteminde ilan verme iznine
+                    sahiptir.
+
+                </div>
+
+
+            </div>
+
+
+            <div class="belge-alt">
+
+                Yetkili İlan Doğrulama
+
+            </div>
+
+
+        </div>
 
     `;
 
 
 }
-    
+
+
+/* =========================================
+   YETKİSİZ İLAN
+   ========================================= */
+
+else{
+
+    sonuc.innerHTML = `
+
+        <div class="pasif-kutu">
+
+            <div class="pasif-baslik">
+
+                ✗ Yetki Pasif
+
+            </div>
+
+
+            <div class="pasif-aciklama">
+
+                Bu ilan için aktif yetkilendirme
+                kaydı bulunmamaktadır.
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
 </script>
+
 
 </body>
 
