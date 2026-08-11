@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Yetki Doğrulama</title>
 
@@ -14,36 +14,37 @@
     box-sizing:border-box;
 }
 
+html,
 body{
     margin:0;
-    padding:20px 12px;
-    background:#f1f3f5;
+    padding:0;
+    width:100%;
+    min-height:100%;
     font-family:Tahoma,Arial,sans-serif;
-    color:#333;
+    background:#f4f5f6;
 }
 
 
 /* =========================================
-   ANA BELGE
+   BELGE
    ========================================= */
 
-.belge-kutu{
+.belge{
 
-    width:100%;
-    max-width:850px;
+    width:calc(100% - 20px);
+    max-width:600px;
 
-    margin:25px auto;
+    margin:12px auto;
 
     background:#fff;
 
     border-radius:8px;
 
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.12);
-
     overflow:hidden;
 
-    border:1px solid #e2e5e8;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,.12);
+
 }
 
 
@@ -53,32 +54,39 @@ body{
 
 .belge-ust{
 
-    padding:28px 35px 22px;
+    height:58px;
 
-    text-align:right;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    padding:0 22px;
 
     border-bottom:1px solid #eee;
+
 }
 
 
-.logo-yazi{
-
-    font-size:30px;
-
-    font-weight:500;
-
-    letter-spacing:1px;
+.firma{
 
     color:#777;
 
+    font-size:20px;
+
+    letter-spacing:.8px;
+
+    white-space:nowrap;
+
 }
 
 
-.logo-yazi span{
+.firma strong{
 
-    color:#9b7020;
+    color:#8b6a25;
 
-    font-weight:bold;
+    font-weight:500;
 
 }
 
@@ -87,32 +95,33 @@ body{
    KİŞİ ALANI
    ========================================= */
 
-.kisi-alani{
+.kisi{
+
+    height:190px;
 
     display:flex;
 
     align-items:center;
 
-    gap:45px;
+    gap:28px;
 
-    padding:35px 55px;
+    padding:20px 25px;
 
 }
 
 
 .kisi-resim{
 
-    width:240px;
-    height:190px;
+    width:150px;
+
+    height:145px;
+
+    flex-shrink:0;
 
     background:#eef0f1;
 
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
     overflow:hidden;
+
 }
 
 
@@ -122,33 +131,36 @@ body{
     height:100%;
 
     object-fit:cover;
+
 }
 
 
 .kisi-adi{
 
-    font-size:36px;
+    font-size:27px;
 
     font-weight:bold;
 
-    color:#333;
+    color:#303030;
 
 }
 
 
 /* =========================================
-   BELGE NUMARASI
+   YETKİ BELGE NO
    ========================================= */
 
-.belge-no{
+.yetki-no{
+
+    height:65px;
 
     display:flex;
 
-    justify-content:space-between;
-
     align-items:center;
 
-    padding:22px 45px;
+    justify-content:space-between;
+
+    padding:0 25px;
 
     border-top:1px solid #eee;
 
@@ -157,125 +169,63 @@ body{
 }
 
 
-.belge-no-baslik{
+.yetki-no .baslik{
 
-    font-size:28px;
+    font-size:22px;
 
     color:#666;
 
 }
 
 
-.belge-no-deger{
+.yetki-no .numara{
 
-    font-size:30px;
-
-    font-weight:bold;
+    font-size:25px;
 
     color:#555;
 
-    letter-spacing:1px;
+    font-weight:500;
 
 }
 
 
 /* =========================================
-   EİDS ALANI
+   EİDS
    ========================================= */
 
-.eids-alani{
+.eids{
+
+    min-height:145px;
 
     display:flex;
 
     align-items:center;
 
-    gap:40px;
+    gap:25px;
 
-    padding:35px 55px;
+    padding:18px 25px 22px;
 
 }
 
 
 .eids-logo{
 
-    width:135px;
+    width:105px;
 
-    height:135px;
+    height:105px;
 
-    border-radius:50%;
+    object-fit:cover;
 
     flex-shrink:0;
 
-    background:
-        linear-gradient(
-            145deg,
-            #0084ad,
-            #006b91
-        );
-
-    border:7px solid #fff;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,.15);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    color:#fff;
-
-    font-weight:bold;
-
-    text-align:center;
-
-    position:relative;
-
-}
-
-
-.eids-logo::before{
-
-    content:"✓";
-
-    width:58px;
-    height:58px;
-
-    background:#fff;
-
-    color:#222;
-
     border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    font-size:48px;
-
-    line-height:1;
-
-    margin-bottom:5px;
-
-}
-
-
-.eids-logo span{
-
-    font-size:10px;
-
-    letter-spacing:.5px;
 
 }
 
 
 .eids-yazi{
 
-    font-size:25px;
+    font-size:20px;
 
     line-height:1.35;
 
@@ -286,56 +236,59 @@ body{
 
 .eids-yazi strong{
 
-    color:#16708d;
-
-    font-weight:bold;
+    color:#555;
 
 }
 
 
 /* =========================================
-   ALT BİLGİ
+   ALT
    ========================================= */
 
-.belge-alt{
+.alt{
 
-    padding:18px;
-
-    text-align:center;
-
-    background:#fafafa;
+    height:28px;
 
     border-top:1px solid #eee;
 
-    color:#999;
+    color:#aaa;
 
-    font-size:13px;
+    font-size:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 
 }
 
 
 /* =========================================
-   YETKİ PASİF
+   YETKİSİZ
    ========================================= */
 
-.pasif-kutu{
+.pasif{
 
-    max-width:500px;
+    width:calc(100% - 30px);
 
-    margin:80px auto;
+    max-width:450px;
 
-    padding:45px 30px;
+    margin:70px auto;
+
+    padding:35px 25px;
 
     background:#fff;
 
-    border-radius:15px;
-
     text-align:center;
 
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.12);
+    border-radius:12px;
 
-    border-top:5px solid #b83245;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,.12);
+
+    border-top:4px solid #b83245;
+
 }
 
 
@@ -343,135 +296,141 @@ body{
 
     color:#b83245;
 
-    font-size:25px;
+    font-size:23px;
 
     font-weight:bold;
 
-    margin-bottom:18px;
+    margin-bottom:15px;
 
 }
 
 
-.pasif-aciklama{
+.pasif-yazi{
 
     color:#777;
 
-    font-size:16px;
+    font-size:15px;
 
-    line-height:1.6;
+    line-height:1.5;
 
 }
 
 
 /* =========================================
-   MOBİL
+   TELEFON
    ========================================= */
 
-@media(max-width:600px){
+@media(max-width:480px){
 
-    body{
-        padding:10px 8px;
-    }
+    .belge{
 
+        width:calc(100% - 12px);
 
-    .belge-kutu{
-
-        margin:10px auto;
+        margin:6px auto;
 
     }
 
 
     .belge-ust{
 
-        padding:22px 18px 18px;
+        height:45px;
 
-        text-align:center;
-
-    }
-
-
-    .logo-yazi{
-
-        font-size:22px;
+        padding:0 12px;
 
     }
 
 
-    .kisi-alani{
+    .firma{
 
-        flex-direction:column;
+        font-size:15px;
 
-        gap:20px;
+    }
 
-        padding:25px 20px;
 
-        text-align:center;
+    .kisi{
+
+        height:145px;
+
+        gap:16px;
+
+        padding:12px 14px;
 
     }
 
 
     .kisi-resim{
 
-        width:240px;
-        height:180px;
+        width:115px;
+
+        height:110px;
 
     }
 
 
     .kisi-adi{
 
-        font-size:27px;
+        font-size:21px;
 
     }
 
 
-    .belge-no{
+    .yetki-no{
 
-        padding:18px 20px;
+        height:52px;
 
-        gap:10px;
-
-    }
-
-
-    .belge-no-baslik{
-
-        font-size:17px;
+        padding:0 14px;
 
     }
 
 
-    .belge-no-deger{
+    .yetki-no .baslik{
 
-        font-size:20px;
+        font-size:16px;
 
     }
 
 
-    .eids-alani{
+    .yetki-no .numara{
 
-        flex-direction:column;
+        font-size:19px;
 
-        gap:20px;
+    }
 
-        padding:28px 20px;
 
-        text-align:center;
+    .eids{
+
+        min-height:112px;
+
+        gap:14px;
+
+        padding:12px 14px;
 
     }
 
 
     .eids-logo{
 
-        width:120px;
-        height:120px;
+        width:82px;
+
+        height:82px;
 
     }
 
 
     .eids-yazi{
 
-        font-size:18px;
+        font-size:14px;
+
+        line-height:1.35;
+
+    }
+
+
+    .alt{
+
+        height:20px;
+
+        font-size:8px;
 
     }
 
@@ -512,7 +471,7 @@ const sonuc =
 
 
 /* =========================================
-   YETKİLİ İLAN
+   YETKİLİ
    ========================================= */
 
 if(
@@ -523,32 +482,28 @@ if(
 
     sonuc.innerHTML = `
 
-        <div class="belge-kutu">
+        <div class="belge">
 
-
-            <!-- ÜST -->
 
             <div class="belge-ust">
 
-                <div class="logo-yazi">
+                <div class="firma">
 
-                    EN <span>NET MAX</span> GAYRİMENKUL
+                    EN NET MAX GAYRİMENKUL
 
                 </div>
 
             </div>
 
 
-            <!-- KİŞİ -->
+            <div class="kisi">
 
-            <div class="kisi-alani">
 
                 <div class="kisi-resim">
 
                     <img
                         src="images/nedim-deniz.jpg"
                         alt="Nedim Deniz"
-                        onerror="this.style.display='none';"
                     >
 
                 </div>
@@ -560,21 +515,20 @@ if(
 
                 </div>
 
+
             </div>
 
 
-            <!-- BELGE NO -->
+            <div class="yetki-no">
 
-            <div class="belge-no">
+                <div class="baslik">
 
-                <div class="belge-no-baslik">
-
-                    Taşınmaz Ticareti Yetki Belge No
+                    Yetki Belge No
 
                 </div>
 
 
-                <div class="belge-no-deger">
+                <div class="numara">
 
                     6800330
 
@@ -583,18 +537,14 @@ if(
             </div>
 
 
-            <!-- EİDS -->
-
-            <div class="eids-alani">
+            <div class="eids">
 
 
-                <div class="eids-logo">
-
-                    <span>
-                        EİDS
-                    </span>
-
-                </div>
+                <img
+                    src="eids-logo.jpg"
+                    class="eids-logo"
+                    alt="EİDS"
+                >
 
 
                 <div class="eids-yazi">
@@ -610,9 +560,9 @@ if(
             </div>
 
 
-            <div class="belge-alt">
+            <div class="alt">
 
-                Yetkili İlan Doğrulama
+                Yetki doğrulama
 
             </div>
 
@@ -621,19 +571,18 @@ if(
 
     `;
 
-
 }
 
 
 /* =========================================
-   YETKİSİZ İLAN
+   YETKİSİZ
    ========================================= */
 
 else{
 
     sonuc.innerHTML = `
 
-        <div class="pasif-kutu">
+        <div class="pasif">
 
             <div class="pasif-baslik">
 
@@ -642,7 +591,7 @@ else{
             </div>
 
 
-            <div class="pasif-aciklama">
+            <div class="pasif-yazi">
 
                 Bu ilan için aktif yetkilendirme
                 kaydı bulunmamaktadır.
@@ -660,5 +609,4 @@ else{
 
 
 </body>
-
 </html>
