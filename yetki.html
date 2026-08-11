@@ -4,133 +4,73 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Yetki Doğrulama</title>
 
-
 <style>
 
 body{
-
     margin:0;
     padding:15px;
-
     background:#f3f4f6;
-
     font-family:Tahoma, Arial, sans-serif;
-
 }
-
 
 .kutu{
-
     max-width:420px;
-
     margin:30px auto;
-
     background:#fff;
-
     padding:25px;
-
     border-radius:15px;
-
     box-shadow:0 5px 20px rgba(0,0,0,0.15);
-
     text-align:center;
-
 }
-
 
 .logo{
-
     font-size:26px;
-
     font-weight:bold;
-
     color:#1f2937;
-
     margin-bottom:20px;
-
 }
-
-
 
 .onay{
-
     background:#dcfce7;
-
     color:#15803d;
-
     padding:15px;
-
     border-radius:10px;
-
     font-size:19px;
-
     font-weight:bold;
-
     margin-bottom:25px;
-
 }
-
-
 
 .bilgi{
-
     text-align:left;
-
     font-size:17px;
-
     line-height:1.8;
-
     color:#374151;
-
 }
-
-
 
 .yetki-no{
-
     margin-top:20px;
-
     padding:15px;
-
     background:#fef3c7;
-
     border-radius:10px;
-
     color:#92400e;
-
     font-size:18px;
-
     font-weight:bold;
-
 }
-
-
 
 .alt{
-
     margin-top:25px;
-
     font-size:14px;
-
     color:#6b7280;
-
 }
 
-
-
 .hata{
-
     color:#dc2626;
-
     font-size:20px;
-
     font-weight:bold;
-
 }
 
 .belge{
@@ -144,73 +84,47 @@ body{
 
 }
 
-
-
 @media(max-width:480px){
 
     body{
-
         padding:10px;
-
     }
-
 
     .kutu{
-
         margin:15px auto;
-
         padding:20px;
-
     }
-
 
     .logo{
-
         font-size:23px;
-
     }
-
 
     .bilgi{
-
         font-size:16px;
-
     }
 
-
     .onay{
-
         font-size:17px;
-
     }
 
 }
 
 
 </style>
-
-
 </head>
-
-
 <body>
-
 
 <div class="kutu" id="sonuc">
 
 Kontrol ediliyor...
 
-
 </div>
-
 
 
 <script src="js/ilanlar.js"></script>
 
 
-
 <script>
-
 
 const id =
 
@@ -222,19 +136,13 @@ const ilan =
 
 ilanlarVerisi.find(x => x.id === id);
 
-
-
 const sonuc =
 
 document.getElementById("sonuc");
 
-
-
 if(ilan && ilan.yetki && ilan.yetki.durum){
 
-
     sonuc.innerHTML = `
-
 
     <div class="logo">
 
@@ -255,8 +163,6 @@ if(ilan && ilan.yetki && ilan.yetki.durum){
 
     </div>
 
-
-
     <div class="bilgi">
         <b>İlan No:</b><br>
         ${ilan.id}
@@ -266,7 +172,6 @@ if(ilan && ilan.yetki && ilan.yetki.durum){
         <b>İlan:</b><br>
 
         ${ilan.baslik}
-
 
 
         <div class="yetki-no">
@@ -283,7 +188,6 @@ if(ilan && ilan.yetki && ilan.yetki.durum){
         
         </div>
 
-
     </div>
 
     <div class="alt">
@@ -291,7 +195,6 @@ if(ilan && ilan.yetki && ilan.yetki.durum){
         Bu ilan NETmax Gayrimenkul tarafından yetkilendirilmiştir.
 
     </div>
-
 
     `;
 
