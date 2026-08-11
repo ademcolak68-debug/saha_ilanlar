@@ -400,5 +400,48 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "Hayır",
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": ""
+    },
+    {
+        "id": 1786435581411,
+        "baslik": "Yeni Mahallede İmarlı",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Yeni",
+        "fiyat": "95",
+        "paraBirimi": "EUR/m²",
+        "aciklama": "SATILIK DİĞER PARSELLER,\n7276/17 ( 768.61 m2 ),\n7276/18 ( 700 m2 ),\n7276/19 ( 775 m2 )\n",
+        "koor": "33.969544, 38.405846",
+        "klasorIsmi": "ahmet-piskin-hasdoner",
+        "resimler": [
+            "images/ahmet-piskin-hasdoner/1.png",
+            "images/ahmet-piskin-hasdoner/2.png",
+            "images/ahmet-piskin-hasdoner/3.png",
+            "images/ahmet-piskin-hasdoner/4.png",
+            "images/ahmet-piskin-hasdoner/5.png",
+            "images/ahmet-piskin-hasdoner/6.png"
+        ],
+        "videoUrl": [
+            "images/ahmet-piskin-hasdoner/video_1786435592109_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-11",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1786435581412"
+        },
+        "M²": "1228.28",
+        "Ada": "7276",
+        "Parsel": "16",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": ""
     }
 ];
