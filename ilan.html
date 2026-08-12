@@ -25,7 +25,19 @@ body{margin:0;background:#f4f4f4;font-family: Tahoma, sans-serif;color:#333}
 
 .header-top{padding:15px;font-size:16px;font-family: 'Titillium Web', sans-serif;text-align:center;border-bottom:1px solid #eee;text-transform:uppercase;line-height:1.4}
 .firma-imza{font-size:14px;font-family: 'Titillium Web', sans-serif;font-weight:normal;text-align:center;padding:12px;background:#f9f9f9;border-bottom:1px solid #eee}
+.firma-imza #yetkiQR{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:10px auto 0;
+}
 
+.firma-imza #yetkiQR canvas,
+.firma-imza #yetkiQR img{
+    display:block;
+    margin:0 auto;
+}
 .slider-kapsul{position:relative}
 .detay-slider{position:relative;width:100%;height:350px;background:#eee;overflow-x:auto;display:flex;scroll-snap-type:x mandatory}
 .detay-resim{min-width:100%;height:100%;object-fit:contain;scroll-snap-align:start}
