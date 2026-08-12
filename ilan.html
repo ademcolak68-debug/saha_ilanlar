@@ -1005,27 +1005,34 @@ if (d.yetki && d.yetki.durum) {
 
 let danismanHtml = "";
 
-window.aktifDanisman =
-    Object.values(danismanlar).find(
-        x =>
-            x.ad.trim().toLowerCase() ===
-            d.danisman.trim().toLowerCase()
-    ) || null;
+window.aktifDanisman = null;
 
-    danismanHtml = `
-    <div class="danisman-butonlari">
+if (d.danisman && d.danisman.trim() !== "") {
 
-        <button onclick="danismanAra()">
-            Ara
-        </button>
+    window.aktifDanisman =
+        Object.values(danismanlar).find(
+            x =>
+                x.ad.trim().toLowerCase() ===
+                d.danisman.trim().toLowerCase()
+        ) || null;
 
-        <button onclick="danismanMesaj()">
-            Mesaj Gönder
-        </button>
+    if (window.aktifDanisman) {
 
-    </div>
-    `;
+        danismanHtml = `
+        <div class="danisman-butonlari">
 
+            <button onclick="danismanAra()">
+                Ara
+            </button>
+
+            <button onclick="danismanMesaj()">
+                Mesaj Gönder
+            </button>
+
+        </div>
+        `;
+
+    }
 }
 
 let ozellikler = "";
