@@ -40,7 +40,7 @@ const ilanlarVerisi = [
             "durum": false,
             "yetkiNo": "NET-YTK-1784039479315"
         },
-        "ilanAktif": false
+        "ilanAktif": true
     },
     {
         "id": 1785784345315,
