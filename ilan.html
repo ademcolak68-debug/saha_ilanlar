@@ -783,6 +783,36 @@ font-weight:bold;
     font-size:12px;
     opacity:0.7;
 }
+
+.danisman-butonlari {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background: white;
+    z-index: 9999;
+}
+
+.danisman-butonlari button {
+    width: 45%;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 12px;
+    cursor: pointer;
+}
+.danisman-butonlari button:active {
+    transform: scale(0.98);
+}
 	
 </style>
 </head>
@@ -873,18 +903,45 @@ font-weight:bold;
 
 <script>
     let detayIndex = 0;
-    const script = document.createElement('script');
-    script.src = "js/ilanlar.js?t=" + new Date().getTime();
-	script.onload = () => {
-        const id = Number(new URLSearchParams(location.search).get("id"));
-        const d = (typeof ilanlarVerisi !== 'undefined' ? ilanlarVerisi : []).find(x => x.id === id);
-        if (d) {
-            render(d);
-            setTimeout(() => document.getElementById("acilisEkrani").style.display = "none", 2500);
-        }
-    };
 
-document.head.appendChild(script);
+	const danismanScript = document.createElement('script');
+	danismanScript.src = "js/danismanlar.js?t=" + new Date().getTime();
+	
+	danismanScript.onload = () => {
+	
+	    const script = document.createElement('script');
+	    script.src = "js/ilanlar.js?t=" + new Date().getTime();
+	
+	    script.onload = () => {
+	
+	        const id = Number(
+	            new URLSearchParams(location.search).get("id")
+	        );
+	
+	        const d =
+	            (typeof ilanlarVerisi !== 'undefined'
+	                ? ilanlarVerisi
+	                : []
+	            ).find(x => x.id === id);
+	
+	        if (d) {
+	
+	            render(d);
+	
+	            setTimeout(() =>
+	                document.getElementById("acilisEkrani").style.display = "none",
+	                2500
+	            );
+	
+	        }
+	
+	    };
+	
+	    document.head.appendChild(script);
+	
+	};
+	
+	document.head.appendChild(danismanScript);
 
     function render(d) {
 
@@ -941,6 +998,35 @@ if (d.yetki && d.yetki.durum) {
     yetkiHtml = `
     <div class="yetki-bilgi">
         ✓ Yetkili İlan<br>
+    </div>
+    `;
+
+}
+
+let danismanHtml = "";
+
+window.aktifDanisman = null;
+
+if (d.danisman && d.danisman.trim() !== "") {
+
+    window.aktifDanisman =
+        Object.values(danismanlar).find(
+            x =>
+                x.ad.toLowerCase() ===
+                d.danisman.toLowerCase()
+        ) || null;
+
+    danismanHtml = `
+    <div class="danisman-butonlari">
+
+        <button onclick="danismanAra()">
+            Ara
+        </button>
+
+        <button onclick="danismanMesaj()">
+            Mesaj Gönder
+        </button>
+
     </div>
     `;
 
@@ -1068,6 +1154,8 @@ const medyaSayisi =
     <div id="konum" class="tab-content ilan-konum">
         ${harita}
     </div>
+
+	${danismanHtml}
 
     `;
 
@@ -1906,6 +1994,27 @@ document.addEventListener("DOMContentLoaded", function(){
     },4000);
 
 });
+
+function danismanAra() {
+
+    if (!window.aktifDanisman) return;
+
+    window.location.href =
+        "tel:" + window.aktifDanisman.telefon.replace(/\s/g, "");
+
+}
+
+
+function danismanMesaj() {
+
+    if (!window.aktifDanisman) return;
+
+    window.open(
+        "https://wa.me/" + window.aktifDanisman.whatsapp,
+        "_blank"
+    );
+
+}
 
 
 </script>
