@@ -557,6 +557,18 @@ button {
 				<option value="false">Pasif</option>
 			</select>
 		</div>
+
+		<div class="field">
+		    <label>Danışman</label>
+		    <select id="danisman">
+		        <option value="">Danışman adı</option>
+		        <option value="Adem Çolak">Adem Çolak</option>
+		        <option value="Nedim Deniz">Nedim Deniz</option>
+				<option value="Muhammed Akpınar">Muhammed Akpınar</option>
+				<option value="Kazım Kayabaşı">Kazım Kayabaşı</option>
+				<option value="Ekrem Deniz">Ekrem Deniz</option>
+		    </select>
+		</div>
 		
 		<div class="field">
 			<label>M²</label>
@@ -727,6 +739,7 @@ function getFormData() {
 		    yetkiNo: "NET-YTK-" + (duzenlenenId || Date.now())
 		},
 		ilanAktif: document.getElementById('ilanAktif').value === "true",
+		danisman: document.getElementById('danisman').value,
         "M²": document.getElementById('m2').value,
 		"Ada": document.getElementById('ada').value,
         "Parsel": document.getElementById('parsel').value,
@@ -792,6 +805,7 @@ function formDoldur(id) {
     document.getElementById('koor').value = ilan.koor || "";
     document.getElementById('ilanTarihi').value = ilan["İlan Tarihi"] || "";
 	document.getElementById('ilanAktif').value = ilan.ilanAktif === false ? "false" : "true";
+	document.getElementById('danisman').value = ilan.danisman || "";
     document.getElementById('m2').value = ilan["M²"] || "";
 	document.getElementById('ada').value = ilan["Ada"] || "";
     document.getElementById('parsel').value = ilan["Parsel"] || "";
