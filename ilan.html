@@ -1005,16 +1005,12 @@ if (d.yetki && d.yetki.durum) {
 
 let danismanHtml = "";
 
-window.aktifDanisman = null;
-
-if (d.danisman && d.danisman.trim() !== "") {
-
-    window.aktifDanisman =
-        Object.values(danismanlar).find(
-            x =>
-                x.ad.toLowerCase() ===
-                d.danisman.toLowerCase()
-        ) || null;
+window.aktifDanisman =
+    Object.values(danismanlar).find(
+        x =>
+            x.ad.trim().toLowerCase() ===
+            d.danisman.trim().toLowerCase()
+    ) || null;
 
     danismanHtml = `
     <div class="danisman-butonlari">
