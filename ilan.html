@@ -1007,6 +1007,9 @@ let danismanHtml = "";
 
 window.aktifDanisman = null;
 
+console.log("İLANDAN GELEN:", d.danisman);
+console.log("DANIŞMANLAR:", danismanlar);
+
 if (d.danisman && d.danisman.trim() !== "") {
 
     window.aktifDanisman =
@@ -1015,6 +1018,8 @@ if (d.danisman && d.danisman.trim() !== "") {
                 x.ad.trim().toLowerCase() ===
                 d.danisman.trim().toLowerCase()
         ) || null;
+
+    console.log("EŞLEŞEN DANIŞMAN:", window.aktifDanisman);
 
     if (window.aktifDanisman) {
 
@@ -1031,7 +1036,6 @@ if (d.danisman && d.danisman.trim() !== "") {
 
         </div>
         `;
-
     }
 }
 
