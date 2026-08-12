@@ -549,6 +549,14 @@ button {
 		        <option value="false">Pasif</option>
 		    </select>
 		</div>
+
+		<div class="field">
+			<label>İlan Yayın Durumu</label>
+			<select id="ilanAktif">
+				<option value="true">Aktif</option>
+				<option value="false">Pasif</option>
+			</select>
+		</div>
 		
 		<div class="field">
 			<label>M²</label>
@@ -718,6 +726,7 @@ function getFormData() {
 		    durum: document.getElementById('yetkiDurumu').value === "true",
 		    yetkiNo: "NET-YTK-" + (duzenlenenId || Date.now())
 		},
+		ilanAktif: document.getElementById('ilanAktif').value === "true",
         "M²": document.getElementById('m2').value,
 		"Ada": document.getElementById('ada').value,
         "Parsel": document.getElementById('parsel').value,
@@ -782,6 +791,7 @@ function formDoldur(id) {
     document.getElementById('aciklama').value = ilan.aciklama || "";
     document.getElementById('koor').value = ilan.koor || "";
     document.getElementById('ilanTarihi').value = ilan["İlan Tarihi"] || "";
+	document.getElementById('ilanAktif').value = ilan.ilanAktif === false ? "false" : "true";
     document.getElementById('m2').value = ilan["M²"] || "";
 	document.getElementById('ada').value = ilan["Ada"] || "";
     document.getElementById('parsel').value = ilan["Parsel"] || "";
