@@ -1297,12 +1297,11 @@ function ilanlariAc(){
     // =========================================
 
     const durumlar = [...new Set(
-
-        ilanlarVerisi
-            .map(d => d.durum)
-            .filter(Boolean)
-
-    )];
+	    ilanlarVerisi
+	        .filter(d => d.ilanAktif !== false)
+	        .map(d => d.durum)
+	        .filter(Boolean)
+	)];
 
 
     // =========================================
@@ -1384,9 +1383,10 @@ function altKategorileriAc(durum, element){
     // =========================================
 
     const ilanlar =
-        ilanlarVerisi.filter(
-            d => d.durum === durum
-        );
+    ilanlarVerisi.filter(
+        d => d.durum === durum &&
+             d.ilanAktif !== false
+    );
 
 
     const kategoriler = [];
@@ -1508,6 +1508,7 @@ kategoriler.forEach(kategori => {
     if(kategori === "Daire"){
 
         adet = ilanlarVerisi.filter(d =>
+			d.ilanAktif !== false &&
             d.durum === durum &&
             d.konutSekli &&
             d.konutSekli.toLowerCase() === "daire"
@@ -1519,6 +1520,7 @@ kategoriler.forEach(kategori => {
     else if(kategori === "Dükkan"){
 
         adet = ilanlarVerisi.filter(d =>
+			d.ilanAktif !== false &&
             d.durum === durum &&
             d.konutTipi &&
             d.konutTipi.toLowerCase().includes("dükkan")
@@ -1530,6 +1532,7 @@ kategoriler.forEach(kategori => {
 	else if(kategori === "Villa"){
 	
 	    adet = ilanlarVerisi.filter(d =>
+			d.ilanAktif !== false &&
 	        d.durum === durum &&
 	        (
 	            (
@@ -1550,6 +1553,7 @@ kategoriler.forEach(kategori => {
     else if(kategori === "Arsa"){
 
         adet = ilanlarVerisi.filter(d =>
+			d.ilanAktif !== false &&
             d.durum === durum &&
             d.tip &&
             d.tip.toLowerCase() === "arsa"
@@ -1561,6 +1565,7 @@ kategoriler.forEach(kategori => {
     else if(kategori === "Tarla"){
 
         adet = ilanlarVerisi.filter(d =>
+			d.ilanAktif !== false &&
             d.durum === durum &&
             d.tip &&
             d.tip.toLowerCase() === "tarla"
@@ -1644,6 +1649,7 @@ function kategoriIlanlariniAc(durum, kategori){
 
         filtreliIlanlar =
             ilanlarVerisi.filter(d =>
+				d.ilanAktif !== false &&
 
                 d.durum === durum &&
 
@@ -1665,6 +1671,7 @@ function kategoriIlanlariniAc(durum, kategori){
 
         filtreliIlanlar =
             ilanlarVerisi.filter(d =>
+				d.ilanAktif !== false &&
 
                 d.durum === durum &&
 
@@ -1685,7 +1692,7 @@ function kategoriIlanlariniAc(durum, kategori){
 	
 	    filtreliIlanlar =
 	        ilanlarVerisi.filter(d =>
-	
+				d.ilanAktif !== false &&
 	            d.durum === durum &&
 	
 	            (
@@ -1717,7 +1724,7 @@ function kategoriIlanlariniAc(durum, kategori){
 
         filtreliIlanlar =
             ilanlarVerisi.filter(d =>
-
+				d.ilanAktif !== false &&
                 d.durum === durum &&
 
                 d.tip &&
