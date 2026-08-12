@@ -25,6 +25,11 @@ const ilanlarVerisi = [
         ],
         "videoUrl": "images/tapan-rezidans/tanitim.mp4",
         "İlan Tarihi": "2026-07-14",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1784039479315"
+        },
+        "ilanAktif": true,
         "M²": "60",
         "Ada": "",
         "Parsel": "",
@@ -35,12 +40,7 @@ const ilanlarVerisi = [
         "Isıtma": "Merkezi",
         "Eşyalı mı?": "Evet",
         "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Hayır",
-        "yetki": {
-            "durum": false,
-            "yetkiNo": "NET-YTK-1784039479315"
-        },
-        "ilanAktif": false
+        "Site İçerisinde?": "Hayır"
     },
     {
         "id": 1785784345315,
