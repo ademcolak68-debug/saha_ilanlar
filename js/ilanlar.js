@@ -86,7 +86,8 @@ const ilanlarVerisi = [
         "yetki": {
             "durum": true,
             "yetkiNo": "NET-YTK-1785784345315"
-        }
+        },
+        "ilanAktif": true,
     },
     {
         "id": 1785871007246,
@@ -122,6 +123,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1785871007247"
         },
+        "ilanAktif": true,
         "M²": "40",
         "Ada": "",
         "Parsel": "",
@@ -169,6 +171,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1785874099365"
         },
+        "ilanAktif": true,
         "M²": "80",
         "Ada": "",
         "Parsel": "",
@@ -205,6 +208,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786029925787"
         },
+        "ilanAktif": true,
         "M²": "200",
         "Ada": "",
         "Parsel": "",
@@ -244,6 +248,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786193103508"
         },
+        "ilanAktif": true,
         "M²": "3374",
         "Ada": "8346",
         "Parsel": "1",
@@ -297,6 +302,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786219230924"
         },
+        "ilanAktif": true,
         "M²": "136",
         "Ada": "",
         "Parsel": "",
@@ -337,6 +343,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786391842022"
         },
+        "ilanAktif": true,
         "M²": "1071",
         "Ada": "4778",
         "Parsel": "6",
@@ -390,6 +397,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786395045611"
         },
+        "ilanAktif": true,
         "M²": "",
         "Ada": "",
         "Parsel": "",
@@ -433,6 +441,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786435581411"
         },
+        "ilanAktif": true,
         "M²": "1228.28",
         "Ada": "7276",
         "Parsel": "16",
@@ -479,6 +488,7 @@ const ilanlarVerisi = [
             "durum": true,
             "yetkiNo": "NET-YTK-1786471692153"
         },
+        "ilanAktif": true,
         "M²": "40",
         "Ada": "",
         "Parsel": "",
