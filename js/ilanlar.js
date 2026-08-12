@@ -411,8 +411,8 @@ const ilanlarVerisi = [
         "il": "Aksaray",
         "ilce": "Merkez",
         "mahalle": "Yeni",
-        "fiyat": "95",
-        "paraBirimi": "EUR/m²",
+        "fiyat": "4.967",
+        "paraBirimi": "TL",
         "aciklama": "SATILIK DİĞER PARSELLER,\n7276/17 ( 768.61 m2 ),\n7276/18 ( 700 m2 ),\n7276/19 ( 775 m2 )\n",
         "koor": "33.969544, 38.405846",
         "klasorIsmi": "ahmet-piskin-hasdoner",
@@ -430,7 +430,7 @@ const ilanlarVerisi = [
         "İlan Tarihi": "2026-08-11",
         "yetki": {
             "durum": true,
-            "yetkiNo": "NET-YTK-1786435581412"
+            "yetkiNo": "NET-YTK-1786435581411"
         },
         "M²": "1228.28",
         "Ada": "7276",
