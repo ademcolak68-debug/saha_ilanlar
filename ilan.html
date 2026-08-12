@@ -1012,12 +1012,12 @@ console.log("DANIŞMANLAR:", danismanlar);
 
 if (d.danisman && d.danisman.trim() !== "") {
 
-    window.aktifDanisman =
-        Object.values(danismanlar).find(
-            x =>
-                x.ad.trim().toLowerCase() ===
-                d.danisman.trim().toLowerCase()
-        ) || null;
+   window.aktifDanisman =
+    Object.values(danismanlar).find(
+        x =>
+            x.ad.trim().toLocaleLowerCase("tr-TR") ===
+            d.danisman.trim().toLocaleLowerCase("tr-TR")
+    ) || null;
 
     console.log("EŞLEŞEN DANIŞMAN:", window.aktifDanisman);
 
