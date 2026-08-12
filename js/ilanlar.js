@@ -490,6 +490,7 @@ const ilanlarVerisi = [
             "yetkiNo": "NET-YTK-1786471692153"
         },
         "ilanAktif": true,
+        "danisman": "Ekrem Deniz",
         "M²": "40",
         "Ada": "",
         "Parsel": "",
