@@ -968,7 +968,9 @@ map.on('load', () => {
   }
 
  // Veriyi Mapbox'ın anlayacağı formata dönüştürme ve TÜRKÇE KARAKTER DÜZELTME
- const ilanlar = ilanlarVerisi.map(item => {
+ const ilanlar = ilanlarVerisi
+		.filter(item => item.ilanAktif !== false)
+		.map(item => {
     
     // 1. Koordinat Ayrıştırma
     let koordinatDizisi = [34.019852, 38.365887]; 
