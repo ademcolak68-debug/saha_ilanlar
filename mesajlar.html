@@ -2260,10 +2260,6 @@ function yoneticiMesajlariniYukle() {
                 );
 
 
-            /* BURADAN SONRA SENİN MEVCUT
-               KODUN AYNEN DEVAM EDECEK */
-
-
 
             if (
                 ilanlar.length === 0
@@ -2588,21 +2584,27 @@ onAuthStateChanged(
 
 
         if (
-            user &&
-            !user.isAnonymous
-        ) {
-
-
-            console.log(
-                "YÖNETİCİ GİRİŞİ:"
-            );
-
-
-            console.log(
-                "YÖNETİCİ UID:",
-                user.uid
-            );
-
+                user &&
+                !user.isAnonymous
+            ) {
+            
+                const mesajSilButonu =
+                    document.getElementById("mesajSilButonu");
+            
+                if (mesajSilButonu) {
+                    mesajSilButonu.style.display = "flex";
+                }
+            
+            
+                console.log(
+                    "YÖNETİCİ GİRİŞİ:"
+                );
+            
+            
+                console.log(
+                    "YÖNETİCİ UID:",
+                    user.uid
+                );
 
             document
                 .getElementById(
