@@ -1254,14 +1254,15 @@ body {
         </div>
 
 
-        <button class="islem-sil"
-                onclick="mesajlariSil()">
-
-            <i class="fa-regular fa-trash-can"></i>
-
-            Mesajı sil
-
-        </button>
+        <button id="mesajSilButonu"
+                    class="islem-sil"
+                    onclick="mesajlariSil()">
+            
+                <i class="fa-regular fa-trash-can"></i>
+            
+                Mesajı sil
+            
+         </button>
 
     </div>
 
@@ -2550,6 +2551,13 @@ onAuthStateChanged(
                 "ZİYARETÇİ UID:",
                 ziyaretciUID
             );
+
+              const mesajSilButonu =
+                      document.getElementById("mesajSilButonu");
+                  
+                  if (mesajSilButonu) {
+                      mesajSilButonu.style.display = "none";
+                  }
 
 
             document
