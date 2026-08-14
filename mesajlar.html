@@ -1894,24 +1894,22 @@ function sohbetMesajlariniGoster() {
                 mesaj.mesaj || "";
 
 
-           const saat =
+          const saat =
                 document.createElement(
                     "span"
                 );
-            
             
             saat.className =
                 "mesaj-saat";
             
             
-            function saatFormatla(zaman) {
+            const tarih =
+                new Date(
+                    Number(mesaj.zaman)
+                );
             
-                if (!zaman) return "";
             
-            
-                const tarih =
-                    new Date(zaman);
-            
+            if (mesaj.zaman) {
             
                 const gun =
                     String(
@@ -1929,7 +1927,7 @@ function sohbetMesajlariniGoster() {
                     tarih.getFullYear();
             
             
-                const saat =
+                const saatDegeri =
                     String(
                         tarih.getHours()
                     ).padStart(2, "0");
@@ -1941,27 +1939,18 @@ function sohbetMesajlariniGoster() {
                     ).padStart(2, "0");
             
             
-                return (
+                saat.textContent =
                     gun +
                     "." +
                     ay +
                     "." +
                     yil +
                     "  " +
-                    saat +
+                    saatDegeri +
                     ":" +
-                    dakika
-                );
+                    dakika;
             
             }
-            
-            
-            /* TARİH + SAATİ BALO NA EKLE */
-            
-            saat.textContent =
-                saatFormatla(
-                    mesaj.zaman
-                );
             
             
             balon.appendChild(
@@ -1977,11 +1966,11 @@ function sohbetMesajlariniGoster() {
             alan.appendChild(
                 balon
             );
-
-
-    alan.scrollTop =
-        alan.scrollHeight;
-}
+            
+            
+            alan.scrollTop =
+                alan.scrollHeight;
+            }
 
 
 /* =====================================================
