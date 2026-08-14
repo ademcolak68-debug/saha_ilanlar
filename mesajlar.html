@@ -9,6 +9,54 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="js/ilanlar.js"></script>
 
+<script type="module">
+
+    import { initializeApp } 
+        from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+    import { getAuth, signInAnonymously } 
+        from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
+        authDomain: "netmax-mesajlar.firebaseapp.com",
+        databaseURL: "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "netmax-mesajlar",
+        storageBucket: "netmax-mesajlar.firebasestorage.app",
+        messagingSenderId: "575038344835",
+        appId: "1:575038344835:web:513417e69f4a291dc095b6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+    signInAnonymously(auth)
+        .then((userCredential) => {
+
+            window.firebaseKullanici =
+                userCredential.user;
+
+            console.log(
+                "MESAJLAR FIREBASE BAĞLANDI"
+            );
+
+            console.log(
+                "UID:",
+                userCredential.user.uid
+            );
+
+        })
+        .catch((error) => {
+
+            console.error(
+                "MESAJLAR FIREBASE HATASI:",
+                error
+            );
+
+        });
+
+</script>
 <style>
 
 * {
