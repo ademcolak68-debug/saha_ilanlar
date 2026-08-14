@@ -2548,13 +2548,14 @@ onAuthStateChanged(
                 ziyaretciUID
             );
 
-              const mesajSilButonu =
-                      document.getElementById("mesajSilButonu");
-                  
-                  if (mesajSilButonu) {
-                      mesajSilButonu.style.display = "none";
-                  }
-
+            if (
+                user &&
+                user.email === "ademcolak68@gmail.com"
+            ) {
+                document.getElementById("mesajSilButonu").style.display = "flex";
+            } else {
+                document.getElementById("mesajSilButonu").style.display = "none";
+            }
 
             document
                 .getElementById(
