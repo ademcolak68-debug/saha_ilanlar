@@ -2461,151 +2461,172 @@ function yoneticiMesajlariniYukle() {
    FIREBASE AUTH DURUMU
 ===================================================== */
 
+```javascript
+/* =====================================================
+   FIREBASE AUTH DURUMU
+===================================================== */
+
 onAuthStateChanged(
     auth,
     async (user) => {
 
-
         /*
         =================================================
-        ZİYARETÇİ MODU
-        URL'de ?ilan varsa
+        YÖNETİCİ KONTROLÜ
+        =================================================
+
+        Önce yönetici kontrol edilir.
+
+        Böylece yönetici:
+        mesajlar.html?ilan=1786471692153
+
+        şeklinde bir sohbet açtığında
+        ziyaretçi moduna düşmez.
         =================================================
         */
 
-        if (gelenIlanID) {
+        if (
+            user &&
+            !user.isAnonymous &&
+            user.email === "ademcolak68@gmail.com"
+        ) {
+
+            console.log(
+                "YÖNETİCİ GİRİŞİ:"
+            );
+
+            console.log(
+                "YÖNETİCİ UID:",
+                user.uid
+            );
 
 
             /*
-            Eğer zaten anonim kullanıcı varsa
-            onu kullan.
+            =================================================
+            YÖNETİCİ MESAJ SİL BUTONU
+            =================================================
             */
 
-            if (
-                user &&
-                user.isAnonymous
-            ) {
+            const mesajSilButonu =
+                document.getElementById(
+                    "mesajSilButonu"
+                );
 
-                ziyaretciUID =
-                    user.uid;
+
+            if (mesajSilButonu) {
+
+                mesajSilButonu.style.display =
+                    "flex";
 
             }
 
 
             /*
-            Hiç kullanıcı yoksa anonim giriş yap.
+            =================================================
+            YÖNETİCİ İLAN SOHBETİ
+            URL'de ?ilan varsa
+            =================================================
             */
 
-            else if (!user) {
+            if (gelenIlanID) {
 
-                try {
-
-                    const sonuc =
-                        await signInAnonymously(
-                            auth
-                        );
+                console.log(
+                    "YÖNETİCİ SOHBETİ:",
+                    gelenIlanID
+                );
 
 
-                    ziyaretciUID =
-                        sonuc.user.uid;
+                /*
+                İlan bulunamadıysa çık
+                */
 
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "ANONİM GİRİŞ HATASI:",
-                        error
-                    );
+                if (!aktifIlan) {
 
                     alert(
-                        "Firebase bağlantısı kurulamadı."
+                        "İlan bulunamadı."
                     );
 
                     return;
 
                 }
 
-            }
+
+                /*
+                İlan önizlemesini doldur
+                */
+
+                ilanOnizlemeyiDoldur();
 
 
-            /*
-            Kullanıcı e-posta hesabıyla açıksa
-            ziyaretçi UID olarak onu kullanmıyoruz.
-            */
+                /*
+                Sohbet ekranını aç
+                */
 
-            else {
+                document
+                    .getElementById(
+                        "sohbetEkrani"
+                    )
+                    .style.display =
+                        "block";
+
+
+                /*
+                Yükleniyor yazısı
+                */
+
+                document
+                    .getElementById(
+                        "sohbetMesajlar"
+                    )
+                    .innerHTML =
+
+                        '<div class="mesaj-yukleniyor">' +
+                        'Mesajlar yükleniyor...' +
+                        '</div>';
+
+
+                /*
+                Yönetici UID'sini geçici olarak
+                kullanıyoruz.
+
+                mesajlariDinle() Firebase'den
+                sohbeti dinleyecek.
+                */
 
                 ziyaretciUID =
                     user.uid;
 
+
+                /*
+                Yönetici olduğunu göster
+                */
+
+                document
+                    .getElementById(
+                        "sohbetIrtibatNo"
+                    )
+                    .textContent =
+                        "Yönetici";
+
+
+                /*
+                Mesajları dinle
+                */
+
+                mesajlariDinle();
+
+
+                return;
+
             }
 
 
-            console.log(
-                "ZİYARETÇİ UID:",
-                ziyaretciUID
-            );
-
-            if (
-                user &&
-                user.email === "ademcolak68@gmail.com"
-            ) {
-                document.getElementById("mesajSilButonu").style.display = "flex";
-            } else {
-                document.getElementById("mesajSilButonu").style.display = "none";
-            }
-
-            document
-                .getElementById(
-                    "sohbetIrtibatNo"
-                )
-                .textContent =
-                    ziyaretciUID;
-
-
-            ziyaretciSohbetiniAc();
-
-
-            mesajlariDinle();
-
-
-            return;
-
-        }
-
-
-        /*
-        =================================================
-        YÖNETİCİ MODU
-        URL'de ?ilan YOK
-        =================================================
-        */
-
-
-        if (
-                user &&
-                !user.isAnonymous
-            ) {
-            
-                const mesajSilButonu =
-                    document.getElementById("mesajSilButonu");
-            
-                if (mesajSilButonu) {
-                    mesajSilButonu.style.display = "flex";
-                }
-            
-            
-                console.log(
-                    "YÖNETİCİ GİRİŞİ:"
-                );
-            
-            
-                console.log(
-                    "YÖNETİCİ UID:",
-                    user.uid
-                );
+            /*
+            =================================================
+            YÖNETİCİ MESAJ LİSTESİ
+            URL'de ?ilan YOK
+            =================================================
+            */
 
             document
                 .getElementById(
@@ -2623,7 +2644,153 @@ onAuthStateChanged(
                     "block";
 
 
+            /*
+            Firebase'den mesajları yükle
+            */
+
             yoneticiMesajlariniYukle();
+
+
+            return;
+
+        }
+
+
+        /*
+        =================================================
+        ZİYARETÇİ MODU
+        URL'de ?ilan varsa
+        =================================================
+        */
+
+        if (gelenIlanID) {
+
+
+            /*
+            =================================================
+            ZATEN ANONİM KULLANICI VARSA
+            =================================================
+            */
+
+            if (
+                user &&
+                user.isAnonymous
+            ) {
+
+                ziyaretciUID =
+                    user.uid;
+
+            }
+
+
+            /*
+            =================================================
+            HİÇ KULLANICI YOKSA
+            ANONİM GİRİŞ
+            =================================================
+            */
+
+            else if (!user) {
+
+                try {
+
+                    const sonuc =
+                        await signInAnonymously(
+                            auth
+                        );
+
+
+                    ziyaretciUID =
+                        sonuc.user.uid;
+
+
+                    console.log(
+                        "YENİ ZİYARETÇİ UID:",
+                        ziyaretciUID
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "ANONİM GİRİŞ HATASI:",
+                        error
+                    );
+
+
+                    alert(
+                        "Firebase bağlantısı kurulamadı."
+                    );
+
+
+                    return;
+
+                }
+
+            }
+
+
+            /*
+            =================================================
+            ZİYARETÇİ SİL BUTONU
+            =================================================
+
+            Ziyaretçi hiçbir şekilde
+            sil butonunu göremez.
+            =================================================
+            */
+
+            const mesajSilButonu =
+                document.getElementById(
+                    "mesajSilButonu"
+                );
+
+
+            if (mesajSilButonu) {
+
+                mesajSilButonu.style.display =
+                    "none";
+
+            }
+
+
+            /*
+            =================================================
+            ZİYARETÇİ UID
+            =================================================
+            */
+
+            console.log(
+                "ZİYARETÇİ UID:",
+                ziyaretciUID
+            );
+
+
+            /*
+            İrtibat alanında UID göster
+            */
+
+            document
+                .getElementById(
+                    "sohbetIrtibatNo"
+                )
+                .textContent =
+                    ziyaretciUID;
+
+
+            /*
+            Sohbet ekranını aç
+            */
+
+            ziyaretciSohbetiniAc();
+
+
+            /*
+            Firebase mesajlarını dinle
+            */
+
+            mesajlariDinle();
 
 
             return;
@@ -2645,13 +2812,16 @@ onAuthStateChanged(
 
             try {
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
             }
 
             catch (error) {
 
                 console.error(
+                    "ANONİM ÇIKIŞ HATASI:",
                     error
                 );
 
@@ -2662,7 +2832,7 @@ onAuthStateChanged(
 
         /*
         =================================================
-        GİRİŞ EKRANINI GÖSTER
+        GİRİŞ EKRANI
         =================================================
         */
 
@@ -2683,6 +2853,7 @@ onAuthStateChanged(
 
     });
 
+
 /* =====================================================
    GERİ TUŞU / BF CACHE
 ===================================================== */
@@ -2696,6 +2867,7 @@ window.addEventListener(
             console.log(
                 "SAYFA GERİDEN GELDİ — YENİDEN YÜKLENİYOR"
             );
+
 
             location.reload();
 
