@@ -2040,14 +2040,14 @@ function danismanAra() {
 
 
 function danismanMesaj() {
- console.log(window.aktifDanisman);
-    if (!window.aktifDanisman) return;
 
-    window.open(
-        "https://wa.me/" + window.aktifDanisman.whatsapp,
-        "_blank"
-    );
+    const ilanID =
+        new URLSearchParams(window.location.search).get("id");
 
+    if (!ilanID) return;
+
+    window.location.href =
+        "mesajlar.html?ilan=" + ilanID;
 }
 
 
