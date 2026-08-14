@@ -1894,16 +1894,16 @@ function sohbetMesajlariniGoster() {
                 mesaj.mesaj || "";
 
 
-            const saat =
+           const saat =
                 document.createElement(
                     "span"
                 );
-
-
+            
+            
             saat.className =
                 "mesaj-saat";
-
-
+            
+            
             function saatFormatla(zaman) {
             
                 if (!zaman) return "";
@@ -1954,24 +1954,29 @@ function sohbetMesajlariniGoster() {
                 );
             
             }
-
-
+            
+            
+            /* TARİH + SAATİ BALO NA EKLE */
+            
+            saat.textContent =
+                saatFormatla(
+                    mesaj.zaman
+                );
+            
+            
             balon.appendChild(
                 metin
             );
-
-
+            
+            
             balon.appendChild(
                 saat
             );
-
-
+            
+            
             alan.appendChild(
                 balon
             );
-
-        }
-    );
 
 
     alan.scrollTop =
