@@ -403,6 +403,8 @@ body {
 
     max-width: 600px;
 
+    height: 220px;
+
     background: #ffffff;
 
     border-top: 1px solid #d8d8d8;
@@ -652,7 +654,7 @@ body {
 
     border-radius: 10px;
 
-    margin-bottom: 7px;
+    margin-bottom: 9px;
 
     font-size: 15px;
 
@@ -682,11 +684,15 @@ body {
 
     border: 1px solid #eeeeee;
 
-    border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 0;
+
 }
 
 
-/* SOL ALT ÇIKINTI */
+/* =====================================================
+   SOL ALT ÇIKINTI
+   Balonun altından direkt devam eder
+===================================================== */
 
 .mesaj-gelen::after {
 
@@ -694,13 +700,13 @@ body {
 
     position: absolute;
 
-    left: -6px;
+    left: -1px;
 
-    bottom: -1px;
+    bottom: -7px;
 
-    width: 9px;
+    width: 8px;
 
-    height: 9px;
+    height: 8px;
 
     background: #ffffff;
 
@@ -708,7 +714,12 @@ body {
 
     border-bottom: 1px solid #eeeeee;
 
-    transform: skewX(-25deg);
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        0 100%
+    );
+
 }
 
 
@@ -726,11 +737,15 @@ body {
 
     margin-right: 0;
 
-    border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 0;
+
 }
 
 
-/* SAĞ ALT ÇIKINTI */
+/* =====================================================
+   SAĞ ALT ÇIKINTI
+   Balonun altından direkt devam eder
+===================================================== */
 
 .mesaj-giden::after {
 
@@ -738,17 +753,22 @@ body {
 
     position: absolute;
 
-    right: -6px;
+    right: -1px;
 
-    bottom: -1px;
+    bottom: -7px;
 
-    width: 9px;
+    width: 8px;
 
-    height: 9px;
+    height: 8px;
 
     background: #bff4b0;
 
-    transform: skewX(25deg);
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 100%
+    );
+
 }
 
 
