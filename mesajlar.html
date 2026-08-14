@@ -2177,7 +2177,11 @@ async function () {
 ===================================================== */
 
 function yoneticiMesajlariniYukle() {
-      console.log("YÖNETİCİ MESAJLARI YÜKLE FONKSİYONU ÇALIŞTI");
+
+    console.log(
+        "YÖNETİCİ MESAJLARI YÜKLE FONKSİYONU ÇALIŞTI"
+    );
+
 
     const liste =
         document.getElementById(
@@ -2196,21 +2200,54 @@ function yoneticiMesajlariniYukle() {
             database,
             "mesajlar"
         );
-      
-console.log(
-    "FIREBASE ONVALUE BAŞLATILIYOR"
-);
-      
+
+
+    console.log(
+        "FIREBASE ONVALUE BAŞLATILIYOR"
+    );
+
+
+    /* =========================================
+       TEK SEFERLİK FIREBASE OKUMA TESTİ
+    ========================================= */
+
+    get(mesajlarRef)
+
+        .then((snapshot) => {
+
+            console.log(
+                "GET İLE FIREBASE VERİSİ:",
+                snapshot.val()
+            );
+
+        })
+
+        .catch((error) => {
+
+            console.error(
+                "GET OKUMA HATASI:",
+                error
+            );
+
+        });
+
+
+    /* =========================================
+       CANLI MESAJ DİNLEME
+    ========================================= */
+
     onValue(
 
         mesajlarRef,
 
         (snapshot) => {
 
-console.log(
-            "FIREBASE MESAJ VERİSİ GELDİ:",
-            snapshot.val()
-        );
+
+            console.log(
+                "FIREBASE MESAJ VERİSİ GELDİ:",
+                snapshot.val()
+            );
+
 
             const veri =
                 snapshot.val() || {};
@@ -2220,6 +2257,11 @@ console.log(
                 Object.entries(
                     veri
                 );
+
+
+            /* BURADAN SONRA SENİN MEVCUT
+               KODUN AYNEN DEVAM EDECEK */
+
 
 
             if (
