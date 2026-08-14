@@ -1325,7 +1325,7 @@ body {
             class="mesaj-gonder"
             onclick="mesajGonder()">
 
-            <i class="fa-solid fa-paper-plane"></i>
+            <i class="fa-solid fa-arrow-right"></i>
 
         </button>
 
@@ -2672,6 +2672,26 @@ onAuthStateChanged(
 
     });
 
+/* =====================================================
+   GERİ TUŞU / BF CACHE
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    function (event) {
+
+        if (event.persisted) {
+
+            console.log(
+                "SAYFA GERİDEN GELDİ — YENİDEN YÜKLENİYOR"
+            );
+
+            location.reload();
+
+        }
+
+    }
+);
 
 /* =====================================================
    ENTER İLE GÖNDER
