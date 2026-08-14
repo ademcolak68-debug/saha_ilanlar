@@ -266,7 +266,7 @@ body {
 
     padding: 6px 10px;
 
-    background: #ffffff;
+    background: #1a365d;
 
     border-bottom: 1px solid #dddddd;
 
@@ -294,8 +294,6 @@ body {
 
     font-weight: normal;
 
-    color: #222;
-
     cursor: pointer;
 
     flex-shrink: 0;
@@ -303,7 +301,7 @@ body {
 
 .sohbet-geri i {
 
-    font-size: 28px;
+    font-size: 26px;
 }
 
 
@@ -325,7 +323,9 @@ body {
 
     justify-content: center;
 
-    padding-left: 5px;
+    align-items: center;
+
+    padding-left: 0;
 
     overflow: hidden;
 }
@@ -334,7 +334,7 @@ body {
 
     font-size: 13px;
 
-    color: #777;
+    color: #ffffff;
 
     font-weight: normal;
 }
@@ -343,7 +343,7 @@ body {
 
     font-size: 15px;
 
-    color: #222;
+    color: #ffffff;
 
     white-space: nowrap;
 
@@ -373,7 +373,7 @@ body {
 
     font-size: 22px;
 
-    color: #333;
+    color: #ffffff;
 
     cursor: pointer;
 
@@ -382,7 +382,7 @@ body {
 
 
 /* =====================================================
-   İŞLEM BALONU
+   İŞLEM PANELİ — ALTTAN AÇILAN
 ===================================================== */
 
 .islem-panel {
@@ -393,9 +393,9 @@ body {
 
     z-index: 12000;
 
-    top: 68px;
-
     left: 50%;
+
+    bottom: 0;
 
     transform: translateX(-50%);
 
@@ -405,18 +405,26 @@ body {
 
     background: #ffffff;
 
-    border-bottom: 1px solid #d8d8d8;
+    border-top: 1px solid #d8d8d8;
+
+    border-radius: 16px 16px 0 0;
 
     box-shadow:
-        0 5px 14px rgba(0,0,0,.12);
+        0 -5px 20px rgba(0,0,0,.12);
+
+    transition:
+        transform .25s ease;
+
 }
 
 
-/* ÜST ÇİZGİ / TUTMA ALANI */
+/* =====================================================
+   ÜST ÇİZGİ / TUTMA ALANI
+===================================================== */
 
 .islem-tutamac {
 
-    height: 28px;
+    height: 36px;
 
     display: flex;
 
@@ -424,8 +432,12 @@ body {
 
     justify-content: center;
 
-    cursor: pointer;
+    cursor: grab;
+
+    touch-action: none;
+
 }
+
 
 .islem-tutamac-cizgi {
 
@@ -436,6 +448,7 @@ body {
     border-radius: 10px;
 
     background: #cfcfcf;
+
 }
 
 
@@ -454,6 +467,7 @@ body {
     font-weight: normal;
 
     border-bottom: 1px solid #eeeeee;
+
 }
 
 
@@ -634,55 +648,121 @@ body {
 
     max-width: 78%;
 
-    padding: 9px 12px;
+    padding: 5px 8px;
 
     border-radius: 10px;
 
-    margin-bottom: 10px;
+    margin-bottom: 7px;
 
     font-size: 15px;
 
-    line-height: 1.4;
+    line-height: 1.3;
 
     font-weight: normal;
 
     word-wrap: break-word;
+
+    position: relative;
 }
 
 
-/* GELEN */
+/* =====================================================
+   GELEN MESAJ — SOLDA
+===================================================== */
 
 .mesaj-gelen {
 
     background: #ffffff;
 
+    color: #222222;
+
     margin-right: auto;
 
+    margin-left: 0;
+
     border: 1px solid #eeeeee;
+
+    border-bottom-left-radius: 3px;
 }
 
 
-/* GİDEN */
+/* SOL ALT ÇIKINTI */
+
+.mesaj-gelen::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: -6px;
+
+    bottom: -1px;
+
+    width: 9px;
+
+    height: 9px;
+
+    background: #ffffff;
+
+    border-left: 1px solid #eeeeee;
+
+    border-bottom: 1px solid #eeeeee;
+
+    transform: skewX(-25deg);
+}
+
+
+/* =====================================================
+   GİDEN MESAJ — SAĞDA
+===================================================== */
 
 .mesaj-giden {
 
-    background: #2563eb;
+    background: #bff4b0;
 
-    color: #ffffff;
+    color: #222222;
 
     margin-left: auto;
+
+    margin-right: 0;
+
+    border-bottom-right-radius: 3px;
 }
 
 
-/* SAAT */
+/* SAĞ ALT ÇIKINTI */
+
+.mesaj-giden::after {
+
+    content: "";
+
+    position: absolute;
+
+    right: -6px;
+
+    bottom: -1px;
+
+    width: 9px;
+
+    height: 9px;
+
+    background: #bff4b0;
+
+    transform: skewX(25deg);
+}
+
+
+/* =====================================================
+   SAAT
+===================================================== */
 
 .mesaj-saat {
 
     display: block;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    margin-top: 4px;
+    margin-top: 2px;
 
     opacity: .65;
 
@@ -690,7 +770,6 @@ body {
 
     font-weight: normal;
 }
-
 
 /* =====================================================
    MESAJ GÖNDER PANELİ
@@ -1196,7 +1275,7 @@ body {
         <div class="sohbet-geri"
              onclick="sohbetKapat()">
 
-            <i class="fa-solid fa-angle-left"></i>
+            <i class="fa-solid fa-angle-left" style="color:#ffffff;"></i>
 
         </div>
 
@@ -1224,7 +1303,7 @@ body {
         <div class="sohbet-islem-buton"
              onclick="islemPanelAc()">
 
-            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <i class="fa-solid fa-ellipsis"></i>
 
         </div>
 
@@ -1240,7 +1319,7 @@ body {
 
 
         <div class="islem-tutamac"
-             onclick="islemPanelKapat()">
+           id="islemTutamac">
 
             <div class="islem-tutamac-cizgi"></div>
 
@@ -1825,10 +1904,56 @@ function sohbetMesajlariniGoster() {
                 "mesaj-saat";
 
 
-            saat.textContent =
-                saatFormatla(
-                    mesaj.zaman
+            function saatFormatla(zaman) {
+            
+                if (!zaman) return "";
+            
+            
+                const tarih =
+                    new Date(zaman);
+            
+            
+                const gun =
+                    String(
+                        tarih.getDate()
+                    ).padStart(2, "0");
+            
+            
+                const ay =
+                    String(
+                        tarih.getMonth() + 1
+                    ).padStart(2, "0");
+            
+            
+                const yil =
+                    tarih.getFullYear();
+            
+            
+                const saat =
+                    String(
+                        tarih.getHours()
+                    ).padStart(2, "0");
+            
+            
+                const dakika =
+                    String(
+                        tarih.getMinutes()
+                    ).padStart(2, "0");
+            
+            
+                return (
+                    gun +
+                    "." +
+                    ay +
+                    "." +
+                    yil +
+                    "  " +
+                    saat +
+                    ":" +
+                    dakika
                 );
+            
+            }
 
 
             balon.appendChild(
@@ -2900,6 +3025,178 @@ document
 
         }
     );
+
+
+/* =====================================================
+   İŞLEM PANELİ — AŞAĞI SÜRÜKLEME
+===================================================== */
+
+const islemPanel =
+    document.getElementById("islemPanel");
+
+const islemTutamac =
+    document.getElementById("islemTutamac");
+
+
+let panelBaslangicY =
+    0;
+
+let panelHareketY =
+    0;
+
+let panelSurukleniyor =
+    false;
+
+
+/* =====================================================
+   PANELİ AÇ
+===================================================== */
+
+window.islemPanelAc =
+function () {
+
+    islemPanel.style.display =
+        "block";
+
+    islemPanel.style.transform =
+        "translateX(-50%) translateY(0)";
+
+};
+
+
+/* =====================================================
+   PANELİ KAPAT
+===================================================== */
+
+window.islemPanelKapat =
+function () {
+
+    islemPanel.style.transform =
+        "translateX(-50%) translateY(100%)";
+
+    setTimeout(
+        function () {
+
+            islemPanel.style.display =
+                "none";
+
+            islemPanel.style.transform =
+                "translateX(-50%)";
+
+        },
+        250
+    );
+
+};
+
+
+/* =====================================================
+   SÜRÜKLEME BAŞLANGICI
+===================================================== */
+
+islemTutamac.addEventListener(
+    "touchstart",
+    function (event) {
+
+        panelSurukleniyor =
+            true;
+
+        panelBaslangicY =
+            event.touches[0].clientY;
+
+        islemPanel.style.transition =
+            "none";
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+/* =====================================================
+   SÜRÜKLEME
+===================================================== */
+
+islemTutamac.addEventListener(
+    "touchmove",
+    function (event) {
+
+        if (!panelSurukleniyor)
+            return;
+
+
+        panelHareketY =
+            event.touches[0].clientY -
+            panelBaslangicY;
+
+
+        /*
+        Yukarı sürüklemeyi engelle.
+        */
+
+        if (panelHareketY < 0) {
+
+            panelHareketY = 0;
+
+        }
+
+
+        islemPanel.style.transform =
+            "translateX(-50%) translateY(" +
+            panelHareketY +
+            "px)";
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+/* =====================================================
+   SÜRÜKLEME BİTİŞİ
+===================================================== */
+
+islemTutamac.addEventListener(
+    "touchend",
+    function () {
+
+        if (!panelSurukleniyor)
+            return;
+
+
+        panelSurukleniyor =
+            false;
+
+
+        islemPanel.style.transition =
+            "transform .25s ease";
+
+
+        /*
+        Yeterince aşağı çekildiyse kapat.
+        */
+
+        if (panelHareketY > 70) {
+
+            islemPanelKapat();
+
+        }
+
+        else {
+
+            islemPanel.style.transform =
+                "translateX(-50%) translateY(0)";
+
+        }
+
+
+        panelHareketY =
+            0;
+
+    }
+);
 
 </script>
 
