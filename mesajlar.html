@@ -1864,7 +1864,6 @@ function sohbetMesajlariniGoster() {
     liste.forEach(
         ([mesajID, mesaj]) => {
 
-
             const balon =
                 document.createElement(
                     "div"
@@ -1894,51 +1893,58 @@ function sohbetMesajlariniGoster() {
                 mesaj.mesaj || "";
 
 
-          const saat =
+            const saat =
                 document.createElement(
                     "span"
                 );
-            
+
+
             saat.className =
                 "mesaj-saat";
-            
-            
-            const tarih =
-                new Date(
-                    Number(mesaj.zaman)
-                );
-            
-            
+
+
+            /*
+            =================================================
+            TARİH + SAAT
+            =================================================
+            */
+
             if (mesaj.zaman) {
-            
+
+                const tarih =
+                    new Date(
+                        Number(mesaj.zaman)
+                    );
+
+
                 const gun =
                     String(
                         tarih.getDate()
                     ).padStart(2, "0");
-            
-            
+
+
                 const ay =
                     String(
                         tarih.getMonth() + 1
                     ).padStart(2, "0");
-            
-            
+
+
                 const yil =
                     tarih.getFullYear();
-            
-            
+
+
                 const saatDegeri =
                     String(
                         tarih.getHours()
                     ).padStart(2, "0");
-            
-            
+
+
                 const dakika =
                     String(
                         tarih.getMinutes()
                     ).padStart(2, "0");
-            
-            
+
+
                 saat.textContent =
                     gun +
                     "." +
@@ -1949,52 +1955,38 @@ function sohbetMesajlariniGoster() {
                     saatDegeri +
                     ":" +
                     dakika;
-            
+
             }
-            
-            
+
+
+            /*
+            =================================================
+            BALOĞA EKLE
+            =================================================
+            */
+
             balon.appendChild(
                 metin
             );
-            
-            
+
+
             balon.appendChild(
                 saat
             );
-            
-            
+
+
             alan.appendChild(
                 balon
             );
-            
-            
-            alan.scrollTop =
-                alan.scrollHeight;
-            }
 
-
-/* =====================================================
-   SAAT
-===================================================== */
-
-function saatFormatla(zaman) {
-
-    if (!zaman) return "";
-
-
-    const tarih =
-        new Date(zaman);
-
-
-    return tarih.toLocaleTimeString(
-        "tr-TR",
-        {
-            hour: "2-digit",
-            minute: "2-digit"
         }
     );
-}
 
+
+    alan.scrollTop =
+        alan.scrollHeight;
+
+}
 
 /* =====================================================
    MESAJ GÖNDER
