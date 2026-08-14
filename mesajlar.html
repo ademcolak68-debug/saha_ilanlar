@@ -491,12 +491,189 @@ body {
 
 <script>
 
-function sohbetKapat() {
+const urlParams = new URLSearchParams(window.location.search);
 
-    document.getElementById("sohbetEkrani").style.display = "none";
+const gelenIlanID = urlParams.get("ilan");
+
+let aktifIlan = null;
+
+
+// İLANI BUL
+if (gelenIlanID && typeof ilanlarVerisi !== "undefined") {
+
+    aktifIlan = ilanlarVerisi.find(
+        ilan => String(ilan.id) === String(gelenIlanID)
+    );
 
 }
 
+console.log("GELEN İLAN ID:", gelenIlanID);
+console.log("AKTİF İLAN:", aktifIlan);
+
+
+// İLAN BULUNDUYSA
+if (aktifIlan) {
+
+    // -----------------------------
+    // İLAN RESMİ
+    // -----------------------------
+
+    const resim =
+        aktifIlan.resimler &&
+        aktifIlan.resimler.length > 0
+            ? aktifIlan.resimler[0]
+            : "";
+
+    document.getElementById("sohbetIlanResim").src = resim;
+
+
+    // -----------------------------
+    // İLAN BAŞLIĞI
+    // -----------------------------
+
+    let kartBaslik = "";
+
+    kartBaslik += aktifIlan.baslik || "";
+
+
+    // DURUM
+
+    if (aktifIlan.durum === "satilik") {
+
+        kartBaslik += " SATILIK";
+
+    }
+
+    else if (aktifIlan.durum === "kiralik") {
+
+        kartBaslik += " KİRALIK";
+
+    }
+
+    else if (aktifIlan.durum === "kat-karsiligi") {
+
+        kartBaslik += " KAT KARŞILIĞI";
+
+    }
+
+
+    // DAİRE
+
+    if (
+        aktifIlan.konutSekli &&
+        aktifIlan.konutSekli.toLowerCase() === "daire"
+    ) {
+
+        kartBaslik += " Daire";
+
+    }
+
+
+    // DÜKKAN
+
+    else if (
+        aktifIlan.konutTipi &&
+        aktifIlan.konutTipi.toLowerCase() === "dükkan"
+    ) {
+
+        kartBaslik += " Dükkan";
+
+    }
+
+
+    // VİLLA
+
+    else if (
+        (
+            aktifIlan.konutTipi &&
+            aktifIlan.konutTipi.toLowerCase() === "villa"
+        )
+        ||
+        (
+            aktifIlan.konutSekli &&
+            aktifIlan.konutSekli.toLowerCase() === "villa"
+        )
+    ) {
+
+        kartBaslik += " Villa";
+
+    }
+
+
+    // ARSA / TARLA
+
+    else if (
+        aktifIlan.tip &&
+        (
+            aktifIlan.tip.toLowerCase() === "arsa" ||
+            aktifIlan.tip.toLowerCase() === "tarla"
+        )
+    ) {
+
+        kartBaslik +=
+            " " +
+            aktifIlan.tip.charAt(0).toUpperCase() +
+            aktifIlan.tip.slice(1).toLowerCase();
+
+    }
+
+
+    // SADECE DAİREDE ODA SAYISI
+
+    if (
+        aktifIlan.konutSekli &&
+        aktifIlan.konutSekli.toLowerCase() === "daire" &&
+        aktifIlan["Oda Sayısı"]
+    ) {
+
+        kartBaslik +=
+            " " + aktifIlan["Oda Sayısı"];
+
+    }
+
+
+    // BAŞLIK
+
+    document.getElementById("sohbetIlanBaslik").textContent =
+        kartBaslik;
+
+
+    // -----------------------------
+    // FİYAT
+    // -----------------------------
+
+    document.getElementById("sohbetIlanAlt").textContent =
+        aktifIlan.fiyat
+            ? aktifIlan.fiyat + " " +
+              (aktifIlan.paraBirimi || "")
+            : "";
+
+
+    // -----------------------------
+    // SOHBETİ AÇ
+    // -----------------------------
+
+    document.getElementById("sohbetEkrani").style.display =
+        "block";
+
+}
+
+
+// -----------------------------
+// SOHBETİ KAPAT
+// -----------------------------
+
+function sohbetKapat() {
+
+    document.getElementById("sohbetEkrani").style.display =
+        "none";
+
+}
+
+
+// -----------------------------
+// MESAJ GÖNDER
+// -----------------------------
 
 function mesajGonder() {
 
@@ -508,7 +685,10 @@ function mesajGonder() {
 
     if (!mesaj) return;
 
-    console.log("Gönderilecek mesaj:", mesaj);
+    console.log(
+        "Gönderilecek mesaj:",
+        mesaj
+    );
 
     input.value = "";
 
