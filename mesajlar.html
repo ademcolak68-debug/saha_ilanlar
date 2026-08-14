@@ -2196,8 +2196,11 @@ function yoneticiMesajlariniYukle() {
             database,
             "mesajlar"
         );
-
-
+      
+console.log(
+    "FIREBASE ONVALUE BAŞLATILIYOR"
+);
+      
     onValue(
 
         mesajlarRef,
@@ -2205,9 +2208,10 @@ function yoneticiMesajlariniYukle() {
         (snapshot) => {
 
 console.log(
-    "FIREBASE MESAJ VERİSİ GELDİ:",
-    snapshot.val()
-);
+            "FIREBASE MESAJ VERİSİ GELDİ:",
+            snapshot.val()
+        );
+
             const veri =
                 snapshot.val() || {};
 
