@@ -14,479 +14,46 @@
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
 <script src="js/ilanlar.js"></script>
-
-
-<!-- ==================================================
-     FIREBASE
-================================================== -->
-
-<script type="module">
-
-    import { initializeApp }
-        from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-
-    import {
-        getAuth,
-        signInWithEmailAndPassword,
-        onAuthStateChanged,
-        signOut
-    }
-        from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-
-
-    const firebaseConfig = {
-
-        apiKey:
-            "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
-
-        authDomain:
-            "netmax-mesajlar.firebaseapp.com",
-
-        databaseURL:
-            "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
-
-        projectId:
-            "netmax-mesajlar",
-
-        storageBucket:
-            "netmax-mesajlar.firebasestorage.app",
-
-        messagingSenderId:
-            "575038344835",
-
-        appId:
-            "1:575038344835:web:513417e69f4a291dc095b6"
-    };
-
-
-    const app =
-        initializeApp(firebaseConfig);
-
-
-    const auth =
-        getAuth(app);
-
-
-    /*
-    ==================================================
-    MESAJLAR GİRİŞ KONTROLÜ
-    ==================================================
-    */
-
-    onAuthStateChanged(auth, async (user) => {
-
-
-        /*
-        ==============================================
-        ANONİM KULLANICI VARSA
-        ==============================================
-        */
-
-        if (user && user.isAnonymous) {
-
-            console.log(
-                "ANONİM KULLANICI TESPİT EDİLDİ"
-            );
-
-            console.log(
-                "ANONİM UID:",
-                user.uid
-            );
-
-
-            /*
-            Anonim oturumu kapatıyoruz.
-            Çünkü mesajlarım sayfası sadece
-            e-posta + şifre ile açılacak.
-            */
-
-            await signOut(auth);
-
-
-            window.firebaseKullanici =
-                null;
-
-
-            const girisEkrani =
-                document.getElementById(
-                    "mesajGirisEkrani"
-                );
-
-
-            if (girisEkrani) {
-
-                girisEkrani.style.display =
-                    "flex";
-
-            }
-
-
-            const mesajlarContainer =
-                document.querySelector(
-                    ".mesajlar-container"
-                );
-
-
-            if (mesajlarContainer) {
-
-                mesajlarContainer.style.display =
-                    "none";
-
-            }
-
-
-            return;
-
-        }
-
-
-        /*
-        ==============================================
-        E-POSTA / ŞİFRE İLE GİRİŞ YAPMIŞSA
-        ==============================================
-        */
-
-        if (user) {
-
-
-            console.log(
-                "MESAJLAR YÖNETİCİ GİRİŞİ BAŞARILI"
-            );
-
-
-            console.log(
-                "YÖNETİCİ UID:",
-                user.uid
-            );
-
-
-            window.firebaseKullanici =
-                user;
-
-
-            const girisEkrani =
-                document.getElementById(
-                    "mesajGirisEkrani"
-                );
-
-
-            if (girisEkrani) {
-
-                girisEkrani.style.display =
-                    "none";
-
-            }
-
-
-            const mesajlarContainer =
-                document.querySelector(
-                    ".mesajlar-container"
-                );
-
-
-            if (mesajlarContainer) {
-
-                mesajlarContainer.style.display =
-                    "block";
-
-            }
-
-
-            return;
-
-        }
-
-
-        /*
-        ==============================================
-        HİÇ GİRİŞ YOKSA
-        ==============================================
-        */
-
-        console.log(
-            "MESAJLAR GİRİŞ YAPILMADI"
-        );
-
-
-        window.firebaseKullanici =
-            null;
-
-
-        const girisEkrani =
-            document.getElementById(
-                "mesajGirisEkrani"
-            );
-
-
-        if (girisEkrani) {
-
-            girisEkrani.style.display =
-                "flex";
-
-        }
-
-
-        const mesajlarContainer =
-            document.querySelector(
-                ".mesajlar-container"
-            );
-
-
-        if (mesajlarContainer) {
-
-            mesajlarContainer.style.display =
-                "none";
-
-        }
-
-    });
-
-
-
-    /*
-    ==================================================
-    E-POSTA + ŞİFRE GİRİŞ
-    ==================================================
-    */
-
-    window.mesajlarGirisYap =
-        async function () {
-
-
-        const email =
-            document
-                .getElementById("mesajEmail")
-                .value
-                .trim();
-
-
-        const sifre =
-            document
-                .getElementById("mesajSifre")
-                .value;
-
-
-        if (!email || !sifre) {
-
-            alert(
-                "E-posta ve şifreyi girin."
-            );
-
-            return;
-
-        }
-
-
-        try {
-
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                sifre
-            );
-
-
-            console.log(
-                "E-POSTA GİRİŞİ BAŞARILI"
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "GİRİŞ HATASI:",
-                error
-            );
-
-
-            alert(
-                "E-posta veya şifre hatalı."
-            );
-
-        }
-
-    };
-
-
-
-    /*
-    ==================================================
-    ÇIKIŞ
-    ==================================================
-    */
-
-    window.mesajlardanCikisYap =
-        async function () {
-
-        try {
-
-            await signOut(auth);
-
-            console.log(
-                "MESAJLARDAN ÇIKIŞ YAPILDI"
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "ÇIKIŞ HATASI:",
-                error
-            );
-
-        }
-
-    };
-
-</script>
-
 
 
 <style>
 
-/* ==================================================
+/* =====================================================
    GENEL
-================================================== */
+===================================================== */
 
 * {
-
     box-sizing: border-box;
-
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
 
 body {
 
-    margin: 0;
-
-    background: #f5f5f5;
+    background: #f2f4f7;
 
     font-family:
         'Titillium Web',
+        Arial,
         sans-serif;
 
+    color: #222;
 }
 
 
-/* ==================================================
-   GİRİŞ EKRANI
-================================================== */
-
-.mesaj-giris-ekrani {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: #f5f5f5;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    z-index: 20000;
-
-}
-
-
-.mesaj-giris-kutu {
-
-    width:
-        calc(100% - 30px);
-
-    max-width: 380px;
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    box-shadow:
-        0 5px 25px
-        rgba(0,0,0,.12);
-
-}
-
-
-.mesaj-giris-baslik {
-
-    text-align: center;
-
-    font-size: 22px;
-
-    margin-bottom: 20px;
-
-    font-weight: normal;
-
-}
-
-
-.mesaj-giris-kutu input {
-
-    width: 100%;
-
-    height: 45px;
-
-    margin-bottom: 10px;
-
-    padding:
-        0 13px;
-
-    border:
-        1px solid #ddd;
-
-    border-radius: 7px;
-
-    font-size: 15px;
-
-    outline: none;
-
-}
-
-
-.mesaj-giris-kutu input:focus {
-
-    border-color:
-        #2563eb;
-
-}
-
-
-.mesaj-giris-kutu button {
-
-    width: 100%;
-
-    height: 45px;
-
-    border: none;
-
-    border-radius: 7px;
-
-    background:
-        #2563eb;
-
-    color: white;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-}
-
-
-/* ==================================================
+/* =====================================================
    ANA KAPSÜL
-================================================== */
+===================================================== */
 
 .mesajlar-container {
-
-    display: none;
 
     width: 100%;
 
@@ -496,16 +63,15 @@ body {
 
     margin: auto;
 
-    background: white;
+    background: #ffffff;
 
     position: relative;
-
 }
 
 
-/* ==================================================
-   ÜST BAŞLIK
-================================================== */
+/* =====================================================
+   MESAJLARIM BAŞLIK
+===================================================== */
 
 .mesajlar-header {
 
@@ -515,45 +81,38 @@ body {
 
     align-items: center;
 
-    padding:
-        0 15px;
+    padding: 0 15px;
 
-    background: white;
+    background: #ffffff;
 
-    border-bottom:
-        1px solid #eee;
+    border-bottom: 1px solid #e5e7eb;
 
     font-size: 20px;
 
     font-weight: normal;
-
 }
-
 
 .mesajlar-header i {
 
     margin-right: 12px;
 
-    color:
-        #2563eb;
-
+    color: #2563eb;
 }
 
 
-/* ==================================================
+/* =====================================================
    İLAN LİSTESİ
-================================================== */
+===================================================== */
 
 .mesaj-ilan-listesi {
 
     width: 100%;
-
 }
 
 
-/* ==================================================
+/* =====================================================
    İLAN SATIRI
-================================================== */
+===================================================== */
 
 .mesaj-ilan {
 
@@ -565,30 +124,24 @@ body {
 
     align-items: center;
 
-    padding:
-        10px 15px;
+    padding: 10px 15px;
 
-    border-bottom:
-        1px solid #eee;
+    border-bottom: 1px solid #eeeeee;
 
     cursor: pointer;
 
-    background: white;
-
+    background: #ffffff;
 }
-
 
 .mesaj-ilan:hover {
 
-    background:
-        #f8fafc;
-
+    background: #f8fafc;
 }
 
 
-/* ==================================================
+/* =====================================================
    İLAN RESMİ
-================================================== */
+===================================================== */
 
 .mesaj-ilan-resim {
 
@@ -601,13 +154,12 @@ body {
     object-fit: cover;
 
     flex-shrink: 0;
-
 }
 
 
-/* ==================================================
-   İLAN BİLGİSİ
-================================================== */
+/* =====================================================
+   İLAN BİLGİ
+===================================================== */
 
 .mesaj-ilan-bilgi {
 
@@ -616,9 +168,7 @@ body {
     min-width: 0;
 
     margin-left: 12px;
-
 }
-
 
 .mesaj-ilan-baslik {
 
@@ -631,9 +181,7 @@ body {
     overflow: hidden;
 
     text-overflow: ellipsis;
-
 }
-
 
 .mesaj-ilan-alt {
 
@@ -642,13 +190,12 @@ body {
     color: #777;
 
     margin-top: 3px;
-
 }
 
 
-/* ==================================================
+/* =====================================================
    SAĞ OK
-================================================== */
+===================================================== */
 
 .mesaj-ilan-ok {
 
@@ -657,38 +204,33 @@ body {
     color: #999;
 
     font-size: 18px;
-
 }
 
 
-/* ==================================================
+/* =====================================================
    BOŞ MESAJ
-================================================== */
+===================================================== */
 
 .mesaj-bos {
 
-    padding:
-        50px 20px;
+    padding: 50px 20px;
 
     text-align: center;
 
     color: #888;
-
 }
-
 
 .mesaj-bos i {
 
     font-size: 45px;
 
     margin-bottom: 15px;
-
 }
 
 
-/* ==================================================
-   SOHBET
-================================================== */
+/* =====================================================
+   SOHBET EKRANI
+===================================================== */
 
 .sohbet-ekrani {
 
@@ -698,17 +240,15 @@ body {
 
     inset: 0;
 
-    background:
-        #f5f5f5;
+    background: #f2f4f7;
 
     z-index: 10000;
-
 }
 
 
-/* ==================================================
-   SOHBET ÜST
-================================================== */
+/* =====================================================
+   SOHBET ÜST ALAN
+===================================================== */
 
 .sohbet-header {
 
@@ -718,77 +258,356 @@ body {
 
     margin: auto;
 
-    height: 70px;
+    height: 68px;
 
     display: flex;
 
     align-items: center;
 
-    padding:
-        8px 12px;
+    padding: 6px 10px;
 
-    background: white;
+    background: #ffffff;
 
-    border-bottom:
-        1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
 
+    position: relative;
 }
 
+
+/* =====================================================
+   GERİ < BUTONU
+===================================================== */
 
 .sohbet-geri {
 
-    width: 40px;
+    width: 42px;
 
-    font-size: 22px;
+    height: 52px;
 
-    cursor: pointer;
+    display: flex;
 
-}
+    align-items: center;
 
+    justify-content: center;
 
-.sohbet-ilan-resim {
-
-    width: 50px;
-
-    height: 50px;
-
-    border-radius: 7px;
-
-    object-fit: cover;
-
-}
-
-
-.sohbet-ilan-bilgi {
-
-    margin-left: 10px;
-
-    min-width: 0;
-
-}
-
-
-.sohbet-ilan-baslik {
+    font-size: 31px;
 
     font-weight: normal;
 
-    font-size: 16px;
+    color: #222;
 
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+.sohbet-geri i {
+
+    font-size: 28px;
 }
 
 
-.sohbet-ilan-alt {
+/* =====================================================
+   İRTİBAT ALANI
+===================================================== */
+
+.sohbet-irtibat {
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: 52px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding-left: 5px;
+
+    overflow: hidden;
+}
+
+.sohbet-irtibat-baslik {
 
     font-size: 13px;
 
     color: #777;
 
+    font-weight: normal;
+}
+
+.sohbet-irtibat-no {
+
+    font-size: 15px;
+
+    color: #222;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    font-weight: normal;
 }
 
 
-/* ==================================================
+/* =====================================================
+   ÜÇ NOKTA
+===================================================== */
+
+.sohbet-islem-buton {
+
+    width: 44px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+
+    color: #333;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   İŞLEM BALONU
+===================================================== */
+
+.islem-panel {
+
+    display: none;
+
+    position: fixed;
+
+    z-index: 12000;
+
+    top: 68px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    max-width: 600px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #d8d8d8;
+
+    box-shadow:
+        0 5px 14px rgba(0,0,0,.12);
+}
+
+
+/* ÜST ÇİZGİ / TUTMA ALANI */
+
+.islem-tutamac {
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.islem-tutamac-cizgi {
+
+    width: 42px;
+
+    height: 4px;
+
+    border-radius: 10px;
+
+    background: #cfcfcf;
+}
+
+
+/* =====================================================
+   İŞLEMLER BAŞLIĞI
+===================================================== */
+
+.islem-baslik {
+
+    padding: 10px 18px;
+
+    font-size: 15px;
+
+    color: #777;
+
+    font-weight: normal;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+/* =====================================================
+   MESAJI SİL
+===================================================== */
+
+.islem-sil {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 18px;
+
+    background: #ffffff;
+
+    border: none;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    color: #333;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.islem-sil:hover {
+
+    background: #f7f7f7;
+}
+
+.islem-sil i {
+
+    margin-right: 10px;
+
+    color: #777;
+}
+
+
+/* =====================================================
+   İLAN ÖN İZLEME ALANI
+===================================================== */
+
+.sohbet-ilan-onizleme {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #dddddd;
+
+    padding: 12px;
+}
+
+
+/* =====================================================
+   ÖN İZLEME KARTI
+===================================================== */
+
+.sohbet-ilan-kart {
+
+    width: 100%;
+
+    min-height: 92px;
+
+    display: flex;
+
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e3e3;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   ÖN İZLEME RESMİ
+===================================================== */
+
+.sohbet-ilan-kart-resim {
+
+    width: 92px;
+
+    height: 92px;
+
+    object-fit: cover;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   ÖN İZLEME BİLGİ
+===================================================== */
+
+.sohbet-ilan-kart-bilgi {
+
+    min-width: 0;
+
+    flex: 1;
+
+    padding: 10px 12px;
+}
+
+.sohbet-ilan-kart-baslik {
+
+    font-size: 15px;
+
+    line-height: 1.35;
+
+    color: #222;
+
+    font-weight: normal;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.sohbet-ilan-kart-fiyat {
+
+    margin-top: 6px;
+
+    font-size: 14px;
+
+    color: #777;
+
+    font-weight: normal;
+}
+
+
+/* =====================================================
    MESAJ ALANI
-================================================== */
+===================================================== */
 
 .sohbet-mesajlar {
 
@@ -799,25 +618,23 @@ body {
     margin: auto;
 
     height:
-        calc(100vh - 130px);
+        calc(100vh - 68px - 117px - 60px);
 
     overflow-y: auto;
 
-    padding: 15px;
-
+    padding: 15px 12px 20px;
 }
 
 
-/* ==================================================
-   MESAJ BALONLARI
-================================================== */
+/* =====================================================
+   MESAJ BALONU
+===================================================== */
 
 .mesaj-balonu {
 
     max-width: 78%;
 
-    padding:
-        9px 12px;
+    padding: 9px 12px;
 
     border-radius: 10px;
 
@@ -827,29 +644,37 @@ body {
 
     line-height: 1.4;
 
+    font-weight: normal;
+
+    word-wrap: break-word;
 }
 
+
+/* GELEN */
 
 .mesaj-gelen {
 
-    background: white;
+    background: #ffffff;
 
     margin-right: auto;
 
+    border: 1px solid #eeeeee;
 }
 
+
+/* GİDEN */
 
 .mesaj-giden {
 
-    background:
-        #2563eb;
+    background: #2563eb;
 
-    color: white;
+    color: #ffffff;
 
     margin-left: auto;
-
 }
 
+
+/* SAAT */
 
 .mesaj-saat {
 
@@ -863,12 +688,13 @@ body {
 
     text-align: right;
 
+    font-weight: normal;
 }
 
 
-/* ==================================================
-   MESAJ GÖNDERME
-================================================== */
+/* =====================================================
+   MESAJ GÖNDER PANELİ
+===================================================== */
 
 .mesaj-gonder-panel {
 
@@ -878,8 +704,7 @@ body {
 
     left: 50%;
 
-    transform:
-        translateX(-50%);
+    transform: translateX(-50%);
 
     width: 100%;
 
@@ -887,18 +712,17 @@ body {
 
     height: 60px;
 
-    background: white;
+    background: #ffffff;
 
-    border-top:
-        1px solid #ddd;
+    border-top: 1px solid #dddddd;
 
     display: flex;
 
     align-items: center;
 
-    padding:
-        8px 10px;
+    padding: 8px 10px;
 
+    z-index: 11000;
 }
 
 
@@ -908,13 +732,11 @@ body {
 
     height: 42px;
 
-    border:
-        1px solid #ddd;
+    border: 1px solid #dddddd;
 
     border-radius: 21px;
 
-    padding:
-        0 15px;
+    padding: 0 15px;
 
     font-family: inherit;
 
@@ -922,8 +744,16 @@ body {
 
     outline: none;
 
+    font-weight: normal;
 }
 
+.mesaj-input:focus {
+
+    border-color: #2563eb;
+}
+
+
+/* GÖNDER */
 
 .mesaj-gonder {
 
@@ -937,8 +767,7 @@ body {
 
     border-radius: 50%;
 
-    background:
-        #2563eb;
+    background: #2563eb;
 
     color: white;
 
@@ -946,22 +775,133 @@ body {
 
     cursor: pointer;
 
+    flex-shrink: 0;
 }
 
 
-/* ==================================================
+/* =====================================================
+   YÖNETİCİ GİRİŞ EKRANI
+===================================================== */
+
+.mesaj-giris-ekrani {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 20000;
+
+    background: #f2f4f7;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+.mesaj-giris-kutu {
+
+    width: 100%;
+
+    max-width: 380px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.12);
+}
+
+
+.mesaj-giris-baslik {
+
+    font-size: 21px;
+
+    text-align: center;
+
+    margin-bottom: 22px;
+
+    font-weight: normal;
+}
+
+
+.mesaj-giris-input {
+
+    width: 100%;
+
+    height: 44px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 7px;
+
+    padding: 0 13px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+.mesaj-giris-buton {
+
+    width: 100%;
+
+    height: 44px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   YÜKLENİYOR
+===================================================== */
+
+.mesaj-yukleniyor {
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
    MOBİL
-================================================== */
+===================================================== */
 
 @media (max-width: 600px) {
 
-
     body {
 
-        background: white;
-
+        background: #ffffff;
     }
-
 
     .mesajlar-container {
 
@@ -970,7 +910,6 @@ body {
         max-width: none;
 
         min-height: 100dvh;
-
     }
 
 
@@ -978,11 +917,9 @@ body {
 
         height: 56px;
 
-        padding:
-            0 14px;
+        padding: 0 14px;
 
         font-size: 18px;
-
     }
 
 
@@ -990,9 +927,7 @@ body {
 
         min-height: 78px;
 
-        padding:
-            8px 12px;
-
+        padding: 8px 12px;
     }
 
 
@@ -1003,30 +938,24 @@ body {
         height: 58px;
 
         border-radius: 7px;
-
     }
 
 
     .mesaj-ilan-bilgi {
 
         margin-left: 10px;
-
     }
 
 
     .mesaj-ilan-baslik {
 
         font-size: 15px;
-
-        font-weight: normal;
-
     }
 
 
     .mesaj-ilan-alt {
 
         font-size: 13px;
-
     }
 
 
@@ -1035,7 +964,6 @@ body {
         font-size: 16px;
 
         margin-left: 7px;
-
     }
 
 
@@ -1045,43 +973,85 @@ body {
 
         height: 62px;
 
-        padding:
-            6px 8px;
-
+        padding: 5px 6px;
     }
 
 
     .sohbet-geri {
 
-        width: 38px;
+        width: 40px;
 
-        font-size: 20px;
-
+        font-size: 28px;
     }
 
 
-    .sohbet-ilan-resim {
+    .sohbet-irtibat {
 
-        width: 45px;
-
-        height: 45px;
-
+        height: 50px;
     }
 
 
-    .sohbet-ilan-baslik {
-
-        font-size: 15px;
-
-        font-weight: normal;
-
-    }
-
-
-    .sohbet-ilan-alt {
+    .sohbet-irtibat-baslik {
 
         font-size: 12px;
+    }
 
+
+    .sohbet-irtibat-no {
+
+        font-size: 14px;
+    }
+
+
+    .sohbet-islem-buton {
+
+        width: 42px;
+
+        height: 50px;
+    }
+
+
+    .islem-panel {
+
+        top: 62px;
+
+        max-width: none;
+    }
+
+
+    .sohbet-ilan-onizleme {
+
+        max-width: none;
+
+        padding: 10px;
+    }
+
+
+    .sohbet-ilan-kart {
+
+        min-height: 98px;
+    }
+
+
+    .sohbet-ilan-kart-resim {
+
+        width: 98px;
+
+        height: 98px;
+    }
+
+
+    .sohbet-ilan-kart-baslik {
+
+        font-size: 14px;
+
+        -webkit-line-clamp: 3;
+    }
+
+
+    .sohbet-ilan-kart-fiyat {
+
+        font-size: 13px;
     }
 
 
@@ -1090,10 +1060,9 @@ body {
         max-width: none;
 
         height:
-            calc(100dvh - 122px);
+            calc(100dvh - 62px - 118px - 60px);
 
         padding: 12px;
-
     }
 
 
@@ -1102,7 +1071,6 @@ body {
         max-width: 82%;
 
         font-size: 14px;
-
     }
 
 
@@ -1113,7 +1081,6 @@ body {
         height: 60px;
 
         padding: 8px;
-
     }
 
 
@@ -1122,7 +1089,6 @@ body {
         height: 42px;
 
         font-size: 14px;
-
     }
 
 
@@ -1131,9 +1097,6 @@ body {
         width: 42px;
 
         height: 42px;
-
-        flex-shrink: 0;
-
     }
 
 }
@@ -1146,9 +1109,9 @@ body {
 <body>
 
 
-<!-- ==================================================
-     GİRİŞ EKRANI
-================================================== -->
+<!-- =====================================================
+     YÖNETİCİ GİRİŞ
+===================================================== -->
 
 <div id="mesajGirisEkrani"
      class="mesaj-giris-ekrani">
@@ -1156,29 +1119,23 @@ body {
     <div class="mesaj-giris-kutu">
 
         <div class="mesaj-giris-baslik">
-
             Mesajlarım
-
         </div>
-
 
         <input
             id="mesajEmail"
+            class="mesaj-giris-input"
             type="email"
-            placeholder="E-posta"
-            autocomplete="username"
-        >
-
+            placeholder="E-posta">
 
         <input
             id="mesajSifre"
+            class="mesaj-giris-input"
             type="password"
-            placeholder="Şifre"
-            autocomplete="current-password"
-        >
-
+            placeholder="Şifre">
 
         <button
+            class="mesaj-giris-buton"
             onclick="mesajlarGirisYap()">
 
             Giriş Yap
@@ -1190,13 +1147,13 @@ body {
 </div>
 
 
+<!-- =====================================================
+     MESAJLAR LİSTESİ
+===================================================== -->
 
-<!-- ==================================================
-     ANA MESAJLAR ALANI
-================================================== -->
-
-<div class="mesajlar-container">
-
+<div class="mesajlar-container"
+     id="mesajlarContainer"
+     style="display:none;">
 
     <div class="mesajlar-header">
 
@@ -1210,90 +1167,159 @@ body {
     <div id="mesajIlanListesi"
          class="mesaj-ilan-listesi">
 
+        <div class="mesaj-yukleniyor">
 
-        <div class="mesaj-bos">
-
-            <i class="fa-regular fa-comment-dots"></i>
-
-            <div>
-                Henüz mesajınız yok.
-            </div>
+            Mesajlar yükleniyor...
 
         </div>
-
 
     </div>
 
 </div>
 
 
-
-<!-- ==================================================
-     SOHBET EKRANI
-================================================== -->
+<!-- =====================================================
+     ZİYARETÇİ SOHBET EKRANI
+===================================================== -->
 
 <div id="sohbetEkrani"
      class="sohbet-ekrani">
 
 
+    <!-- ÜST ALAN -->
+
     <div class="sohbet-header">
 
+
+        <!-- GERİ -->
 
         <div class="sohbet-geri"
              onclick="sohbetKapat()">
 
-            <i class="fa-solid fa-arrow-left"></i>
+            <i class="fa-solid fa-angle-left"></i>
 
         </div>
 
 
-        <img
-            id="sohbetIlanResim"
-            class="sohbet-ilan-resim"
-            src=""
-            alt=""
-        >
+        <!-- İRTİBAT -->
 
+        <div class="sohbet-irtibat">
 
-        <div class="sohbet-ilan-bilgi">
-
-
-            <div
-                id="sohbetIlanBaslik"
-                class="sohbet-ilan-baslik">
+            <div class="sohbet-irtibat-baslik">
+                İrtibat
             </div>
 
+            <div id="sohbetIrtibatNo"
+                 class="sohbet-irtibat-no">
 
-            <div
-                id="sohbetIlanAlt"
-                class="sohbet-ilan-alt">
+                Bağlanıyor...
+
             </div>
-
 
         </div>
 
 
+        <!-- ÜÇ NOKTA -->
+
+        <div class="sohbet-islem-buton"
+             onclick="islemPanelAc()">
+
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+
+        </div>
+
     </div>
 
 
+    <!-- =================================================
+         İŞLEM PANELİ
+    ================================================= -->
 
-    <div
-        id="sohbetMesajlar"
-        class="sohbet-mesajlar">
+    <div id="islemPanel"
+         class="islem-panel">
+
+
+        <div class="islem-tutamac"
+             onclick="islemPanelKapat()">
+
+            <div class="islem-tutamac-cizgi"></div>
+
+        </div>
+
+
+        <div class="islem-baslik">
+
+            İşlemler
+
+        </div>
+
+
+        <button class="islem-sil"
+                onclick="mesajlariSil()">
+
+            <i class="fa-regular fa-trash-can"></i>
+
+            Mesajı sil
+
+        </button>
+
     </div>
 
 
+    <!-- =================================================
+         İLAN ÖN İZLEME
+    ================================================= -->
+
+    <div class="sohbet-ilan-onizleme">
+
+        <div class="sohbet-ilan-kart">
+
+
+            <img id="sohbetIlanResim"
+                 class="sohbet-ilan-kart-resim"
+                 src=""
+                 alt="">
+
+
+            <div class="sohbet-ilan-kart-bilgi">
+
+                <div id="sohbetIlanBaslik"
+                     class="sohbet-ilan-kart-baslik">
+                </div>
+
+
+                <div id="sohbetIlanFiyat"
+                     class="sohbet-ilan-kart-fiyat">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         MESAJLAR
+    ================================================= -->
+
+    <div id="sohbetMesajlar"
+         class="sohbet-mesajlar">
+
+    </div>
+
+
+    <!-- =================================================
+         MESAJ YAZ
+    ================================================= -->
 
     <div class="mesaj-gonder-panel">
-
 
         <input
             id="mesajInput"
             class="mesaj-input"
             type="text"
-            placeholder="Mesajınızı yazın..."
-        >
-
+            placeholder="Mesajınızı yazın...">
 
         <button
             class="mesaj-gonder"
@@ -1303,19 +1329,96 @@ body {
 
         </button>
 
-
     </div>
-
 
 </div>
 
 
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
 
-<script>
+<script type="module">
 
-/* ==================================================
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+
+import {
+    getAuth,
+    signInAnonymously,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+import {
+    getDatabase,
+    ref,
+    push,
+    set,
+    onValue,
+    remove,
+    get
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE AYARLARI
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
+
+    authDomain:
+        "netmax-mesajlar.firebaseapp.com",
+
+    databaseURL:
+        "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
+
+    projectId:
+        "netmax-mesajlar",
+
+    storageBucket:
+        "netmax-mesajlar.firebasestorage.app",
+
+    messagingSenderId:
+        "575038344835",
+
+    appId:
+        "1:575038344835:web:513417e69f4a291dc095b6"
+};
+
+
+/* =====================================================
+   FIREBASE BAŞLAT
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const database =
+    getDatabase(app);
+
+
+/* =====================================================
    URL
-================================================== */
+===================================================== */
 
 const urlParams =
     new URLSearchParams(
@@ -1327,13 +1430,20 @@ const gelenIlanID =
     urlParams.get("ilan");
 
 
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 let aktifIlan = null;
 
+let aktifMesajlar = {};
+
+let ziyaretciUID = null;
 
 
-/* ==================================================
+/* =====================================================
    İLANI BUL
-================================================== */
+===================================================== */
 
 if (
     gelenIlanID &&
@@ -1342,39 +1452,173 @@ if (
 
     aktifIlan =
         ilanlarVerisi.find(
+
             ilan =>
                 String(ilan.id) ===
                 String(gelenIlanID)
+
         );
 
 }
 
 
-console.log(
-    "GELEN İLAN ID:",
-    gelenIlanID
-);
+/* =====================================================
+   İLAN BAŞLIĞI OLUŞTUR
+===================================================== */
+
+function ilanBasligiOlustur(ilan) {
+
+    if (!ilan) return "";
 
 
-console.log(
-    "AKTİF İLAN:",
-    aktifIlan
-);
+    let kartBaslik = "";
 
 
-
-/* ==================================================
-   İLAN BULUNDUYSA
-================================================== */
-
-if (aktifIlan) {
+    kartBaslik +=
+        ilan.baslik || "";
 
 
-    /* RESİM */
+    /* DURUM */
+
+    if (ilan.durum === "satilik") {
+
+        kartBaslik +=
+            " SATILIK";
+
+    }
+
+    else if (ilan.durum === "kiralik") {
+
+        kartBaslik +=
+            " KİRALIK";
+
+    }
+
+    else if (
+        ilan.durum === "kat-karsiligi"
+    ) {
+
+        kartBaslik +=
+            " KAT KARŞILIĞI";
+
+    }
+
+
+    /* DAİRE */
+
+    if (
+        ilan.konutSekli &&
+        ilan.konutSekli
+            .toLowerCase() === "daire"
+    ) {
+
+        kartBaslik +=
+            " Daire";
+
+    }
+
+
+    /* DÜKKAN */
+
+    else if (
+        ilan.konutTipi &&
+        ilan.konutTipi
+            .toLowerCase() === "dükkan"
+    ) {
+
+        kartBaslik +=
+            " Dükkan";
+
+    }
+
+
+    /* VİLLA */
+
+    else if (
+
+        (
+            ilan.konutTipi &&
+            ilan.konutTipi
+                .toLowerCase() === "villa"
+        )
+
+        ||
+
+        (
+            ilan.konutSekli &&
+            ilan.konutSekli
+                .toLowerCase() === "villa"
+        )
+
+    ) {
+
+        kartBaslik +=
+            " Villa";
+
+    }
+
+
+    /* ARSA / TARLA */
+
+    else if (
+
+        ilan.tip &&
+
+        (
+            ilan.tip.toLowerCase() === "arsa" ||
+
+            ilan.tip.toLowerCase() === "tarla"
+        )
+
+    ) {
+
+        kartBaslik +=
+            " " +
+            ilan.tip.charAt(0)
+                .toUpperCase() +
+            ilan.tip.slice(1)
+                .toLowerCase();
+
+    }
+
+
+    /* ODA SAYISI */
+
+    if (
+
+        ilan.konutSekli &&
+
+        ilan.konutSekli
+            .toLowerCase() === "daire" &&
+
+        ilan["Oda Sayısı"]
+
+    ) {
+
+        kartBaslik +=
+            " " +
+            ilan["Oda Sayısı"];
+
+    }
+
+
+    return kartBaslik;
+}
+
+
+/* =====================================================
+   İLAN ÖN İZLEMESİNİ DOLDUR
+===================================================== */
+
+function ilanOnizlemeyiDoldur() {
+
+    if (!aktifIlan) return;
+
 
     const resim =
 
         aktifIlan.resimler &&
+
         aktifIlan.resimler.length > 0
 
             ? aktifIlan.resimler[0]
@@ -1389,197 +1633,19 @@ if (aktifIlan) {
         .src = resim;
 
 
-
-    /* ==================================================
-       BAŞLIK
-    ================================================== */
-
-    let kartBaslik = "";
-
-
-    kartBaslik +=
-        aktifIlan.baslik || "";
-
-
-
-    /* DURUM */
-
-    if (
-        aktifIlan.durum ===
-        "satilik"
-    ) {
-
-        kartBaslik +=
-            " SATILIK";
-
-    }
-
-
-    else if (
-        aktifIlan.durum ===
-        "kiralik"
-    ) {
-
-        kartBaslik +=
-            " KİRALIK";
-
-    }
-
-
-    else if (
-        aktifIlan.durum ===
-        "kat-karsiligi"
-    ) {
-
-        kartBaslik +=
-            " KAT KARŞILIĞI";
-
-    }
-
-
-
-    /* DAİRE */
-
-    if (
-
-        aktifIlan.konutSekli &&
-
-        aktifIlan.konutSekli
-            .toLowerCase() ===
-            "daire"
-
-    ) {
-
-        kartBaslik +=
-            " Daire";
-
-    }
-
-
-
-    /* DÜKKAN */
-
-    else if (
-
-        aktifIlan.konutTipi &&
-
-        aktifIlan.konutTipi
-            .toLowerCase() ===
-            "dükkan"
-
-    ) {
-
-        kartBaslik +=
-            " Dükkan";
-
-    }
-
-
-
-    /* VİLLA */
-
-    else if (
-
-        (
-            aktifIlan.konutTipi &&
-
-            aktifIlan.konutTipi
-                .toLowerCase() ===
-                "villa"
-        )
-
-        ||
-
-        (
-            aktifIlan.konutSekli &&
-
-            aktifIlan.konutSekli
-                .toLowerCase() ===
-                "villa"
-        )
-
-    ) {
-
-        kartBaslik +=
-            " Villa";
-
-    }
-
-
-
-    /* ARSA / TARLA */
-
-    else if (
-
-        aktifIlan.tip &&
-
-        (
-            aktifIlan.tip
-                .toLowerCase() ===
-                "arsa"
-
-            ||
-
-            aktifIlan.tip
-                .toLowerCase() ===
-                "tarla"
-        )
-
-    ) {
-
-        kartBaslik +=
-            " " +
-
-            aktifIlan.tip
-                .charAt(0)
-                .toUpperCase() +
-
-            aktifIlan.tip
-                .slice(1)
-                .toLowerCase();
-
-    }
-
-
-
-    /* ODA SAYISI */
-
-    if (
-
-        aktifIlan.konutSekli &&
-
-        aktifIlan.konutSekli
-            .toLowerCase() ===
-            "daire" &&
-
-        aktifIlan["Oda Sayısı"]
-
-    ) {
-
-        kartBaslik +=
-            " " +
-            aktifIlan["Oda Sayısı"];
-
-    }
-
-
-
     document
         .getElementById(
             "sohbetIlanBaslik"
         )
         .textContent =
-        kartBaslik;
+            ilanBasligiOlustur(
+                aktifIlan
+            );
 
-
-
-    /* ==================================================
-       FİYAT
-    ================================================== */
 
     document
         .getElementById(
-            "sohbetIlanAlt"
+            "sohbetIlanFiyat"
         )
         .textContent =
 
@@ -1593,74 +1659,229 @@ if (aktifIlan) {
               )
 
             : "";
-
-
-
-    /*
-    ==================================================
-    NOT
-
-    Burada sohbet ekranını otomatik açmıyoruz.
-
-    Mesajlarım sayfasına giriş yapıldıktan sonra
-    ilgili ilana tıklanınca açılacak.
-    ==================================================
-    */
-
 }
 
 
+/* =====================================================
+   ZİYARETÇİ SOHBETİNİ AÇ
+===================================================== */
 
-/* ==================================================
-   SOHBETİ AÇ
-================================================== */
-
-function sohbetAc(ilanID) {
-
+function ziyaretciSohbetiniAc() {
 
     if (!aktifIlan) {
+
+        alert(
+            "İlan bulunamadı."
+        );
 
         return;
 
     }
 
 
-    document
-        .getElementById(
-            "sohbetEkrani"
-        )
-        .style.display =
-        "block";
-
-
-}
-
-
-
-/* ==================================================
-   SOHBETİ KAPAT
-================================================== */
-
-function sohbetKapat() {
+    ilanOnizlemeyiDoldur();
 
 
     document
         .getElementById(
             "sohbetEkrani"
         )
-        .style.display =
-        "none";
+        .style.display = "block";
+
+
+    document
+        .getElementById(
+            "sohbetMesajlar"
+        )
+        .innerHTML =
+
+        '<div class="mesaj-yukleniyor">' +
+        'Mesajlar yükleniyor...' +
+        '</div>';
 
 }
 
 
+/* =====================================================
+   ZİYARETÇİ MESAJLARINI DİNLE
+===================================================== */
 
-/* ==================================================
+function mesajlariDinle() {
+
+    if (!gelenIlanID) return;
+
+    if (!ziyaretciUID) return;
+
+
+    const mesajRef =
+        ref(
+            database,
+            "mesajlar/" +
+            gelenIlanID
+        );
+
+
+    onValue(
+        mesajRef,
+        (snapshot) => {
+
+            const veri =
+                snapshot.val() || {};
+
+
+            aktifMesajlar =
+                veri;
+
+
+            sohbetMesajlariniGoster();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   MESAJLARI GÖSTER
+===================================================== */
+
+function sohbetMesajlariniGoster() {
+
+    const alan =
+        document.getElementById(
+            "sohbetMesajlar"
+        );
+
+
+    alan.innerHTML = "";
+
+
+    const liste =
+        Object.entries(
+            aktifMesajlar
+        );
+
+
+    if (liste.length === 0) {
+
+        return;
+
+    }
+
+
+    liste.sort(
+        (a, b) => {
+
+            return (
+                (a[1].zaman || 0) -
+                (b[1].zaman || 0)
+            );
+
+        }
+    );
+
+
+    liste.forEach(
+        ([mesajID, mesaj]) => {
+
+
+            const balon =
+                document.createElement(
+                    "div"
+                );
+
+
+            balon.className =
+                "mesaj-balonu " +
+
+                (
+                    mesaj.uid ===
+                    ziyaretciUID
+
+                        ? "mesaj-giden"
+
+                        : "mesaj-gelen"
+                );
+
+
+            const metin =
+                document.createElement(
+                    "div"
+                );
+
+
+            metin.textContent =
+                mesaj.mesaj || "";
+
+
+            const saat =
+                document.createElement(
+                    "span"
+                );
+
+
+            saat.className =
+                "mesaj-saat";
+
+
+            saat.textContent =
+                saatFormatla(
+                    mesaj.zaman
+                );
+
+
+            balon.appendChild(
+                metin
+            );
+
+
+            balon.appendChild(
+                saat
+            );
+
+
+            alan.appendChild(
+                balon
+            );
+
+        }
+    );
+
+
+    alan.scrollTop =
+        alan.scrollHeight;
+}
+
+
+/* =====================================================
+   SAAT
+===================================================== */
+
+function saatFormatla(zaman) {
+
+    if (!zaman) return "";
+
+
+    const tarih =
+        new Date(zaman);
+
+
+    return tarih.toLocaleTimeString(
+        "tr-TR",
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+/* =====================================================
    MESAJ GÖNDER
-================================================== */
+===================================================== */
 
-function mesajGonder() {
-
+window.mesajGonder =
+async function () {
 
     const input =
         document.getElementById(
@@ -1672,26 +1893,764 @@ function mesajGonder() {
         input.value.trim();
 
 
-    if (!mesaj) {
+    if (!mesaj) return;
+
+
+    if (!ziyaretciUID) {
+
+        alert(
+            "Firebase bağlantısı henüz hazır değil."
+        );
 
         return;
 
     }
 
 
-    console.log(
-        "Gönderilecek mesaj:",
-        mesaj
+    if (!gelenIlanID) {
+
+        alert(
+            "İlan bulunamadı."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const mesajRef =
+            ref(
+                database,
+                "mesajlar/" +
+                gelenIlanID
+            );
+
+
+        const yeniMesaj =
+            push(mesajRef);
+
+
+        await set(
+            yeniMesaj,
+            {
+
+                mesaj:
+                    mesaj,
+
+                uid:
+                    ziyaretciUID,
+
+                zaman:
+                    Date.now()
+
+            }
+        );
+
+
+        input.value = "";
+
+
+        console.log(
+            "MESAJ FIREBASE'E KAYDEDİLDİ"
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "MESAJ KAYIT HATASI:",
+            error
+        );
+
+
+        alert(
+            "Mesaj gönderilemedi."
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   İŞLEM PANELİ
+===================================================== */
+
+window.islemPanelAc =
+function () {
+
+    const panel =
+        document.getElementById(
+            "islemPanel"
+        );
+
+
+    panel.style.display =
+        "block";
+
+};
+
+
+window.islemPanelKapat =
+function () {
+
+    const panel =
+        document.getElementById(
+            "islemPanel"
+        );
+
+
+    panel.style.display =
+        "none";
+
+};
+
+
+/* =====================================================
+   MESAJLARI SİL
+===================================================== */
+
+window.mesajlariSil =
+async function () {
+
+    if (!gelenIlanID) return;
+
+
+    const onay =
+        confirm(
+            "Bu konuşmadaki mesajları silmek istiyor musunuz?"
+        );
+
+
+    if (!onay) return;
+
+
+    try {
+
+        await remove(
+
+            ref(
+                database,
+                "mesajlar/" +
+                gelenIlanID
+            )
+
+        );
+
+
+        islemPanelKapat();
+
+
+        console.log(
+            "MESAJLAR SİLİNDİ"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "MESAJ SİLME HATASI:",
+            error
+        );
+
+        alert(
+            "Mesajlar silinemedi."
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   SOHBET KAPAT
+===================================================== */
+
+window.sohbetKapat =
+function () {
+
+    document
+        .getElementById(
+            "sohbetEkrani"
+        )
+        .style.display = "none";
+
+
+    islemPanelKapat();
+
+
+    /*
+    Ziyaretçi sayfasında geri dönmek
+    için bir önceki sayfaya dönüyoruz.
+    */
+
+    if (
+        document.referrer &&
+        document.referrer !==
+        window.location.href
+    ) {
+
+        history.back();
+
+    }
+
+};
+
+
+/* =====================================================
+   YÖNETİCİ GİRİŞ
+===================================================== */
+
+window.mesajlarGirisYap =
+async function () {
+
+    const email =
+        document
+            .getElementById(
+                "mesajEmail"
+            )
+            .value
+            .trim();
+
+
+    const sifre =
+        document
+            .getElementById(
+                "mesajSifre"
+            )
+            .value;
+
+
+    if (!email || !sifre) {
+
+        alert(
+            "E-posta ve şifreyi girin."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            sifre
+        );
+
+
+        console.log(
+            "YÖNETİCİ GİRİŞİ BAŞARILI"
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "YÖNETİCİ GİRİŞ HATASI:",
+            error
+        );
+
+
+        alert(
+            "E-posta veya şifre hatalı."
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   YÖNETİCİ MESAJLARI OKU
+===================================================== */
+
+function yoneticiMesajlariniYukle() {
+
+    const liste =
+        document.getElementById(
+            "mesajIlanListesi"
+        );
+
+
+    liste.innerHTML =
+        '<div class="mesaj-yukleniyor">' +
+        'Mesajlar yükleniyor...' +
+        '</div>';
+
+
+    const mesajlarRef =
+        ref(
+            database,
+            "mesajlar"
+        );
+
+
+    onValue(
+
+        mesajlarRef,
+
+        (snapshot) => {
+
+
+            const veri =
+                snapshot.val() || {};
+
+
+            const ilanlar =
+                Object.entries(
+                    veri
+                );
+
+
+            if (
+                ilanlar.length === 0
+            ) {
+
+                liste.innerHTML =
+
+                    '<div class="mesaj-bos">' +
+
+                    '<i class="fa-regular fa-comment-dots"></i>' +
+
+                    '<div>Henüz mesajınız yok.</div>' +
+
+                    '</div>';
+
+                return;
+
+            }
+
+
+            liste.innerHTML = "";
+
+
+            ilanlar.forEach(
+                ([ilanID, mesajlar]) => {
+
+
+                    const ilan =
+                        ilanlarVerisi.find(
+
+                            x =>
+                                String(x.id) ===
+                                String(ilanID)
+
+                        );
+
+
+                    if (!ilan) return;
+
+
+                    const mesajListesi =
+                        Object.values(
+                            mesajlar || {}
+                        );
+
+
+                    if (
+                        mesajListesi.length === 0
+                    ) return;
+
+
+                    mesajListesi.sort(
+
+                        (a, b) =>
+
+                            (b.zaman || 0) -
+                            (a.zaman || 0)
+
+                    );
+
+
+                    const sonMesaj =
+                        mesajListesi[0];
+
+
+                    const satir =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    satir.className =
+                        "mesaj-ilan";
+
+
+                    const resim =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    resim.className =
+                        "mesaj-ilan-resim";
+
+
+                    resim.src =
+
+                        ilan.resimler &&
+                        ilan.resimler.length
+
+                            ? ilan.resimler[0]
+
+                            : "";
+
+
+                    const bilgi =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    bilgi.className =
+                        "mesaj-ilan-bilgi";
+
+
+                    const baslik =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    baslik.className =
+                        "mesaj-ilan-baslik";
+
+
+                    baslik.textContent =
+                        ilanBasligiOlustur(
+                            ilan
+                        );
+
+
+                    const alt =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    alt.className =
+                        "mesaj-ilan-alt";
+
+
+                    alt.textContent =
+                        sonMesaj.mesaj ||
+                        "";
+
+
+                    bilgi.appendChild(
+                        baslik
+                    );
+
+
+                    bilgi.appendChild(
+                        alt
+                    );
+
+
+                    const ok =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    ok.className =
+                        "mesaj-ilan-ok";
+
+
+                    ok.innerHTML =
+                        '<i class="fa-solid fa-chevron-right"></i>';
+
+
+                    satir.appendChild(
+                        resim
+                    );
+
+
+                    satir.appendChild(
+                        bilgi
+                    );
+
+
+                    satir.appendChild(
+                        ok
+                    );
+
+
+                    satir.onclick =
+                        function () {
+
+                            window.location.href =
+                                "mesajlar.html?ilan=" +
+                                ilanID;
+
+                        };
+
+
+                    liste.appendChild(
+                        satir
+                    );
+
+                }
+            );
+
+        }
     );
 
-
-    input.value = "";
-
 }
+
+
+/* =====================================================
+   FIREBASE AUTH DURUMU
+===================================================== */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+
+        /*
+        =================================================
+        ZİYARETÇİ MODU
+        URL'de ?ilan varsa
+        =================================================
+        */
+
+        if (gelenIlanID) {
+
+
+            /*
+            Eğer zaten anonim kullanıcı varsa
+            onu kullan.
+            */
+
+            if (
+                user &&
+                user.isAnonymous
+            ) {
+
+                ziyaretciUID =
+                    user.uid;
+
+            }
+
+
+            /*
+            Hiç kullanıcı yoksa anonim giriş yap.
+            */
+
+            else if (!user) {
+
+                try {
+
+                    const sonuc =
+                        await signInAnonymously(
+                            auth
+                        );
+
+
+                    ziyaretciUID =
+                        sonuc.user.uid;
+
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "ANONİM GİRİŞ HATASI:",
+                        error
+                    );
+
+                    alert(
+                        "Firebase bağlantısı kurulamadı."
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            /*
+            Kullanıcı e-posta hesabıyla açıksa
+            ziyaretçi UID olarak onu kullanmıyoruz.
+            */
+
+            else {
+
+                ziyaretciUID =
+                    user.uid;
+
+            }
+
+
+            console.log(
+                "ZİYARETÇİ UID:",
+                ziyaretciUID
+            );
+
+
+            document
+                .getElementById(
+                    "sohbetIrtibatNo"
+                )
+                .textContent =
+                    ziyaretciUID;
+
+
+            ziyaretciSohbetiniAc();
+
+
+            mesajlariDinle();
+
+
+            return;
+
+        }
+
+
+        /*
+        =================================================
+        YÖNETİCİ MODU
+        URL'de ?ilan YOK
+        =================================================
+        */
+
+
+        if (
+            user &&
+            !user.isAnonymous
+        ) {
+
+
+            console.log(
+                "YÖNETİCİ GİRİŞİ:"
+            );
+
+
+            console.log(
+                "YÖNETİCİ UID:",
+                user.uid
+            );
+
+
+            document
+                .getElementById(
+                    "mesajGirisEkrani"
+                )
+                .style.display =
+                    "none";
+
+
+            document
+                .getElementById(
+                    "mesajlarContainer"
+                )
+                .style.display =
+                    "block";
+
+
+            yoneticiMesajlariniYukle();
+
+
+            return;
+
+        }
+
+
+        /*
+        =================================================
+        ANONİM OTURUM VARSA
+        YÖNETİCİ SAYFASINDA KABUL ETME
+        =================================================
+        */
+
+        if (
+            user &&
+            user.isAnonymous
+        ) {
+
+            try {
+
+                await signOut(auth);
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+        =================================================
+        GİRİŞ EKRANINI GÖSTER
+        =================================================
+        */
+
+        document
+            .getElementById(
+                "mesajGirisEkrani"
+            )
+            .style.display =
+                "flex";
+
+
+        document
+            .getElementById(
+                "mesajlarContainer"
+            )
+            .style.display =
+                "none";
+
+    });
+
+
+/* =====================================================
+   ENTER İLE GÖNDER
+===================================================== */
+
+document
+    .getElementById(
+        "mesajInput"
+    )
+    .addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                mesajGonder();
+
+            }
+
+        }
+    );
 
 </script>
 
 
 </body>
-
 </html>
