@@ -10,228 +10,269 @@
 
 <title>Mesajlarım - NETmax Gayrimenkul</title>
 
+
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <script src="js/ilanlar.js"></script>
 
 
-<!-- =====================================================
+<!-- ==================================================
      FIREBASE
-===================================================== -->
+================================================== -->
 
 <script type="module">
 
-import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-}
-    from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-
-
-const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
-
-    authDomain:
-        "netmax-mesajlar.firebaseapp.com",
-
-    databaseURL:
-        "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
-
-    projectId:
-        "netmax-mesajlar",
-
-    storageBucket:
-        "netmax-mesajlar.firebasestorage.app",
-
-    messagingSenderId:
-        "575038344835",
-
-    appId:
-        "1:575038344835:web:513417e69f4a291dc095b6"
-};
-
-
-const app =
-    initializeApp(firebaseConfig);
-
-
-const auth =
-    getAuth(app);
-
-
-/* =====================================================
-   YÖNETİCİ GİRİŞİ
-===================================================== */
-
-window.yoneticiGiris = function () {
-
-    const email =
-        document
-        .getElementById("yoneticiEmail")
-        .value
-        .trim();
-
-
-    const sifre =
-        document
-        .getElementById("yoneticiSifre")
-        .value;
-
-
-    const hata =
-        document.getElementById("yoneticiHata");
-
-
-    hata.textContent = "";
-
-
-    if (!email || !sifre) {
-
-        hata.textContent =
-            "E-posta ve şifre giriniz.";
-
-        return;
+    import {
+        getAuth,
+        signInWithEmailAndPassword,
+        onAuthStateChanged,
+        signOut
     }
+        from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
-    signInWithEmailAndPassword(
-        auth,
-        email,
-        sifre
-    )
+    const firebaseConfig = {
 
-    .then((userCredential) => {
+        apiKey:
+            "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
 
-        window.firebaseKullanici =
-            userCredential.user;
+        authDomain:
+            "netmax-mesajlar.firebaseapp.com",
 
+        databaseURL:
+            "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
 
-        console.log(
-            "YÖNETİCİ GİRİŞİ BAŞARILI"
-        );
+        projectId:
+            "netmax-mesajlar",
 
+        storageBucket:
+            "netmax-mesajlar.firebasestorage.app",
 
-        console.log(
-            "YÖNETİCİ UID:",
-            userCredential.user.uid
-        );
+        messagingSenderId:
+            "575038344835",
 
-    })
-
-    .catch((error) => {
-
-        console.error(
-            "YÖNETİCİ GİRİŞ HATASI:",
-            error
-        );
+        appId:
+            "1:575038344835:web:513417e69f4a291dc095b6"
+    };
 
 
-        hata.textContent =
-            "E-posta veya şifre hatalı.";
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const auth =
+        getAuth(app);
+
+
+    /*
+    ==================================================
+    GİRİŞ DURUMU
+    ==================================================
+    */
+
+    onAuthStateChanged(auth, (user) => {
+
+        if (user) {
+
+            console.log(
+                "MESAJLAR GİRİŞ YAPILDI"
+            );
+
+            console.log(
+                "KULLANICI UID:",
+                user.uid
+            );
+
+
+            window.firebaseKullanici = user;
+
+
+            const girisEkrani =
+                document.getElementById(
+                    "mesajGirisEkrani"
+                );
+
+
+            if (girisEkrani) {
+
+                girisEkrani.style.display =
+                    "none";
+
+            }
+
+
+            const mesajlarContainer =
+                document.querySelector(
+                    ".mesajlar-container"
+                );
+
+
+            if (mesajlarContainer) {
+
+                mesajlarContainer.style.display =
+                    "block";
+
+            }
+
+        }
+
+        else {
+
+            console.log(
+                "MESAJLAR GİRİŞ YAPILMADI"
+            );
+
+
+            window.firebaseKullanici =
+                null;
+
+
+            const girisEkrani =
+                document.getElementById(
+                    "mesajGirisEkrani"
+                );
+
+
+            if (girisEkrani) {
+
+                girisEkrani.style.display =
+                    "flex";
+
+            }
+
+
+            const mesajlarContainer =
+                document.querySelector(
+                    ".mesajlar-container"
+                );
+
+
+            if (mesajlarContainer) {
+
+                mesajlarContainer.style.display =
+                    "none";
+
+            }
+
+        }
 
     });
 
-};
+
+    /*
+    ==================================================
+     E-POSTA / ŞİFRE GİRİŞİ
+    ==================================================
+    */
+
+    window.mesajlarGirisYap =
+        async function () {
 
 
-/* =====================================================
-   OTURUM KONTROLÜ
-===================================================== */
-
-onAuthStateChanged(auth, (user) => {
-
-    const girisEkrani =
-        document.getElementById(
-            "yoneticiGiris"
-        );
+        const email =
+            document
+                .getElementById("mesajEmail")
+                .value
+                .trim();
 
 
-    const mesajlarSayfasi =
-        document.getElementById(
-            "mesajlarSayfasi"
-        );
+        const sifre =
+            document
+                .getElementById("mesajSifre")
+                .value;
 
 
-    if (user) {
+        if (!email || !sifre) {
 
-        window.firebaseKullanici =
-            user;
+            alert(
+                "E-posta ve şifreyi girin."
+            );
 
-
-        console.log(
-            "YÖNETİCİ UID:",
-            user.uid
-        );
-
-
-        if (girisEkrani) {
-
-            girisEkrani.style.display =
-                "none";
+            return;
 
         }
 
 
-        if (mesajlarSayfasi) {
+        try {
 
-            mesajlarSayfasi.style.display =
-                "block";
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                sifre
+            );
 
-        }
 
-    }
-
-    else {
-
-        if (girisEkrani) {
-
-            girisEkrani.style.display =
-                "flex";
+            console.log(
+                "MESAJLAR GİRİŞ BAŞARILI"
+            );
 
         }
 
+        catch (error) {
 
-        if (mesajlarSayfasi) {
+            console.error(
+                "GİRİŞ HATASI:",
+                error
+            );
 
-            mesajlarSayfasi.style.display =
-                "none";
+
+            alert(
+                "E-posta veya şifre hatalı."
+            );
 
         }
 
-    }
-
-});
+    };
 
 
-/* =====================================================
-   ÇIKIŞ
-===================================================== */
+    /*
+    ==================================================
+     ÇIKIŞ
+    ==================================================
+    */
 
-window.yoneticiCikis = function () {
+    window.mesajlardanCikisYap =
+        async function () {
 
-    signOut(auth);
+        try {
 
-};
+            await signOut(auth);
+
+            console.log(
+                "MESAJLARDAN ÇIKIŞ YAPILDI"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "ÇIKIŞ HATASI:",
+                error
+            );
+
+        }
+
+    };
 
 </script>
 
 
+
 <style>
 
-/* =====================================================
+/* ==================================================
    GENEL
-===================================================== */
+================================================== */
 
 * {
+
     box-sizing: border-box;
+
 }
 
 
@@ -244,14 +285,15 @@ body {
     font-family:
         'Titillium Web',
         sans-serif;
+
 }
 
 
-/* =====================================================
-   YÖNETİCİ GİRİŞ EKRANI
-===================================================== */
+/* ==================================================
+   GİRİŞ EKRANI
+================================================== */
 
-.yonetici-giris {
+.mesaj-giris-ekrani {
 
     position: fixed;
 
@@ -265,89 +307,80 @@ body {
 
     justify-content: center;
 
-    padding: 20px;
-
     z-index: 20000;
+
 }
 
 
-.yonetici-giris-kutu {
+.mesaj-giris-kutu {
 
-    width: 100%;
+    width:
+        calc(100% - 30px);
 
-    max-width: 360px;
+    max-width: 380px;
 
     background: white;
 
-    padding: 28px 22px;
+    padding: 25px;
 
     border-radius: 12px;
 
     box-shadow:
-        0 8px 30px
-        rgba(0,0,0,.10);
+        0 5px 25px
+        rgba(0,0,0,.12);
+
 }
 
 
-.yonetici-giris-baslik {
+.mesaj-giris-baslik {
 
     text-align: center;
 
-    font-size: 23px;
+    font-size: 22px;
 
-    font-weight: 600;
+    margin-bottom: 20px;
+
+    font-weight: normal;
+
 }
 
 
-.yonetici-giris-alt {
-
-    text-align: center;
-
-    color: #777;
-
-    margin:
-        6px 0 22px;
-
-    font-size: 14px;
-}
-
-
-.yonetici-giris-kutu input {
+.mesaj-giris-kutu input {
 
     width: 100%;
 
-    height: 44px;
+    height: 45px;
+
+    margin-bottom: 10px;
+
+    padding:
+        0 13px;
 
     border:
         1px solid #ddd;
 
     border-radius: 7px;
 
-    padding:
-        0 12px;
-
-    margin-bottom: 12px;
-
-    font-family: inherit;
-
     font-size: 15px;
 
     outline: none;
+
 }
 
 
-.yonetici-giris-kutu input:focus {
+.mesaj-giris-kutu input:focus {
 
     border-color:
         #2563eb;
+
 }
 
 
-.yonetici-giris-kutu button {
+.mesaj-giris-kutu button {
 
     width: 100%;
 
-    height: 44px;
+    height: 45px;
 
     border: none;
 
@@ -358,31 +391,20 @@ body {
 
     color: white;
 
-    font-size: 15px;
+    font-size: 16px;
 
     cursor: pointer;
+
 }
 
 
-.yonetici-hata {
-
-    min-height: 20px;
-
-    margin-top: 12px;
-
-    text-align: center;
-
-    color: #dc2626;
-
-    font-size: 13px;
-}
-
-
-/* =====================================================
+/* ==================================================
    ANA KAPSÜL
-===================================================== */
+================================================== */
 
 .mesajlar-container {
+
+    display: none;
 
     width: 100%;
 
@@ -395,12 +417,13 @@ body {
     background: white;
 
     position: relative;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    ÜST BAŞLIK
-===================================================== */
+================================================== */
 
 .mesajlar-header {
 
@@ -420,7 +443,8 @@ body {
 
     font-size: 20px;
 
-    font-weight: bold;
+    font-weight: normal;
+
 }
 
 
@@ -430,22 +454,24 @@ body {
 
     color:
         #2563eb;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    İLAN LİSTESİ
-===================================================== */
+================================================== */
 
 .mesaj-ilan-listesi {
 
     width: 100%;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    İLAN SATIRI
-===================================================== */
+================================================== */
 
 .mesaj-ilan {
 
@@ -466,6 +492,7 @@ body {
     cursor: pointer;
 
     background: white;
+
 }
 
 
@@ -473,12 +500,13 @@ body {
 
     background:
         #f8fafc;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    İLAN RESMİ
-===================================================== */
+================================================== */
 
 .mesaj-ilan-resim {
 
@@ -491,12 +519,13 @@ body {
     object-fit: cover;
 
     flex-shrink: 0;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    İLAN BİLGİSİ
-===================================================== */
+================================================== */
 
 .mesaj-ilan-bilgi {
 
@@ -505,6 +534,7 @@ body {
     min-width: 0;
 
     margin-left: 12px;
+
 }
 
 
@@ -512,13 +542,14 @@ body {
 
     font-size: 16px;
 
-    font-weight: bold;
+    font-weight: normal;
 
     white-space: nowrap;
 
     overflow: hidden;
 
     text-overflow: ellipsis;
+
 }
 
 
@@ -529,12 +560,13 @@ body {
     color: #777;
 
     margin-top: 3px;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    SAĞ OK
-===================================================== */
+================================================== */
 
 .mesaj-ilan-ok {
 
@@ -543,12 +575,13 @@ body {
     color: #999;
 
     font-size: 18px;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    BOŞ MESAJ
-===================================================== */
+================================================== */
 
 .mesaj-bos {
 
@@ -558,6 +591,7 @@ body {
     text-align: center;
 
     color: #888;
+
 }
 
 
@@ -566,12 +600,13 @@ body {
     font-size: 45px;
 
     margin-bottom: 15px;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    SOHBET
-===================================================== */
+================================================== */
 
 .sohbet-ekrani {
 
@@ -585,12 +620,13 @@ body {
         #f5f5f5;
 
     z-index: 10000;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    SOHBET ÜST
-===================================================== */
+================================================== */
 
 .sohbet-header {
 
@@ -613,6 +649,7 @@ body {
 
     border-bottom:
         1px solid #ddd;
+
 }
 
 
@@ -623,6 +660,7 @@ body {
     font-size: 22px;
 
     cursor: pointer;
+
 }
 
 
@@ -635,6 +673,7 @@ body {
     border-radius: 7px;
 
     object-fit: cover;
+
 }
 
 
@@ -643,14 +682,16 @@ body {
     margin-left: 10px;
 
     min-width: 0;
+
 }
 
 
 .sohbet-ilan-baslik {
 
-    font-weight: bold;
+    font-weight: normal;
 
     font-size: 16px;
+
 }
 
 
@@ -659,12 +700,13 @@ body {
     font-size: 13px;
 
     color: #777;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    MESAJ ALANI
-===================================================== */
+================================================== */
 
 .sohbet-mesajlar {
 
@@ -680,12 +722,13 @@ body {
     overflow-y: auto;
 
     padding: 15px;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    MESAJ BALONLARI
-===================================================== */
+================================================== */
 
 .mesaj-balonu {
 
@@ -701,6 +744,7 @@ body {
     font-size: 15px;
 
     line-height: 1.4;
+
 }
 
 
@@ -709,6 +753,7 @@ body {
     background: white;
 
     margin-right: auto;
+
 }
 
 
@@ -720,6 +765,7 @@ body {
     color: white;
 
     margin-left: auto;
+
 }
 
 
@@ -734,12 +780,13 @@ body {
     opacity: .65;
 
     text-align: right;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    MESAJ GÖNDERME
-===================================================== */
+================================================== */
 
 .mesaj-gonder-panel {
 
@@ -769,6 +816,7 @@ body {
 
     padding:
         8px 10px;
+
 }
 
 
@@ -791,6 +839,7 @@ body {
     font-size: 15px;
 
     outline: none;
+
 }
 
 
@@ -814,18 +863,21 @@ body {
     font-size: 17px;
 
     cursor: pointer;
+
 }
 
 
-/* =====================================================
+/* ==================================================
    MOBİL
-===================================================== */
+================================================== */
 
 @media (max-width: 600px) {
+
 
     body {
 
         background: white;
+
     }
 
 
@@ -836,6 +888,7 @@ body {
         max-width: none;
 
         min-height: 100dvh;
+
     }
 
 
@@ -847,6 +900,7 @@ body {
             0 14px;
 
         font-size: 18px;
+
     }
 
 
@@ -856,6 +910,7 @@ body {
 
         padding:
             8px 12px;
+
     }
 
 
@@ -866,24 +921,30 @@ body {
         height: 58px;
 
         border-radius: 7px;
+
     }
 
 
     .mesaj-ilan-bilgi {
 
         margin-left: 10px;
+
     }
 
 
     .mesaj-ilan-baslik {
 
         font-size: 15px;
+
+        font-weight: normal;
+
     }
 
 
     .mesaj-ilan-alt {
 
         font-size: 13px;
+
     }
 
 
@@ -892,6 +953,7 @@ body {
         font-size: 16px;
 
         margin-left: 7px;
+
     }
 
 
@@ -903,6 +965,7 @@ body {
 
         padding:
             6px 8px;
+
     }
 
 
@@ -911,6 +974,7 @@ body {
         width: 38px;
 
         font-size: 20px;
+
     }
 
 
@@ -919,18 +983,23 @@ body {
         width: 45px;
 
         height: 45px;
+
     }
 
 
     .sohbet-ilan-baslik {
 
         font-size: 15px;
+
+        font-weight: normal;
+
     }
 
 
     .sohbet-ilan-alt {
 
         font-size: 12px;
+
     }
 
 
@@ -942,6 +1011,7 @@ body {
             calc(100dvh - 122px);
 
         padding: 12px;
+
     }
 
 
@@ -950,6 +1020,7 @@ body {
         max-width: 82%;
 
         font-size: 14px;
+
     }
 
 
@@ -960,6 +1031,7 @@ body {
         height: 60px;
 
         padding: 8px;
+
     }
 
 
@@ -968,6 +1040,7 @@ body {
         height: 42px;
 
         font-size: 14px;
+
     }
 
 
@@ -978,6 +1051,7 @@ body {
         height: 42px;
 
         flex-shrink: 0;
+
     }
 
 }
@@ -990,27 +1064,24 @@ body {
 <body>
 
 
-<!-- =====================================================
-     YÖNETİCİ GİRİŞİ
-===================================================== -->
+<!-- ==================================================
+     GİRİŞ EKRANI
+================================================== -->
 
-<div id="yoneticiGiris"
-     class="yonetici-giris">
+<div id="mesajGirisEkrani"
+     class="mesaj-giris-ekrani">
 
-    <div class="yonetici-giris-kutu">
+    <div class="mesaj-giris-kutu">
 
-        <div class="yonetici-giris-baslik">
+        <div class="mesaj-giris-baslik">
+
             Mesajlarım
-        </div>
 
-
-        <div class="yonetici-giris-alt">
-            Yönetici Girişi
         </div>
 
 
         <input
-            id="yoneticiEmail"
+            id="mesajEmail"
             type="email"
             placeholder="E-posta"
             autocomplete="username"
@@ -1018,7 +1089,7 @@ body {
 
 
         <input
-            id="yoneticiSifre"
+            id="mesajSifre"
             type="password"
             placeholder="Şifre"
             autocomplete="current-password"
@@ -1026,59 +1097,46 @@ body {
 
 
         <button
-            onclick="yoneticiGiris()">
+            onclick="mesajlarGirisYap()">
 
-            GİRİŞ
+            Giriş Yap
 
         </button>
 
-
-        <div
-            id="yoneticiHata"
-            class="yonetici-hata">
-        </div>
-
     </div>
 
 </div>
 
 
-<!-- =====================================================
-     MESAJLAR SAYFASI
-===================================================== -->
 
-<div id="mesajlarSayfasi"
-     style="display:none;">
+<!-- ==================================================
+     ANA MESAJLAR ALANI
+================================================== -->
 
-
-    <div class="mesajlar-container">
+<div class="mesajlar-container">
 
 
-        <div class="mesajlar-header">
+    <div class="mesajlar-header">
 
-            <i class="fa-solid fa-comments"></i>
+        <i class="fa-solid fa-comments"></i>
 
-            Mesajlarım
+        Mesajlarım
 
-        </div>
-
-
-        <div
-            id="mesajIlanListesi"
-            class="mesaj-ilan-listesi">
+    </div>
 
 
-            <div class="mesaj-bos">
+    <div id="mesajIlanListesi"
+         class="mesaj-ilan-listesi">
 
-                <i class="fa-regular fa-comment-dots"></i>
 
-                <div>
-                    Henüz mesajınız yok.
-                </div>
+        <div class="mesaj-bos">
 
+            <i class="fa-regular fa-comment-dots"></i>
+
+            <div>
+                Henüz mesajınız yok.
             </div>
 
-
         </div>
 
 
@@ -1087,9 +1145,10 @@ body {
 </div>
 
 
-<!-- =====================================================
+
+<!-- ==================================================
      SOHBET EKRANI
-===================================================== -->
+================================================== -->
 
 <div id="sohbetEkrani"
      class="sohbet-ekrani">
@@ -1098,9 +1157,8 @@ body {
     <div class="sohbet-header">
 
 
-        <div
-            class="sohbet-geri"
-            onclick="sohbetKapat()">
+        <div class="sohbet-geri"
+             onclick="sohbetKapat()">
 
             <i class="fa-solid fa-arrow-left"></i>
 
@@ -1111,6 +1169,7 @@ body {
             id="sohbetIlanResim"
             class="sohbet-ilan-resim"
             src=""
+            alt=""
         >
 
 
@@ -1135,10 +1194,12 @@ body {
     </div>
 
 
+
     <div
         id="sohbetMesajlar"
         class="sohbet-mesajlar">
     </div>
+
 
 
     <div class="mesaj-gonder-panel">
@@ -1167,12 +1228,12 @@ body {
 </div>
 
 
-<!-- =====================================================
-     MEVCUT İLAN / SOHBET JS
-===================================================== -->
 
 <script>
 
+/* ==================================================
+   URL
+================================================== */
 
 const urlParams =
     new URLSearchParams(
@@ -1187,9 +1248,10 @@ const gelenIlanID =
 let aktifIlan = null;
 
 
-/* =====================================================
+
+/* ==================================================
    İLANI BUL
-===================================================== */
+================================================== */
 
 if (
     gelenIlanID &&
@@ -1218,9 +1280,10 @@ console.log(
 );
 
 
-/* =====================================================
+
+/* ==================================================
    İLAN BULUNDUYSA
-===================================================== */
+================================================== */
 
 if (aktifIlan) {
 
@@ -1244,9 +1307,10 @@ if (aktifIlan) {
         .src = resim;
 
 
-    /* =================================================
-       İLAN BAŞLIĞI
-    ================================================= */
+
+    /* ==================================================
+       BAŞLIK
+    ================================================== */
 
     let kartBaslik = "";
 
@@ -1255,10 +1319,12 @@ if (aktifIlan) {
         aktifIlan.baslik || "";
 
 
+
     /* DURUM */
 
     if (
-        aktifIlan.durum === "satilik"
+        aktifIlan.durum ===
+        "satilik"
     ) {
 
         kartBaslik +=
@@ -1266,8 +1332,10 @@ if (aktifIlan) {
 
     }
 
+
     else if (
-        aktifIlan.durum === "kiralik"
+        aktifIlan.durum ===
+        "kiralik"
     ) {
 
         kartBaslik +=
@@ -1275,14 +1343,17 @@ if (aktifIlan) {
 
     }
 
+
     else if (
-        aktifIlan.durum === "kat-karsiligi"
+        aktifIlan.durum ===
+        "kat-karsiligi"
     ) {
 
         kartBaslik +=
             " KAT KARŞILIĞI";
 
     }
+
 
 
     /* DAİRE */
@@ -1292,7 +1363,8 @@ if (aktifIlan) {
         aktifIlan.konutSekli &&
 
         aktifIlan.konutSekli
-            .toLowerCase() === "daire"
+            .toLowerCase() ===
+            "daire"
 
     ) {
 
@@ -1302,6 +1374,7 @@ if (aktifIlan) {
     }
 
 
+
     /* DÜKKAN */
 
     else if (
@@ -1309,7 +1382,8 @@ if (aktifIlan) {
         aktifIlan.konutTipi &&
 
         aktifIlan.konutTipi
-            .toLowerCase() === "dükkan"
+            .toLowerCase() ===
+            "dükkan"
 
     ) {
 
@@ -1319,28 +1393,27 @@ if (aktifIlan) {
     }
 
 
+
     /* VİLLA */
 
     else if (
 
         (
-
             aktifIlan.konutTipi &&
 
             aktifIlan.konutTipi
-                .toLowerCase() === "villa"
-
+                .toLowerCase() ===
+                "villa"
         )
 
         ||
 
         (
-
             aktifIlan.konutSekli &&
 
             aktifIlan.konutSekli
-                .toLowerCase() === "villa"
-
+                .toLowerCase() ===
+                "villa"
         )
 
     ) {
@@ -1351,6 +1424,7 @@ if (aktifIlan) {
     }
 
 
+
     /* ARSA / TARLA */
 
     else if (
@@ -1358,24 +1432,26 @@ if (aktifIlan) {
         aktifIlan.tip &&
 
         (
-
             aktifIlan.tip
-                .toLowerCase() === "arsa"
+                .toLowerCase() ===
+                "arsa"
 
             ||
 
             aktifIlan.tip
-                .toLowerCase() === "tarla"
-
+                .toLowerCase() ===
+                "tarla"
         )
 
     ) {
 
         kartBaslik +=
             " " +
+
             aktifIlan.tip
                 .charAt(0)
                 .toUpperCase() +
+
             aktifIlan.tip
                 .slice(1)
                 .toLowerCase();
@@ -1383,16 +1459,16 @@ if (aktifIlan) {
     }
 
 
-    /* =================================================
-       ODA SAYISI
-    ================================================= */
+
+    /* ODA SAYISI */
 
     if (
 
         aktifIlan.konutSekli &&
 
         aktifIlan.konutSekli
-            .toLowerCase() === "daire" &&
+            .toLowerCase() ===
+            "daire" &&
 
         aktifIlan["Oda Sayısı"]
 
@@ -1405,19 +1481,19 @@ if (aktifIlan) {
     }
 
 
-    /* BAŞLIK */
 
     document
         .getElementById(
             "sohbetIlanBaslik"
         )
         .textContent =
-            kartBaslik;
+        kartBaslik;
 
 
-    /* =================================================
+
+    /* ==================================================
        FİYAT
-    ================================================= */
+    ================================================== */
 
     document
         .getElementById(
@@ -1437,41 +1513,72 @@ if (aktifIlan) {
             : "";
 
 
-    /* =================================================
-       SOHBETİ AÇ
-    ================================================= */
+
+    /*
+    ==================================================
+    NOT
+
+    Burada sohbet ekranını otomatik açmıyoruz.
+
+    Mesajlarım sayfasına giriş yapıldıktan sonra
+    ilgili ilana tıklanınca açılacak.
+    ==================================================
+    */
+
+}
+
+
+
+/* ==================================================
+   SOHBETİ AÇ
+================================================== */
+
+function sohbetAc(ilanID) {
+
+
+    if (!aktifIlan) {
+
+        return;
+
+    }
+
 
     document
         .getElementById(
             "sohbetEkrani"
         )
         .style.display =
-            "block";
+        "block";
+
 
 }
 
 
-/* =====================================================
+
+/* ==================================================
    SOHBETİ KAPAT
-===================================================== */
+================================================== */
 
 function sohbetKapat() {
 
+
     document
         .getElementById(
             "sohbetEkrani"
         )
         .style.display =
-            "none";
+        "none";
 
 }
 
 
-/* =====================================================
+
+/* ==================================================
    MESAJ GÖNDER
-===================================================== */
+================================================== */
 
 function mesajGonder() {
+
 
     const input =
         document.getElementById(
@@ -1483,8 +1590,11 @@ function mesajGonder() {
         input.value.trim();
 
 
-    if (!mesaj)
+    if (!mesaj) {
+
         return;
+
+    }
 
 
     console.log(
@@ -1496,7 +1606,6 @@ function mesajGonder() {
     input.value = "";
 
 }
-
 
 </script>
 
