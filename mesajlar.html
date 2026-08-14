@@ -70,61 +70,38 @@
 
     /*
     ==================================================
-    GİRİŞ DURUMU
+    MESAJLAR GİRİŞ KONTROLÜ
     ==================================================
     */
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
 
-        if (user) {
+
+        /*
+        ==============================================
+        ANONİM KULLANICI VARSA
+        ==============================================
+        */
+
+        if (user && user.isAnonymous) {
 
             console.log(
-                "MESAJLAR GİRİŞ YAPILDI"
+                "ANONİM KULLANICI TESPİT EDİLDİ"
             );
 
             console.log(
-                "KULLANICI UID:",
+                "ANONİM UID:",
                 user.uid
             );
 
 
-            window.firebaseKullanici = user;
+            /*
+            Anonim oturumu kapatıyoruz.
+            Çünkü mesajlarım sayfası sadece
+            e-posta + şifre ile açılacak.
+            */
 
-
-            const girisEkrani =
-                document.getElementById(
-                    "mesajGirisEkrani"
-                );
-
-
-            if (girisEkrani) {
-
-                girisEkrani.style.display =
-                    "none";
-
-            }
-
-
-            const mesajlarContainer =
-                document.querySelector(
-                    ".mesajlar-container"
-                );
-
-
-            if (mesajlarContainer) {
-
-                mesajlarContainer.style.display =
-                    "block";
-
-            }
-
-        }
-
-        else {
-
-            console.log(
-                "MESAJLAR GİRİŞ YAPILMADI"
-            );
+            await signOut(auth);
 
 
             window.firebaseKullanici =
@@ -158,14 +135,118 @@
 
             }
 
+
+            return;
+
+        }
+
+
+        /*
+        ==============================================
+        E-POSTA / ŞİFRE İLE GİRİŞ YAPMIŞSA
+        ==============================================
+        */
+
+        if (user) {
+
+
+            console.log(
+                "MESAJLAR YÖNETİCİ GİRİŞİ BAŞARILI"
+            );
+
+
+            console.log(
+                "YÖNETİCİ UID:",
+                user.uid
+            );
+
+
+            window.firebaseKullanici =
+                user;
+
+
+            const girisEkrani =
+                document.getElementById(
+                    "mesajGirisEkrani"
+                );
+
+
+            if (girisEkrani) {
+
+                girisEkrani.style.display =
+                    "none";
+
+            }
+
+
+            const mesajlarContainer =
+                document.querySelector(
+                    ".mesajlar-container"
+                );
+
+
+            if (mesajlarContainer) {
+
+                mesajlarContainer.style.display =
+                    "block";
+
+            }
+
+
+            return;
+
+        }
+
+
+        /*
+        ==============================================
+        HİÇ GİRİŞ YOKSA
+        ==============================================
+        */
+
+        console.log(
+            "MESAJLAR GİRİŞ YAPILMADI"
+        );
+
+
+        window.firebaseKullanici =
+            null;
+
+
+        const girisEkrani =
+            document.getElementById(
+                "mesajGirisEkrani"
+            );
+
+
+        if (girisEkrani) {
+
+            girisEkrani.style.display =
+                "flex";
+
+        }
+
+
+        const mesajlarContainer =
+            document.querySelector(
+                ".mesajlar-container"
+            );
+
+
+        if (mesajlarContainer) {
+
+            mesajlarContainer.style.display =
+                "none";
+
         }
 
     });
 
 
+
     /*
     ==================================================
-     E-POSTA / ŞİFRE GİRİŞİ
+    E-POSTA + ŞİFRE GİRİŞ
     ==================================================
     */
 
@@ -207,7 +288,7 @@
 
 
             console.log(
-                "MESAJLAR GİRİŞ BAŞARILI"
+                "E-POSTA GİRİŞİ BAŞARILI"
             );
 
         }
@@ -229,9 +310,10 @@
     };
 
 
+
     /*
     ==================================================
-     ÇIKIŞ
+    ÇIKIŞ
     ==================================================
     */
 
