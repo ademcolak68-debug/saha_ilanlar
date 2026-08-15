@@ -1858,7 +1858,8 @@ function ziyaretciSohbetiniAc() {
 ===================================================== */
 
 function mesajlariDinle() {
-      console.log(
+
+    console.log(
         "MESAJLARI DİNLE ÇALIŞTI"
     );
 
@@ -1877,39 +1878,41 @@ function mesajlariDinle() {
 
     if (mesajDinleyiciDurdur) {
 
-    mesajDinleyiciDurdur();
+        mesajDinleyiciDurdur();
 
-    mesajDinleyiciDurdur = null;
+        mesajDinleyiciDurdur =
+            null;
+
+    }
+
+
+    mesajDinleyiciDurdur =
+        onValue(
+
+            mesajRef,
+
+            (snapshot) => {
+
+                const veri =
+                    snapshot.val() || {};
+
+                aktifMesajlar =
+                    veri;
+
+
+                console.log(
+                    "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
+                    Object.keys(veri).length
+                );
+
+
+                sohbetMesajlariniGoster();
+
+            }
+
+        );
 
 }
-
-
-mesajDinleyiciDurdur =
-    onValue(
-
-        mesajRef,
-
-        (snapshot) => {
-
-            const veri =
-                snapshot.val() || {};
-
-            aktifMesajlar =
-                veri;
-
-              console.log(
-                      "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
-                      Object.keys(veri).length
-                  );
-
-            sohbetMesajlariniGoster();
-
-        }
-
-    );
-
-}
-
 
 /* =====================================================
    MESAJLARI GÖSTER
