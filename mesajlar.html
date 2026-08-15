@@ -1912,9 +1912,18 @@ mesajDinleyiciDurdur =
 
 function sohbetMesajlariniGoster() {
       console.log(
-        "SOHBET GÖSTER ÇALIŞTI",
-        Date.now()
-    );
+          "SOHBET GÖSTER ÇALIŞTI",
+          Date.now(),
+          "MESAJ SAYISI:",
+          Object.keys(aktifMesajlar || {}).length,
+          "UID:",
+          ziyaretciUID
+      );
+      
+      console.log(
+          "AKTİF MESAJLAR:",
+          aktifMesajlar
+      );
 
     const alan =
         document.getElementById(
