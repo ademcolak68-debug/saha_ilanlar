@@ -1966,7 +1966,7 @@ function sohbetMesajlariniGoster() {
 
 
       liste.forEach(
-    async ([mesajID, mesaj]) => {
+     ([mesajID, mesaj]) => {
           console.log(
             "BALON OLUŞTURULUYOR:",
             mesajID,
@@ -1988,18 +1988,28 @@ function sohbetMesajlariniGoster() {
 
             try {
 
-                await update(
-                    ref(
-                        database,
-                        "mesajlar/" +
-                        gelenIlanID +
-                        "/" +
-                        mesajID
-                    ),
-                    {
-                        okundu: true
-                    }
-                );
+                update(
+                      ref(
+                          database,
+                          "mesajlar/" +
+                          gelenIlanID +
+                          "/" +
+                          mesajID
+                      ),
+                      {
+                          okundu: true
+                      }
+                  )
+                  .catch(
+                      (error) => {
+                  
+                          console.error(
+                              "MESAJ OKUNDU GÜNCELLEME HATASI:",
+                              error
+                          );
+                  
+                      }
+                  );
 
             }
 
