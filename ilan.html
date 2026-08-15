@@ -902,11 +902,27 @@ font-weight:bold;
 
 </a>
 
-<a href="#" class="menu-link" onclick="event.preventDefault();mesajlarimiAc();">
+<a href="#"
+   class="menu-link"
+   onclick="event.preventDefault();mesajlarimiAc();">
 
     <i class="fa-solid fa-comments"></i>
 
-    <span style="flex:1;">Mesajlarım</span>
+    <span style="flex:1;">
+        Mesajlarım
+    </span>
+
+    <span
+        id="mesajBildirim"
+        style="
+            display:none;
+            font-size:12px;
+            color:#2563eb;
+            margin-left:auto;
+            margin-right:8px;
+            white-space:nowrap;
+        ">
+    </span>
 
 </a>
 
