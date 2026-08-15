@@ -1211,6 +1211,24 @@ body {
 
 }
 
+.mesaj-tik {
+
+    font-size: 11px;
+
+    margin-left: 5px;
+
+    color: #777;
+
+    letter-spacing: -2px;
+}
+
+
+.mesaj-tik.mesaj-okundu {
+
+    color: #1683ff;
+
+}
+
 </style>
 
 </head>
@@ -1480,6 +1498,7 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
 
 
 /* =====================================================
@@ -1892,13 +1911,54 @@ function sohbetMesajlariniGoster() {
     );
 
 
-    liste.forEach(
-        ([mesajID, mesaj]) => {
 
-            const balon =
-                document.createElement(
-                    "div"
+      liste.forEach(
+    async ([mesajID, mesaj]) => {
+
+        /*
+        =================================================
+        KARŞI TARAFIN MESAJINI OKUNDU YAP
+        =================================================
+        */
+
+        if (
+            mesaj.uid !== ziyaretciUID &&
+            mesaj.okundu !== true
+        ) {
+
+            try {
+
+                await update(
+                    ref(
+                        database,
+                        "mesajlar/" +
+                        gelenIlanID +
+                        "/" +
+                        mesajID
+                    ),
+                    {
+                        okundu: true
+                    }
                 );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "MESAJ OKUNDU GÜNCELLEME HATASI:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        const balon =
+            document.createElement(
+                "div"
+            );
 
 
             balon.className =
@@ -2005,6 +2065,33 @@ function sohbetMesajlariniGoster() {
                 saat
             );
 
+            const tik =
+                document.createElement(
+                    "span"
+                );
+            
+            
+            tik.className =
+                "mesaj-tik";
+            
+            
+            tik.textContent =
+                "✓✓";
+            
+            
+            if (mesaj.okundu === true) {
+            
+                tik.classList.add(
+                    "mesaj-okundu"
+                );
+            
+            }
+            
+            
+            balon.appendChild(
+                tik
+            );
+
 
             alan.appendChild(
                 balon
@@ -2063,7 +2150,6 @@ async function () {
 
     try {
 
-
         const mesajRef =
             ref(
                 database,
@@ -2087,7 +2173,10 @@ async function () {
                     ziyaretciUID,
 
                 zaman:
-                    Date.now()
+                    Date.now(),
+
+                okundu:
+                    false
 
             }
         );
@@ -2118,7 +2207,6 @@ async function () {
     }
 
 };
-
 
 /* =====================================================
    İŞLEM PANELİ
@@ -2620,11 +2708,6 @@ function yoneticiMesajlariniYukle() {
     );
 
 }
-
-
-/* =====================================================
-   FIREBASE AUTH DURUMU
-===================================================== */
 
 
 /* =====================================================
