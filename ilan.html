@@ -2266,11 +2266,11 @@ function mesajlarimiAc() {
 			        =========================================
 			        */
 					if (
-					    mesaj.alici === "ziyaretci" &&
-					    mesaj.okundu !== true
-					) {
-					    toplamOkunmamis++;
-					}
+						    mesaj.uid === window.firebaseKullanici.uid &&
+						    mesaj.okundu !== true
+						) {
+						    toplamOkunmamis++;
+						}
 					
 					}
 			
