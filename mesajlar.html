@@ -1566,6 +1566,9 @@ const urlParams =
 const gelenIlanID =
     urlParams.get("ilan");
 
+const ziyaretciModu =
+    urlParams.get("ziyaretci") === "true";
+
 
 /* =====================================================
    GLOBAL
@@ -2766,12 +2769,17 @@ console.log(
     "EMAIL:",
     user?.email
 );
+
+          const ziyaretciModu =
+          new URLSearchParams(window.location.search)
+              .get("ziyaretci") === "true";
           
         if (
-            user &&
-            !user.isAnonymous &&
-            user.email === "ademcolak68@gmail.com"
-        ) {
+                !ziyaretciModu &&
+                user &&
+                !user.isAnonymous &&
+                user.email === "ademcolak68@gmail.com"
+            ) {
 
             console.log(
                 "YÖNETİCİ GİRİŞİ:"
@@ -2955,69 +2963,61 @@ console.log(
 
 
             /*
-            =================================================
-            ZATEN ANONİM KULLANICI VARSA
-            =================================================
-            */
+           if (ziyaretciModu) {
 
-            if (
-                user &&
-                user.isAnonymous
-            ) {
-
-                ziyaretciUID =
-                    user.uid;
-
-            }
-
-
-            /*
-            =================================================
-            HİÇ KULLANICI YOKSA
-            ANONİM GİRİŞ
-            =================================================
-            */
-
-            else if (!user) {
-
-                try {
-
-                    const sonuc =
-                        await signInAnonymously(
-                            auth
-                        );
-
-
-                    ziyaretciUID =
-                        sonuc.user.uid;
-
-
-                    console.log(
-                        "YENİ ZİYARETÇİ UID:",
-                        ziyaretciUID
-                    );
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "ANONİM GİRİŞ HATASI:",
-                        error
-                    );
-
-
-                    alert(
-                        "Firebase bağlantısı kurulamadı."
-                    );
-
-
-                    return;
-
-                }
-
-            }
-
+          try {
+      
+              if (user && !user.isAnonymous) {
+      
+                  await signOut(auth);
+      
+              }
+      
+      
+              const sonuc =
+                  await signInAnonymously(
+                      auth
+                  );
+      
+      
+              ziyaretciUID =
+                  sonuc.user.uid;
+      
+      
+              window.yoneticiModu =
+                  false;
+      
+      
+              console.log(
+                  "ZİYARETÇİ MODU:"
+              );
+      
+      
+              console.log(
+                  "ZİYARETÇİ UID:",
+                  ziyaretciUID
+              );
+      
+          }
+      
+          catch (error) {
+      
+              console.error(
+                  "ZİYARETÇİ GİRİŞ HATASI:",
+                  error
+              );
+      
+      
+              alert(
+                  "Firebase bağlantısı kurulamadı."
+              );
+      
+      
+              return;
+      
+          }
+      
+      }
 
             /*
             =================================================
