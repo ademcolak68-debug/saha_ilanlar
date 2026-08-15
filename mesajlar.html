@@ -2177,23 +2177,28 @@ async function () {
 
 
         await set(
-            yeniMesaj,
-            {
-
-                mesaj:
-                    mesaj,
-
-                uid:
-                    ziyaretciUID,
-
-                zaman:
-                    Date.now(),
-
-                okundu:
-                    false
-
-            }
-        );
+                yeniMesaj,
+                {
+            
+                    mesaj:
+                        mesaj,
+            
+                    uid:
+                        ziyaretciUID,
+            
+                    alici:
+                        window.yoneticiModu === true
+                            ? "ziyaretci"
+                            : "yonetici",
+            
+                    zaman:
+                        Date.now(),
+            
+                    okundu:
+                        false
+            
+                }
+            );
 
 
         input.value = "";
@@ -2858,6 +2863,7 @@ onAuthStateChanged(
                 ziyaretciUID =
                     user.uid;
 
+                  window.yoneticiModu = true;
 
                 /*
                 Yönetici olduğunu göster
@@ -2924,7 +2930,8 @@ onAuthStateChanged(
         URL'de ?ilan varsa
         =================================================
         */
-
+        window.yoneticiModu = false;
+          
         if (gelenIlanID) {
 
 
