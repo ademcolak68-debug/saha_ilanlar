@@ -1936,9 +1936,9 @@ function sohbetMesajlariniGoster() {
         */
 
         if (
-            mesaj.uid !== ziyaretciUID &&
-            mesaj.okundu !== true
-        ) {
+                mesaj.alici === "yonetici" &&
+                mesaj.okundu !== true
+            ) {
 
             try {
 
