@@ -2105,6 +2105,86 @@ function mesajlarimiAc() {
     .catch((error) => {
       console.error("FIREBASE HATASI:", error);
     });
+
+function mesajBildirimleriniDinle() {
+
+    const bildirim =
+        document.getElementById(
+            "mesajBildirim"
+        );
+
+    if (!bildirim) return;
+
+
+    const mesajlarRef =
+        ref(
+            database,
+            "mesajlar"
+        );
+
+
+    onValue(
+        mesajlarRef,
+        (snapshot) => {
+
+            const veri =
+                snapshot.val() || {};
+
+            let toplamOkunmamis = 0;
+
+
+            Object.values(veri).forEach(
+                (ilanMesajlari) => {
+
+                    Object.values(
+                        ilanMesajlari || {}
+                    ).forEach(
+                        (mesaj) => {
+
+                            if (
+                                mesaj.okundu !== true
+                            ) {
+
+                                toplamOkunmamis++;
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+            if (
+                toplamOkunmamis > 0
+            ) {
+
+                bildirim.style.display =
+                    "block";
+
+                bildirim.textContent =
+                    toplamOkunmamis +
+                    " yeni mesaj";
+
+            }
+
+            else {
+
+                bildirim.style.display =
+                    "none";
+
+                bildirim.textContent =
+                    "";
+
+            }
+
+        }
+    );
+
+}
+mesajBildirimleriniDinle();
+	
 </script>
 	
 </body>
