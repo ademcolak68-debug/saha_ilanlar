@@ -945,14 +945,6 @@ font-weight:bold;
 </div>
 
 <script>
-
-import {
-    getDatabase,
-    ref,
-    onValue
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 	
 	
     let detayIndex = 0;
@@ -2089,113 +2081,240 @@ function mesajlarimiAc() {
 </script>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+  import {
+    initializeApp
+  }
+  from
+  "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+
+  import {
+    getAuth,
+    signInAnonymously
+  }
+  from
+  "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+  import {
+    getDatabase,
+    ref,
+    onValue
+  }
+  from
+  "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
 
   const firebaseConfig = {
-    apiKey: "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
-    authDomain: "netmax-mesajlar.firebaseapp.com",
-    databaseURL: "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "netmax-mesajlar",
-    storageBucket: "netmax-mesajlar.firebasestorage.app",
-    messagingSenderId: "575038344835",
-    appId: "1:575038344835:web:513417e69f4a291dc095b6"
+
+    apiKey:
+      "AIzaSyBVMw9NS3R49xqnVLgmlAiSvTtYXFrHwB0",
+
+    authDomain:
+      "netmax-mesajlar.firebaseapp.com",
+
+    databaseURL:
+      "https://netmax-mesajlar-default-rtdb.europe-west1.firebasedatabase.app",
+
+    projectId:
+      "netmax-mesajlar",
+
+    storageBucket:
+      "netmax-mesajlar.firebasestorage.app",
+
+    messagingSenderId:
+      "575038344835",
+
+    appId:
+      "1:575038344835:web:513417e69f4a291dc095b6"
+
   };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+
+  const app =
+    initializeApp(
+      firebaseConfig
+    );
+
+
+  const auth =
+    getAuth(
+      app
+    );
+
+
+  const database =
+    getDatabase(
+      app
+    );
+
+
+  /*
+  =====================================================
+  ZİYARETÇİ FIREBASE GİRİŞİ
+  =====================================================
+  */
 
   signInAnonymously(auth)
-    .then((userCredential) => {
-      window.firebaseKullanici = userCredential.user;
 
-      console.log("FIREBASE BAĞLANDI");
-      console.log("ZİYARETÇİ UID:", userCredential.user.uid);
-    })
-    .catch((error) => {
-      console.error("FIREBASE HATASI:", error);
-    });
+    .then(
+      (userCredential) => {
 
-function mesajBildirimleriniDinle() {
+        window.firebaseKullanici =
+          userCredential.user;
 
-    const bildirim =
-        document.getElementById(
-            "mesajBildirim"
+
+        console.log(
+          "FIREBASE BAĞLANDI"
         );
 
-    if (!bildirim) return;
+
+        console.log(
+          "ZİYARETÇİ UID:",
+          userCredential.user.uid
+        );
+
+
+        /*
+        =================================================
+        MESAJ BİLDİRİMİNİ BAŞLAT
+        =================================================
+        */
+
+        mesajBildirimleriniDinle();
+
+      }
+    )
+
+    .catch(
+      (error) => {
+
+        console.error(
+          "FIREBASE HATASI:",
+          error
+        );
+
+      }
+    );
+
+
+  /*
+  =====================================================
+  OKUNMAMIŞ MESAJLARI DİNLE
+  =====================================================
+  */
+
+  function mesajBildirimleriniDinle() {
+
+    const bildirim =
+      document.getElementById(
+        "mesajBildirim"
+      );
+
+
+    if (!bildirim) {
+
+      console.log(
+        "mesajBildirim alanı bulunamadı."
+      );
+
+      return;
+
+    }
 
 
     const mesajlarRef =
-        ref(
-            database,
-            "mesajlar"
-        );
+      ref(
+        database,
+        "mesajlar"
+      );
 
 
     onValue(
-        mesajlarRef,
-        (snapshot) => {
 
-            const veri =
-                snapshot.val() || {};
+      mesajlarRef,
 
-            let toplamOkunmamis = 0;
+      (snapshot) => {
+
+        const veri =
+          snapshot.val() || {};
 
 
-            Object.values(veri).forEach(
-                (ilanMesajlari) => {
+        let toplamOkunmamis =
+          0;
 
-                    Object.values(
-                        ilanMesajlari || {}
-                    ).forEach(
-                        (mesaj) => {
 
-                            if (
-                                mesaj.okundu !== true
-                            ) {
+        Object.values(veri).forEach(
 
-                                toplamOkunmamis++;
+          (ilanMesajlari) => {
 
-                            }
+            Object.values(
+              ilanMesajlari || {}
+            ).forEach(
 
-                        }
-                    );
+              (mesaj) => {
+
+                /*
+                =========================================
+                OKUNMAMIŞ MESAJ
+                =========================================
+                */
+
+                if (
+                  mesaj.okundu !== true
+                ) {
+
+                  toplamOkunmamis++;
 
                 }
+
+              }
+
             );
 
+          }
 
-            if (
-                toplamOkunmamis > 0
-            ) {
+        );
 
-                bildirim.style.display =
-                    "block";
 
-                bildirim.textContent =
-                    toplamOkunmamis +
-                    " yeni mesaj";
+        /*
+        ================================================
+        BİLDİRİMİ GÖSTER / GİZLE
+        ================================================
+        */
 
-            }
+        if (
+          toplamOkunmamis > 0
+        ) {
 
-            else {
+          bildirim.style.display =
+            "block";
 
-                bildirim.style.display =
-                    "none";
 
-                bildirim.textContent =
-                    "";
-
-            }
+          bildirim.textContent =
+            toplamOkunmamis +
+            " yeni mesaj";
 
         }
+
+        else {
+
+          bildirim.style.display =
+            "none";
+
+
+          bildirim.textContent =
+            "";
+
+        }
+
+      }
+
     );
 
-}
+  }
 
-mesajBildirimleriniDinle();
-	
 </script>
 	
 </body>
