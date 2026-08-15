@@ -397,7 +397,8 @@ body {
 
     bottom: 0;
 
-    transform: translateX(-50%);
+    transform:
+        translate(-50%, 100%);
 
     width: 100%;
 
@@ -409,13 +410,23 @@ body {
 
     border-top: 1px solid #d8d8d8;
 
-    border-radius: 16px 16px 0 0;
+    border-radius:
+        16px 16px 0 0;
 
     box-shadow:
         0 -5px 20px rgba(0,0,0,.12);
 
     transition:
         transform .25s ease;
+
+    overflow-y: auto;
+}
+
+
+.islem-panel.islem-panel-acik {
+
+    transform:
+        translate(-50%, 0);
 
 }
 
@@ -780,11 +791,11 @@ body {
 
     display: block;
 
-    font-size: 10px;
+    font-size: 11px;
 
     margin-top: 2px;
 
-    opacity: .65;
+    opacity: .75;
 
     text-align: right;
 
@@ -2121,9 +2132,20 @@ function () {
             "islemPanel"
         );
 
+    if (!panel) return;
 
     panel.style.display =
         "block";
+
+    requestAnimationFrame(
+        function () {
+
+            panel.classList.add(
+                "islem-panel-acik"
+            );
+
+        }
+    );
 
 };
 
@@ -2136,9 +2158,21 @@ function () {
             "islemPanel"
         );
 
+    if (!panel) return;
 
-    panel.style.display =
-        "none";
+    panel.classList.remove(
+        "islem-panel-acik"
+    );
+
+    setTimeout(
+        function () {
+
+            panel.style.display =
+                "none";
+
+        },
+        250
+    );
 
 };
 
