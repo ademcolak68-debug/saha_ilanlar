@@ -1589,6 +1589,8 @@ let aktifMesajlar = {};
 
 let ziyaretciUID = null;
 
+let mesajDinleyiciDurdur = null;
+
 
 /* =====================================================
    İLANI BUL
@@ -1873,21 +1875,32 @@ function mesajlariDinle() {
         );
 
 
+    if (mesajDinleyiciDurdur) {
+
+    mesajDinleyiciDurdur();
+
+    mesajDinleyiciDurdur = null;
+
+}
+
+
+mesajDinleyiciDurdur =
     onValue(
+
         mesajRef,
+
         (snapshot) => {
 
             const veri =
                 snapshot.val() || {};
 
-
             aktifMesajlar =
                 veri;
-
 
             sohbetMesajlariniGoster();
 
         }
+
     );
 
 }
