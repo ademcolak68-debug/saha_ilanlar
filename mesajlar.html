@@ -2752,6 +2752,21 @@ onAuthStateChanged(
         =================================================
         */
 
+console.log(
+    "GELEN FIREBASE USER:",
+    user
+);
+
+console.log(
+    "ANONİM Mİ:",
+    user?.isAnonymous
+);
+
+console.log(
+    "EMAIL:",
+    user?.email
+);
+          
         if (
             user &&
             !user.isAnonymous &&
