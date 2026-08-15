@@ -1549,6 +1549,15 @@ const auth =
     getAuth(app);
 
 
+const mevcutKullanici =
+    auth.currentUser;
+
+console.log(
+    "SAYFA AÇILIŞINDA FIREBASE KULLANICISI:",
+    mevcutKullanici
+);
+
+
 const database =
     getDatabase(app);
 
@@ -2962,7 +2971,7 @@ console.log(
         if (gelenIlanID) {
 
 
-            /*
+            
            if (ziyaretciModu) {
 
           try {
