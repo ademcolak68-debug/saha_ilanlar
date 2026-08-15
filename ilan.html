@@ -2250,28 +2250,30 @@ function mesajlarimiAc() {
           (ilanMesajlari) => {
 
             Object.values(
-              ilanMesajlari || {}
-            ).forEach(
-
-              (mesaj) => {
-
-                /*
-                =========================================
-                OKUNMAMIŞ MESAJ
-                =========================================
-                */
-
-                if (
-                  mesaj.okundu !== true
-                ) {
-
-                  toplamOkunmamis++;
-
-                }
-
-              }
-
-            );
+			    ilanMesajlari || {}
+			).forEach(
+			
+			    (mesaj) => {
+			
+			        /*
+			        =========================================
+			        SADECE KARŞI TARAFTAN GELEN
+			        OKUNMAMIŞ MESAJLARI SAY
+			        =========================================
+			        */
+			
+			        if (
+			            mesaj.uid !== window.firebaseKullanici.uid &&
+			            mesaj.okundu !== true
+			        ) {
+			
+			            toplamOkunmamis++;
+			
+			        }
+			
+			    }
+			
+			);
 
           }
 
