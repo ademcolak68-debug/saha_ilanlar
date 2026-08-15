@@ -2168,9 +2168,23 @@ function sohbetMesajlariniGoster() {
             );
 
 
-            alan.appendChild(
-                balon
-            );
+            console.log(
+    "APPEND YAPILIYOR:",
+    mesajID,
+    "EKLENMEDEN ÖNCE:",
+    alan.querySelectorAll(".mesaj-balonu").length
+);
+
+alan.appendChild(
+    balon
+);
+
+console.log(
+    "APPEND SONRASI:",
+    mesajID,
+    "EKRANDA:",
+    alan.querySelectorAll(".mesaj-balonu").length
+);
 
         }
     );
