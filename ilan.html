@@ -1055,20 +1055,36 @@ window.aktifDanisman = null;
 console.log("İLANDAN GELEN:", d.danisman);
 console.log("DANIŞMANLAR:", danismanlar);
 
+
+// =====================================================
+// DANIŞMAN VARSA DANIŞMANI BUL
+// =====================================================
+
 if (d.danisman && d.danisman.trim() !== "") {
 
-   window.aktifDanisman =
-    Object.values(danismanlar).find(
-        x =>
-            x.ad.trim().toLocaleLowerCase("tr-TR") ===
-            d.danisman.trim().toLocaleLowerCase("tr-TR")
-    ) || null;
+    window.aktifDanisman =
+        Object.values(danismanlar).find(
+            x =>
+                x.ad.trim().toLocaleLowerCase("tr-TR") ===
+                d.danisman.trim().toLocaleLowerCase("tr-TR")
+        ) || null;
 
-    console.log("EŞLEŞEN DANIŞMAN:", window.aktifDanisman);
+    console.log(
+        "EŞLEŞEN DANIŞMAN:",
+        window.aktifDanisman
+    );
+}
 
-    if (window.aktifDanisman) {
 
-        danismanHtml = `
+// =====================================================
+// BUTONLAR
+// MESAJ GÖNDER HER İLANDA VAR
+// ARA SADECE DANIŞMAN VARSA VAR
+// =====================================================
+
+if (window.aktifDanisman) {
+
+    danismanHtml = `
         <div class="danisman-butonlari">
 
             <button onclick="danismanAra()">
@@ -1080,8 +1096,20 @@ if (d.danisman && d.danisman.trim() !== "") {
             </button>
 
         </div>
-        `;
-    }
+    `;
+
+} else {
+
+    danismanHtml = `
+        <div class="danisman-butonlari">
+
+            <button onclick="danismanMesaj()">
+                Mesaj Gönder
+            </button>
+
+        </div>
+    `;
+
 }
 
 let ozellikler = "";
