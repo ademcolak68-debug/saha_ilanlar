@@ -2770,7 +2770,8 @@ function yoneticiMesajlariniYukle() {
                       const mesajSayisi =
                       mesajListesi.filter(
                           mesaj =>
-                              mesaj.alici === "yonetici"
+                              mesaj.alici === "yonetici" &&
+                              mesaj.okundu !== true
                       ).length;
 
 
@@ -2789,7 +2790,7 @@ function yoneticiMesajlariniYukle() {
                     );
 
 
-                    const ilkGelenMesaj =
+                    const okunmamisGelenMesajlar =
                       mesajListesi
                           .filter(
                               mesaj =>
@@ -2800,7 +2801,11 @@ function yoneticiMesajlariniYukle() {
                               (a, b) =>
                                   (a.zaman || 0) -
                                   (b.zaman || 0)
-                          )[0];
+                          );
+                  
+                  
+                  const ilkGelenMesaj =
+                      okunmamisGelenMesajlar[0];
 
 
                     const satir =
