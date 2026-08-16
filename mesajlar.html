@@ -2807,7 +2807,7 @@ function yoneticiMesajlariniYukle() {
                           .filter(
                               mesaj =>
                                   mesaj.alici === "yonetici" &&
-                                  mesaj.okundu !== true
+                                  mesaj.okundu !== false
                           )
                           .sort(
                               (a, b) =>
