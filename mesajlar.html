@@ -1896,17 +1896,32 @@ function mesajlariDinle() {
                 const veri =
                     snapshot.val() || {};
 
-                aktifMesajlar =
-                    veri;
-
-
-                console.log(
-                    "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
-                    Object.keys(veri).length
-                );
-
-
-                sohbetMesajlariniGoster();
+                  aktifMesajlar =
+                      veri;
+                  
+                  
+                  console.log(
+                      "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
+                      Object.keys(veri).length
+                  );
+                  
+                  
+                  /*
+                  =====================================================
+                  MESAJLARI EKRANA GÖSTER
+                  =====================================================
+                  */
+                  
+                  sohbetMesajlariniGoster();
+                  
+                  
+                  /*
+                  =====================================================
+                  KARŞI TARAFIN MESAJLARINI OKUNDU YAP
+                  =====================================================
+                  */
+                  
+                  karsiTarafMesajlariniOkunduYap();
 
                 if (window.yoneticiModu === true) {
                   
@@ -2012,18 +2027,21 @@ function sohbetMesajlariniGoster() {
             );
 
 
+            const benimUID =
+                window.firebaseKullanici?.uid;
+            
+            const benimMesajim =
+                mesaj.uid === benimUID;
+            
+            
             balon.className =
                 "mesaj-balonu " +
-
+            
                 (
-                    mesaj.uid ===
-                    ziyaretciUID
-
+                    benimMesajim
                         ? "mesaj-giden"
-
                         : "mesaj-gelen"
                 );
-
 
             const metin =
                 document.createElement(
@@ -2116,32 +2134,48 @@ function sohbetMesajlariniGoster() {
                 saat
             );
 
-            const tik =
-                document.createElement(
-                    "span"
-                );
-            
-            
-            tik.className =
-                "mesaj-tik";
-            
-            
-            tik.textContent =
-                "✓✓";
-            
-            
-            if (mesaj.okundu === true) {
-            
-                tik.classList.add(
-                    "mesaj-okundu"
-                );
-            
-            }
-            
-            
-            balon.appendChild(
-                tik
-            );
+           /*
+=====================================================
+SADECE BENİM GÖNDERDİĞİM MESAJDA TİK GÖSTER
+=====================================================
+*/
+
+if (benimMesajim) {
+
+    const tik =
+        document.createElement(
+            "span"
+        );
+
+
+    tik.className =
+        "mesaj-tik";
+
+
+    tik.textContent =
+        "✓✓";
+
+
+    /*
+    ================================================
+    KARŞI TARAF OKUDUYSA MAVİ
+    ================================================
+    */
+
+    if (mesaj.okundu === true) {
+
+        tik.classList.add(
+            "mesaj-okundu"
+        );
+
+    }
+
+
+    balon.appendChild(
+        tik
+    );
+
+}
 
 
             console.log(
@@ -2181,13 +2215,20 @@ console.log(
 }
 
 
-function ziyaretciMesajlariniOkunduYap() {
+/* =====================================================
+   KARŞI TARAFIN MESAJLARINI OKUNDU YAP
+===================================================== */
+
+function karsiTarafMesajlariniOkunduYap() {
 
     if (!gelenIlanID) return;
 
     if (!aktifMesajlar) return;
 
-    if (window.yoneticiModu !== true) return;
+    const benimUID =
+        window.firebaseKullanici?.uid;
+
+    if (!benimUID) return;
 
 
     Object.entries(
@@ -2195,8 +2236,14 @@ function ziyaretciMesajlariniOkunduYap() {
     ).forEach(
         ([mesajID, mesaj]) => {
 
+            /*
+            =============================================
+            SADECE KARŞI TARAFIN MESAJI
+            =============================================
+            */
+
             if (
-                mesaj.alici === "yonetici" &&
+                mesaj.uid !== benimUID &&
                 mesaj.okundu !== true
             ) {
 
@@ -2216,7 +2263,7 @@ function ziyaretciMesajlariniOkunduYap() {
                     () => {
 
                         console.log(
-                            "MESAJ OKUNDU YAPILDI:",
+                            "KARŞI TARAF MESAJI OKUNDU:",
                             mesajID
                         );
 
@@ -2226,7 +2273,7 @@ function ziyaretciMesajlariniOkunduYap() {
                     (error) => {
 
                         console.error(
-                            "MESAJ OKUNDU GÜNCELLEME HATASI:",
+                            "OKUNDU GÜNCELLEME HATASI:",
                             error
                         );
 
