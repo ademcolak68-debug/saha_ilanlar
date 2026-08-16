@@ -2783,7 +2783,7 @@ function yoneticiMesajlariniYukle() {
                       mesajListesi.filter(
                           mesaj =>
                               mesaj.alici === "yonetici" &&
-                              mesaj.okundu !== false
+                              mesaj.okundu === false
                       ).length;
 
 
@@ -2807,7 +2807,7 @@ function yoneticiMesajlariniYukle() {
                           .filter(
                               mesaj =>
                                   mesaj.alici === "yonetici" &&
-                                  mesaj.okundu !== false
+                                  mesaj.okundu === false
                           )
                           .sort(
                               (a, b) =>
