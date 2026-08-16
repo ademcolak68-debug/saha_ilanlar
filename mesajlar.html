@@ -1906,7 +1906,6 @@ function mesajlariDinle() {
             aktifMesajlar =
                 veri;
 
-            karsiTarafMesajlariniOkunduYap();
 
             console.log(
                 "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
@@ -2212,6 +2211,8 @@ console.log(
           "EKRANDAKİ BALON SAYISI:",
           alan.querySelectorAll(".mesaj-balonu").length
       );
+
+      karsiTarafMesajlariniOkunduYap();
 
 }
 
