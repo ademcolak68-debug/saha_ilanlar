@@ -1908,6 +1908,12 @@ function mesajlariDinle() {
 
                 sohbetMesajlariniGoster();
 
+                if (window.yoneticiModu === true) {
+                  
+                      ziyaretciMesajlariniOkunduYap();
+                  
+                  }
+
             }
 
         );
@@ -2173,6 +2179,67 @@ console.log(
       );
 
 }
+
+
+function ziyaretciMesajlariniOkunduYap() {
+
+    if (!gelenIlanID) return;
+
+    if (!aktifMesajlar) return;
+
+    if (window.yoneticiModu !== true) return;
+
+
+    Object.entries(
+        aktifMesajlar
+    ).forEach(
+        ([mesajID, mesaj]) => {
+
+            if (
+                mesaj.alici === "yonetici" &&
+                mesaj.okundu !== true
+            ) {
+
+                update(
+                    ref(
+                        database,
+                        "mesajlar/" +
+                        gelenIlanID +
+                        "/" +
+                        mesajID
+                    ),
+                    {
+                        okundu: true
+                    }
+                )
+                .then(
+                    () => {
+
+                        console.log(
+                            "MESAJ OKUNDU YAPILDI:",
+                            mesajID
+                        );
+
+                    }
+                )
+                .catch(
+                    (error) => {
+
+                        console.error(
+                            "MESAJ OKUNDU GÜNCELLEME HATASI:",
+                            error
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+}
+      
 
 /* =====================================================
    MESAJ GÖNDER
