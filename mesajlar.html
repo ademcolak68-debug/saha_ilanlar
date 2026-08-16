@@ -2768,7 +2768,10 @@ function yoneticiMesajlariniYukle() {
                         );
 
                       const mesajSayisi =
-                      mesajListesi.length;
+                      mesajListesi.filter(
+                          mesaj =>
+                              mesaj.alici === "yonetici"
+                      ).length;
 
 
                     if (
