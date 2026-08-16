@@ -1597,7 +1597,7 @@ let ziyaretciUID = null;
 
 let mesajDinleyiciDurdur = null;
 
-
+let sohbetAcik = false;
 /* =====================================================
    İLANI BUL
 ===================================================== */
@@ -1912,12 +1912,9 @@ function mesajlariDinle() {
                 Object.keys(veri).length
             );
 
-
-            /*
-            =====================================================
-            MESAJLARI EKRANA GÖSTER
-            =====================================================
-            */
+            if (gelenIlanID) {
+                karsiTarafMesajlariniOkunduYap();
+            }
 
             sohbetMesajlariniGoster();
 
@@ -2212,7 +2209,6 @@ console.log(
           alan.querySelectorAll(".mesaj-balonu").length
       );
 
-      karsiTarafMesajlariniOkunduYap();
 
 }
 
