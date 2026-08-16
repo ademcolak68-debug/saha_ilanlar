@@ -2785,7 +2785,11 @@ function yoneticiMesajlariniYukle() {
                               mesaj.alici === "yonetici" &&
                               mesaj.okundu === false
                       ).length;
-
+                      
+                  console.log(
+                      "HESAPLANAN OKUNMAMIŞ YÖNETİCİ MESAJ SAYISI:",
+                      mesajSayisi
+                  );
 
                     if (
                         mesajListesi.length === 0
