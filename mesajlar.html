@@ -2027,11 +2027,8 @@ function sohbetMesajlariniGoster() {
             );
 
 
-            const benimUID =
-                window.firebaseKullanici?.uid;
-            
             const benimMesajim =
-                mesaj.uid === benimUID;
+                mesaj.uid === ziyaretciUID;
             
             
             balon.className =
