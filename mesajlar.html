@@ -1997,48 +1997,7 @@ function sohbetMesajlariniGoster() {
         =================================================
         */
 
-        if (
-                mesaj.alici === "yonetici" &&
-                mesaj.okundu !== true
-            ) {
 
-            try {
-
-                update(
-                      ref(
-                          database,
-                          "mesajlar/" +
-                          gelenIlanID +
-                          "/" +
-                          mesajID
-                      ),
-                      {
-                          okundu: true
-                      }
-                  )
-                  .catch(
-                      (error) => {
-                  
-                          console.error(
-                              "MESAJ OKUNDU GÜNCELLEME HATASI:",
-                              error
-                          );
-                  
-                      }
-                  );
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "MESAJ OKUNDU GÜNCELLEME HATASI:",
-                    error
-                );
-
-            }
-
-        }
 
 
         const balon =
