@@ -2028,7 +2028,9 @@ function sohbetMesajlariniGoster() {
 
 
             const benimMesajim =
-                mesaj.uid === ziyaretciUID;
+                window.yoneticiModu === true
+                    ? mesaj.alici === "ziyaretci"
+                    : mesaj.alici === "yonetici";
             
             
             balon.className =
