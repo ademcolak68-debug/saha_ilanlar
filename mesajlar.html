@@ -2891,30 +2891,33 @@ function yoneticiMesajlariniYukle() {
                           ? ilkGelenMesaj.mesaj || ""
                           : "";
 
+                  bilgi.appendChild(
+                      baslik
+                  );
+                  
+                  bilgi.appendChild(
+                      alt
+                  );
+                  
+                  if (mesajSayisi > 0) {
+                  
                       const sayi =
-                      document.createElement(
-                          "div"
+                          document.createElement(
+                              "div"
+                          );
+                  
+                      sayi.className =
+                          "mesaj-ilan-sayi";
+                  
+                      sayi.textContent =
+                          mesajSayisi +
+                          " mesaj";
+                  
+                      bilgi.appendChild(
+                          sayi
                       );
                   
-                  sayi.className =
-                      "mesaj-ilan-sayi";
-                  
-                  sayi.textContent =
-                      mesajSayisi +
-                      " mesaj";
-
-
-                    bilgi.appendChild(
-                            baslik
-                        );
-                        
-                        bilgi.appendChild(
-                            alt
-                        );
-                        
-                        bilgi.appendChild(
-                            sayi
-                        );
+                  }
 
 
                     const ok =
