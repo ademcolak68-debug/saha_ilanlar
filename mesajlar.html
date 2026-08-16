@@ -1887,51 +1887,46 @@ function mesajlariDinle() {
 
 
     mesajDinleyiciDurdur =
-        onValue(
+    onValue(
 
-            mesajRef,
+        mesajRef,
 
-            (snapshot) => {
+        (snapshot) => {
 
-                const veri =
-                    snapshot.val() || {};
+            const veri =
+                snapshot.val() || {};
 
-                  aktifMesajlar =
-                      veri;
-                  
-                  
-                  console.log(
-                      "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
-                      Object.keys(veri).length
-                  );
-                  
-                  
-                  /*
-                  =====================================================
-                  MESAJLARI EKRANA GÖSTER
-                  =====================================================
-                  */
-                  
-                  sohbetMesajlariniGoster();
-                  
-                  
-                  /*
-                  =====================================================
-                  KARŞI TARAFIN MESAJLARINI OKUNDU YAP
-                  =====================================================
-                  */
-                  
-                  karsiTarafMesajlariniOkunduYap();
 
-                if (window.yoneticiModu === true) {
-                  
-                      ziyaretciMesajlariniOkunduYap();
-                  
-                  }
+            aktifMesajlar =
+                veri;
 
-            }
 
-        );
+            console.log(
+                "FIREBASE'DEKİ GERÇEK MESAJ SAYISI:",
+                Object.keys(veri).length
+            );
+
+
+            /*
+            =====================================================
+            MESAJLARI EKRANA GÖSTER
+            =====================================================
+            */
+
+            sohbetMesajlariniGoster();
+
+
+            /*
+            =====================================================
+            KARŞI TARAFIN MESAJLARINI OKUNDU YAP
+            =====================================================
+            */
+
+            karsiTarafMesajlariniOkunduYap();
+
+        }
+
+    );
 
 }
 
@@ -2218,16 +2213,27 @@ console.log(
    KARŞI TARAFIN MESAJLARINI OKUNDU YAP
 ===================================================== */
 
+/* =====================================================
+   KARŞI TARAFIN MESAJLARINI OKUNDU YAP
+===================================================== */
+
 function karsiTarafMesajlariniOkunduYap() {
 
     if (!gelenIlanID) return;
 
     if (!aktifMesajlar) return;
 
-    const benimUID =
-        window.firebaseKullanici?.uid;
 
-    if (!benimUID) return;
+    /*
+    =====================================================
+    BU SAYFADA MESAJIN ALICISI Kİ?
+    =====================================================
+    */
+
+    const benimAliciDegerim =
+        window.yoneticiModu === true
+            ? "ziyaretci"
+            : "yonetici";
 
 
     Object.entries(
@@ -2235,14 +2241,16 @@ function karsiTarafMesajlariniOkunduYap() {
     ).forEach(
         ([mesajID, mesaj]) => {
 
+
             /*
-            =============================================
-            SADECE KARŞI TARAFIN MESAJI
-            =============================================
+            =================================================
+            SADECE BU SAYFADAKİ KİŞİYE GELEN
+            OKUNMAMIŞ MESAJLARI OKUNDU YAP
+            =================================================
             */
 
             if (
-                mesaj.uid !== benimUID &&
+                mesaj.alici === benimAliciDegerim &&
                 mesaj.okundu !== true
             ) {
 
@@ -2262,7 +2270,7 @@ function karsiTarafMesajlariniOkunduYap() {
                     () => {
 
                         console.log(
-                            "KARŞI TARAF MESAJI OKUNDU:",
+                            "MESAJ OKUNDU YAPILDI:",
                             mesajID
                         );
 
@@ -2272,7 +2280,7 @@ function karsiTarafMesajlariniOkunduYap() {
                     (error) => {
 
                         console.error(
-                            "OKUNDU GÜNCELLEME HATASI:",
+                            "MESAJ OKUNDU GÜNCELLEME HATASI:",
                             error
                         );
 
