@@ -2789,8 +2789,18 @@ function yoneticiMesajlariniYukle() {
                     );
 
 
-                    const sonMesaj =
-                        mesajListesi[0];
+                    const ilkGelenMesaj =
+                      mesajListesi
+                          .filter(
+                              mesaj =>
+                                  mesaj.alici === "yonetici" &&
+                                  mesaj.okundu !== true
+                          )
+                          .sort(
+                              (a, b) =>
+                                  (a.zaman || 0) -
+                                  (b.zaman || 0)
+                          )[0];
 
 
                     const satir =
@@ -2860,8 +2870,9 @@ function yoneticiMesajlariniYukle() {
 
 
                     alt.textContent =
-                        sonMesaj.mesaj ||
-                        "";
+                      ilkGelenMesaj
+                          ? ilkGelenMesaj.mesaj || ""
+                          : "";
 
                       const sayi =
                       document.createElement(
