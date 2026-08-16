@@ -192,6 +192,12 @@ body {
     margin-top: 3px;
 }
 
+.mesaj-ilan-sayi {
+    font-size: 12px;
+    color: #777;
+    margin-top: 3px;
+}
+
 
 /* =====================================================
    SAĞ OK
@@ -2761,6 +2767,9 @@ function yoneticiMesajlariniYukle() {
                             mesajlar || {}
                         );
 
+                      const mesajSayisi =
+                      mesajListesi.length;
+
 
                     if (
                         mesajListesi.length === 0
@@ -2851,15 +2860,30 @@ function yoneticiMesajlariniYukle() {
                         sonMesaj.mesaj ||
                         "";
 
+                      const sayi =
+                      document.createElement(
+                          "div"
+                      );
+                  
+                  sayi.className =
+                      "mesaj-ilan-sayi";
+                  
+                  sayi.textContent =
+                      mesajSayisi +
+                      " mesaj";
+
 
                     bilgi.appendChild(
-                        baslik
-                    );
-
-
-                    bilgi.appendChild(
-                        alt
-                    );
+                            baslik
+                        );
+                        
+                        bilgi.appendChild(
+                            alt
+                        );
+                        
+                        bilgi.appendChild(
+                            sayi
+                        );
 
 
                     const ok =
