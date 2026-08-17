@@ -2333,56 +2333,53 @@ function mesajlarimiAc() {
       );
 
 
-    onValue(
+ onValue(
 
-      mesajlarRef,
+    mesajlarRef,
 
-      (snapshot) => {
+    (snapshot) => {
 
         const veri =
-          snapshot.val() || {};
-
+            snapshot.val() || {};
 
         let toplamOkunmamis =
-          0;
-
+            0;
 
         Object.values(veri).forEach(
 
-          (ilanMesajlari) => {
+            (ilanMesajlari) => {
 
-            Object.values(
-			    ilanMesajlari || {}
-			).forEach(
-			
-			    (mesaj) => {
-					console.log(
-			            "MESAJ BİLDİRİM KONTROL:",
-			            mesaj
-			        );
-			
-			        /*
-			        =========================================
-			        SADECE KARŞI TARAFTAN GELEN
-			        OKUNMAMIŞ MESAJLARI SAY
-			        =========================================
-			        */
-					if (
-					    mesaj.alici === "yonetici" &&
-					    mesaj.okundu !== true
-					) {
-					    toplamOkunmamis++;
-					}
-					
-					}
-			
-			    }
-			
-			);
+                Object.values(
+                    ilanMesajlari || {}
+                ).forEach(
 
-          }
+                    (mesaj) => {
+
+                        console.log(
+                            "MESAJ BİLDİRİM KONTROL:",
+                            mesaj
+                        );
+
+                        if (
+                            mesaj.alici === "yonetici" &&
+                            mesaj.okundu !== true
+                        ) {
+
+                            toplamOkunmamis++;
+
+                        }
+
+                    }
+
+                );
+
+            }
 
         );
+
+    }
+
+);
 
 
         /*
