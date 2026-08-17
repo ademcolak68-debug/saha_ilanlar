@@ -2204,7 +2204,7 @@ function mesajlarimiAc() {
 
 		window.yoneticiModu = false;
 
-		mesajBildirimleriniDinle();
+		mesajBildiriminiGoster();
 		  
         console.log(
           "FIREBASE BAĞLANDI"
@@ -2238,6 +2238,60 @@ function mesajlarimiAc() {
 
       }
     );
+
+	function mesajBildiriminiGoster() {
+
+    const bildirim =
+        document.getElementById("mesajBildirim");
+
+    if (!bildirim) return;
+
+    const bildirimRef =
+        ref(
+            database,
+            "bildirimSayaci"
+        );
+
+    onValue(
+        bildirimRef,
+        (snapshot) => {
+
+            const veri =
+                snapshot.val() || {};
+
+            const toplam =
+                Number(
+                    veri.okunmamis || 0
+                );
+
+            console.log(
+                "BURGER MESAJ SAYISI:",
+                toplam
+            );
+
+            if (toplam > 0) {
+
+                bildirim.style.display =
+                    "block";
+
+                bildirim.textContent =
+                    toplam +
+                    " yeni mesaj";
+
+            } else {
+
+                bildirim.style.display =
+                    "none";
+
+                bildirim.textContent =
+                    "";
+
+            }
+
+        }
+    );
+
+}
 
 
   /*
