@@ -2202,13 +2202,15 @@ function mesajlarimiAc() {
         window.firebaseKullanici =
           userCredential.user;
 
-		window.yoneticiModu = false;
+        window.yoneticiModu = false;
 
-		setTimeout(
-		    mesajBildiriminiGoster,
-		    500
-		);
-		  
+
+        setTimeout(
+          mesajBildiriminiGoster,
+          500
+        );
+
+
         console.log(
           "FIREBASE BAĞLANDI"
         );
@@ -2218,15 +2220,6 @@ function mesajlarimiAc() {
           "ZİYARETÇİ UID:",
           userCredential.user.uid
         );
-
-
-        /*
-        =================================================
-        MESAJ BİLDİRİMİNİ BAŞLAT
-        =================================================
-        */
-
-        
 
       }
     )
@@ -2242,72 +2235,19 @@ function mesajlarimiAc() {
       }
     );
 
-	function mesajBildiriminiGoster() {
-		console.log(
-        "BURGER FONKSİYONU ÇAĞRILDI"
-    );
-
-
-    const bildirim =
-        document.getElementById("mesajBildirim");
-
-    if (!bildirim) return;
-
-    const bildirimRef =
-        ref(
-            database,
-            "bildirimSayaci"
-        );
-
-    onValue(
-        bildirimRef,
-        (snapshot) => {
-
-            const veri =
-                snapshot.val() || {};
-
-            const toplam =
-                Number(
-                    veri.okunmamis || 0
-                );
-
-            console.log(
-                "BURGER MESAJ SAYISI:",
-                toplam
-            );
-
-            if (toplam > 0) {
-
-                bildirim.style.display =
-                    "block";
-
-                bildirim.textContent =
-                    toplam +
-                    " yeni mesaj";
-
-            } else {
-
-                bildirim.style.display =
-                    "none";
-
-                bildirim.textContent =
-                    "";
-
-            }
-
-        }
-    );
-
-}
-
 
   /*
   =====================================================
-  OKUNMAMIŞ MESAJLARI DİNLE
+  BURGER MESAJ SAYISI
   =====================================================
   */
 
-  function mesajBildirimleriniDinle() {
+  function mesajBildiriminiGoster() {
+
+    console.log(
+      "BURGER FONKSİYONU ÇAĞRILDI"
+    );
+
 
     const bildirim =
       document.getElementById(
@@ -2318,7 +2258,7 @@ function mesajlarimiAc() {
     if (!bildirim) {
 
       console.log(
-        "mesajBildirim alanı bulunamadı."
+        "mesajBildirim bulunamadı."
       );
 
       return;
@@ -2326,70 +2266,37 @@ function mesajlarimiAc() {
     }
 
 
-    const mesajlarRef =
+    const bildirimRef =
       ref(
         database,
-        "mesajlar"
+        "bildirimSayaci"
       );
 
 
- onValue(
+    onValue(
 
-    mesajlarRef,
+      bildirimRef,
 
-    (snapshot) => {
+      (snapshot) => {
 
         const veri =
-            snapshot.val() || {};
+          snapshot.val() || {};
 
-        let toplamOkunmamis =
-            0;
 
-        Object.values(veri).forEach(
+        const toplam =
+          Number(
+            veri.okunmamis || 0
+          );
 
-            (ilanMesajlari) => {
 
-                Object.values(
-                    ilanMesajlari || {}
-                ).forEach(
-
-                    (mesaj) => {
-
-                        console.log(
-                            "MESAJ BİLDİRİM KONTROL:",
-                            mesaj
-                        );
-
-                        if (
-                            mesaj.alici === "yonetici" &&
-                            mesaj.okundu !== true
-                        ) {
-
-                            toplamOkunmamis++;
-
-                        }
-
-                    }
-
-                );
-
-            }
-
+        console.log(
+          "BURGER MESAJ SAYISI:",
+          toplam
         );
 
-    }
-
-);
-
-
-        /*
-        ================================================
-        BİLDİRİMİ GÖSTER / GİZLE
-        ================================================
-        */
 
         if (
-          toplamOkunmamis > 0
+          toplam > 0
         ) {
 
           bildirim.style.display =
@@ -2397,7 +2304,7 @@ function mesajlarimiAc() {
 
 
           bildirim.textContent =
-            toplamOkunmamis +
+            toplam +
             " yeni mesaj";
 
         }
