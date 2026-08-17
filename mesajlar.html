@@ -2983,6 +2983,17 @@ function yoneticiMesajlariniYukle() {
                 "TOPLAM OKUNMAMIŞ YÖNETİCİ MESAJ:",
                 toplamOkunmamisMesaj
             );
+
+              set(
+                      ref(
+                          database,
+                          "bildirimSayaci"
+                      ),
+                      {
+                          okunmamis:
+                              toplamOkunmamisMesaj
+                      }
+                  );
         }
     );
 
