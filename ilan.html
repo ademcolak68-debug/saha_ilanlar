@@ -2305,8 +2305,8 @@ function mesajlarimiAc() {
 			        =========================================
 			        */
 					if (
-					    mesaj.uid === window.firebaseKullanici.uid &&
-					    mesaj.okundu !== true
+					    mesaj.alici === "yonetici" &&
+					    mesaj.okundu === false
 					) {
 					    toplamOkunmamis++;
 					}
