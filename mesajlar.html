@@ -2752,7 +2752,8 @@ function yoneticiMesajlariniYukle() {
 
             liste.innerHTML = "";
 
-
+            let toplamOkunmamisMesaj = 0;
+              
             ilanlar.forEach(
                 ([ilanID, mesajlar]) => {
 
@@ -2792,6 +2793,8 @@ function yoneticiMesajlariniYukle() {
                               mesaj.alici === "yonetici" &&
                               mesaj.okundu === false
                       ).length;
+
+                      toplamOkunmamisMesaj += mesajSayisi;
                       
                   console.log(
                       "HESAPLANAN OKUNMAMIŞ YÖNETİCİ MESAJ SAYISI:",
@@ -2976,7 +2979,10 @@ function yoneticiMesajlariniYukle() {
 
                 }
             );
-
+            console.log(
+                "TOPLAM OKUNMAMIŞ YÖNETİCİ MESAJ:",
+                toplamOkunmamisMesaj
+            );
         }
     );
 
