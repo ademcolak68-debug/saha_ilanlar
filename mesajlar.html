@@ -2235,9 +2235,9 @@ function karsiTarafMesajlariniOkunduYap() {
     */
 
     const benimAliciDegerim =
-        window.yoneticiModu === true
-            ? "ziyaretci"
-            : "yonetici";
+    window.yoneticiModu === true
+        ? "yonetici"
+        : "ziyaretci";
 
 
     Object.entries(
@@ -2265,7 +2265,6 @@ console.log(
 
             if (
                 mesaj.alici === benimAliciDegerim &&
-                mesaj.uid !== ziyaretciUID &&
                 mesaj.okundu !== true
             ) {
 
