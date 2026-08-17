@@ -2203,6 +2203,8 @@ function mesajlarimiAc() {
           userCredential.user;
 
 		window.yoneticiModu = false;
+
+		mesajBildirimleriniDinle();
 		  
         console.log(
           "FIREBASE BAĞLANDI"
@@ -2306,7 +2308,7 @@ function mesajlarimiAc() {
 			        */
 					if (
 					    mesaj.alici === "yonetici" &&
-					    mesaj.okundu === false
+					    mesaj.okundu !== true
 					) {
 					    toplamOkunmamis++;
 					}
