@@ -2064,49 +2064,53 @@ function sohbetMesajlariniGoster() {
                         : "mesaj-gelen"
                 );
 
-         /* =====================================================
+        /* =====================================================
                MESAJ SEÇİMİ
             ===================================================== */
             
             balon.dataset.mesajId = mesajID;
             
             let basiliTimer = null;
+            let uzunBasildi = false;
             
             
             /* =====================================================
-               BASILDI
+               BASILI TUTMA
             ===================================================== */
             
             balon.addEventListener(
-                "pointerdown",
-                function (e) {
+                "touchstart",
+                function () {
             
-                    e.preventDefault();
+                    uzunBasildi = false;
+            
+                    clearTimeout(
+                        basiliTimer
+                    );
+            
             
                     /*
                      * SEÇİM MODU AÇIKSA
-                     * normal dokunma = seç / kaldır
+                     * tek dokunma = seç / kaldır
                      */
             
                     if (window.mesajSecimModu) {
             
-                        mesajSec(
-                            balon,
-                            mesajID
-                        );
-            
                         return;
+            
                     }
             
             
                     /*
                      * İLK MESAJ
-                     * 500 ms basılı tut
+                     * uzun basma
                      */
             
                     basiliTimer =
                         setTimeout(
                             function () {
+            
+                                uzunBasildi = true;
             
                                 mesajSec(
                                     balon,
@@ -2117,54 +2121,65 @@ function sohbetMesajlariniGoster() {
                             500
                         );
             
+                },
+                {
+                    passive: true
                 }
             );
             
             
             /* =====================================================
-               BIRAKILDI
+               PARMAĞI BIRAK
             ===================================================== */
             
             balon.addEventListener(
-                "pointerup",
+                "touchend",
                 function () {
             
                     clearTimeout(
                         basiliTimer
                     );
             
+            
+                    /*
+                     * Seçim modu açıksa
+                     * normal dokunmayı seçim yap.
+                     */
+            
+                    if (
+                        window.mesajSecimModu &&
+                        !uzunBasildi
+                    ) {
+            
+                        mesajSec(
+                            balon,
+                            mesajID
+                        );
+            
+                    }
+            
+                },
+                {
+                    passive: true
                 }
             );
             
             
             /* =====================================================
-               HAREKET
+               PARMAK HAREKETİ
             ===================================================== */
             
             balon.addEventListener(
-                "pointermove",
+                "touchmove",
                 function () {
             
                     clearTimeout(
                         basiliTimer
                     );
             
-                }
-            );
-            
-            
-            /* =====================================================
-               İPTAL
-            ===================================================== */
-            
-            balon.addEventListener(
-                "pointercancel",
-                function () {
-            
-                    clearTimeout(
-                        basiliTimer
-                    );
-            
+                },
+                {
+                    passive: true
                 }
             );
 
@@ -2362,10 +2377,6 @@ if (benimMesajim) {
 
 }
 
-
-/* =====================================================
-   KARŞI TARAFIN MESAJLARINI OKUNDU YAP
-===================================================== */
 
 /* =====================================================
    KARŞI TARAFIN MESAJLARINI OKUNDU YAP
