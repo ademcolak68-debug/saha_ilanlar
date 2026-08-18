@@ -694,39 +694,58 @@ body {
     position: relative;
 }
 
-
+      
 /* =====================================================
    GELEN MESAJ — SOLDA
 ===================================================== */
 
 .mesaj-gelen {
-    position: relative; /* ::after için gerekli */
+
+    position: relative;
+
     background: #ffffff;
+
     color: #222222;
+
     margin-right: auto;
+
     margin-left: 0;
+
     border: 1px solid #eeeeee;
-    border-top-left-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
+
+    border-bottom-left-radius: 0;
 }
 
+
 /* =====================================================
-   SOL ÜST ÇIKINTI (Gelen Mesaj)
+   SOL ALT ÇIKINTI
+   Balonun altından direkt devam eder
 ===================================================== */
 
 .mesaj-gelen::after {
+
     content: "";
+
     position: absolute;
-    left: -7px;
-    top: 0px;
+
+    left: -1px;
+
+    bottom: -7px;
+
     width: 8px;
+
     height: 8px;
+
     background: #ffffff;
-    border-top: 1px solid #eeeeee;
+
     border-left: 1px solid #eeeeee;
+
+    border-bottom: 1px solid #eeeeee;
+
     clip-path: polygon(
-        100% 0,
         0 0,
-        100% 100%
+        100% 0,
+        0 100%
     );
 }
 
@@ -736,30 +755,52 @@ body {
 ===================================================== */
 
 .mesaj-giden {
-    position: relative; /* ::after için gerekli */
-    background: #bff4b0;
+
+    position: relative;
+
+    background: #ffffff;
+
     color: #222222;
+
     margin-left: auto;
+
     margin-right: 0;
-    border-bottom-right-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
+
+    border: 1px solid #eeeeee;
+
+    border-bottom-right-radius: 0;
 }
 
+
 /* =====================================================
-   SAĞ ALT ÇIKINTI (Giden Mesaj)
+   SAĞ ALT ÇIKINTI
+   Balonun altından direkt devam eder
 ===================================================== */
 
 .mesaj-giden::after {
+
     content: "";
+
     position: absolute;
-    right: -7px;
-    bottom: 0px;
+
+    right: -1px;
+
+    bottom: -7px;
+
     width: 8px;
+
     height: 8px;
-    background: #bff4b0;
+
+    background: #ffffff;
+
+    border-right: 1px solid #eeeeee;
+
+    border-bottom: 1px solid #eeeeee;
+
     clip-path: polygon(
         0 0,
-        100% 100%,
-        0 100%
+        100% 0,
+        100% 100%
     );
 }
 
