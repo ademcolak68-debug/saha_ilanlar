@@ -2398,6 +2398,34 @@ async function () {
                 }
             );
 
+          const bildirimRef =
+                ref(
+                    database,
+                    "bildirimSayaci"
+                );
+            
+            const bildirimSnapshot =
+                await get(
+                    bildirimRef
+                );
+            
+            const mevcutSayi =
+                Number(
+                    bildirimSnapshot.val()?.okunmamis || 0
+                );
+            
+            await set(
+                bildirimRef,
+                {
+                    okunmamis:
+                        mevcutSayi + 1
+                }
+            );
+            
+            console.log(
+                "BURGER SAYACI GÜNCELLENDİ:",
+                mevcutSayi + 1
+            );
 
         input.value = "";
 
