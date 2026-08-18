@@ -674,23 +674,15 @@ body {
 ===================================================== */
 
 .mesaj-balonu {
-
-    max-width: 78%;
-
+    display: inline-block; /* Kısa mesajlarda sadece yazı kadar yer kaplar, tüm satırı doldurmaz */
+    max-width: 78%;        /* Uzun mesajlar için maksimum genişlik sınırı */
     padding: 5px 8px;
-
     border-radius: 10px;
-
     margin-bottom: 9px;
-
     font-size: 15px;
-
     line-height: 1.3;
-
     font-weight: normal;
-
     word-wrap: break-word;
-
     position: relative;
 }
 
@@ -1180,8 +1172,7 @@ body {
 
     .mesaj-balonu {
 
-        max-width: 82%;
-
+        max-width: 82%;    
         font-size: 14px;
     }
 
