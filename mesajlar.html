@@ -2979,21 +2979,37 @@ function yoneticiMesajlariniYukle() {
 
                 }
             );
-            console.log(
+          console.log(
                 "TOPLAM OKUNMAMIŞ YÖNETİCİ MESAJ:",
                 toplamOkunmamisMesaj
             );
-
-              set(
-                      ref(
-                          database,
-                          "bildirimSayaci"
-                      ),
-                      {
-                          okunmamis:
-                              toplamOkunmamisMesaj
-                      }
-                  );
+            
+            set(
+                ref(
+                    database,
+                    "bildirimSayaci"
+                ),
+                {
+                    okunmamis:
+                        toplamOkunmamisMesaj
+                }
+            )
+            .then(() => {
+            
+                console.log(
+                    "BURGER SAYACI FIREBASE'E YAZILDI:",
+                    toplamOkunmamisMesaj
+                );
+            
+            })
+            .catch((error) => {
+            
+                console.error(
+                    "BURGER SAYACI YAZMA HATASI:",
+                    error
+                );
+            
+            });
         }
     );
 
