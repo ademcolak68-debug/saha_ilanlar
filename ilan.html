@@ -1403,11 +1403,26 @@ function menuKapat(){
 
 async function ilanPaylas(){
 
-    const baslik = document.title;
+    const baslik =
+        document.title;
 
-    const metin = document.querySelector(".header-top").innerText;
+    const metin =
+        document.querySelector(
+            ".header-top"
+        ).innerText;
 
-    const link = window.location.href;
+    const url =
+        new URL(
+            window.location.href
+        );
+
+    url.searchParams.set(
+        "paylasim",
+        "1"
+    );
+
+    const link =
+        url.toString();
 
     if(navigator.share){
 
@@ -1415,11 +1430,14 @@ async function ilanPaylas(){
 
             await navigator.share({
 
-                title: baslik,
+                title:
+                    baslik,
 
-                text: metin,
+                text:
+                    metin,
 
-                url: link
+                url:
+                    link
 
             });
 
@@ -1427,9 +1445,13 @@ async function ilanPaylas(){
 
     }else{
 
-        navigator.clipboard.writeText(link);
+        navigator.clipboard.writeText(
+            link
+        );
 
-        alert("İlan bağlantısı kopyalandı.");
+        alert(
+            "İlan bağlantısı kopyalandı."
+        );
 
     }
 
