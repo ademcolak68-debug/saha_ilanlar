@@ -2064,7 +2064,7 @@ function sohbetMesajlariniGoster() {
                         : "mesaj-gelen"
                 );
 
-          /* =====================================================
+         /* =====================================================
                MESAJ SEÇİMİ
             ===================================================== */
             
@@ -2082,26 +2082,34 @@ function sohbetMesajlariniGoster() {
                 "touchstart",
                 function (e) {
             
+                    /*
+                     * Metin seçme / tarayıcı hareketlerini engelle
+                     */
+            
+                    e.preventDefault();
+            
                     uzunBasildi = false;
             
+            
                     /*
-                     * SEÇİM MODU AÇIKSA:
-                     * Uzun basma yok.
-                     * Normal dokunma ile seçilecek.
+                     * SEÇİM MODU AÇIKSA
+                     * normal dokunma ile seç / kaldır
                      */
             
                     if (window.mesajSecimModu) {
             
-                        e.preventDefault();
+                        mesajSec(
+                            balon,
+                            mesajID
+                        );
             
                         return;
-            
                     }
             
             
                     /*
-                     * İlk mesaj:
-                     * uzun basma gerekiyor.
+                     * İLK SEÇİM
+                     * uzun basma gerekir
                      */
             
                     basiliTimer =
@@ -2132,31 +2140,11 @@ function sohbetMesajlariniGoster() {
             
             balon.addEventListener(
                 "touchend",
-                function (e) {
+                function () {
             
                     clearTimeout(
                         basiliTimer
                     );
-            
-            
-                    /*
-                     * Seçim modu açıksa
-                     * normal dokunmayı seçim olarak kabul et.
-                     */
-            
-                    if (
-                        window.mesajSecimModu &&
-                        !uzunBasildi
-                    ) {
-            
-                        e.preventDefault();
-            
-                        mesajSec(
-                            balon,
-                            mesajID
-                        );
-            
-                    }
             
                 },
                 {
@@ -2166,7 +2154,7 @@ function sohbetMesajlariniGoster() {
             
             
             /* =====================================================
-               PARMAK HAREKET EDERSE
+               PARMAK HAREKETİ
             ===================================================== */
             
             balon.addEventListener(
@@ -2179,7 +2167,7 @@ function sohbetMesajlariniGoster() {
             
                 },
                 {
-                    passive: true
+                    passive: false
                 }
             );
 
