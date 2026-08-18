@@ -1223,7 +1223,34 @@ body {
 }
       
 
-      
+/* =====================================================
+   MESAJ SATIRI
+===================================================== */
+
+.mesaj-satir {
+
+    width: 100%;
+
+    display: flex;
+
+    margin-bottom: 9px;
+
+    border-radius: 6px;
+
+    transition:
+        background .15s ease;
+}
+
+
+/* =====================================================
+   SEÇİLİ MESAJ SATIRI
+===================================================== */
+
+.mesaj-satir.mesaj-secili {
+
+    background:
+        rgba(144, 238, 144, 0.25);
+}
       
 </style>
 
@@ -2283,26 +2310,48 @@ if (benimMesajim) {
 
 
             console.log(
-    "APPEND YAPILIYOR:",
-    mesajID,
-    "EKLENMEDEN ÖNCE:",
-    alan.querySelectorAll(".mesaj-balonu").length
-);
+                "APPEND YAPILIYOR:",
+                mesajID,
+                "EKLENMEDEN ÖNCE:",
+                alan.querySelectorAll(".mesaj-balonu").length
+            );
 
-alan.appendChild(
-    balon
-);
+            /* =====================================================
+               MESAJ SATIRI OLUŞTUR
+            ===================================================== */
+            
+            const satir =
+                document.createElement(
+                    "div"
+                );
+            
+            satir.className =
+                "mesaj-satir";
+            
+            
+            /* Balonu satırın içine koy */
+            
+            satir.appendChild(
+                balon
+            );
+            
+            
+            /* Satırı sohbet alanına ekle */
+            
+            alan.appendChild(
+                satir
+            );
 
            console.trace(
                 "BALON APPEND EDEN KOD:"
             );
 
-console.log(
-    "APPEND SONRASI:",
-    mesajID,
-    "EKRANDA:",
-    alan.querySelectorAll(".mesaj-balonu").length
-);
+            console.log(
+                "APPEND SONRASI:",
+                mesajID,
+                "EKRANDA:",
+                alan.querySelectorAll(".mesaj-balonu").length
+            );
 
         }
     );
@@ -3793,40 +3842,59 @@ function mesajSec(
     mesajID
 ) {
 
-    mesajSecimModu = true;
+    window.mesajSecimModu =
+        true;
+
+
+    const satir =
+        balon.closest(
+            ".mesaj-satir"
+        );
+
 
     if (
-        mesajSecilenler.has(
+        window.mesajSecilenler.has(
             mesajID
         )
     ) {
 
-        mesajSecilenler.delete(
+        window.mesajSecilenler.delete(
             mesajID
         );
 
-        balon.classList.remove(
-            "mesaj-secili"
-        );
+
+        if (satir) {
+
+            satir.classList.remove(
+                "mesaj-secili"
+            );
+
+        }
 
     } else {
 
-        mesajSecilenler.add(
+        window.mesajSecilenler.add(
             mesajID
         );
 
-        balon.classList.add(
-            "mesaj-secili"
-        );
+
+        if (satir) {
+
+            satir.classList.add(
+                "mesaj-secili"
+            );
+
+        }
 
     }
 
 
     if (
-        mesajSecilenler.size === 0
+        window.mesajSecilenler.size === 0
     ) {
 
-        mesajSecimModu = false;
+        window.mesajSecimModu =
+            false;
 
     }
 
@@ -3834,7 +3902,7 @@ function mesajSec(
     console.log(
         "SEÇİLİ MESAJLAR:",
         [
-            ...mesajSecilenler
+            ...window.mesajSecilenler
         ]
     );
 
