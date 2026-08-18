@@ -675,7 +675,7 @@ body {
 
 .mesaj-balonu {
     display: table;
-    max-width: 78%;     
+    max-width: 78%;        /* Uzun mesajlar için maksimum genişlik sınırı */
     padding: 5px 8px;
     border-radius: 10px;
     margin-bottom: 9px;
@@ -684,12 +684,6 @@ body {
     font-weight: normal;
     word-wrap: break-word;
     position: relative;
-
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    touch-action: manipulation;
-
 }
 
 /* =====================================================
@@ -1210,46 +1204,8 @@ body {
 
 }
 
-/* =====================================================
-   MESAJ SEÇİLİ DURUMU
-===================================================== */
-
-.mesaj-balonu.mesaj-secili {
-
-    background: #e8f0fe !important;
-
-    box-shadow: none;
-
-}
-      
-
-/* =====================================================
-   MESAJ SATIRI
-===================================================== */
-
-.mesaj-satir {
-
-    width: 100%;
-
-    display: flex;
-
-    border-radius: 6px;
-
-    transition:
-        background .15s ease;
-}
 
 
-/* =====================================================
-   SEÇİLİ MESAJ SATIRI
-===================================================== */
-
-.mesaj-satir.mesaj-secili {
-
-    background:
-        background: rgba(0, 0, 0, 0.08);
-}
-      
 </style>
 
 </head>
@@ -1376,17 +1332,6 @@ body {
             <i class="fa-solid fa-ellipsis"></i>
 
         </div>
-
-       <!-- MESAJ SEÇİMİNDE ÇÖP -->
-
-      <div id="mesajSecimSil"
-           class="mesaj-secim-sil"
-           onclick="mesajSilOnayAc()"
-           style="display:none;">
-      
-          <i class="fa-regular fa-trash-can"></i>
-      
-      </div>
 
     </div>
 
@@ -2064,130 +2009,6 @@ function sohbetMesajlariniGoster() {
                         : "mesaj-gelen"
                 );
 
-        /* =====================================================
-               MESAJ SEÇİMİ
-            ===================================================== */
-            
-            balon.dataset.mesajId = mesajID;
-            
-            let basiliTimer = null;
-            let uzunBasildi = false;
-            
-            
-            /* =====================================================
-               BASILI TUTMA
-            ===================================================== */
-            
-            balon.addEventListener(
-                "touchstart",
-                function () {
-            
-                    uzunBasildi = false;
-            
-                    clearTimeout(
-                        basiliTimer
-                    );
-            
-            
-                    /*
-                     * SEÇİM MODU AÇIKSA
-                     * tek dokunma = seç / kaldır
-                     */
-            
-                    if (window.mesajSecimModu) {
-
-                            mesajSec(
-                                balon,
-                                mesajID
-                            );
-                        
-                            return;
-                        
-                        }
-            
-            
-                    /*
-                     * İLK MESAJ
-                     * uzun basma
-                     */
-            
-                    basiliTimer =
-                        setTimeout(
-                            function () {
-            
-                                uzunBasildi = true;
-            
-                                mesajSec(
-                                    balon,
-                                    mesajID
-                                );
-            
-                            },
-                            500
-                        );
-            
-                },
-                {
-                    passive: true
-                }
-            );
-            
-            
-            /* =====================================================
-               PARMAĞI BIRAK
-            ===================================================== */
-            
-            balon.addEventListener(
-                "touchend",
-                function () {
-            
-                    clearTimeout(
-                        basiliTimer
-                    );
-            
-            
-                    /*
-                     * Seçim modu açıksa
-                     * normal dokunmayı seçim yap.
-                     */
-            
-                    if (
-                        window.mesajSecimModu &&
-                        !uzunBasildi
-                    ) {
-            
-                        mesajSec(
-                            balon,
-                            mesajID
-                        );
-            
-                    }
-            
-                },
-                {
-                    passive: true
-                }
-            );
-            
-            
-            /* =====================================================
-               PARMAK HAREKETİ
-            ===================================================== */
-            
-            balon.addEventListener(
-                "touchmove",
-                function () {
-            
-                    clearTimeout(
-                        basiliTimer
-                    );
-            
-                },
-                {
-                    passive: true
-                }
-            );
-
             const metin =
                 document.createElement(
                     "div"
@@ -2324,31 +2145,30 @@ if (benimMesajim) {
 
 
             console.log(
-                "APPEND YAPILIYOR:",
-                mesajID,
-                "EKLENMEDEN ÖNCE:",
-                alan.querySelectorAll(".mesaj-balonu").length
+    "APPEND YAPILIYOR:",
+    mesajID,
+    "EKLENMEDEN ÖNCE:",
+    alan.querySelectorAll(".mesaj-balonu").length
+);
+
+alan.appendChild(
+    balon
+);
+
+           console.trace(
+                "BALON APPEND EDEN KOD:"
             );
 
-     /* =====================================================
-         MESAJ SATIRI
-      ===================================================== */
-      
-      const satir =
-          document.createElement("div");
-      
-      satir.className =
-          "mesaj-satir";
-      
-      
-      satir.appendChild(
-          balon
-      );
-      
-      
-      alan.appendChild(
-          satir
-      );
+console.log(
+    "APPEND SONRASI:",
+    mesajID,
+    "EKRANDA:",
+    alan.querySelectorAll(".mesaj-balonu").length
+);
+
+        }
+    );
+
 
     alan.scrollTop =
         alan.scrollHeight;
@@ -2356,12 +2176,15 @@ if (benimMesajim) {
       console.log(
           "EKRANDAKİ BALON SAYISI:",
           alan.querySelectorAll(".mesaj-balonu").length
-            );
-       }
-   );
+      );
+
 
 }
 
+
+/* =====================================================
+   KARŞI TARAFIN MESAJLARINI OKUNDU YAP
+===================================================== */
 
 /* =====================================================
    KARŞI TARAFIN MESAJLARINI OKUNDU YAP
@@ -3814,164 +3637,6 @@ islemTutamac.addEventListener(
 
     }
 );
-
-/* =====================================================
-   MESAJ SEÇİM SİSTEMİ
-===================================================== */
-
-window.mesajSecilenler =
-    new Set();
-
-
-window.mesajSecimModu =
-    false;
-
-
-function mesajSec(
-    balon,
-    mesajID
-) {
-
-    window.mesajSecimModu =
-        true;
-
-
-    const satir =
-        balon.closest(
-            ".mesaj-satir"
-        );
-
-
-    if (
-        window.mesajSecilenler.has(
-            mesajID
-        )
-    ) {
-
-        window.mesajSecilenler.delete(
-            mesajID
-        );
-
-
-        if (satir) {
-
-            satir.classList.remove(
-                "mesaj-secili"
-            );
-
-        }
-
-    } else {
-
-        window.mesajSecilenler.add(
-            mesajID
-        );
-
-
-        if (satir) {
-
-            satir.classList.add(
-                "mesaj-secili"
-            );
-
-        }
-
-    }
-
-
-    if (
-        window.mesajSecilenler.size === 0
-    ) {
-
-        window.mesajSecimModu =
-            false;
-
-    }
-
-      if (
-          window.mesajSecilenler.size > 0
-      ) {
-      
-          mesajSecimHeaderAc();
-      
-      } else {
-      
-          mesajSecimHeaderKapat();
-      
-      }
-
-
-    console.log(
-        "SEÇİLİ MESAJLAR:",
-        [
-            ...window.mesajSecilenler
-        ]
-    );
-
-}
-
-
-/* =====================================================
-   MESAJ SEÇİM HEADER
-===================================================== */
-
-function mesajSecimHeaderAc() {
-
-    const ucNokta =
-        document.querySelector(
-            ".sohbet-islem-buton"
-        );
-
-    const cop =
-        document.getElementById(
-            "mesajSecimSil"
-        );
-
-    if (ucNokta) {
-
-        ucNokta.style.display =
-            "none";
-
-    }
-
-    if (cop) {
-
-        cop.style.display =
-            "flex";
-
-    }
-
-}
-
-
-function mesajSecimHeaderKapat() {
-
-    const ucNokta =
-        document.querySelector(
-            ".sohbet-islem-buton"
-        );
-
-    const cop =
-        document.getElementById(
-            "mesajSecimSil"
-        );
-
-    if (cop) {
-
-        cop.style.display =
-            "none";
-
-    }
-
-    if (ucNokta) {
-
-        ucNokta.style.display =
-            "flex";
-
-    }
-
-}
-      
 
 </script>
 
