@@ -675,7 +675,7 @@ body {
 
 .mesaj-balonu {
     display: table;
-    max-width: 78%;        /* Uzun mesajlar için maksimum genişlik sınırı */
+    max-width: 78%;     
     padding: 5px 8px;
     border-radius: 10px;
     margin-bottom: 9px;
@@ -1212,10 +1212,7 @@ body {
 
     background: #e8f0fe !important;
 
-    border-color: #2563eb !important;
-
-    box-shadow:
-        0 0 0 2px rgba(37, 99, 235, .15);
+    box-shadow: none;
 
 }
 
@@ -2039,13 +2036,7 @@ function sohbetMesajlariniGoster() {
             
             balon.addEventListener(
                 "touchstart",
-                function (e) {
-            
-                    if (window.mesajSecimModu) {
-                        return;
-                    }
-            
-                    basmaZamani = Date.now();
+                function () {
             
                     basiliTimer =
                         setTimeout(
