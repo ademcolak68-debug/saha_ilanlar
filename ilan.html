@@ -2262,62 +2262,43 @@ function mesajBildiriminiGoster() {
         return;
     }
 
-    const mesajlarRef =
+    const bildirimRef =
         ref(
             database,
-            "mesajlar"
+            "bildirimSayaci"
         );
 
     onValue(
-        mesajlarRef,
+        bildirimRef,
         (snapshot) => {
 
             const veri =
                 snapshot.val() || {};
 
-            let toplamOkunmamis =
-                0;
-
-            Object.values(veri).forEach(
-                (ilanMesajlari) => {
-
-                    Object.values(
-                        ilanMesajlari || {}
-                    ).forEach(
-                        (mesaj) => {
-
-                            if (
-                                mesaj.alici === "yonetici" &&
-                                mesaj.okundu !== true
-                            ) {
-
-                                toplamOkunmamis++;
-
-                            }
-
-                        }
-                    );
-
-                }
-            );
+            const toplam =
+                Number(
+                    veri.okunmamis || 0
+                );
 
             console.log(
-                "BURGER CANLI OKUNMAMIŞ SAYISI:",
-                toplamOkunmamis
+                "BURGER MESAJ SAYISI:",
+                toplam
             );
 
             if (
-                toplamOkunmamis > 0
+                toplam > 0
             ) {
 
                 bildirim.style.display =
                     "block";
 
                 bildirim.textContent =
-                    toplamOkunmamis +
+                    toplam +
                     " yeni mesaj";
 
-            } else {
+            }
+
+            else {
 
                 bildirim.style.display =
                     "none";
@@ -2326,6 +2307,11 @@ function mesajBildiriminiGoster() {
                     "";
 
             }
+
+            console.log(
+                "BURGER EKRANA YAZILDI:",
+                bildirim.textContent
+            );
 
         }
     );
