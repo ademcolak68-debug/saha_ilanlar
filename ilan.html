@@ -2242,18 +2242,16 @@ function mesajlarimiAc() {
   =====================================================
   */
 
-  function mesajBildiriminiGoster() {
+function mesajBildiriminiGoster() {
 
     console.log(
         "BURGER FONKSİYONU ÇAĞRILDI"
     );
 
-
     const bildirim =
         document.getElementById(
             "mesajBildirim"
         );
-
 
     if (!bildirim) {
 
@@ -2262,72 +2260,74 @@ function mesajlarimiAc() {
         );
 
         return;
-
     }
 
-
-    const bildirimRef =
+    const mesajlarRef =
         ref(
             database,
-            "bildirimSayaci"
+            "mesajlar"
         );
 
-
     onValue(
-
-        bildirimRef,
-
+        mesajlarRef,
         (snapshot) => {
 
             const veri =
                 snapshot.val() || {};
 
+            let toplamOkunmamis =
+                0;
 
-            const toplam =
-                Number(
-                    veri.okunmamis || 0
-                );
+            Object.values(veri).forEach(
+                (ilanMesajlari) => {
 
+                    Object.values(
+                        ilanMesajlari || {}
+                    ).forEach(
+                        (mesaj) => {
 
-            console.log(
-                "BURGER MESAJ SAYISI:",
-                toplam
+                            if (
+                                mesaj.alici === "yonetici" &&
+                                mesaj.okundu !== true
+                            ) {
+
+                                toplamOkunmamis++;
+
+                            }
+
+                        }
+                    );
+
+                }
             );
 
+            console.log(
+                "BURGER CANLI OKUNMAMIŞ SAYISI:",
+                toplamOkunmamis
+            );
 
             if (
-                toplam > 0
+                toplamOkunmamis > 0
             ) {
 
                 bildirim.style.display =
                     "block";
 
-
                 bildirim.textContent =
-                    toplam +
+                    toplamOkunmamis +
                     " yeni mesaj";
 
-            }
-
-            else {
+            } else {
 
                 bildirim.style.display =
                     "none";
-
 
                 bildirim.textContent =
                     "";
 
             }
 
-
-            console.log(
-                "BURGER EKRANA YAZILDI:",
-                bildirim.textContent
-            );
-
         }
-
     );
 
 }
