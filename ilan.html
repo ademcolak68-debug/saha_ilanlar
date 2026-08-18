@@ -2262,32 +2262,51 @@ function mesajBildiriminiGoster() {
         return;
     }
 
-    const bildirimRef =
+    const mesajlarRef =
         ref(
             database,
-            "bildirimSayaci"
+            "mesajlar"
         );
 
     onValue(
-        bildirimRef,
+        mesajlarRef,
         (snapshot) => {
 
             const veri =
                 snapshot.val() || {};
 
-            const toplam =
-                Number(
-                    veri.okunmamis || 0
-                );
+            let toplam =
+                0;
+
+            Object.values(veri).forEach(
+                (ilanMesajlari) => {
+
+                    Object.values(
+                        ilanMesajlari || {}
+                    ).forEach(
+                        (mesaj) => {
+
+                            if (
+                                mesaj.alici === "yonetici" &&
+                                mesaj.okundu === false
+                            ) {
+
+                                toplam++;
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
 
             console.log(
-                "BURGER MESAJ SAYISI:",
+                "ANONİM BURGER MESAJ SAYISI:",
                 toplam
             );
 
-            if (
-                toplam > 0
-            ) {
+            if (toplam > 0) {
 
                 bildirim.style.display =
                     "block";
@@ -2296,9 +2315,7 @@ function mesajBildiriminiGoster() {
                     toplam +
                     " yeni mesaj";
 
-            }
-
-            else {
+            } else {
 
                 bildirim.style.display =
                     "none";
@@ -2308,16 +2325,18 @@ function mesajBildiriminiGoster() {
 
             }
 
-            console.log(
-                "BURGER EKRANA YAZILDI:",
-                bildirim.textContent
+        },
+        (error) => {
+
+            console.error(
+                "ANONİM BURGER OKUMA HATASI:",
+                error
             );
 
         }
     );
 
 }
-
 </script>
 	
 </body>
