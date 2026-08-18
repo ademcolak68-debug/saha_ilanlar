@@ -1233,8 +1233,6 @@ body {
 
     display: flex;
 
-    margin-bottom: 9px;
-
     border-radius: 6px;
 
     transition:
@@ -1249,7 +1247,7 @@ body {
 .mesaj-satir.mesaj-secili {
 
     background:
-        rgba(144, 238, 144, 0.25);
+        background: rgba(0, 0, 0, 0.08);
 }
       
 </style>
@@ -1378,6 +1376,17 @@ body {
             <i class="fa-solid fa-ellipsis"></i>
 
         </div>
+
+       <!-- MESAJ SEÇİMİNDE ÇÖP -->
+
+      <div id="mesajSecimSil"
+           class="mesaj-secim-sil"
+           onclick="mesajSilOnayAc()"
+           style="display:none;">
+      
+          <i class="fa-regular fa-trash-can"></i>
+      
+      </div>
 
     </div>
 
@@ -3898,6 +3907,18 @@ function mesajSec(
 
     }
 
+      if (
+          window.mesajSecilenler.size > 0
+      ) {
+      
+          mesajSecimHeaderAc();
+      
+      } else {
+      
+          mesajSecimHeaderKapat();
+      
+      }
+
 
     console.log(
         "SEÇİLİ MESAJLAR:",
@@ -3905,6 +3926,68 @@ function mesajSec(
             ...window.mesajSecilenler
         ]
     );
+
+}
+
+
+/* =====================================================
+   MESAJ SEÇİM HEADER
+===================================================== */
+
+function mesajSecimHeaderAc() {
+
+    const ucNokta =
+        document.querySelector(
+            ".sohbet-islem-buton"
+        );
+
+    const cop =
+        document.getElementById(
+            "mesajSecimSil"
+        );
+
+    if (ucNokta) {
+
+        ucNokta.style.display =
+            "none";
+
+    }
+
+    if (cop) {
+
+        cop.style.display =
+            "flex";
+
+    }
+
+}
+
+
+function mesajSecimHeaderKapat() {
+
+    const ucNokta =
+        document.querySelector(
+            ".sohbet-islem-buton"
+        );
+
+    const cop =
+        document.getElementById(
+            "mesajSecimSil"
+        );
+
+    if (cop) {
+
+        cop.style.display =
+            "none";
+
+    }
+
+    if (ucNokta) {
+
+        ucNokta.style.display =
+            "flex";
+
+    }
 
 }
       
