@@ -2325,46 +2325,25 @@ if (benimMesajim) {
                 alan.querySelectorAll(".mesaj-balonu").length
             );
 
-            /* =====================================================
-               MESAJ SATIRI OLUŞTUR
-            ===================================================== */
-            
-            const satir =
-                document.createElement(
-                    "div"
-                );
-            
-            satir.className =
-                "mesaj-satir";
-            
-            
-            /* Balonu satırın içine koy */
-            
-            satir.appendChild(
-                balon
-            );
-            
-            
-            /* Satırı sohbet alanına ekle */
-            
-            alan.appendChild(
-                satir
-            );
-
-           console.trace(
-                "BALON APPEND EDEN KOD:"
-            );
-
-            console.log(
-                "APPEND SONRASI:",
-                mesajID,
-                "EKRANDA:",
-                alan.querySelectorAll(".mesaj-balonu").length
-            );
-
-        }
-    );
-
+     /* =====================================================
+         MESAJ SATIRI
+      ===================================================== */
+      
+      const satir =
+          document.createElement("div");
+      
+      satir.className =
+          "mesaj-satir";
+      
+      
+      satir.appendChild(
+          balon
+      );
+      
+      
+      alan.appendChild(
+          satir
+      );
 
     alan.scrollTop =
         alan.scrollHeight;
