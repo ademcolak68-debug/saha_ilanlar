@@ -1091,36 +1091,55 @@ if (d.danisman && d.danisman.trim() !== "") {
 // ARA SADECE DANIŞMAN VARSA VAR
 // =====================================================
 
-if (window.aktifDanisman) {
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
 
-    danismanHtml = `
-        <div class="danisman-butonlari">
+const paylasimdanGeldi =
+    urlParams.get("paylasim") === "1";
 
-            <button onclick="danismanAra()">
-                Ara
-            </button>
 
-            <button onclick="danismanMesaj()">
-                Mesaj Gönder
-            </button>
+if (
+    paylasimdanGeldi
+) {
 
-        </div>
-    `;
+    if (window.aktifDanisman) {
+
+        danismanHtml = `
+            <div class="danisman-butonlari">
+
+                <button onclick="danismanAra()">
+                    Ara
+                </button>
+
+                <button onclick="danismanMesaj()">
+                    Mesaj Gönder
+                </button>
+
+            </div>
+        `;
+
+    } else {
+
+        danismanHtml = `
+            <div class="danisman-butonlari">
+
+                <button onclick="danismanMesaj()">
+                    Mesaj Gönder
+                </button>
+
+            </div>
+        `;
+
+    }
 
 } else {
 
-    danismanHtml = `
-        <div class="danisman-butonlari">
-
-            <button onclick="danismanMesaj()">
-                Mesaj Gönder
-            </button>
-
-        </div>
-    `;
+    danismanHtml = "";
 
 }
-
+		
 let ozellikler = "";
 
 if(d.fiyat){
