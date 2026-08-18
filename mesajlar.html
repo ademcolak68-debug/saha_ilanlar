@@ -656,6 +656,16 @@ body {
     overflow-y: auto;
 
     padding: 15px 12px 20px;
+
+    background-color: #efeae2;
+
+    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+
+    background-repeat: repeat;
+
+    background-position: center top;
+
+    background-size: auto;
 }
 
 
@@ -690,53 +700,34 @@ body {
 ===================================================== */
 
 .mesaj-gelen {
-
+    position: relative; /* ::after için gerekli */
     background: #ffffff;
-
     color: #222222;
-
     margin-right: auto;
-
     margin-left: 0;
-
     border: 1px solid #eeeeee;
-
-    border-bottom-left-radius: 0;
-
+    border-top-left-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
 }
 
-
 /* =====================================================
-   SOL ALT ÇIKINTI
-   Balonun altından direkt devam eder
+   SOL ÜST ÇIKINTI (Gelen Mesaj)
 ===================================================== */
 
 .mesaj-gelen::after {
-
     content: "";
-
     position: absolute;
-
-    left: -1px;
-
-    bottom: -7px;
-
+    left: -7px;
+    top: 0px;
     width: 8px;
-
     height: 8px;
-
     background: #ffffff;
-
+    border-top: 1px solid #eeeeee;
     border-left: 1px solid #eeeeee;
-
-    border-bottom: 1px solid #eeeeee;
-
     clip-path: polygon(
-        0 0,
         100% 0,
-        0 100%
+        0 0,
+        100% 100%
     );
-
 }
 
 
@@ -745,47 +736,31 @@ body {
 ===================================================== */
 
 .mesaj-giden {
-
+    position: relative; /* ::after için gerekli */
     background: #bff4b0;
-
     color: #222222;
-
     margin-left: auto;
-
     margin-right: 0;
-
-    border-bottom-right-radius: 0;
-
+    border-bottom-right-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
 }
 
-
 /* =====================================================
-   SAĞ ALT ÇIKINTI
-   Balonun altından direkt devam eder
+   SAĞ ALT ÇIKINTI (Giden Mesaj)
 ===================================================== */
 
 .mesaj-giden::after {
-
     content: "";
-
     position: absolute;
-
-    right: -1px;
-
-    bottom: -7px;
-
+    right: -7px;
+    bottom: 0px;
     width: 8px;
-
     height: 8px;
-
     background: #bff4b0;
-
     clip-path: polygon(
         0 0,
-        100% 0,
-        100% 100%
+        100% 100%,
+        0 100%
     );
-
 }
 
 
