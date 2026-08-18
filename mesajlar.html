@@ -684,6 +684,12 @@ body {
     font-weight: normal;
     word-wrap: break-word;
     position: relative;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+
 }
 
 /* =====================================================
@@ -1216,11 +1222,7 @@ body {
 
 }
       
-.mesaj-balonu {
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-}
+
       
       
 </style>
@@ -2042,17 +2044,29 @@ function sohbetMesajlariniGoster() {
             
             balon.addEventListener(
                 "touchstart",
-                function () {
+                function (e) {
             
                     uzunBasildi = false;
             
                     /*
-                     * Seçim modu açıksa
-                     * uzun basmaya gerek yok.
+                     * SEÇİM MODU AÇIKSA:
+                     * Uzun basma yok.
+                     * Normal dokunma ile seçilecek.
                      */
+            
                     if (window.mesajSecimModu) {
+            
+                        e.preventDefault();
+            
                         return;
+            
                     }
+            
+            
+                    /*
+                     * İlk mesaj:
+                     * uzun basma gerekiyor.
+                     */
             
                     basiliTimer =
                         setTimeout(
@@ -2088,9 +2102,10 @@ function sohbetMesajlariniGoster() {
                         basiliTimer
                     );
             
+            
                     /*
                      * Seçim modu açıksa
-                     * normal dokunma ile seç / seçimden çıkar.
+                     * normal dokunmayı seçim olarak kabul et.
                      */
             
                     if (
@@ -2115,7 +2130,7 @@ function sohbetMesajlariniGoster() {
             
             
             /* =====================================================
-               PARMAK HAREKET ETTİ
+               PARMAK HAREKET EDERSE
             ===================================================== */
             
             balon.addEventListener(
