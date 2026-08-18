@@ -2245,93 +2245,92 @@ function mesajlarimiAc() {
   function mesajBildiriminiGoster() {
 
     console.log(
-      "BURGER FONKSİYONU ÇAĞRILDI"
+        "BURGER FONKSİYONU ÇAĞRILDI"
     );
 
 
     const bildirim =
-      document.getElementById(
-        "mesajBildirim"
-      );
+        document.getElementById(
+            "mesajBildirim"
+        );
 
 
     if (!bildirim) {
 
-      console.log(
-        "mesajBildirim bulunamadı."
-      );
+        console.log(
+            "mesajBildirim bulunamadı."
+        );
 
-      return;
+        return;
 
     }
 
 
     const bildirimRef =
-      ref(
-        database,
-        "bildirimSayaci"
-      );
+        ref(
+            database,
+            "bildirimSayaci"
+        );
 
 
     onValue(
 
-      bildirimRef,
+        bildirimRef,
 
-      (snapshot) => {
+        (snapshot) => {
 
-        const veri =
-          snapshot.val() || {};
-
-
-        const toplam =
-          Number(
-            veri.okunmamis || 0
-          );
-
-		console.log(
-		    "CANLI BİLDİRİM GÜNCELLENDİ:",
-		    toplam
-		);
-        console.log(
-          "BURGER MESAJ SAYISI:",
-          toplam
-        );
+            const veri =
+                snapshot.val() || {};
 
 
-        if (
-          toplam > 0
-        ) {
-
-          bildirim.style.display =
-            "block";
+            const toplam =
+                Number(
+                    veri.okunmamis || 0
+                );
 
 
-          bildirim.textContent =
-            toplam +
-            " yeni mesaj";
+            console.log(
+                "BURGER MESAJ SAYISI:",
+                toplam
+            );
+
+
+            if (
+                toplam > 0
+            ) {
+
+                bildirim.style.display =
+                    "block";
+
+
+                bildirim.textContent =
+                    toplam +
+                    " yeni mesaj";
+
+            }
+
+            else {
+
+                bildirim.style.display =
+                    "none";
+
+
+                bildirim.textContent =
+                    "";
+
+            }
+
+
+            console.log(
+                "BURGER EKRANA YAZILDI:",
+                bildirim.textContent
+            );
 
         }
-
-        else {
-
-          bildirim.style.display =
-            "none";
-
-
-          bildirim.textContent =
-            "";
-
-        }
-		  console.log(
-          "BURGER EKRANA YAZILDI:",
-          bildirim.textContent
-        );
-
-      }
 
     );
 
-  }
+}
 
 </script>
 	
