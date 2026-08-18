@@ -2071,29 +2071,21 @@ function sohbetMesajlariniGoster() {
             balon.dataset.mesajId = mesajID;
             
             let basiliTimer = null;
-            let uzunBasildi = false;
             
             
             /* =====================================================
-               DOKUNMAYA BAŞLA
+               BASILDI
             ===================================================== */
             
             balon.addEventListener(
-                "touchstart",
+                "pointerdown",
                 function (e) {
-            
-                    /*
-                     * Metin seçme / tarayıcı hareketlerini engelle
-                     */
             
                     e.preventDefault();
             
-                    uzunBasildi = false;
-            
-            
                     /*
                      * SEÇİM MODU AÇIKSA
-                     * normal dokunma ile seç / kaldır
+                     * normal dokunma = seç / kaldır
                      */
             
                     if (window.mesajSecimModu) {
@@ -2108,15 +2100,13 @@ function sohbetMesajlariniGoster() {
             
             
                     /*
-                     * İLK SEÇİM
-                     * uzun basma gerekir
+                     * İLK MESAJ
+                     * 500 ms basılı tut
                      */
             
                     basiliTimer =
                         setTimeout(
                             function () {
-            
-                                uzunBasildi = true;
             
                                 mesajSec(
                                     balon,
@@ -2127,47 +2117,54 @@ function sohbetMesajlariniGoster() {
                             500
                         );
             
-                },
-                {
-                    passive: false
                 }
             );
             
             
             /* =====================================================
-               PARMAĞI BIRAK
+               BIRAKILDI
             ===================================================== */
             
             balon.addEventListener(
-                "touchend",
+                "pointerup",
                 function () {
             
                     clearTimeout(
                         basiliTimer
                     );
             
-                },
-                {
-                    passive: false
                 }
             );
             
             
             /* =====================================================
-               PARMAK HAREKETİ
+               HAREKET
             ===================================================== */
             
             balon.addEventListener(
-                "touchmove",
+                "pointermove",
                 function () {
             
                     clearTimeout(
                         basiliTimer
                     );
             
-                },
-                {
-                    passive: false
+                }
+            );
+            
+            
+            /* =====================================================
+               İPTAL
+            ===================================================== */
+            
+            balon.addEventListener(
+                "pointercancel",
+                function () {
+            
+                    clearTimeout(
+                        basiliTimer
+                    );
+            
                 }
             );
 
