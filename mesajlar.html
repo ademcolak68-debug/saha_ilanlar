@@ -1355,6 +1355,17 @@ body {
 
         </div>
 
+          <!-- MESAJ SEÇİMİNDE ÇÖP -->
+
+        <div id="mesajSecimSil"
+             class="mesaj-secim-sil"
+             onclick="mesajSilOnayAc()"
+             style="display:none;">
+
+            <i class="fa-regular fa-trash-can"></i>
+
+        </div>
+
     </div>
 
 
@@ -1972,6 +1983,22 @@ function mesajSec(balon, mesajID) {
         window.mesajSecimModu = false;
 
     }
+
+      /* =====================================================
+         HEADER DEĞİŞTİR
+      ===================================================== */
+
+      if (
+          window.mesajSecilenler.size > 0
+      ) {
+      
+          mesajSecimHeaderAc();
+      
+      } else {
+      
+          mesajSecimHeaderKapat();
+      
+      }
 
 
     console.log(
