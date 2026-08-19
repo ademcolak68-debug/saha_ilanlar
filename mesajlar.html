@@ -1245,6 +1245,81 @@ body {
     z-index: 10;
 }
 
+ /* =====================================================
+   SEÇİLEN MESAJLARI HERKESTEN SİL — ONAY PENCERESİ
+===================================================== */
+
+.mesaj-sil-onay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    z-index: 99999;
+}
+
+.mesaj-sil-onay-kutu {
+    width: calc(100% - 40px);
+    max-width: 340px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+.mesaj-sil-onay-baslik {
+    font-size: 17px;
+    font-weight: bold;
+    color: #222222;
+
+    margin-bottom: 10px;
+}
+
+.mesaj-sil-onay-aciklama {
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666666;
+
+    margin-bottom: 20px;
+}
+
+.mesaj-sil-onay-butonlar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.mesaj-sil-onay-butonlar button {
+    border: none;
+    border-radius: 8px;
+
+    padding: 9px 14px;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.mesaj-sil-onay-butonlar button:first-child {
+    background: #eeeeee;
+    color: #333333;
+}
+
+.mesaj-sil-onay-butonlar button:last-child {
+    background: #dc2626;
+    color: #ffffff;
+}
+
 </style>
 
 </head>
@@ -1375,7 +1450,7 @@ body {
 
             <div id="mesajSecimSil"
                  class="mesaj-secim-sil"
-                 onclick="mesajSecilenleriSil()"
+                 onclick="mesajSilOnayAc()"
                  style="display:none;">
             
                 <i class="fa-regular fa-trash-can"></i>
@@ -1487,6 +1562,46 @@ body {
     </div>
 
 </div>
+
+
+      <!-- =====================================================
+           SEÇİLEN MESAJLARI HERKESTEN SİL — ONAY PENCERESİ
+      ===================================================== -->
+      
+      <div id="mesajSilOnay"
+           class="mesaj-sil-onay"
+           style="display:none;">
+      
+          <div class="mesaj-sil-onay-kutu">
+      
+              <div class="mesaj-sil-onay-baslik">
+                  Seçilen mesajları herkesten sil?
+              </div>
+      
+              <div class="mesaj-sil-onay-aciklama">
+                  Bu mesajlar hem sizin hem karşı tarafın
+                  sohbetinden silinecek.
+              </div>
+      
+              <div class="mesaj-sil-onay-butonlar">
+      
+                  <button
+                      type="button"
+                      onclick="mesajSilOnayKapat()">
+                      Vazgeç
+                  </button>
+      
+                  <button
+                      type="button"
+                      onclick="mesajSilOnayla()">
+                      Herkesten sil
+                  </button>
+      
+              </div>
+      
+          </div>
+      
+      </div>
 
 
 <!-- =====================================================
@@ -1989,7 +2104,133 @@ function mesajSec(balon, mesajID) {
 
     }
 
-      /* =====================================================
+/* =====================================================
+   SEÇİLEN MESAJLARI SİL
+===================================================== */
+
+/* =====================================================
+   MESAJ SEÇ / SEÇİMİ KALDIR
+===================================================== */
+
+function mesajSec(balon, mesajID) {
+
+    window.mesajSecimModu = true;
+
+    if (window.mesajSecilenler.has(mesajID)) {
+
+        /* SEÇİMİ KALDIR */
+
+        window.mesajSecilenler.delete(mesajID);
+
+        balon.classList.remove(
+            "mesaj-secili"
+        );
+
+    } else {
+
+        /* MESAJI SEÇ */
+
+        window.mesajSecilenler.add(mesajID);
+
+        balon.classList.add(
+            "mesaj-secili"
+        );
+
+    }
+
+
+    /* Hiç seçim kalmadıysa seçim modunu kapat */
+
+    if (
+        window.mesajSecilenler.size === 0
+    ) {
+
+        window.mesajSecimModu = false;
+
+    }
+
+
+    /* =====================================================
+       HEADER — SEÇİM DURUMU
+    ===================================================== */
+
+    if (
+        window.mesajSecilenler.size > 0
+    ) {
+
+        const irtibat =
+            document.querySelector(
+                ".sohbet-irtibat"
+            );
+
+        const ucNokta =
+            document.querySelector(
+                ".sohbet-islem-buton"
+            );
+
+        const cop =
+            document.getElementById(
+                "mesajSecimSil"
+            );
+
+
+        if (irtibat) {
+            irtibat.style.display = "none";
+        }
+
+        if (ucNokta) {
+            ucNokta.style.display = "none";
+        }
+
+        if (cop) {
+            cop.style.display = "flex";
+        }
+
+
+    } else {
+
+        const irtibat =
+            document.querySelector(
+                ".sohbet-irtibat"
+            );
+
+        const ucNokta =
+            document.querySelector(
+                ".sohbet-islem-buton"
+            );
+
+        const cop =
+            document.getElementById(
+                "mesajSecimSil"
+            );
+
+
+        if (irtibat) {
+            irtibat.style.display = "flex";
+        }
+
+        if (ucNokta) {
+            ucNokta.style.display = "flex";
+        }
+
+        if (cop) {
+            cop.style.display = "none";
+        }
+
+    }
+
+
+    console.log(
+        "SEÇİLİ MESAJLAR:",
+        [
+            ...window.mesajSecilenler
+        ]
+    );
+
+}
+
+
+/* =====================================================
    SEÇİLEN MESAJLARI SİL
 ===================================================== */
 
@@ -2003,14 +2244,6 @@ window.mesajSecilenleriSil = async function () {
     ) {
         return;
     }
-
-
-    const onay =
-        confirm(
-            "Seçilen mesajları silmek istiyor musunuz?"
-        );
-
-    if (!onay) return;
 
 
     try {
@@ -2096,87 +2329,77 @@ window.mesajSecilenleriSil = async function () {
 
 };
 
-    /* Hiç seçim kalmadıysa seçim modunu kapat */
+
+/* =====================================================
+   ÖZEL SİLME ONAY PENCERESİNİ AÇ
+===================================================== */
+
+window.mesajSilOnayAc = function () {
 
     if (
+        !window.mesajSecilenler ||
         window.mesajSecilenler.size === 0
     ) {
-
-        window.mesajSecimModu = false;
-
+        return;
     }
 
-      if (window.mesajSecilenler.size > 0) {
 
-    const irtibat =
-        document.querySelector(
-            ".sohbet-irtibat"
-        );
-
-    const ucNokta =
-        document.querySelector(
-            ".sohbet-islem-buton"
-        );
-
-    const cop =
+    const onay =
         document.getElementById(
-            "mesajSecimSil"
+            "mesajSilOnay"
         );
 
 
-    if (irtibat) {
-        irtibat.style.display = "none";
-    }
-
-    if (ucNokta) {
-        ucNokta.style.display = "none";
-    }
-
-    if (cop) {
-        cop.style.display = "flex";
-    }
+    if (!onay) return;
 
 
-} else {
+    onay.style.display = "flex";
 
-    const irtibat =
-        document.querySelector(
-            ".sohbet-irtibat"
-        );
+};
 
-    const ucNokta =
-        document.querySelector(
-            ".sohbet-islem-buton"
-        );
 
-    const cop =
+/* =====================================================
+   ÖZEL SİLME ONAY PENCERESİNİ KAPAT
+===================================================== */
+
+window.mesajSilOnayKapat = function () {
+
+    const onay =
         document.getElementById(
-            "mesajSecimSil"
+            "mesajSilOnay"
         );
 
 
-    if (irtibat) {
-        irtibat.style.display = "flex";
+    if (!onay) return;
+
+
+    onay.style.display = "none";
+
+};
+
+
+/* =====================================================
+   HERKESTEN SİL — ONAYLANDI
+===================================================== */
+
+window.mesajSilOnayla = function () {
+
+    const onay =
+        document.getElementById(
+            "mesajSilOnay"
+        );
+
+
+    if (onay) {
+
+        onay.style.display = "none";
+
     }
 
-    if (ucNokta) {
-        ucNokta.style.display = "flex";
-    }
 
-    if (cop) {
-        cop.style.display = "none";
-    }
+    mesajSecilenleriSil();
 
-}
-
-    console.log(
-        "SEÇİLİ MESAJLAR:",
-        [
-            ...window.mesajSecilenler
-        ]
-    );
-
-}
+};
 
 /* =====================================================
    MESAJLARI GÖSTER
