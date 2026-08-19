@@ -2078,36 +2078,6 @@ window.mesajSecimModu = false;
    MESAJ SEÇ / SEÇİMİ KALDIR
 ===================================================== */
 
-function mesajSec(balon, mesajID) {
-
-    window.mesajSecimModu = true;
-
-    if (window.mesajSecilenler.has(mesajID)) {
-
-        /* SEÇİMİ KALDIR */
-
-        window.mesajSecilenler.delete(mesajID);
-
-        balon.classList.remove(
-            "mesaj-secili"
-        );
-
-    } else {
-
-        /* MESAJI SEÇ */
-
-        window.mesajSecilenler.add(mesajID);
-
-        balon.classList.add(
-            "mesaj-secili"
-        );
-
-    }
-
-/* =====================================================
-   SEÇİLEN MESAJLARI SİL
-===================================================== */
-
 /* =====================================================
    MESAJ SEÇ / SEÇİMİ KALDIR
 ===================================================== */
@@ -2151,7 +2121,7 @@ function mesajSec(balon, mesajID) {
 
 
     /* =====================================================
-       HEADER — SEÇİM DURUMU
+       HEADER SEÇİM DURUMU
     ===================================================== */
 
     if (
@@ -2331,7 +2301,7 @@ window.mesajSecilenleriSil = async function () {
 
 
 /* =====================================================
-   ÖZEL SİLME ONAY PENCERESİNİ AÇ
+   ÖZEL ONAY PENCERESİNİ AÇ
 ===================================================== */
 
 window.mesajSilOnayAc = function () {
@@ -2343,15 +2313,12 @@ window.mesajSilOnayAc = function () {
         return;
     }
 
-
     const onay =
         document.getElementById(
             "mesajSilOnay"
         );
 
-
     if (!onay) return;
-
 
     onay.style.display = "flex";
 
@@ -2359,7 +2326,7 @@ window.mesajSilOnayAc = function () {
 
 
 /* =====================================================
-   ÖZEL SİLME ONAY PENCERESİNİ KAPAT
+   ÖZEL ONAY PENCERESİNİ KAPAT
 ===================================================== */
 
 window.mesajSilOnayKapat = function () {
@@ -2369,9 +2336,7 @@ window.mesajSilOnayKapat = function () {
             "mesajSilOnay"
         );
 
-
     if (!onay) return;
-
 
     onay.style.display = "none";
 
@@ -2379,7 +2344,7 @@ window.mesajSilOnayKapat = function () {
 
 
 /* =====================================================
-   HERKESTEN SİL — ONAYLANDI
+   HERKESTEN SİL — ONAY
 ===================================================== */
 
 window.mesajSilOnayla = function () {
@@ -2389,13 +2354,9 @@ window.mesajSilOnayla = function () {
             "mesajSilOnay"
         );
 
-
     if (onay) {
-
         onay.style.display = "none";
-
     }
-
 
     mesajSecilenleriSil();
 
