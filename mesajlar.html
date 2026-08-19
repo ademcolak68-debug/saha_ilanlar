@@ -1641,7 +1641,13 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
-
+import {
+    getMessaging,
+    getToken,
+    onMessage
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.1/firebase-messaging.js";
 
 /* =====================================================
    FIREBASE AYARLARI
@@ -1678,6 +1684,15 @@ const firebaseConfig = {
 
 const app =
     initializeApp(firebaseConfig);
+
+
+const messaging =
+    getMessaging(app);
+
+console.log(
+    "FIREBASE MESSAGING HAZIR:",
+    messaging
+);
 
 
 const auth =
