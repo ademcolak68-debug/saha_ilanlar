@@ -684,6 +684,15 @@ body {
     font-weight: normal;
     word-wrap: break-word;
     position: relative;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+}
+
+.mesaj-balonu.mesaj-secili {
+    background: rgba(40, 40, 40, 0.75) !important;
 }
 
 /* =====================================================
@@ -2068,23 +2077,25 @@ function sohbetMesajlariniGoster() {
                         : "mesaj-gelen"
                 );
 
-           /* =====================================================
+          /* =====================================================
                BALON MESAJ SEÇİMİ
             ===================================================== */
             
             let basiliTimer = null;
-            let uzunBasildi = false;
+            let parmakHareketEtti = false;
             
             
             /* =====================================================
-               DOKUNMAYA BAŞLA
+               BASILI TUT
             ===================================================== */
             
             balon.addEventListener(
                 "touchstart",
-                function () {
+                function (e) {
             
-                    uzunBasildi = false;
+                    e.preventDefault();
+            
+                    parmakHareketEtti = false;
             
                     clearTimeout(
                         basiliTimer
@@ -2092,7 +2103,7 @@ function sohbetMesajlariniGoster() {
             
             
                     /* Seçim modu açıksa
-                       tek dokunma ile seç */
+                       normal dokunma ile seç */
             
                     if (window.mesajSecimModu) {
             
@@ -2101,19 +2112,20 @@ function sohbetMesajlariniGoster() {
                     }
             
             
-                    /* İlk seçim için
-                       500 ms basılı tut */
+                    /* İlk seçim */
             
                     basiliTimer =
                         setTimeout(
                             function () {
             
-                                uzunBasildi = true;
+                                if (!parmakHareketEtti) {
             
-                                mesajSec(
-                                    balon,
-                                    mesajID
-                                );
+                                    mesajSec(
+                                        balon,
+                                        mesajID
+                                    );
+            
+                                }
             
                             },
                             500
@@ -2121,7 +2133,7 @@ function sohbetMesajlariniGoster() {
             
                 },
                 {
-                    passive: true
+                    passive: false
                 }
             );
             
@@ -2132,19 +2144,23 @@ function sohbetMesajlariniGoster() {
             
             balon.addEventListener(
                 "touchend",
-                function () {
+                function (e) {
+            
+                    e.preventDefault();
             
                     clearTimeout(
                         basiliTimer
                     );
             
             
-                    /* Seçim modu açıksa
-                       tek dokunma ile seç */
+                    /*
+                     * Seçim modu açıksa
+                     * kısa dokunma = seç / kaldır
+                     */
             
                     if (
                         window.mesajSecimModu &&
-                        !uzunBasildi
+                        !parmakHareketEtti
                     ) {
             
                         mesajSec(
@@ -2156,7 +2172,7 @@ function sohbetMesajlariniGoster() {
             
                 },
                 {
-                    passive: true
+                    passive: false
                 }
             );
             
@@ -2167,7 +2183,9 @@ function sohbetMesajlariniGoster() {
             
             balon.addEventListener(
                 "touchmove",
-                function () {
+                function (e) {
+            
+                    parmakHareketEtti = true;
             
                     clearTimeout(
                         basiliTimer
@@ -2176,6 +2194,22 @@ function sohbetMesajlariniGoster() {
                 },
                 {
                     passive: true
+                }
+            );
+            
+            
+            /* =====================================================
+               İPTAL
+            ===================================================== */
+            
+            balon.addEventListener(
+                "touchcancel",
+                function () {
+            
+                    clearTimeout(
+                        basiliTimer
+                    );
+            
                 }
             );
 
