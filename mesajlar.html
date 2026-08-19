@@ -1903,6 +1903,65 @@ function mesajlariDinle() {
 }
 
 /* =====================================================
+   MESAJ SEÇİM SİSTEMİ
+===================================================== */
+
+window.mesajSecilenler = new Set();
+
+window.mesajSecimModu = false;
+
+/* =====================================================
+   MESAJ SEÇ / SEÇİMİ KALDIR
+===================================================== */
+
+function mesajSec(balon, mesajID) {
+
+    window.mesajSecimModu = true;
+
+    if (window.mesajSecilenler.has(mesajID)) {
+
+        /* SEÇİMİ KALDIR */
+
+        window.mesajSecilenler.delete(mesajID);
+
+        balon.classList.remove(
+            "mesaj-secili"
+        );
+
+    } else {
+
+        /* MESAJI SEÇ */
+
+        window.mesajSecilenler.add(mesajID);
+
+        balon.classList.add(
+            "mesaj-secili"
+        );
+
+    }
+
+
+    /* Hiç seçim kalmadıysa seçim modunu kapat */
+
+    if (
+        window.mesajSecilenler.size === 0
+    ) {
+
+        window.mesajSecimModu = false;
+
+    }
+
+
+    console.log(
+        "SEÇİLİ MESAJLAR:",
+        [
+            ...window.mesajSecilenler
+        ]
+    );
+
+}
+
+/* =====================================================
    MESAJLARI GÖSTER
 ===================================================== */
 
@@ -2008,6 +2067,117 @@ function sohbetMesajlariniGoster() {
                         ? "mesaj-giden"
                         : "mesaj-gelen"
                 );
+
+           /* =====================================================
+               BALON MESAJ SEÇİMİ
+            ===================================================== */
+            
+            let basiliTimer = null;
+            let uzunBasildi = false;
+            
+            
+            /* =====================================================
+               DOKUNMAYA BAŞLA
+            ===================================================== */
+            
+            balon.addEventListener(
+                "touchstart",
+                function () {
+            
+                    uzunBasildi = false;
+            
+                    clearTimeout(
+                        basiliTimer
+                    );
+            
+            
+                    /* Seçim modu açıksa
+                       tek dokunma ile seç */
+            
+                    if (window.mesajSecimModu) {
+            
+                        return;
+            
+                    }
+            
+            
+                    /* İlk seçim için
+                       500 ms basılı tut */
+            
+                    basiliTimer =
+                        setTimeout(
+                            function () {
+            
+                                uzunBasildi = true;
+            
+                                mesajSec(
+                                    balon,
+                                    mesajID
+                                );
+            
+                            },
+                            500
+                        );
+            
+                },
+                {
+                    passive: true
+                }
+            );
+            
+            
+            /* =====================================================
+               PARMAĞI BIRAK
+            ===================================================== */
+            
+            balon.addEventListener(
+                "touchend",
+                function () {
+            
+                    clearTimeout(
+                        basiliTimer
+                    );
+            
+            
+                    /* Seçim modu açıksa
+                       tek dokunma ile seç */
+            
+                    if (
+                        window.mesajSecimModu &&
+                        !uzunBasildi
+                    ) {
+            
+                        mesajSec(
+                            balon,
+                            mesajID
+                        );
+            
+                    }
+            
+                },
+                {
+                    passive: true
+                }
+            );
+            
+            
+            /* =====================================================
+               PARMAK HAREKET EDERSE
+            ===================================================== */
+            
+            balon.addEventListener(
+                "touchmove",
+                function () {
+            
+                    clearTimeout(
+                        basiliTimer
+                    );
+            
+                },
+                {
+                    passive: true
+                }
+            );
 
             const metin =
                 document.createElement(
