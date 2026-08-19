@@ -2170,7 +2170,11 @@ function sohbetMesajlariniGoster() {
             let basiliTimer = null;
             let parmakHareketEtti = false;
             
+            let basiliTimer = null;
+            let parmakHareketEtti = false;
             
+            let baslangicX = 0;
+            let baslangicY = 0;
             /* =====================================================
                BASILI TUT
             ===================================================== */
@@ -2180,8 +2184,14 @@ function sohbetMesajlariniGoster() {
                 function (e) {
             
                     e.preventDefault();
-            
-                    parmakHareketEtti = false;
+
+                        parmakHareketEtti = false;
+                        
+                        baslangicX =
+                            e.touches[0].clientX;
+                        
+                        baslangicY =
+                            e.touches[0].clientY;
             
                     clearTimeout(
                         basiliTimer
@@ -2229,36 +2239,41 @@ function sohbetMesajlariniGoster() {
             ===================================================== */
             
             balon.addEventListener(
-                "touchend",
+                "touchmove",
                 function (e) {
             
-                    e.preventDefault();
+                    const dokunma =
+                        e.touches[0];
             
-                    clearTimeout(
-                        basiliTimer
-                    );
+                    const farkX =
+                        Math.abs(
+                            dokunma.clientX -
+                            baslangicX
+                        );
             
+                    const farkY =
+                        Math.abs(
+                            dokunma.clientY -
+                            baslangicY
+                        );
             
-                    /*
-                     * Seçim modu açıksa
-                     * kısa dokunma = seç / kaldır
-                     */
             
                     if (
-                        window.mesajSecimModu &&
-                        !parmakHareketEtti
+                        farkX > 15 ||
+                        farkY > 15
                     ) {
             
-                        mesajSec(
-                            balon,
-                            mesajID
+                        parmakHareketEtti = true;
+            
+                        clearTimeout(
+                            basiliTimer
                         );
             
                     }
             
                 },
                 {
-                    passive: false
+                    passive: true
                 }
             );
             
