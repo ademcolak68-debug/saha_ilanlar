@@ -1990,6 +1990,112 @@ function mesajSec(balon, mesajID) {
 
     }
 
+      /* =====================================================
+   SEÇİLEN MESAJLARI SİL
+===================================================== */
+
+window.mesajSecilenleriSil = async function () {
+
+    if (!gelenIlanID) return;
+
+    if (
+        !window.mesajSecilenler ||
+        window.mesajSecilenler.size === 0
+    ) {
+        return;
+    }
+
+
+    const onay =
+        confirm(
+            "Seçilen mesajları silmek istiyor musunuz?"
+        );
+
+    if (!onay) return;
+
+
+    try {
+
+        const silinecekler = [
+            ...window.mesajSecilenler
+        ];
+
+
+        for (const mesajID of silinecekler) {
+
+            await remove(
+                ref(
+                    database,
+                    "mesajlar/" +
+                    gelenIlanID +
+                    "/" +
+                    mesajID
+                )
+            );
+
+        }
+
+
+        /* Seçim listesini temizle */
+
+        window.mesajSecilenler.clear();
+
+        window.mesajSecimModu = false;
+
+
+        console.log(
+            "SEÇİLEN MESAJLAR SİLİNDİ:",
+            silinecekler
+        );
+
+
+        /* Header'ı eski haline getir */
+
+        const irtibat =
+            document.querySelector(
+                ".sohbet-irtibat"
+            );
+
+        const ucNokta =
+            document.querySelector(
+                ".sohbet-islem-buton"
+            );
+
+        const cop =
+            document.getElementById(
+                "mesajSecimSil"
+            );
+
+
+        if (irtibat) {
+            irtibat.style.display = "flex";
+        }
+
+        if (ucNokta) {
+            ucNokta.style.display = "flex";
+        }
+
+        if (cop) {
+            cop.style.display = "none";
+        }
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "SEÇİLEN MESAJLARI SİLME HATASI:",
+            error
+        );
+
+        alert(
+            "Seçilen mesajlar silinemedi."
+        );
+
+    }
+
+};
 
     /* Hiç seçim kalmadıysa seçim modunu kapat */
 
