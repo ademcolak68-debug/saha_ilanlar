@@ -2199,10 +2199,15 @@ function sohbetMesajlariniGoster() {
                        normal dokunma ile seç */
             
                     if (window.mesajSecimModu) {
-            
-                        return;
-            
-                    }
+
+                            mesajSec(
+                                balon,
+                                mesajID
+                            );
+                        
+                            return;
+                        
+                        }
             
             
                     /* İlk seçim */
