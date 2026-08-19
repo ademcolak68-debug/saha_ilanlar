@@ -674,7 +674,7 @@ body {
 ===================================================== */
 
 .mesaj-balonu {
-    display: table;
+    display: inline-block;
     max-width: 78%;        /* Uzun mesajlar için maksimum genişlik sınırı */
     padding: 5px 8px;
     border-radius: 10px;
@@ -692,7 +692,7 @@ body {
 }
 
 .mesaj-balonu.mesaj-secili {
-    background: rgba(40, 40, 40, 0.75) !important;
+    background: rgba(40, 40, 40, 0.50) !important;
 }
 
 /* =====================================================
@@ -1226,7 +1226,24 @@ body {
 
 }
 
+.mesaj-secim-sil {
+    display: none;
+    align-items: center;
+    justify-content: center;
 
+    position: absolute;
+    left: 58px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #ffffff;
+    font-size: 23px;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
 
 </style>
 
