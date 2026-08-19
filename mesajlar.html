@@ -1984,22 +1984,68 @@ function mesajSec(balon, mesajID) {
 
     }
 
-      /* =====================================================
-         HEADER DEĞİŞTİR
-      ===================================================== */
+      if (window.mesajSecilenler.size > 0) {
 
-      if (
-          window.mesajSecilenler.size > 0
-      ) {
-      
-          mesajSecimHeaderAc();
-      
-      } else {
-      
-          mesajSecimHeaderKapat();
-      
-      }
+    const irtibat =
+        document.querySelector(
+            ".sohbet-irtibat"
+        );
 
+    const ucNokta =
+        document.querySelector(
+            ".sohbet-islem-buton"
+        );
+
+    const cop =
+        document.getElementById(
+            "mesajSecimSil"
+        );
+
+
+    if (irtibat) {
+        irtibat.style.display = "none";
+    }
+
+    if (ucNokta) {
+        ucNokta.style.display = "none";
+    }
+
+    if (cop) {
+        cop.style.display = "flex";
+    }
+
+
+} else {
+
+    const irtibat =
+        document.querySelector(
+            ".sohbet-irtibat"
+        );
+
+    const ucNokta =
+        document.querySelector(
+            ".sohbet-islem-buton"
+        );
+
+    const cop =
+        document.getElementById(
+            "mesajSecimSil"
+        );
+
+
+    if (irtibat) {
+        irtibat.style.display = "flex";
+    }
+
+    if (ucNokta) {
+        ucNokta.style.display = "flex";
+    }
+
+    if (cop) {
+        cop.style.display = "none";
+    }
+
+}
 
     console.log(
         "SEÇİLİ MESAJLAR:",
