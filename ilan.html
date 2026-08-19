@@ -922,16 +922,48 @@ font-weight:bold;
     </span>
 
     <span
-        id="mesajBildirim"
+    id="mesajBildirim"
+    style="
+        display:none;
+        position:relative;
+        width:24px;
+        height:24px;
+        margin-left:auto;
+        margin-right:8px;
+        flex-shrink:0;
+    ">
+
+    <i
+        class="fa-brands fa-whatsapp"
         style="
-            display:none;
-            font-size:12px;
-            color:#2563eb;
-            margin-left:auto;
-            margin-right:8px;
-            white-space:nowrap;
+            font-size:21px;
+            color:#25D366;
+        ">
+    </i>
+
+    <span
+        id="mesajBildirimSayi"
+        style="
+            position:absolute;
+            top:-7px;
+            right:-7px;
+            min-width:16px;
+            height:16px;
+            padding:0 4px;
+            border-radius:50%;
+            background:#ff3b30;
+            color:#ffffff;
+            font-size:10px;
+            font-weight:bold;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            line-height:16px;
+            box-sizing:border-box;
         ">
     </span>
+
+</span>
 
 </a>
 
@@ -2357,9 +2389,17 @@ function mesajBildiriminiGoster() {
                 bildirim.style.display =
                     "block";
 
-                bildirim.textContent =
-                    toplam +
-                    " yeni mesaj";
+                const sayi =
+				    document.getElementById(
+				        "mesajBildirimSayi"
+				    );
+				
+				if (sayi) {
+				
+				    sayi.textContent =
+				        toplam;
+				
+				}
 
             } else {
 
