@@ -698,7 +698,6 @@ body {
 
 .mesaj-balonu.mesaj-secili {
     background: rgba(40, 40, 40, 0.50) !important;
-    border: none !important;
 }
 
 
@@ -713,13 +712,12 @@ body {
     margin-right: auto;
     margin-left: 0;
 
-    border: none;
     border-top-left-radius: 0;
 }
 
 
 /* =====================================================
-   SOL ÜST KUYRUK
+   SOL ÜST ÇIKINTI
 ===================================================== */
 
 .mesaj-gelen::after {
@@ -734,8 +732,6 @@ body {
 
     background: #ffffff;
 
-    border: none !important;
-
     clip-path: polygon(
         100% 0,
         0 0,
@@ -745,13 +741,23 @@ body {
 
 
 /* =====================================================
-   SEÇİLİ GELEN MESAJ KUYRUĞU
+   SEÇİLİ GELEN MESAJ
+   KUYRUK + BALON TEK PARÇA GÖRÜNSÜN
 ===================================================== */
+
+.mesaj-gelen.mesaj-secili {
+    background: rgba(40, 40, 40, 0.50) !important;
+}
 
 .mesaj-gelen.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
 
-    border: none !important;
+    /*
+       Kuyruğu balonun içine 1px bindiriyoruz.
+       Böylece birleşim yerinde siyah/şeffaf çizgi
+       oluşmuyor.
+    */
+    left: -6px;
 }
 
 
@@ -767,13 +773,12 @@ body {
     margin-left: auto;
     margin-right: 0;
 
-    border: none;
     border-bottom-right-radius: 0;
 }
 
 
 /* =====================================================
-   SAĞ ALT KUYRUK
+   SAĞ ALT ÇIKINTI
 ===================================================== */
 
 .mesaj-giden::after {
@@ -788,8 +793,6 @@ body {
 
     background: #bff4b0;
 
-    border: none !important;
-
     clip-path: polygon(
         0 0,
         100% 100%,
@@ -799,13 +802,20 @@ body {
 
 
 /* =====================================================
-   SEÇİLİ GİDEN MESAJ KUYRUĞU
+   SEÇİLİ GİDEN MESAJ
 ===================================================== */
+
+.mesaj-giden.mesaj-secili {
+    background: rgba(40, 40, 40, 0.50) !important;
+}
 
 .mesaj-giden.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
 
-    border: none !important;
+    /*
+       Kuyruğu balonun içine 1px bindiriyoruz.
+    */
+    right: -6px;
 }
 
 /* =====================================================
