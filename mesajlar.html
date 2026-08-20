@@ -1697,6 +1697,25 @@ console.log(
 );
 
 
+Notification.requestPermission()
+    .then((permission) => {
+
+        console.log(
+            "BİLDİRİM İZNİ:",
+            permission
+        );
+
+    })
+    .catch((error) => {
+
+        console.error(
+            "BİLDİRİM İZNİ HATASI:",
+            error
+        );
+
+    });
+
+
 const auth =
     getAuth(app);
 
