@@ -705,7 +705,6 @@ body {
     color: #222222;
     margin-right: auto;
     margin-left: 0;
-    border: 1px solid #eeeeee;
     border-top-left-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
 }
 
@@ -721,8 +720,8 @@ body {
     width: 8px;
     height: 8px;
     background: #ffffff;
-    border-top: 1px solid #eeeeee;
-    border-left: 1px solid #eeeeee;
+   
+   
     clip-path: polygon(
         100% 0,
         0 0,
@@ -734,13 +733,9 @@ body {
    SEÇİLİ GELEN MESAJ — ÇİZGİLERİ KALDIR
 ===================================================== */
 
-.mesaj-gelen.mesaj-secili {
-    border: none !important;
-}
-
 .mesaj-gelen.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
-    border: none !important;
+   
 }
 
 
@@ -782,8 +777,7 @@ body {
 
 .mesaj-gelen.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
-    border-top: none !important;
-    border-left: none !important;
+  
 }
 
 .mesaj-giden.mesaj-secili::after {
