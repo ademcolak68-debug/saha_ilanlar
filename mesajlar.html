@@ -1729,12 +1729,11 @@ navigator.serviceWorker.register(
            YÖNETİCİ FCM TOKEN KAYDI
         ===================================================== */
 
-        const bildirimTokenRef =
-            ref(
-                database,
-                "yoneticiBildirimTokenleri/" +
-                auth.currentUser.uid
-            );
+      const bildirimTokenRef =
+          ref(
+              database,
+              "yoneticiBildirimTokenleri/yonetici"
+          );
 
 
         await set(
