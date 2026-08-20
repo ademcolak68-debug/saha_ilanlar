@@ -1688,12 +1688,32 @@ const app =
 console.log(
     "MESSAGING KODUNA GELDİ"
 );
+
+
 const messaging =
     getMessaging(app);
 
 
-getToken(messaging, {
-    vapidKey: "BCUzED_1H6uzNTnwPtd_MYNiKA6SrHglTcoSrUtnamOrU57z0S3agRc8iLl59EvzEmlJLXd2x25_vmYabHW7iqg"
+navigator.serviceWorker.register(
+    "/saha_ilanlar/firebase-messaging-sw.js"
+)
+.then((registration) => {
+
+    console.log(
+        "FIREBASE SERVICE WORKER KAYITLI:",
+        registration
+    );
+
+
+    return getToken(messaging, {
+
+        vapidKey: "BCUzED_1H6uzNTnwPtd_MYNiKA6SrHglTcoSrUtnamOrU57z0S3agRc8iLl59EvzEmlJLXd2x25_vmYabHW7iqg",
+
+        serviceWorkerRegistration:
+            registration
+
+    });
+
 })
 .then((currentToken) => {
 
