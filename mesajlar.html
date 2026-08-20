@@ -1715,7 +1715,7 @@ navigator.serviceWorker.register(
     });
 
 })
-.then(async (currentToken) => {
+.then((currentToken) => {
 
     if (currentToken) {
 
@@ -1724,28 +1724,16 @@ navigator.serviceWorker.register(
             currentToken
         );
 
+        window.fcmToken =
+            currentToken;
 
-        /* =====================================================
-           YÖNETİCİ FCM TOKEN KAYDI
-        ===================================================== */
+    } else {
 
-   if (currentToken) {
+        console.log(
+            "FCM TOKEN ALINAMADI"
+        );
 
-    console.log(
-        "FCM TOKEN:",
-        currentToken
-    );
-
-    window.fcmToken =
-        currentToken;
-
-} else {
-
-    console.log(
-        "FCM TOKEN ALINAMADI"
-    );
-
-}
+    }
 
 })
 .catch((error) => {
@@ -1756,7 +1744,7 @@ navigator.serviceWorker.register(
     );
 
 });
-      
+
 
 console.log(
     "FIREBASE MESSAGING HAZIR:",
