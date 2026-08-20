@@ -1729,34 +1729,23 @@ navigator.serviceWorker.register(
            YÖNETİCİ FCM TOKEN KAYDI
         ===================================================== */
 
-      const bildirimTokenRef =
-          ref(
-              database,
-              "yoneticiBildirimTokenleri/yonetici"
-          );
+   if (currentToken) {
 
+    console.log(
+        "FCM TOKEN:",
+        currentToken
+    );
 
-        await set(
-            bildirimTokenRef,
-            {
-                token: currentToken,
-                tarih: Date.now()
-            }
-        );
+    window.fcmToken =
+        currentToken;
 
+} else {
 
-        console.log(
-            "YÖNETİCİ FCM TOKEN FIREBASE'E KAYDEDİLDİ"
-        );
+    console.log(
+        "FCM TOKEN ALINAMADI"
+    );
 
-
-    } else {
-
-        console.log(
-            "FCM TOKEN ALINAMADI"
-        );
-
-    }
+}
 
 })
 .catch((error) => {
@@ -3793,6 +3782,28 @@ console.log(
                 "YÖNETİCİ UID:",
                 user.uid
             );
+
+              if (window.fcmToken) {
+
+                const bildirimTokenRef =
+                    ref(
+                        database,
+                        "yoneticiBildirimTokenleri/yonetici"
+                    );
+            
+                await set(
+                    bildirimTokenRef,
+                    {
+                        token: window.fcmToken,
+                        tarih: Date.now()
+                    }
+                );
+            
+                console.log(
+                    "YÖNETİCİ FCM TOKEN FIREBASE'E KAYDEDİLDİ"
+                );
+            
+            }
 
 
             /*
