@@ -1691,6 +1691,38 @@ console.log(
 const messaging =
     getMessaging(app);
 
+
+getToken(messaging, {
+    vapidKey: "BCUzED_1H6uzNTnwPtd_MYNiKA6SrHglTcoSrUtnamOrU57z0S3agRc8iLl59EvzEmlJLXd2x25_vmYabHW7iqg"
+})
+.then((currentToken) => {
+
+    if (currentToken) {
+
+        console.log(
+            "FCM TOKEN:",
+            currentToken
+        );
+
+    } else {
+
+        console.log(
+            "FCM TOKEN ALINAMADI"
+        );
+
+    }
+
+})
+.catch((error) => {
+
+    console.error(
+        "FCM TOKEN HATASI:",
+        error
+    );
+
+});
+      
+
 console.log(
     "FIREBASE MESSAGING HAZIR:",
     messaging
