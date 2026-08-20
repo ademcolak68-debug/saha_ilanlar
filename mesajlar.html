@@ -819,6 +819,38 @@ body {
 }
 
 /* =====================================================
+   SEÇİLİ MESAJ — KUYRUK/BALON BİRLEŞİMİNİ KAPAT
+===================================================== */
+
+.mesaj-gelen.mesaj-secili::after,
+.mesaj-giden.mesaj-secili::after {
+    z-index: 2;
+}
+
+/* Seçili balon kuyruğun birleşim noktasını örtsün */
+.mesaj-gelen.mesaj-secili::before,
+.mesaj-giden.mesaj-secili::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 9px;
+    background: rgba(40, 40, 40, 0.50);
+    z-index: 3;
+}
+
+/* Gelen — sol üst birleşim */
+.mesaj-gelen.mesaj-secili::before {
+    left: 0;
+    top: 0;
+}
+
+/* Giden — sağ alt birleşim */
+.mesaj-giden.mesaj-secili::before {
+    right: 0;
+    bottom: 0;
+}
+
+/* =====================================================
    SAAT
 ===================================================== */
 
