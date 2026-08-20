@@ -709,6 +709,7 @@ body {
     position: relative;
     background: #ffffff;
     color: #222222;
+
     margin-right: auto;
     margin-left: 0;
 
@@ -742,22 +743,33 @@ body {
 
 /* =====================================================
    SEÇİLİ GELEN MESAJ
-   KUYRUK + BALON TEK PARÇA GÖRÜNSÜN
 ===================================================== */
 
 .mesaj-gelen.mesaj-secili {
     background: rgba(40, 40, 40, 0.50) !important;
 }
 
+
+/* =====================================================
+   SEÇİLİ GELEN KUYRUK
+   BALONLA AYNI RENK
+===================================================== */
+
 .mesaj-gelen.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
 
     /*
-       Kuyruğu balonun içine 1px bindiriyoruz.
-       Böylece birleşim yerinde siyah/şeffaf çizgi
-       oluşmuyor.
+       Kuyruğu balonun altına bindiriyoruz.
+       Böylece birleşim noktasında çizgi oluşmaz.
     */
-    left: -6px;
+
+    left: -7px;
+    top: 0;
+
+    width: 9px;
+    height: 9px;
+
+    z-index: 0;
 }
 
 
@@ -809,46 +821,29 @@ body {
     background: rgba(40, 40, 40, 0.50) !important;
 }
 
+
+/* =====================================================
+   SEÇİLİ GİDEN KUYRUK
+   BALONLA AYNI RENK
+===================================================== */
+
 .mesaj-giden.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
 
     /*
-       Kuyruğu balonun içine 1px bindiriyoruz.
+       Kuyruğu balonun altına bindiriyoruz.
     */
-    right: -6px;
-}
 
-/* =====================================================
-   SEÇİLİ MESAJ — KUYRUK/BALON BİRLEŞİMİNİ KAPAT
-===================================================== */
-
-.mesaj-gelen.mesaj-secili::after,
-.mesaj-giden.mesaj-secili::after {
-    z-index: 2;
-}
-
-/* Seçili balon kuyruğun birleşim noktasını örtsün */
-.mesaj-gelen.mesaj-secili::before,
-.mesaj-giden.mesaj-secili::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 9px;
-    background: rgba(40, 40, 40, 0.50);
-    z-index: 3;
-}
-
-/* Gelen — sol üst birleşim */
-.mesaj-gelen.mesaj-secili::before {
-    left: 0;
-    top: 0;
-}
-
-/* Giden — sağ alt birleşim */
-.mesaj-giden.mesaj-secili::before {
-    right: 0;
+    right: -7px;
     bottom: 0;
+
+    width: 9px;
+    height: 9px;
+
+    z-index: 0;
 }
+
+
 
 /* =====================================================
    SAAT
