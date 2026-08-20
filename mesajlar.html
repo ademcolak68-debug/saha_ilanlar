@@ -769,8 +769,8 @@ body {
 
 .mesaj-gelen.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
-    border-top-color: rgba(40, 40, 40, 0.50) !important;
-    border-left-color: rgba(40, 40, 40, 0.50) !important;
+    border-top: none !important;
+    border-left: none !important;
 }
 
 .mesaj-giden.mesaj-secili::after {
@@ -2469,6 +2469,15 @@ function sohbetMesajlariniGoster() {
                         : "mesaj-gelen"
                 );
 
+                 balon.dataset.mesajId = mesajID;
+      
+      
+                  /* =====================================================
+                     BALON MESAJ SEÇİMİ
+                  ===================================================== */
+                  
+                  let basiliTimer = null;
+
           /* =====================================================
                BALON MESAJ SEÇİMİ
             ===================================================== */
@@ -2758,15 +2767,15 @@ if (benimMesajim) {
 
 
             console.log(
-    "APPEND YAPILIYOR:",
-    mesajID,
-    "EKLENMEDEN ÖNCE:",
-    alan.querySelectorAll(".mesaj-balonu").length
-);
+                "APPEND YAPILIYOR:",
+                mesajID,
+                "EKLENMEDEN ÖNCE:",
+                alan.querySelectorAll(".mesaj-balonu").length
+            );
 
-alan.appendChild(
-    balon
-);
+            alan.appendChild(
+                balon
+            );
 
            console.trace(
                 "BALON APPEND EDEN KOD:"
@@ -2794,10 +2803,103 @@ console.log(
 
 }
 
-
 /* =====================================================
-   KARŞI TARAFIN MESAJLARINI OKUNDU YAP
+   BOŞ ALANA TIKLANINCA SEÇİMLERİ İPTAL ET
 ===================================================== */
+
+document
+    .getElementById("sohbetMesajlar")
+    .addEventListener(
+        "click",
+        function (event) {
+
+            if (!window.mesajSecimModu) {
+                return;
+            }
+
+
+            /*
+            Mesaj balonuna tıklandıysa
+            mevcut seçim sistemi çalışmaya devam etsin.
+            */
+
+            if (
+                event.target.closest(
+                    ".mesaj-balonu"
+                )
+            ) {
+                return;
+            }
+
+
+            /*
+            Boş alana tıklandı.
+            Bütün seçili balonları kaldır.
+            */
+
+            document
+                .querySelectorAll(
+                    ".mesaj-balonu.mesaj-secili"
+                )
+                .forEach(
+                    function (balon) {
+
+                        balon.classList.remove(
+                            "mesaj-secili"
+                        );
+
+                    }
+                );
+
+
+            /*
+            Seçim listesini temizle.
+            */
+
+            window.mesajSecilenler.clear();
+
+            window.mesajSecimModu =
+                false;
+
+
+            /*
+            Header'ı eski haline getir.
+            */
+
+            const irtibat =
+                document.querySelector(
+                    ".sohbet-irtibat"
+                );
+
+            const ucNokta =
+                document.querySelector(
+                    ".sohbet-islem-buton"
+                );
+
+            const cop =
+                document.getElementById(
+                    "mesajSecimSil"
+                );
+
+
+            if (irtibat) {
+                irtibat.style.display =
+                    "flex";
+            }
+
+            if (ucNokta) {
+                ucNokta.style.display =
+                    "flex";
+            }
+
+            if (cop) {
+                cop.style.display =
+                    "none";
+            }
+
+        }
+    );
+
 
 /* =====================================================
    KARŞI TARAFIN MESAJLARINI OKUNDU YAP
