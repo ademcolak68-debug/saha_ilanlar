@@ -675,7 +675,7 @@ body {
 
 .mesaj-balonu {
     display: table;
-    max-width: 78%;        /* Uzun mesajlar için maksimum genişlik sınırı */
+    max-width: 78%;
     padding: 5px 8px;
     border-radius: 10px;
     margin-bottom: 9px;
@@ -691,37 +691,51 @@ body {
     touch-action: manipulation;
 }
 
+
+/* =====================================================
+   SEÇİLİ MESAJ
+===================================================== */
+
 .mesaj-balonu.mesaj-secili {
     background: rgba(40, 40, 40, 0.50) !important;
+    border: none !important;
 }
+
 
 /* =====================================================
    GELEN MESAJ — SOLDA
 ===================================================== */
 
 .mesaj-gelen {
-    position: relative; /* ::after için gerekli */
+    position: relative;
     background: #ffffff;
     color: #222222;
     margin-right: auto;
     margin-left: 0;
-    border-top-left-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
+
+    border: none;
+    border-top-left-radius: 0;
 }
 
+
 /* =====================================================
-   SOL ÜST ÇIKINTI (Gelen Mesaj)
+   SOL ÜST KUYRUK
 ===================================================== */
 
 .mesaj-gelen::after {
     content: "";
     position: absolute;
+
     left: -7px;
-    top: 0px;
+    top: 0;
+
     width: 8px;
     height: 8px;
+
     background: #ffffff;
-   
-   
+
+    border: none !important;
+
     clip-path: polygon(
         100% 0,
         0 0,
@@ -729,13 +743,15 @@ body {
     );
 }
 
+
 /* =====================================================
-   SEÇİLİ GELEN MESAJ — ÇİZGİLERİ KALDIR
+   SEÇİLİ GELEN MESAJ KUYRUĞU
 ===================================================== */
 
 .mesaj-gelen.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
-   
+
+    border: none !important;
 }
 
 
@@ -744,26 +760,36 @@ body {
 ===================================================== */
 
 .mesaj-giden {
-    position: relative; /* ::after için gerekli */
+    position: relative;
     background: #bff4b0;
     color: #222222;
+
     margin-left: auto;
     margin-right: 0;
-    border-bottom-right-radius: 0; /* Çıkıntının olduğu köşe düzleştirildi */
+
+    border: none;
+    border-bottom-right-radius: 0;
 }
 
+
 /* =====================================================
-   SAĞ ALT ÇIKINTI (Giden Mesaj)
+   SAĞ ALT KUYRUK
 ===================================================== */
 
 .mesaj-giden::after {
     content: "";
     position: absolute;
+
     right: -7px;
-    bottom: 0px;
+    bottom: 0;
+
     width: 8px;
     height: 8px;
+
     background: #bff4b0;
+
+    border: none !important;
+
     clip-path: polygon(
         0 0,
         100% 100%,
@@ -771,17 +797,15 @@ body {
     );
 }
 
-/* =====================================================
-   SEÇİLİ MESAJ KUYRUKLARI
-===================================================== */
 
-.mesaj-gelen.mesaj-secili::after {
-    background: rgba(40, 40, 40, 0.50) !important;
-  
-}
+/* =====================================================
+   SEÇİLİ GİDEN MESAJ KUYRUĞU
+===================================================== */
 
 .mesaj-giden.mesaj-secili::after {
     background: rgba(40, 40, 40, 0.50) !important;
+
+    border: none !important;
 }
 
 /* =====================================================
