@@ -1715,14 +1715,42 @@ navigator.serviceWorker.register(
     });
 
 })
-.then((currentToken) => {
+.then(async (currentToken) => {
 
     if (currentToken) {
 
-        console.log(
-            "FCM TOKEN:",
-            currentToken
-        );
+          console.log(
+              "FCM TOKEN:",
+              currentToken
+          );
+      
+      
+          /* =====================================================
+             YÖNETİCİ FCM TOKEN KAYDI
+          ===================================================== */
+      
+          const bildirimTokenRef =
+              ref(
+                  database,
+                  "yoneticiBildirimTokenleri/" +
+                  auth.currentUser.uid
+              );
+      
+      
+          await set(
+              bildirimTokenRef,
+              {
+                  token: currentToken,
+                  tarih: Date.now()
+              }
+          );
+      
+      
+          console.log(
+              "YÖNETİCİ FCM TOKEN FIREBASE'E KAYDEDİLDİ"
+          );
+      
+      }
 
     } else {
 
