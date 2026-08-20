@@ -2401,15 +2401,24 @@ function mesajBildiriminiGoster() {
 				
 				}
 
-            } else {
-
-                bildirim.style.display =
-                    "none";
-
-                bildirim.textContent =
-                    "";
-
-            }
+	            } else {
+	
+				    bildirim.style.display =
+				        "none";
+				
+				    const sayi =
+				        document.getElementById(
+				            "mesajBildirimSayi"
+				        );
+				
+				    if (sayi) {
+				
+				        sayi.textContent =
+				            "0";
+				
+				    }
+				
+				}
 
         },
         (error) => {
