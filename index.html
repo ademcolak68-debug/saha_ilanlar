@@ -1263,84 +1263,92 @@ map.on('load', () => {
 
 	// ==========================================
 	// CLUSTER ↔ ÖN İZLEME LEVHASI GEÇİŞİ
-	// ==========================================
-	
-	// ==========================================
-	// CLUSTER ↔ ÖN İZLEME LEVHASI GEÇİŞİ
 	// SIDEBAR FİLTRESİNE UYUMLU
 	// ==========================================
 	
 	function clusterLevhaKontrol() {
-	
-	    const zoom = map.getZoom();
-	
-	    // Sidebar'da açık olan tipleri bul
-	    const aktifTipler = new Set();
-	
-	    document.querySelectorAll(
-	        '#sidebar input[type="checkbox"]'
-	    ).forEach(cb => {
-	
-	        if (cb.checked) {
-	            aktifTipler.add(cb.value);
-	        }
-	
-	    });
-	
-	
-	    // --------------------------------------
-	    // UZAKTAYSA:
-	    // Cluster görünsün, bütün levhalar gizlensin
-	    // --------------------------------------
-	
-	    if (zoom < 13) {
-	
-	        Object.values(markersByType).forEach(grup => {
-	
-	            grup.forEach(item => {
-	
-	                item.popup.remove();
-	                item.marker.remove();
-	
-	            });
-	
-	        });
-	
-	        return;
-	    }
-	
-	
-	    // --------------------------------------
-	    // YAKINDAYSA:
-	    // Sadece sidebar'da açık tiplerin
-	    // levhalarını göster
-	    // --------------------------------------
-	
-	    Object.entries(markersByType).forEach(
-	        ([tip, grup]) => {
-	
-	            grup.forEach(item => {
-	
-	                if (aktifTipler.has(tip)) {
-	
-	                    item.marker.addTo(map);
-	
-	                    if (!item.popup.isOpen()) {
-	                        item.marker.togglePopup();
-	                    }
-	
-	                } else {
-	
-	                    item.popup.remove();
-	                    item.marker.remove();
-	
-	                }
-	
-	            });
-	
-	        }
-	    );
-	}
+
+    // Sidebar'da açık olan tipleri bul
+    const aktifTipler = new Set();
+
+    document.querySelectorAll(
+        '#sidebar input[type="checkbox"]'
+    ).forEach(cb => {
+
+        if (cb.checked) {
+            aktifTipler.add(cb.value);
+        }
+
+    });
+
+
+    // --------------------------------------
+    // EKRANDA GERÇEKTEN CLUSTER VAR MI?
+    // --------------------------------------
+
+    const clusterlar = map.queryRenderedFeatures({
+        layers: ["ilanlar-cluster-hit"]
+    });
+
+    const clusterVar = clusterlar.some(feature =>
+        feature.properties &&
+        feature.properties.cluster
+    );
+
+
+    // --------------------------------------
+    // CLUSTER VARSA
+    // Levhaları gizle
+    // --------------------------------------
+
+    if (clusterVar) {
+
+        Object.values(markersByType).forEach(grup => {
+
+            grup.forEach(item => {
+
+                item.popup.remove();
+                item.marker.remove();
+
+            });
+
+        });
+
+        return;
+    }
+
+
+    // --------------------------------------
+    // CLUSTER YOKSA
+    // Sadece sidebar'da seçili tiplerin
+    // levhalarını göster
+    // --------------------------------------
+
+    Object.entries(markersByType).forEach(
+        ([tip, grup]) => {
+
+            grup.forEach(item => {
+
+                if (aktifTipler.has(tip)) {
+
+                    item.marker.addTo(map);
+
+                    if (!item.popup.isOpen()) {
+                        item.marker.togglePopup();
+                    }
+
+                } else {
+
+                    item.popup.remove();
+                    item.marker.remove();
+
+                }
+
+            });
+
+        }
+    );
+}
 	
 	
 	// ==========================================
