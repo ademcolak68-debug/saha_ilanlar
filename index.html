@@ -1268,6 +1268,8 @@ map.on('load', () => {
 	
 	function clusterLevhaKontrol() {
 
+    const zoom = map.getZoom();
+
     // Sidebar'da açık olan tipleri bul
     const aktifTipler = new Set();
 
@@ -1283,25 +1285,11 @@ map.on('load', () => {
 
 
     // --------------------------------------
-    // EKRANDA GERÇEKTEN CLUSTER VAR MI?
+    // UZAKTAYSA:
+    // Cluster görünsün, bütün levhalar gizlensin
     // --------------------------------------
 
-    const clusterlar = map.queryRenderedFeatures({
-        layers: ["ilanlar-cluster-hit"]
-    });
-
-    const clusterVar = clusterlar.some(feature =>
-        feature.properties &&
-        feature.properties.cluster
-    );
-
-
-    // --------------------------------------
-    // CLUSTER VARSA
-    // Levhaları gizle
-    // --------------------------------------
-
-    if (clusterVar) {
+    if (zoom < 13) {
 
         Object.values(markersByType).forEach(grup => {
 
@@ -1319,8 +1307,8 @@ map.on('load', () => {
 
 
     // --------------------------------------
-    // CLUSTER YOKSA
-    // Sadece sidebar'da seçili tiplerin
+    // YAKINDAYSA:
+    // Sadece sidebar'da açık tiplerin
     // levhalarını göster
     // --------------------------------------
 
@@ -1349,24 +1337,6 @@ map.on('load', () => {
         }
     );
 }
-	
-	
-	// ==========================================
-	// İLK KONTROL
-	// ==========================================
-	
-	clusterLevhaKontrol();
-	
-	
-	// ==========================================
-	// ZOOM DEĞİŞİNCE
-	// ==========================================
-	
-	map.on("zoomend", () => {
-	
-	    clusterLevhaKontrol();
-	
-	});
   
   
 
