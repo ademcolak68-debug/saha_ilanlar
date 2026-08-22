@@ -917,6 +917,39 @@ map.addControl(
 
 map.on('load', () => {
 
+// ==========================================
+    // ZOOM SEVİYESİ GÖSTERGESİ
+    // ==========================================
+
+    const zoomGosterge = document.createElement("div");
+
+    zoomGosterge.id = "zoomGosterge";
+
+    zoomGosterge.style.cssText = `
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        z-index: 10;
+        background: rgba(0,0,0,0.75);
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font: bold 14px Arial;
+    `;
+
+    zoomGosterge.textContent =
+        "Zoom: " + map.getZoom().toFixed(2);
+
+    map.getContainer().appendChild(zoomGosterge);
+
+    map.on("zoom", () => {
+
+        zoomGosterge.textContent =
+            "Zoom: " + map.getZoom().toFixed(2);
+
+    });	
+	
+
  // 1. Google UYDU Kaynağı
   map.addSource('google-tiles', {
     type: 'raster',
