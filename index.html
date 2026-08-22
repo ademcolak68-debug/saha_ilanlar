@@ -1091,6 +1091,17 @@ map.addSource("ilanlar-cluster", {
     clusterRadius: 50
 });
 
+	map.addLayer({
+    id: "ilanlar-cluster-hit",
+    type: "circle",
+    source: "ilanlar-cluster",
+    filter: ["has", "point_count"],
+    paint: {
+        "circle-radius": 20,
+        "circle-opacity": 0
+    }
+});
+
 	const clusterMarkers = {};
 let clusterMarkersOnScreen = {};
 
