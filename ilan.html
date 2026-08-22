@@ -988,24 +988,14 @@ font-weight:bold;
 <div id="ilanlarPanel" class="ilanlar-panel">
 
     <div class="ilanlar-ust">
-
-    <div>
-        <span>İlanlarımız</span>
-
-        <div id="yayindaIlanSayisi">
-            ${
-                ilanlarVerisi.filter(
-                    ilan => ilan.ilanAktif !== false
-                ).length
-            } İlan Yayında
-        </div>
-    </div>
-
-    <i class="fa-solid fa-xmark"
-       onclick="ilanlarKapat()">
-    </i>
-
-</div>
+	
+	    <span>İlanlarımız</span>
+	
+	    <i class="fa-solid fa-xmark"
+	       onclick="ilanlarKapat()">
+	    </i>
+	
+	</div>
 
 </div>
 
@@ -1035,15 +1025,30 @@ font-weight:bold;
 	            ).find(x => x.id === id);
 	
 	        if (d) {
-	
-	            render(d);
-	
-	            setTimeout(() =>
-	                document.getElementById("acilisEkrani").style.display = "none",
-	                2500
-	            );
-	
-	        }
+
+			    render(d);
+			
+			    const aktifIlanSayisi =
+			        ilanlarVerisi.filter(
+			            ilan => ilan.ilanAktif !== false
+			        ).length;
+			
+			    const sayiAlani =
+			        document.getElementById("yayindaIlanSayisi");
+			
+			    if (sayiAlani) {
+			
+			        sayiAlani.textContent =
+			            aktifIlanSayisi + " İlan Yayında";
+			
+			    }
+			
+			    setTimeout(() =>
+			        document.getElementById("acilisEkrani").style.display = "none",
+			        2500
+			    );
+			
+			}
 	
 	    };
 	
