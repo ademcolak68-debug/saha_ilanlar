@@ -1088,62 +1088,83 @@ map.addSource("ilanlar-cluster", {
     clusterRadius: 50
 });
 
-	const clusterMarkerlar = [];
+	const clusterMarkers = {};
+let clusterMarkersOnScreen = {};
 
-function clusterlariGoster() {
+function updateClusterMarkers() {
 
-    // Eski cluster markerlarını temizle
-    clusterMarkerlar.forEach(marker => marker.remove());
-    clusterMarkerlar.length = 0;
+    const newMarkers = {};
 
-    const clusters = map.querySourceFeatures("ilanlar-cluster");
+    const features = map.querySourceFeatures("ilanlar-cluster");
 
-    clusters.forEach(feature => {
+    for (const feature of features) {
 
-        if (!feature.properties.cluster) return;
+        const props = feature.properties;
 
-        const koordinat = feature.geometry.coordinates;
-        const sayi = feature.properties.point_count;
+        if (!props.cluster) continue;
 
-        const el = document.createElement("div");
+        const id = props.cluster_id;
+        const coords = feature.geometry.coordinates;
+        const sayi = props.point_count;
 
-        el.className = "netmax-cluster-marker";
+        let marker = clusterMarkers[id];
 
-        el.innerHTML = `
-            <span>${sayi}</span>
-        `;
+        if (!marker) {
 
-        el.onclick = () => {
+            const el = document.createElement("div");
 
-            const clusterId = feature.properties.cluster_id;
+            el.style.width = "42px";
+            el.style.height = "42px";
+            el.style.borderRadius = "50% 50% 50% 0";
+            el.style.background = "#1976d2";
+            el.style.border = "3px solid #fff";
+            el.style.boxShadow = "0 3px 8px rgba(0,0,0,.45)";
+            el.style.display = "flex";
+            el.style.alignItems = "center";
+            el.style.justifyContent = "center";
+            el.style.transform = "rotate(-45deg)";
+            el.style.cursor = "pointer";
 
-            map.getSource("ilanlar-cluster")
-                .getClusterExpansionZoom(
-                    clusterId,
-                    (err, zoom) => {
+            el.innerHTML = `
+                <span style="
+                    transform:rotate(45deg);
+                    color:#fff;
+                    font-family:Tahoma;
+                    font-weight:bold;
+                    font-size:13px;
+                ">${sayi}</span>
+            `;
 
-                        if (err) return;
+            marker = clusterMarkers[id] =
+                new mapboxgl.Marker({
+                    element: el
+                }).setLngLat(coords);
+        }
 
-                        map.easeTo({
-                            center: koordinat,
-                            zoom: zoom
-                        });
+        newMarkers[id] = marker;
 
-                    }
-                );
-        };
+        if (!clusterMarkersOnScreen[id]) {
+            marker.addTo(map);
+        }
+    }
 
-        const marker = new mapboxgl.Marker(el)
-            .setLngLat(koordinat)
-            .addTo(map);
+    for (const id in clusterMarkersOnScreen) {
 
-        clusterMarkerlar.push(marker);
+        if (!newMarkers[id]) {
+            clusterMarkersOnScreen[id].remove();
+        }
+    }
 
-    });
+    clusterMarkersOnScreen = newMarkers;
 }
 
-map.on("render", clusterlariGoster);
+map.on("render", () => {
 
+    if (!map.isSourceLoaded("ilanlar-cluster")) return;
+
+    updateClusterMarkers();
+
+});
 	
 
 // ==========================================
