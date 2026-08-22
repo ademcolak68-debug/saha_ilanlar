@@ -1137,6 +1137,126 @@ map.on('load', () => {
     markersByType[ilan.tip].push({ marker, popup });
 
   });
+
+	// ==========================================
+// MAPBOX CLUSTER
+// ==========================================
+
+const ilanGeoJSON = {
+    type: "FeatureCollection",
+
+    features: ilanlar.map(ilan => ({
+        type: "Feature",
+
+        geometry: {
+            type: "Point",
+            coordinates: ilan.coord
+        },
+
+        properties: {
+            id: String(ilan.id),
+            tip: ilan.tip
+        }
+    }))
+};
+
+
+// ------------------------------------------
+// CLUSTER SOURCE
+// ------------------------------------------
+
+map.addSource("ilanlar-cluster", {
+    type: "geojson",
+    data: ilanGeoJSON,
+
+    cluster: true,
+    clusterMaxZoom: 13,
+    clusterRadius: 50
+});
+
+
+// ------------------------------------------
+// CLUSTER DAİRELERİ
+// ------------------------------------------
+
+map.addLayer({
+    id: "ilanlar-cluster-circles",
+    type: "circle",
+    source: "ilanlar-cluster",
+
+    filter: ["has", "point_count"],
+
+    paint: {
+        "circle-color": "#334155",
+
+        "circle-radius": [
+            "step",
+            ["get", "point_count"],
+            20,
+            10, 24,
+            50, 28,
+            100, 32
+        ],
+
+        "circle-stroke-width": 3,
+        "circle-stroke-color": "#ffffff"
+    }
+});
+
+
+// ------------------------------------------
+// CLUSTER SAYISI
+// ------------------------------------------
+
+map.addLayer({
+    id: "ilanlar-cluster-count",
+    type: "symbol",
+    source: "ilanlar-cluster",
+
+    filter: ["has", "point_count"],
+
+    layout: {
+        "text-field": "{point_count_abbreviated}",
+        "text-size": 13
+    },
+
+    paint: {
+        "text-color": "#ffffff"
+    }
+});
+
+
+// ------------------------------------------
+// CLUSTER TIKLAMA
+// Şimdilik sadece test için
+// ------------------------------------------
+
+map.on("click", "ilanlar-cluster-circles", (e) => {
+
+    const features = map.queryRenderedFeatures(e.point, {
+        layers: ["ilanlar-cluster-circles"]
+    });
+
+    if (!features.length) return;
+
+    const clusterId =
+        features[0].properties.cluster_id;
+
+    map.getSource("ilanlar-cluster")
+        .getClusterExpansionZoom(
+            clusterId,
+            (err, zoom) => {
+
+                if (err) return;
+
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom: zoom
+                });
+
+            }
+        );
+});
   
   
 
