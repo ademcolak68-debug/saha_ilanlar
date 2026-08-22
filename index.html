@@ -1353,16 +1353,29 @@ function updateClusterMarkers() {
   }
 
   // CHECKBOX FİLTRELEME KONTROLLERİ
-  document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
+ document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
     cb.addEventListener("change", () => {
-      const tip = cb.value;
-      if (!markersByType[tip]) return;
-      markersByType[tip].forEach(o => {
-        if (cb.checked) { o.marker.addTo(map); o.popup.addTo(map); }
-        else { o.popup.remove(); o.marker.remove(); }
-      });
+
+        const tip = cb.value;
+
+        if (!markersByType[tip]) return;
+
+        markersByType[tip].forEach(o => {
+
+            if (cb.checked) {
+                o.marker.addTo(map);
+                o.popup.addTo(map);
+            } else {
+                o.popup.remove();
+                o.marker.remove();
+            }
+
+        });
+
+        updateClusterMarkers();
+
     });
-  });
+});
   
   // HEPSİNİ KAPAT BUTONU
   document.getElementById("hideAllBtn").addEventListener("click", () => {
