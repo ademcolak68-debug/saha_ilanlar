@@ -1277,20 +1277,7 @@ map.on("moveend", () => {
 	        "text-color": "#ffffff"
 	    }
 	});
-	map.on("render", () => {
-    const source = map.getSource("ilanlar-cluster");
-
-    if (!source) return;
-
-    const features = map.querySourceFeatures("ilanlar-cluster", {
-        sourceLayer: undefined
-    });
-
-    console.log(
-        "CLUSTER SOURCE:",
-        features.filter(f => f.properties && f.properties.point_count)
-    );
-});
+	
 	
 	// ------------------------------------------
 	// CLUSTER TIKLAMA
