@@ -1334,7 +1334,42 @@ map.on("moveend", () => {
 
 
     // --------------------------------------
-    // HER İLANI KENDİ KONUMUNDA KONTROL ET
+    // EKRANDA CLUSTER VAR MI?
+    // --------------------------------------
+
+    const clusterFeatures = map.queryRenderedFeatures({
+        layers: ["ilanlar-cluster-circles"]
+    });
+
+    const clusterVar = clusterFeatures.length > 0;
+
+
+    // --------------------------------------
+    // CLUSTER VARSA:
+    // Bütün levhaları gizle
+    // --------------------------------------
+
+    if (clusterVar) {
+
+        Object.values(markersByType).forEach(grup => {
+
+            grup.forEach(item => {
+
+                item.popup.remove();
+                item.marker.remove();
+
+            });
+
+        });
+
+        return;
+    }
+
+
+    // --------------------------------------
+    // CLUSTER YOKSA:
+    // Sadece sidebar'da açık tiplerin
+    // levhalarını göster
     // --------------------------------------
 
     Object.entries(markersByType).forEach(
@@ -1342,61 +1377,18 @@ map.on("moveend", () => {
 
             grup.forEach(item => {
 
-                // Sidebar kapalıysa gösterme
-                if (!aktifTipler.has(tip)) {
-
-                    item.popup.remove();
-                    item.marker.remove();
-
-                    return;
-                }
-
-
-                // İlanın haritadaki ekran koordinatı
-                const nokta = map.project(
-                    item.marker.getLngLat()
-                );
-
-
-                // İlanın bulunduğu noktada
-                // cluster var mı?
-                const clusterFeatures =
-                    map.queryRenderedFeatures(
-                        [
-                            [nokta.x - 10, nokta.y - 10],
-                            [nokta.x + 10, nokta.y + 10]
-                        ],
-                        {
-                            layers: [
-                                "ilanlar-cluster-circles"
-                            ]
-                        }
-                    );
-
-
-                // --------------------------------------
-                // CLUSTER İÇİNDEYSE LEVHAYI GİZLE
-                // --------------------------------------
-
-                if (clusterFeatures.length > 0) {
-
-                    item.popup.remove();
-                    item.marker.remove();
-
-                }
-
-
-                // --------------------------------------
-                // CLUSTER YOKSA LEVHAYI GÖSTER
-                // --------------------------------------
-
-                else {
+                if (aktifTipler.has(tip)) {
 
                     item.marker.addTo(map);
 
                     if (!item.popup.isOpen()) {
                         item.marker.togglePopup();
                     }
+
+                } else {
+
+                    item.popup.remove();
+                    item.marker.remove();
 
                 }
 
@@ -1412,6 +1404,12 @@ map.on("moveend", () => {
 // --------------------------------------
 
 map.on("zoomend", () => {
+
+    clusterLevhaKontrol();
+
+});
+
+map.once("idle", () => {
 
     clusterLevhaKontrol();
 
