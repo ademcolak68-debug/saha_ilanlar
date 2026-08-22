@@ -1102,10 +1102,22 @@ map.on('load', () => {
 		    }
 		});
 		
-		const clusterMarkers = {};
+const clusterMarkers = {};
 let clusterMarkersOnScreen = {};
+let tumIlanlarKapali = false;
 
 function updateClusterMarkers() {
+
+	 if (tumIlanlarKapali) {
+
+        Object.values(clusterMarkersOnScreen).forEach(marker => {
+            marker.remove();
+        });
+
+        clusterMarkersOnScreen = {};
+
+        return;
+    }
 
     const newMarkers = {};
 
@@ -1378,6 +1390,7 @@ function updateClusterMarkers() {
   // CHECKBOX FİLTRELEME KONTROLLERİ
  document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
     cb.addEventListener("change", () => {
+		tumIlanlarKapali = false;
         const tip = cb.value;
         if (!markersByType[tip]) return;
         markersByType[tip].forEach(o => {
@@ -1394,7 +1407,9 @@ function updateClusterMarkers() {
 });
   
   // HEPSİNİ KAPAT BUTONU
- document.getElementById("hideAllBtn").addEventListener("click", () => {
+ 	document.getElementById("hideAllBtn").addEventListener("click", () => {
+
+    tumIlanlarKapali = true;
 
     document.querySelectorAll('#sidebar input[type="checkbox"]')
         .forEach(cb => cb.checked = false);
@@ -1408,7 +1423,6 @@ function updateClusterMarkers() {
 
     });
 
-    // Ekrandaki clusterları kaldır
     Object.values(clusterMarkersOnScreen).forEach(marker => {
         marker.remove();
     });
