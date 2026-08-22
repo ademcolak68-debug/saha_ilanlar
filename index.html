@@ -1509,7 +1509,7 @@ document.getElementById("hideAllBtn").addEventListener("click", () => {
     toggleBtn.style.display = 'flex';
   });
   
-  document.getElementById('homeBtn').addEventListener('click', () => {
+ document.getElementById('homeBtn').addEventListener('click', () => {
 
     if (ilanlar.length > 0) {
 
@@ -1520,7 +1520,8 @@ document.getElementById("hideAllBtn").addEventListener("click", () => {
         });
 
         map.fitBounds(bounds, {
-            padding: 50
+            padding: 120,
+            maxZoom: 13
         });
 
         map.once("idle", () => {
