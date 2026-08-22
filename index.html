@@ -1338,7 +1338,13 @@ map.on('load', () => {
     );
 }
   
-  
+  map.on("zoomend", () => {
+
+    clusterLevhaKontrol();
+
+});
+
+clusterLevhaKontrol();
 
   // Sidebar sayaçlarını güncelleme
   Object.keys(markersByType).forEach(tip => {
@@ -1352,7 +1358,7 @@ map.on('load', () => {
   if (ilanlar.length > 0) {
     const bounds = new mapboxgl.LngLatBounds();
     ilanlar.forEach(ilan => bounds.extend(ilan.coord));
-    map.fitBounds(bounds, { padding: 60, maxZoom: 14 });
+    map.fitBounds(bounds, { padding: 60, maxZoom: 12 });
   }
 
   // CHECKBOX FİLTRELEME KONTROLLERİ
