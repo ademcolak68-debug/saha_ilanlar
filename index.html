@@ -1203,22 +1203,45 @@ function updateClusterMarkers() {
             item.marker.remove();
         });
 
-    } else {
-
-        ilanMarkerlar.forEach(item => {
-
-            item.marker.addTo(map);
-
-            const popup = item.marker.getPopup();
-
-            if (popup && !popup.isOpen()) {
-                item.marker.togglePopup();
-            }
-
-        });
-
-    }
-
+	    } else {
+	
+	    ilanMarkerlar.forEach(item => {
+	
+	        const ilanBilgisi = ilanlar.find(
+	            ilan => String(ilan.id) === String(item.id)
+	        );
+	
+	        if (!ilanBilgisi) return;
+	
+	        const cb = document.querySelector(
+	            `#sidebar input[type="checkbox"][value="${ilanBilgisi.tip}"]`
+	        );
+	
+	        if (cb && cb.checked) {
+	
+	            item.marker.addTo(map);
+	
+	            const popup = item.marker.getPopup();
+	
+	            if (popup && !popup.isOpen()) {
+	                item.marker.togglePopup();
+	            }
+	
+	        } else {
+	
+	            item.marker.remove();
+	
+	            const popup = item.marker.getPopup();
+	
+	            if (popup) {
+	                popup.remove();
+	            }
+	
+	        }
+	
+	    });
+	
+	}
 }
 		
 		map.on("render", () => {
@@ -1355,25 +1378,18 @@ function updateClusterMarkers() {
   // CHECKBOX FİLTRELEME KONTROLLERİ
  document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
     cb.addEventListener("change", () => {
-
         const tip = cb.value;
-
         if (!markersByType[tip]) return;
-
         markersByType[tip].forEach(o => {
-
-            if (cb.checked) {
-                o.marker.addTo(map);
-                o.popup.addTo(map);
-            } else {
-                o.popup.remove();
-                o.marker.remove();
+            if (cb.checked) { 
+                o.marker.addTo(map); 
+                o.popup.addTo(map); 
             }
-
+            else { 
+                o.popup.remove(); 
+                o.marker.remove(); 
+            }
         });
-
-        updateClusterMarkers();
-
     });
 });
   
@@ -1386,6 +1402,9 @@ function updateClusterMarkers() {
         o.marker.remove();
       });
     });
+
+	updateClusterMarkers();
+	  
   });
 
   // ÜSTTEKİ SİLİNMİŞ OLAN KAPAT/X ve HOME EVENTLERİ
