@@ -1198,6 +1198,45 @@ function updateClusterMarkers() {
     }
 
     clusterMarkersOnScreen = newMarkers;
+
+	ilanMarkerlar.forEach(item => {
+
+    const point = turf.point(item.coord);
+
+    let clusterVar = false;
+
+    for (const id in clusterMarkersOnScreen) {
+
+        const clusterMarker =
+            clusterMarkersOnScreen[id];
+
+        const clusterCoord =
+            clusterMarker.getLngLat();
+
+        const clusterPoint =
+            turf.point([
+                clusterCoord.lng,
+                clusterCoord.lat
+            ]);
+
+        const mesafe =
+            turf.distance(point, clusterPoint, {
+                units: "kilometers"
+            });
+
+        if (mesafe < 0.05) {
+            clusterVar = true;
+            break;
+        }
+    }
+
+    if (clusterVar) {
+        item.marker.remove();
+    } else {
+        item.marker.addTo(map);
+    }
+
+});
 }
 
 map.on("render", () => {
@@ -1212,6 +1251,7 @@ map.on("render", () => {
 // ==========================================
   // MARKER VE RENKLİ POPUP'LARIN BASILMASI
   // ==========================================
+  const ilanMarkerlar = [];
   const markersByType = {};
 
   ilanlar.forEach(ilan => {
@@ -1276,6 +1316,11 @@ map.on("render", () => {
       .setLngLat(ilan.coord)
       .setPopup(popup)
       .addTo(map);
+
+	  ilanMarkerlar.push({
+		    marker: marker,
+		    coord: ilan.coord
+		});
 	  
 	  popup.on('open', () => {
 
