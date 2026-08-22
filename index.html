@@ -1394,18 +1394,27 @@ function updateClusterMarkers() {
 });
   
   // HEPSİNİ KAPAT BUTONU
-  document.getElementById("hideAllBtn").addEventListener("click", () => {
-    document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+ document.getElementById("hideAllBtn").addEventListener("click", () => {
+
+    document.querySelectorAll('#sidebar input[type="checkbox"]')
+        .forEach(cb => cb.checked = false);
+
     Object.values(markersByType).forEach(list => {
-      list.forEach(o => {
-        o.popup.remove();
-        o.marker.remove();
-      });
+
+        list.forEach(o => {
+            o.popup.remove();
+            o.marker.remove();
+        });
+
     });
 
-	updateClusterMarkers();
-	  
-  });
+    // Ekrandaki clusterları kaldır
+    Object.values(clusterMarkersOnScreen).forEach(marker => {
+        marker.remove();
+    });
+
+    clusterMarkersOnScreen = {};
+});
 
   // ÜSTTEKİ SİLİNMİŞ OLAN KAPAT/X ve HOME EVENTLERİ
   const sidebar = document.getElementById('sidebar');
