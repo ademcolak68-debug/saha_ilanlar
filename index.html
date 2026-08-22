@@ -1043,6 +1043,56 @@ map.on('load', () => {
     };
 });
 
+		const ilanGeoJSON = {
+	    type: "FeatureCollection",
+	    features: ilanlar.map(ilan => ({
+	        type: "Feature",
+	        geometry: {
+	            type: "Point",
+	            coordinates: ilan.coord
+	        },
+	        properties: {
+	            id: ilan.id,
+	            tip: ilan.tip
+	        }
+	    }))
+	};
+	
+	map.addSource("ilanlar-cluster", {
+	    type: "geojson",
+	    data: ilanGeoJSON,
+	    cluster: true,
+	    clusterMaxZoom: 13,
+	    clusterRadius: 50
+	});
+
+	map.addLayer({
+    id: "ilanlar-cluster",
+    type: "circle",
+    source: "ilanlar-cluster",
+    filter: ["has", "point_count"],
+    paint: {
+        "circle-color": "#1976d2",
+        "circle-radius": 20,
+        "circle-stroke-width": 3,
+        "circle-stroke-color": "#ffffff"
+    }
+});
+
+	map.addLayer({
+    id: "ilanlar-cluster-count",
+    type: "symbol",
+    source: "ilanlar-cluster",
+    filter: ["has", "point_count"],
+    layout: {
+        "text-field": "{point_count_abbreviated}",
+        "text-size": 12
+    },
+    paint: {
+        "text-color": "#ffffff"
+    }
+});
+
 // ==========================================
   // MARKER VE RENKLİ POPUP'LARIN BASILMASI
   // ==========================================
