@@ -84,6 +84,11 @@ html, body {
   background: linear-gradient(135deg, #c29b38, #8a6515) !important; 
 } 
 
+/* FABRİKA: Güçlü, ağır ve kurumsal Koyu Kiremit / Bakır */
+.popup-renk-fabrika { 
+  background: linear-gradient(135deg, #7c2d12, #431407) !important; 
+}
+
 /* İŞ MERKEZİ: Modern mimariyi andıran Premium Safir / Çelik Mavisi */
 .popup-renk-ismerkezi { 
   background: linear-gradient(135deg, #0369a1, #0c4a6e) !important; 
@@ -846,6 +851,7 @@ html, body {
 <label><input type="checkbox" value="daire" checked> Daire <span id="count-daire"></span></label>
 <label><input type="checkbox" value="tarla" checked> Tarla <span id="count-tarla"></span></label>
 <label><input type="checkbox" value="dukkan" checked> Dükkan <span id="count-dukkan"></span></label>
+<label><input type="checkbox" value="fabrika" checked>Fabrika<span id="count-fabrika"></span></label>
 <label><input type="checkbox" value="ismerkezi" checked> İş Merkezi <span id="count-ismerkezi"></span></label>
 <label><input type="checkbox" value="villa" checked> Villa <span id="count-villa"></span></label>
 <label><input type="checkbox" value="katkarsiligi" checked> Kat Karşılığı <span id="count-katkarsiligi"></span></label>
@@ -990,6 +996,7 @@ map.on('load', () => {
         haritaTipi = "katkarsiligi";
     } else if (rawTip === "konut" || rawTip === "isyeri" || rawTip === "işyeri" || rawTip === "") {
         if (altTip.includes("dükkan") || altTip.includes("dukkan")) haritaTipi = "dukkan";
+		else if (altTip.includes("fabrika")) haritaTipi = "fabrika";
         else if (altTip.includes("iş") || altTip.includes("is") || altTip.includes("merkez")) haritaTipi = "ismerkezi";
         else if (altTip.includes("daire")) haritaTipi = "daire";
         else if (altTip.includes("villa")) haritaTipi = "villa";
@@ -1050,29 +1057,31 @@ map.on('load', () => {
     el.style.cursor = "pointer";
     el.style.boxShadow = "0 2px 6px rgba(0,0,0,0.6)";
 
-    // Yuvarlak harita noktalarının renk eşleştirmesi
-    // Küçük yuvarlak harita noktalarının yeni asil renk eşleştirmesi
-    el.style.backgroundColor =
-      ilan.tip === "arsa" ? "#1b4d3e" :         // Zümrüt Yeşili
-      ilan.tip === "daire" ? "#1e3a8a" :        // Gece Mavisi
-      ilan.tip === "tarla" ? "#706353" :         // Vizon / Haki
-      ilan.tip === "dukkan" ? "#c29b38" :        // Premium Gold / Kehribar
-      ilan.tip === "ismerkezi" ? "#0369a1" :     // Çelik Mavisi
-      ilan.tip === "villa" ? "#581c87" :         // Lüks Mürdüm
-      ilan.tip === "katkarsiligi" ? "#334155" :  // Kurşun Gri
-      "#1f2937";
-
-    // Dinamik renk sınıfını belirliyoruz
-    const renkSinifi = 
-      ilan.tip === "arsa" ? "popup-renk-arsa" :
-      ilan.tip === "tarla" ? "popup-renk-tarla" :
-      ilan.tip === "daire" ? "popup-renk-daire" :
-      ilan.tip === "villa" ? "popup-renk-villa" :
-      ilan.tip === "dukkan" ? "popup-renk-dukkan" :
-      ilan.tip === "ismerkezi" ? "popup-renk-ismerkezi" :
-      ilan.tip === "katkarsiligi" ? "popup-renk-katkarsiligi" : "popup-renk-varsayilan";
-
-    // Popup yapısına ilgili renk sınıfını enjekte ediyoruz
+   // Yuvarlak harita noktalarının renk eşleştirmesi
+	// Küçük yuvarlak harita noktalarının yeni asil renk eşleştirmesi
+	el.style.backgroundColor =
+	  ilan.tip === "arsa" ? "#1b4d3e" :         // Zümrüt Yeşili
+	  ilan.tip === "daire" ? "#1e3a8a" :        // Gece Mavisi
+	  ilan.tip === "tarla" ? "#706353" :        // Vizon / Haki
+	  ilan.tip === "dukkan" ? "#c29b38" :       // Premium Gold / Kehribar
+	  ilan.tip === "fabrika" ? "#7c2d12" :      // Fabrika - Koyu Turuncu
+	  ilan.tip === "ismerkezi" ? "#0369a1" :    // Çelik Mavisi
+	  ilan.tip === "villa" ? "#581c87" :        // Lüks Mürdüm
+	  ilan.tip === "katkarsiligi" ? "#334155" : // Kurşun Gri
+	  "#1f2937";
+	
+	// Dinamik renk sınıfını belirliyoruz
+	const renkSinifi = 
+	  ilan.tip === "arsa" ? "popup-renk-arsa" :
+	  ilan.tip === "tarla" ? "popup-renk-tarla" :
+	  ilan.tip === "daire" ? "popup-renk-daire" :
+	  ilan.tip === "villa" ? "popup-renk-villa" :
+	  ilan.tip === "dukkan" ? "popup-renk-dukkan" :
+	  ilan.tip === "fabrika" ? "popup-renk-fabrika" :
+	  ilan.tip === "ismerkezi" ? "popup-renk-ismerkezi" :
+	  ilan.tip === "katkarsiligi" ? "popup-renk-katkarsiligi" :
+	  "popup-renk-varsayilan";
+	  // Popup yapısına ilgili renk sınıfını enjekte ediyoruz
 	const popup = new mapboxgl.Popup({ 
       offset: 14, // Noktaya olan ideal uzaklık
       closeButton: false, 
