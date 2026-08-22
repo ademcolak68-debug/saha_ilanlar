@@ -1465,11 +1465,11 @@ map.once("idle", () => {
 
         });
 
-        // SIDEBAR DEĞİŞİNCE CLUSTER'I DA GÜNCELLE
-        clusterVerisiniGuncelle();
+       clusterVerisiniGuncelle();
 
-        // LEVHALARI ZOOM + SIDEBAR DURUMUNA GÖRE DÜZELT
-        clusterLevhaKontrol();
+		map.once("idle", () => {
+		    clusterLevhaKontrol();
+		});
 
     });
 
