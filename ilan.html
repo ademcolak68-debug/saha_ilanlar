@@ -1689,6 +1689,26 @@ function altKategorileriAc(durum, element){
     });
 
 	// =========================================
+	// FABRİKA
+	// durum + konutTipi
+	// =========================================
+	
+	ilanlar.forEach(d => {
+	
+	    if(
+	        d.konutTipi &&
+	        d.konutTipi.toLowerCase() === "fabrika"
+	    ){
+	
+	        if(!kategoriler.includes("Fabrika")){
+	            kategoriler.push("Fabrika");
+	        }
+	
+	    }
+	
+	});
+
+	// =========================================
 	// VİLLA
 	// durum + konutTipi / konutSekli
 	// =========================================
@@ -1782,6 +1802,18 @@ kategoriler.forEach(kategori => {
         ).length;
 
     }
+
+		// FABRİKA
+		else if(kategori === "Fabrika"){
+		
+		    adet = ilanlarVerisi.filter(d =>
+		        d.ilanAktif !== false &&
+		        d.durum === durum &&
+		        d.konutTipi &&
+		        d.konutTipi.toLowerCase() === "fabrika"
+		    ).length;
+		
+		}
 
 	// VİLLA
 	else if(kategori === "Villa"){
@@ -1939,6 +1971,26 @@ function kategoriIlanlariniAc(durum, kategori){
     }
 
 	// =========================================
+	// FABRİKA
+	// durum + konutTipi
+	// =========================================
+	
+	else if(kategori === "Fabrika"){
+	
+	    filtreliIlanlar =
+	        ilanlarVerisi.filter(d =>
+	            d.ilanAktif !== false &&
+	
+	            d.durum === durum &&
+	
+	            d.konutTipi &&
+	
+	            d.konutTipi.toLowerCase() === "fabrika"
+	        );
+	
+	}
+
+	// =========================================
 	// VİLLA
 	// durum + konutTipi / konutSekli
 	// =========================================
@@ -2044,6 +2096,15 @@ else if(
 
     kartBaslik += " Dükkan";
 
+}
+
+// FABRİKA
+else if(
+    d.konutTipi &&
+    d.konutTipi.toLowerCase() === "fabrika"
+){
+
+    kartBaslik += " Fabrika";
 }
 
 // VİLLA
