@@ -917,37 +917,55 @@ map.addControl(
 
 map.on('load', () => {
 
-// ==========================================
-    // ZOOM SEVİYESİ GÖSTERGESİ
-    // ==========================================
+const zoomGosterge = document.createElement("div");
 
-    const zoomGosterge = document.createElement("div");
+zoomGosterge.id = "zoomGosterge";
 
-    zoomGosterge.id = "zoomGosterge";
+zoomGosterge.style.cssText = `
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    z-index: 10;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font: bold 14px Arial;
+`;
 
-    zoomGosterge.style.cssText = `
-        position: absolute;
-        left: 10px;
-        bottom: 10px;
-        z-index: 10;
-        background: rgba(0,0,0,0.75);
-        color: #fff;
-        padding: 6px 10px;
-        border-radius: 6px;
-        font: bold 14px Arial;
-    `;
+map.getContainer().appendChild(zoomGosterge);
 
-    zoomGosterge.textContent =
-        "Zoom: " + map.getZoom().toFixed(2);
 
-    map.getContainer().appendChild(zoomGosterge);
+function zoomBilgisiniGuncelle() {
 
-    map.on("zoom", () => {
+    const zoom = map.getZoom();
 
-        zoomGosterge.textContent =
-            "Zoom: " + map.getZoom().toFixed(2);
+    let clusterSayisi = 0;
 
-    });	
+    if (map.getLayer("ilanlar-cluster-circles")) {
+
+        const features = map.queryRenderedFeatures({
+            layers: ["ilanlar-cluster-circles"]
+        });
+
+        clusterSayisi = features.length;
+    }
+
+    zoomGosterge.innerHTML =
+        "Zoom: " + zoom.toFixed(2) +
+        "<br>Cluster: " + clusterSayisi;
+}
+
+
+zoomBilgisiniGuncelle();
+
+map.on("zoom", () => {
+    zoomBilgisiniGuncelle();
+});
+
+map.on("moveend", () => {
+    zoomBilgisiniGuncelle();
+});
 	
 
  // 1. Google UYDU Kaynağı
