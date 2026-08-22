@@ -1182,7 +1182,7 @@ map.on("moveend", () => {
 
 });
 
-   
+   marker.togglePopup(); // Levhayı otomatik aç
 
     if (!markersByType[ilan.tip]) markersByType[ilan.tip] = [];
     markersByType[ilan.tip].push({ marker, popup });
@@ -1427,7 +1427,6 @@ map.once("idle", () => {
     clusterLevhaKontrol();
 
 });
-
   // Sidebar sayaçlarını güncelleme
   Object.keys(markersByType).forEach(tip => {
     const el = document.getElementById(`count-${tip}`);
