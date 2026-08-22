@@ -1109,7 +1109,7 @@ map.on('load', () => {
     const marker = new mapboxgl.Marker(el)
       .setLngLat(ilan.coord)
       .setPopup(popup)
-      .addTo(map);
+     
 	  
 	  popup.on('open', () => {
 
@@ -1358,12 +1358,9 @@ map.on("zoomend", () => {
 
 });
 
-
-// --------------------------------------
-// İLK AÇILIŞ KONTROLÜ
-// --------------------------------------
-
-clusterLevhaKontrol();
+map.once("idle", () => {
+    clusterLevhaKontrol();
+});
 
   // Sidebar sayaçlarını güncelleme
   Object.keys(markersByType).forEach(tip => {
