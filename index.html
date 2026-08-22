@@ -1111,30 +1111,78 @@ map.addSource("ilanlar-cluster", {
 
     const newMarkers = {};
 
-    // Ekranda görünen cluster'ları al
     const features = map.queryRenderedFeatures(
         { layers: ["ilanlar-cluster-hit"] }
     );
 
-    // Cluster içinde bulunan ilan ID'lerini tutacağız
+    const clusterFeatures = features.filter(feature =>
+        feature.properties &&
+        feature.properties.cluster
+    );
+
+    // --------------------------------------------------
+    // EKRANDA CLUSTER VARSA NORMAL MARKERLARI
+    // ÖNCE GİZLE
+    // --------------------------------------------------
+
+    if (clusterFeatures.length > 0) {
+
+        ilanMarkerlar.forEach(item => {
+            item.marker.remove();
+        });
+    }
+
+    // --------------------------------------------------
+    // CLUSTERLARI OLUŞTUR
+    // --------------------------------------------------
+
+    let bekleyenCluster = clusterFeatures.length;
+
     const clusteredPointIds = new Set();
 
-    for (const feature of features) {
+    if (bekleyenCluster === 0) {
 
-        const coords = feature.geometry.coordinates;
-        const props = feature.properties;
+        // Artık cluster yok.
+        // Normal markerları ve levhaları aç.
+        ilanMarkerlar.forEach(item => {
 
-        if (!props.cluster) continue;
+            item.marker.addTo(map);
 
-        const clusterId = props.cluster_id;
-        const sayi = props.point_count;
+            // Levha otomatik açılsın
+            if (!item.marker.getPopup().isOpen()) {
+                item.marker.togglePopup();
+            }
 
-        let marker = clusterMarkers[clusterId];
+        });
 
-        // Cluster marker daha önce oluşturulmadıysa
+    }
+
+    for (const feature of clusterFeatures) {
+
+        const coords =
+            feature.geometry.coordinates;
+
+        const props =
+            feature.properties;
+
+        const clusterId =
+            props.cluster_id;
+
+        const sayi =
+            props.point_count;
+
+        let marker =
+            clusterMarkers[clusterId];
+
+
+        // --------------------------------------------------
+        // CLUSTER MARKER YOKSA OLUŞTUR
+        // --------------------------------------------------
+
         if (!marker) {
 
-            const el = document.createElement("div");
+            const el =
+                document.createElement("div");
 
             el.style.width = "42px";
             el.style.height = "42px";
@@ -1144,7 +1192,8 @@ map.addSource("ilanlar-cluster", {
             el.style.display = "flex";
             el.style.alignItems = "center";
             el.style.justifyContent = "center";
-            el.style.boxShadow = "0 3px 8px rgba(0,0,0,.45)";
+            el.style.boxShadow =
+                "0 3px 8px rgba(0,0,0,.45)";
             el.style.cursor = "pointer";
             el.style.transform = "rotate(-45deg)";
 
@@ -1160,13 +1209,16 @@ map.addSource("ilanlar-cluster", {
                 </span>
             `;
 
-            marker = new mapboxgl.Marker({
-                element: el
-            })
-            .setLngLat(coords);
+            marker =
+                new mapboxgl.Marker({
+                    element: el
+                })
+                .setLngLat(coords);
 
             clusterMarkers[clusterId] = marker;
 
+
+            // Cluster tıklanınca yakınlaştır
             el.addEventListener("click", () => {
 
                 map.getSource("ilanlar-cluster")
@@ -1187,16 +1239,21 @@ map.addSource("ilanlar-cluster", {
             });
         }
 
-        // Cluster koordinatı değişmiş olabilir
+
         marker.setLngLat(coords);
 
         newMarkers[clusterId] = marker;
+
 
         if (!clusterMarkersOnScreen[clusterId]) {
             marker.addTo(map);
         }
 
-        // Bu cluster'ın içindeki gerçek ilanları al
+
+        // --------------------------------------------------
+        // CLUSTER İÇİNDEKİ İLANLARI BUL
+        // --------------------------------------------------
+
         map.getSource("ilanlar-cluster")
             .getClusterLeaves(
                 clusterId,
@@ -1204,68 +1261,87 @@ map.addSource("ilanlar-cluster", {
                 0,
                 (err, leaves) => {
 
-                    if (err || !leaves) return;
+                    if (!err && leaves) {
 
-                    leaves.forEach(leaf => {
+                        leaves.forEach(leaf => {
 
-                        const ilanId = String(
-                            leaf.properties.id
-                        );
+                            clusteredPointIds.add(
+                                String(
+                                    leaf.properties.id
+                                )
+                            );
 
-                        clusteredPointIds.add(ilanId);
+                        });
+                    }
 
-                    });
 
-                    // Cluster içindeki normal markerları gizle
-                    ilanMarkerlar.forEach(item => {
+                    bekleyenCluster--;
 
-                        if (
-                            clusteredPointIds.has(
-                                String(item.id)
-                            )
-                        ) {
-                            item.marker.remove();
-                        }
 
-                    });
+                    // Bütün clusterların ilanları
+                    // bulunduğunda markerları düzelt
+                    if (bekleyenCluster === 0) {
+
+                        ilanMarkerlar.forEach(item => {
+
+                            const ilanId =
+                                String(item.id);
+
+
+                            if (
+                                clusteredPointIds.has(
+                                    ilanId
+                                )
+                            ) {
+
+                                // Cluster içindeyse
+                                // kendi markerı görünmesin
+                                item.marker.remove();
+
+                            } else {
+
+                                // Cluster dışında kalan
+                                // normal ilan markerı görünsün
+                                item.marker.addTo(map);
+
+                                // Levhası otomatik açılsın
+                                if (
+                                    !item.marker
+                                        .getPopup()
+                                        .isOpen()
+                                ) {
+
+                                    item.marker.togglePopup();
+                                }
+                            }
+
+                        });
+
+                    }
 
                 }
             );
     }
 
-    // Artık görünmeyen clusterları kaldır
-    for (const id in clusterMarkersOnScreen) {
+
+    // --------------------------------------------------
+    // ESKİ CLUSTERLARI KALDIR
+    // --------------------------------------------------
+
+    for (
+        const id in clusterMarkersOnScreen
+    ) {
 
         if (!newMarkers[id]) {
+
             clusterMarkersOnScreen[id].remove();
         }
     }
 
-    clusterMarkersOnScreen = newMarkers;
 
-    // Cluster içinde olmayan ilan markerlarını göster
-    ilanMarkerlar.forEach(item => {
-
-        const ilanId = String(item.id);
-
-        if (!clusteredPointIds.has(ilanId)) {
-
-            if (!item.marker.getElement().parentNode) {
-                item.marker.addTo(map);
-            }
-
-        }
-
-    });
+    clusterMarkersOnScreen =
+        newMarkers;
 }
-
-map.on("render", () => {
-
-    if (!map.isSourceLoaded("ilanlar-cluster")) return;
-
-    updateClusterMarkers();
-
-});
 	
 
 // ==========================================
