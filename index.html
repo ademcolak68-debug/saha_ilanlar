@@ -1257,6 +1257,69 @@ map.on('load', () => {
 	            }
 	        );
 	});
+
+
+	// ==========================================
+	// CLUSTER ↔ ÖN İZLEME LEVHASI GEÇİŞİ
+	// ==========================================
+	
+	function clusterLevhaKontrol() {
+	
+	    const zoom = map.getZoom();
+	
+	    // Cluster'ın çalıştığı seviyede levhaları gizle
+	    if (zoom < 13) {
+	
+	        Object.values(markersByType).forEach(grup => {
+	
+	            grup.forEach(item => {
+	
+	                item.popup.remove();
+	                item.marker.remove();
+	
+	            });
+	
+	        });
+	
+	    }
+	
+	    // Cluster çözüldüğünde levhaları göster
+	    else {
+	
+	        Object.values(markersByType).forEach(grup => {
+	
+	            grup.forEach(item => {
+	
+	                item.marker.addTo(map);
+	
+	                if (!item.popup.isOpen()) {
+	                    item.marker.togglePopup();
+	                }
+	
+	            });
+	
+	        });
+	
+	    }
+	}
+	
+	
+	// ==========================================
+	// ZOOM DEĞİŞİNCE KONTROL ET
+	// ==========================================
+	
+	map.on("zoomend", () => {
+	
+	    clusterLevhaKontrol();
+	
+	});
+	
+	
+	// ==========================================
+	// HARİTA İLK AÇILDIĞINDA KONTROL
+	// ==========================================
+	
+	clusterLevhaKontrol();
   
   
 
