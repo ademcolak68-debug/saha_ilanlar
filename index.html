@@ -1334,42 +1334,7 @@ map.on("moveend", () => {
 
 
     // --------------------------------------
-    // EKRANDA CLUSTER VAR MI?
-    // --------------------------------------
-
-    const clusterFeatures = map.queryRenderedFeatures({
-        layers: ["ilanlar-cluster-circles"]
-    });
-
-    const clusterVar = clusterFeatures.length > 0;
-
-
-    // --------------------------------------
-    // CLUSTER VARSA:
-    // Bütün levhaları gizle
-    // --------------------------------------
-
-    if (clusterVar) {
-
-        Object.values(markersByType).forEach(grup => {
-
-            grup.forEach(item => {
-
-                item.popup.remove();
-                item.marker.remove();
-
-            });
-
-        });
-
-        return;
-    }
-
-
-    // --------------------------------------
-    // CLUSTER YOKSA:
-    // Sadece sidebar'da açık tiplerin
-    // levhalarını göster
+    // HER İLANI KENDİ KONUMUNDA KONTROL ET
     // --------------------------------------
 
     Object.entries(markersByType).forEach(
@@ -1377,18 +1342,60 @@ map.on("moveend", () => {
 
             grup.forEach(item => {
 
-                if (aktifTipler.has(tip)) {
+                // Sidebar kapalıysa
+                if (!aktifTipler.has(tip)) {
+
+                    item.popup.remove();
+                    item.marker.remove();
+
+                    return;
+                }
+
+
+                // İlanın ekrandaki koordinatı
+                const nokta = map.project(
+                    item.marker.getLngLat()
+                );
+
+
+                // İlanın çevresinde cluster var mı?
+                const clusterFeatures =
+                    map.queryRenderedFeatures(
+                        [
+                            [nokta.x - 70, nokta.y - 70],
+                            [nokta.x + 70, nokta.y + 70]
+                        ],
+                        {
+                            layers: [
+                                "ilanlar-cluster-circles"
+                            ]
+                        }
+                    );
+
+
+                // --------------------------------------
+                // CLUSTER İÇİNDEYSE
+                // --------------------------------------
+
+                if (clusterFeatures.length > 0) {
+
+                    item.popup.remove();
+                    item.marker.remove();
+
+                }
+
+
+                // --------------------------------------
+                // CLUSTER İÇİNDE DEĞİLSE
+                // --------------------------------------
+
+                else {
 
                     item.marker.addTo(map);
 
                     if (!item.popup.isOpen()) {
                         item.marker.togglePopup();
                     }
-
-                } else {
-
-                    item.popup.remove();
-                    item.marker.remove();
 
                 }
 
