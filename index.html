@@ -1510,12 +1510,25 @@ document.getElementById("hideAllBtn").addEventListener("click", () => {
   });
   
   document.getElementById('homeBtn').addEventListener('click', () => {
+
     if (ilanlar.length > 0) {
-      const bounds = new mapboxgl.LngLatBounds();
-      ilanlar.forEach(ilan => bounds.extend(ilan.coord));
-      map.fitBounds(bounds, { padding: 50 });
+
+        const bounds = new mapboxgl.LngLatBounds();
+
+        ilanlar.forEach(ilan => {
+            bounds.extend(ilan.coord);
+        });
+
+        map.fitBounds(bounds, {
+            padding: 50
+        });
+
+        map.once("idle", () => {
+            clusterLevhaKontrol();
+        });
     }
-  });
+
+});
   
   
   
