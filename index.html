@@ -1089,6 +1089,17 @@ map.on('load', () => {
 	    clusterRadius: 50
 	});
 
+	map.addLayer({
+    id: "ilanlar-cluster-hit",
+    type: "circle",
+    source: "ilanlar-cluster",
+    filter: ["has", "point_count"],
+    paint: {
+        "circle-radius": 1,
+        "circle-opacity": 0
+    }
+});
+
 	map.on("click", "ilanlar-cluster", (e) => {
     const features = map.queryRenderedFeatures(e.point, {
         layers: ["ilanlar-cluster"]
