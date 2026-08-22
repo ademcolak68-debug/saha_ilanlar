@@ -836,28 +836,6 @@ html, body {
     height:100%;
 }
 
-.netmax-cluster-marker{
-    width:42px;
-    height:42px;
-    background:#334155;
-    border:3px solid #fff;
-    border-radius:50% 50% 50% 0;
-    transform:rotate(-45deg);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 3px 8px rgba(0,0,0,.45);
-    cursor:pointer;
-}
-
-.netmax-cluster-marker span{
-    transform:rotate(45deg);
-    color:#fff;
-    font-family:Tahoma,sans-serif;
-    font-size:13px;
-    font-weight:bold;
-}
-
 </style>
 </head>
 
@@ -1065,213 +1043,9 @@ map.on('load', () => {
     };
 });
 
-		const ilanGeoJSON = {
-		    type: "FeatureCollection",
-		
-		    features: ilanlar.map(ilan => ({
-		        type: "Feature",
-		
-		        geometry: {
-		            type: "Point",
-		            coordinates: ilan.coord
-		        },
-		
-		        properties: {
-		            id: ilan.id,
-		            tip: ilan.tip
-		        }
-		    }))
-		};
-		
-		map.addSource("ilanlar-cluster", {
-		    type: "geojson",
-		    data: ilanGeoJSON,
-		    cluster: true,
-		    clusterMaxZoom: 13,
-		    clusterRadius: 50
-		});
-		
-		map.addLayer({
-		    id: "ilanlar-cluster-hit",
-		    type: "circle",
-		    source: "ilanlar-cluster",
-		    filter: ["has", "point_count"],
-		    paint: {
-		        "circle-radius": 20,
-		        "circle-opacity": 0
-		    }
-		});
-		
-const clusterMarkers = {};
-let clusterMarkersOnScreen = {};
-let tumIlanlarKapali = false;
-
-function updateClusterMarkers() {
-
-	 if (tumIlanlarKapali) {
-
-        Object.values(clusterMarkersOnScreen).forEach(marker => {
-            marker.remove();
-        });
-
-        clusterMarkersOnScreen = {};
-
-        return;
-    }
-
-    const newMarkers = {};
-
-    const features = map.queryRenderedFeatures(
-        { layers: ["ilanlar-cluster-hit"] }
-    );
-
-    for (const feature of features) {
-
-        const coords = feature.geometry.coordinates;
-        const props = feature.properties;
-
-        // Sadece cluster olanları al
-        if (!props.cluster) continue;
-
-        const id = props.cluster_id;
-        const sayi = props.point_count;
-
-        let marker = clusterMarkers[id];
-
-        // Daha önce oluşturulmadıysa oluştur
-        if (!marker) {
-
-            const el = document.createElement("div");
-
-            el.style.width = "42px";
-            el.style.height = "42px";
-            el.style.background = "#334155";
-            el.style.border = "3px solid #fff";
-            el.style.borderRadius = "50% 50% 50% 0";
-            el.style.display = "flex";
-            el.style.alignItems = "center";
-            el.style.justifyContent = "center";
-            el.style.boxShadow = "0 3px 8px rgba(0,0,0,.45)";
-            el.style.cursor = "pointer";
-            el.style.transform = "rotate(-45deg)";
-
-            el.innerHTML = `
-                <span style="
-                    transform:rotate(45deg);
-                    color:#fff;
-                    font-family:Tahoma,sans-serif;
-                    font-size:13px;
-                    font-weight:bold;
-                ">
-                    ${sayi}
-                </span>
-            `;
-
-            marker = clusterMarkers[id] =
-                new mapboxgl.Marker({
-                    element: el
-                }).setLngLat(coords);
-
-            el.addEventListener("click", () => {
-
-                map.getSource("ilanlar-cluster")
-                    .getClusterExpansionZoom(
-                        id,
-                        (err, zoom) => {
-
-                            if (err) return;
-
-                            map.easeTo({
-                                center: coords,
-                                zoom: zoom
-                            });
-
-                        }
-                    );
-
-            });
-        }
-
-        newMarkers[id] = marker;
-
-        if (!clusterMarkersOnScreen[id]) {
-            marker.addTo(map);
-        }
-    }
-
-    // Artık görünmeyen clusterları kaldır
-    for (const id in clusterMarkersOnScreen) {
-
-        if (!newMarkers[id]) {
-            clusterMarkersOnScreen[id].remove();
-        }
-    }
-
-    clusterMarkersOnScreen = newMarkers;
-
-    if (Object.keys(clusterMarkersOnScreen).length > 0) {
-
-        ilanMarkerlar.forEach(item => {
-            item.marker.remove();
-        });
-
-	    } else {
-	
-	    ilanMarkerlar.forEach(item => {
-	
-	        const ilanBilgisi = ilanlar.find(
-	            ilan => String(ilan.id) === String(item.id)
-	        );
-	
-	        if (!ilanBilgisi) return;
-	
-	        const cb = document.querySelector(
-	            `#sidebar input[type="checkbox"][value="${ilanBilgisi.tip}"]`
-	        );
-	
-	        if (cb && cb.checked) {
-	
-	            item.marker.addTo(map);
-	
-	            const popup = item.marker.getPopup();
-	
-	            if (popup && !popup.isOpen()) {
-	                item.marker.togglePopup();
-	            }
-	
-	        } else {
-	
-	            item.marker.remove();
-	
-	            const popup = item.marker.getPopup();
-	
-	            if (popup) {
-	                popup.remove();
-	            }
-	
-	        }
-	
-	    });
-	
-	}
-}
-		
-		map.on("render", () => {
-		
-		    if (!map.isSourceLoaded("ilanlar-cluster")) return;
-		
-		    updateClusterMarkers();
-		
-		});
-
-
-    
-	
-
 // ==========================================
   // MARKER VE RENKLİ POPUP'LARIN BASILMASI
   // ==========================================
-  const ilanMarkerlar = [];
   const markersByType = {};
 
   ilanlar.forEach(ilan => {
@@ -1336,12 +1110,6 @@ function updateClusterMarkers() {
       .setLngLat(ilan.coord)
       .setPopup(popup)
       .addTo(map);
-
-	  ilanMarkerlar.push({
-		    id: ilan.id,
-		    marker: marker,
-		    coord: ilan.coord
-		});
 	  
 	  popup.on('open', () => {
 
@@ -1388,47 +1156,27 @@ function updateClusterMarkers() {
   }
 
   // CHECKBOX FİLTRELEME KONTROLLERİ
- document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
+  document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
     cb.addEventListener("change", () => {
-		tumIlanlarKapali = false;
-        const tip = cb.value;
-        if (!markersByType[tip]) return;
-        markersByType[tip].forEach(o => {
-            if (cb.checked) { 
-                o.marker.addTo(map); 
-                o.popup.addTo(map); 
-            }
-            else { 
-                o.popup.remove(); 
-                o.marker.remove(); 
-            }
-        });
+      const tip = cb.value;
+      if (!markersByType[tip]) return;
+      markersByType[tip].forEach(o => {
+        if (cb.checked) { o.marker.addTo(map); o.popup.addTo(map); }
+        else { o.popup.remove(); o.marker.remove(); }
+      });
     });
-});
+  });
   
   // HEPSİNİ KAPAT BUTONU
- 	document.getElementById("hideAllBtn").addEventListener("click", () => {
-
-    tumIlanlarKapali = true;
-
-    document.querySelectorAll('#sidebar input[type="checkbox"]')
-        .forEach(cb => cb.checked = false);
-
+  document.getElementById("hideAllBtn").addEventListener("click", () => {
+    document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
     Object.values(markersByType).forEach(list => {
-
-        list.forEach(o => {
-            o.popup.remove();
-            o.marker.remove();
-        });
-
+      list.forEach(o => {
+        o.popup.remove();
+        o.marker.remove();
+      });
     });
-
-    Object.values(clusterMarkersOnScreen).forEach(marker => {
-        marker.remove();
-    });
-
-    clusterMarkersOnScreen = {};
-});
+  });
 
   // ÜSTTEKİ SİLİNMİŞ OLAN KAPAT/X ve HOME EVENTLERİ
   const sidebar = document.getElementById('sidebar');
