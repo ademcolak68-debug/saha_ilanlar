@@ -1268,8 +1268,6 @@ map.on('load', () => {
 	
 	function clusterLevhaKontrol() {
 
-    const zoom = map.getZoom();
-
     // Sidebar'da açık olan tipleri bul
     const aktifTipler = new Set();
 
@@ -1285,11 +1283,22 @@ map.on('load', () => {
 
 
     // --------------------------------------
-    // UZAKTAYSA:
-    // Cluster görünsün, bütün levhalar gizlensin
+    // EKRANDA CLUSTER VAR MI?
     // --------------------------------------
 
-    if (zoom < 13) {
+    const clusterFeatures = map.queryRenderedFeatures({
+        layers: ["ilanlar-cluster-circles"]
+    });
+
+    const clusterVar = clusterFeatures.length > 0;
+
+
+    // --------------------------------------
+    // CLUSTER VARSA:
+    // Bütün levhaları gizle
+    // --------------------------------------
+
+    if (clusterVar) {
 
         Object.values(markersByType).forEach(grup => {
 
@@ -1307,7 +1316,7 @@ map.on('load', () => {
 
 
     // --------------------------------------
-    // YAKINDAYSA:
+    // CLUSTER YOKSA:
     // Sadece sidebar'da açık tiplerin
     // levhalarını göster
     // --------------------------------------
@@ -1337,12 +1346,22 @@ map.on('load', () => {
         }
     );
 }
-  
-  map.on("zoomend", () => {
+
+
+// --------------------------------------
+// ZOOM DEĞİŞİNCE KONTROL
+// --------------------------------------
+
+map.on("zoomend", () => {
 
     clusterLevhaKontrol();
 
 });
+
+
+// --------------------------------------
+// İLK AÇILIŞ KONTROLÜ
+// --------------------------------------
 
 clusterLevhaKontrol();
 
@@ -1509,28 +1528,14 @@ document.getElementById("hideAllBtn").addEventListener("click", () => {
     toggleBtn.style.display = 'flex';
   });
   
+ 
  document.getElementById('homeBtn').addEventListener('click', () => {
-
     if (ilanlar.length > 0) {
-
         const bounds = new mapboxgl.LngLatBounds();
-
-        ilanlar.forEach(ilan => {
-            bounds.extend(ilan.coord);
-        });
-
-        map.fitBounds(bounds, {
-            padding: 120,
-            maxZoom: 13
-        });
-
-        map.once("idle", () => {
-            clusterLevhaKontrol();
-        });
+        ilanlar.forEach(ilan => bounds.extend(ilan.coord));
+        map.fitBounds(bounds, { padding: 50 });
     }
-
-});
-  
+}); 
   
   
   function ilanDetayPopup(ilan){
