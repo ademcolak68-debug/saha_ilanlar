@@ -836,6 +836,28 @@ html, body {
     height:100%;
 }
 
+.netmax-cluster-marker{
+    width:42px;
+    height:42px;
+    background:#334155;
+    border:3px solid #fff;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(-45deg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 3px 8px rgba(0,0,0,.45);
+    cursor:pointer;
+}
+
+.netmax-cluster-marker span{
+    transform:rotate(45deg);
+    color:#fff;
+    font-family:Tahoma,sans-serif;
+    font-size:13px;
+    font-weight:bold;
+}
+
 </style>
 </head>
 
@@ -1043,55 +1065,86 @@ map.on('load', () => {
     };
 });
 
-		const ilanGeoJSON = {
-	    type: "FeatureCollection",
-	    features: ilanlar.map(ilan => ({
-	        type: "Feature",
-	        geometry: {
-	            type: "Point",
-	            coordinates: ilan.coord
-	        },
-	        properties: {
-	            id: ilan.id,
-	            tip: ilan.tip
-	        }
-	    }))
-	};
+const ilanGeoJSON = {
+    type: "FeatureCollection",
+    features: ilanlar.map(ilan => ({
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: ilan.coord
+        },
+        properties: {
+            id: ilan.id,
+            tip: ilan.tip
+        }
+    }))
+};
+
+map.addSource("ilanlar-cluster", {
+    type: "geojson",
+    data: ilanGeoJSON,
+    cluster: true,
+    clusterMaxZoom: 13,
+    clusterRadius: 50
+});
+
+	const clusterMarkerlar = [];
+
+function clusterlariGoster() {
+
+    // Eski cluster markerlarını temizle
+    clusterMarkerlar.forEach(marker => marker.remove());
+    clusterMarkerlar.length = 0;
+
+    const clusters = map.querySourceFeatures("ilanlar-cluster");
+
+    clusters.forEach(feature => {
+
+        if (!feature.properties.cluster) return;
+
+        const koordinat = feature.geometry.coordinates;
+        const sayi = feature.properties.point_count;
+
+        const el = document.createElement("div");
+
+        el.className = "netmax-cluster-marker";
+
+        el.innerHTML = `
+            <span>${sayi}</span>
+        `;
+
+        el.onclick = () => {
+
+            const clusterId = feature.properties.cluster_id;
+
+            map.getSource("ilanlar-cluster")
+                .getClusterExpansionZoom(
+                    clusterId,
+                    (err, zoom) => {
+
+                        if (err) return;
+
+                        map.easeTo({
+                            center: koordinat,
+                            zoom: zoom
+                        });
+
+                    }
+                );
+        };
+
+        const marker = new mapboxgl.Marker(el)
+            .setLngLat(koordinat)
+            .addTo(map);
+
+        clusterMarkerlar.push(marker);
+
+    });
+}
+
+map.on("render", clusterlariGoster);
+
 	
-	map.addSource("ilanlar-cluster", {
-	    type: "geojson",
-	    data: ilanGeoJSON,
-	    cluster: true,
-	    clusterMaxZoom: 13,
-	    clusterRadius: 50
-	});
-
-	map.addLayer({
-    id: "ilanlar-cluster",
-    type: "circle",
-    source: "ilanlar-cluster",
-    filter: ["has", "point_count"],
-    paint: {
-        "circle-color": "#1976d2",
-        "circle-radius": 20,
-        "circle-stroke-width": 3,
-        "circle-stroke-color": "#ffffff"
-    }
-});
-
-	map.addLayer({
-    id: "ilanlar-cluster-count",
-    type: "symbol",
-    source: "ilanlar-cluster",
-    filter: ["has", "point_count"],
-    layout: {
-        "text-field": "{point_count_abbreviated}",
-        "text-size": 12
-    },
-    paint: {
-        "text-color": "#ffffff"
-    }
-});
 
 // ==========================================
   // MARKER VE RENKLİ POPUP'LARIN BASILMASI
