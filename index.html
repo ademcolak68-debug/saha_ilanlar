@@ -1410,9 +1410,21 @@ map.on("moveend", () => {
 // ZOOM DEĞİŞİNCE KONTROL
 // --------------------------------------
 
-map.on("zoomend", () => {
+let clusterKontrolBekliyor = false;
 
-    clusterLevhaKontrol();
+map.on("render", () => {
+
+    if (clusterKontrolBekliyor) return;
+
+    clusterKontrolBekliyor = true;
+
+    requestAnimationFrame(() => {
+
+        clusterKontrolBekliyor = false;
+
+        clusterLevhaKontrol();
+
+    });
 
 });
 
