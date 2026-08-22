@@ -907,7 +907,19 @@ font-weight:bold;
 
     <i class="fa-solid fa-building"></i>
 
-    <span style="flex:1;">İlanlarımız</span>
+    <span style="flex:1;">
+        İlanlarımız
+
+        <small id="yayindaIlanSayisi"
+               style="
+                   display:block;
+                   font-size:12px;
+                   opacity:0.75;
+                   margin-top:2px;
+               ">
+        </small>
+
+    </span>
 
 </a>
 
@@ -976,12 +988,24 @@ font-weight:bold;
 <div id="ilanlarPanel" class="ilanlar-panel">
 
     <div class="ilanlar-ust">
+
+    <div>
         <span>İlanlarımız</span>
 
-        <i class="fa-solid fa-xmark"
-           onclick="ilanlarKapat()">
-        </i>
+        <div id="yayindaIlanSayisi">
+            ${
+                ilanlarVerisi.filter(
+                    ilan => ilan.ilanAktif !== false
+                ).length
+            } İlan Yayında
+        </div>
     </div>
+
+    <i class="fa-solid fa-xmark"
+       onclick="ilanlarKapat()">
+    </i>
+
+</div>
 
 </div>
 
