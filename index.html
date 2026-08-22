@@ -1259,56 +1259,6 @@ map.addSource("ilanlar-cluster", {
     });
 }
 
-    // Artık görünmeyen clusterları kaldır
-    for (const id in clusterMarkersOnScreen) {
-
-        if (!newMarkers[id]) {
-            clusterMarkersOnScreen[id].remove();
-        }
-    }
-
-    clusterMarkersOnScreen = newMarkers;
-
-	ilanMarkerlar.forEach(item => {
-
-    const point = turf.point(item.coord);
-
-    let clusterVar = false;
-
-    for (const id in clusterMarkersOnScreen) {
-
-        const clusterMarker =
-            clusterMarkersOnScreen[id];
-
-        const clusterCoord =
-            clusterMarker.getLngLat();
-
-        const clusterPoint =
-            turf.point([
-                clusterCoord.lng,
-                clusterCoord.lat
-            ]);
-
-        const mesafe =
-            turf.distance(point, clusterPoint, {
-                units: "kilometers"
-            });
-
-        if (mesafe < 0.05) {
-            clusterVar = true;
-            break;
-        }
-    }
-
-    if (clusterVar) {
-        item.marker.remove();
-    } else {
-        item.marker.addTo(map);
-    }
-
-});
-}
-
 map.on("render", () => {
 
     if (!map.isSourceLoaded("ilanlar-cluster")) return;
