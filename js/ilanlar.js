@@ -551,5 +551,59 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "Hayır",
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": "Hayır"
+    },
+    {
+        "id": 1787400082068,
+        "baslik": "Organize Sanayide",
+        "durum": "satilik",
+        "tip": "isyeri",
+        "konutTipi": "Fabrika",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Taşpınar Erenler",
+        "fiyat": "43.000.000",
+        "paraBirimi": "TL",
+        "aciklama": "Kapalı alan 1300 m2,İdari bina 250 m2,İskanı alınmış,400 KW trafo direk tipi,Şu an tadilat aşamasında eksiklikler yapılacaktır veya liste fiyatından düşülecektir",
+        "koor": "34.003721,38.260203",
+        "klasorIsmi": "yasin-fabrika",
+        "resimler": [
+            "images/yasin-fabrika/1.jpeg",
+            "images/yasin-fabrika/2.jpeg",
+            "images/yasin-fabrika/3.jpeg",
+            "images/yasin-fabrika/4.jpeg",
+            "images/yasin-fabrika/5.jpeg",
+            "images/yasin-fabrika/6.jpeg",
+            "images/yasin-fabrika/7.jpeg",
+            "images/yasin-fabrika/8.jpeg",
+            "images/yasin-fabrika/9.jpeg",
+            "images/yasin-fabrika/10.jpeg",
+            "images/yasin-fabrika/11.jpeg",
+            "images/yasin-fabrika/12.jpeg",
+            "images/yasin-fabrika/13.jpeg",
+            "images/yasin-fabrika/14.jpeg",
+            "images/yasin-fabrika/15.jpeg"
+        ],
+        "videoUrl": [
+            "images/yasin-fabrika/video_1787400109895_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-22",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1787400082068"
+        },
+        "ilanAktif": true,
+        "danisman": "",
+        "M²": "5089",
+        "Ada": "139",
+        "Parsel": "2",
+        "Oda Sayısı": "5",
+        "Bina Yaşı": "10",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "2",
+        "Isıtma": "Kombi",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "Boş",
+        "Site İçerisinde?": ""
     }
 ];
