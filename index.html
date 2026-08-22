@@ -1174,6 +1174,8 @@ map.on('load', () => {
 	    clusterRadius: 50
 	});
 	
+	// İLK AÇILIŞTA SIDEBAR SEÇİMLERİNE GÖRE CLUSTERI GÜNCELLE
+	clusterVerisiniGuncelle();
 	
 	// ------------------------------------------
 	// CLUSTER DAİRELERİ
@@ -1263,11 +1265,34 @@ map.on('load', () => {
 	// CLUSTER ↔ ÖN İZLEME LEVHASI GEÇİŞİ
 	// ==========================================
 	
+	// ==========================================
+	// CLUSTER ↔ ÖN İZLEME LEVHASI GEÇİŞİ
+	// SIDEBAR FİLTRESİNE UYUMLU
+	// ==========================================
+	
 	function clusterLevhaKontrol() {
 	
 	    const zoom = map.getZoom();
 	
-	    // Cluster'ın çalıştığı seviyede levhaları gizle
+	    // Sidebar'da açık olan tipleri bul
+	    const aktifTipler = new Set();
+	
+	    document.querySelectorAll(
+	        '#sidebar input[type="checkbox"]'
+	    ).forEach(cb => {
+	
+	        if (cb.checked) {
+	            aktifTipler.add(cb.value);
+	        }
+	
+	    });
+	
+	
+	    // --------------------------------------
+	    // UZAKTAYSA:
+	    // Cluster görünsün, bütün levhalar gizlensin
+	    // --------------------------------------
+	
 	    if (zoom < 13) {
 	
 	        Object.values(markersByType).forEach(grup => {
@@ -1281,31 +1306,52 @@ map.on('load', () => {
 	
 	        });
 	
+	        return;
 	    }
 	
-	    // Cluster çözüldüğünde levhaları göster
-	    else {
 	
-	        Object.values(markersByType).forEach(grup => {
+	    // --------------------------------------
+	    // YAKINDAYSA:
+	    // Sadece sidebar'da açık tiplerin
+	    // levhalarını göster
+	    // --------------------------------------
+	
+	    Object.entries(markersByType).forEach(
+	        ([tip, grup]) => {
 	
 	            grup.forEach(item => {
 	
-	                item.marker.addTo(map);
+	                if (aktifTipler.has(tip)) {
 	
-	                if (!item.popup.isOpen()) {
-	                    item.marker.togglePopup();
+	                    item.marker.addTo(map);
+	
+	                    if (!item.popup.isOpen()) {
+	                        item.marker.togglePopup();
+	                    }
+	
+	                } else {
+	
+	                    item.popup.remove();
+	                    item.marker.remove();
+	
 	                }
 	
 	            });
 	
-	        });
-	
-	    }
+	        }
+	    );
 	}
 	
 	
 	// ==========================================
-	// ZOOM DEĞİŞİNCE KONTROL ET
+	// İLK KONTROL
+	// ==========================================
+	
+	clusterLevhaKontrol();
+	
+	
+	// ==========================================
+	// ZOOM DEĞİŞİNCE
 	// ==========================================
 	
 	map.on("zoomend", () => {
@@ -1313,13 +1359,6 @@ map.on('load', () => {
 	    clusterLevhaKontrol();
 	
 	});
-	
-	
-	// ==========================================
-	// HARİTA İLK AÇILDIĞINDA KONTROL
-	// ==========================================
-	
-	clusterLevhaKontrol();
   
   
 
@@ -1340,26 +1379,136 @@ map.on('load', () => {
 
   // CHECKBOX FİLTRELEME KONTROLLERİ
   document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => {
+
     cb.addEventListener("change", () => {
-      const tip = cb.value;
-      if (!markersByType[tip]) return;
-      markersByType[tip].forEach(o => {
-        if (cb.checked) { o.marker.addTo(map); o.popup.addTo(map); }
-        else { o.popup.remove(); o.marker.remove(); }
-      });
+
+        const tip = cb.value;
+
+        if (!markersByType[tip]) return;
+
+        markersByType[tip].forEach(o => {
+
+            if (cb.checked) {
+
+                o.marker.addTo(map);
+                o.popup.addTo(map);
+
+            } else {
+
+                o.popup.remove();
+                o.marker.remove();
+
+            }
+
+        });
+
+        // SIDEBAR DEĞİŞİNCE CLUSTER'I DA GÜNCELLE
+        clusterVerisiniGuncelle();
+
+        // LEVHALARI ZOOM + SIDEBAR DURUMUNA GÖRE DÜZELT
+        clusterLevhaKontrol();
+
     });
-  });
+
+});
+
+	function clusterVerisiniGuncelle() {
+
+    const aktifTipler = [];
+
+    document.querySelectorAll(
+        '#sidebar input[type="checkbox"]'
+    ).forEach(cb => {
+
+        if (cb.checked) {
+            aktifTipler.push(cb.value);
+        }
+
+    });
+
+    const filtrelenmisIlanlar = ilanlar.filter(
+        ilan => aktifTipler.includes(ilan.tip)
+    );
+
+    const yeniGeoJSON = {
+        type: "FeatureCollection",
+
+        features: filtrelenmisIlanlar.map(ilan => ({
+            type: "Feature",
+
+            geometry: {
+                type: "Point",
+                coordinates: ilan.coord
+            },
+
+            properties: {
+                id: String(ilan.id),
+                tip: ilan.tip
+            }
+        }))
+    };
+
+    const source = map.getSource("ilanlar-cluster");
+
+    if (source) {
+        source.setData(yeniGeoJSON);
+    }
+}
   
-  // HEPSİNİ KAPAT BUTONU
-  document.getElementById("hideAllBtn").addEventListener("click", () => {
-    document.querySelectorAll('#sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
-    Object.values(markersByType).forEach(list => {
-      list.forEach(o => {
-        o.popup.remove();
-        o.marker.remove();
-      });
+  // ==========================================
+// HEPSİNİ KAPAT
+// ==========================================
+
+document.getElementById("hideAllBtn").addEventListener("click", () => {
+
+    // Tüm checkboxları kapat
+    document.querySelectorAll(
+        '#sidebar input[type="checkbox"]'
+    ).forEach(cb => {
+        cb.checked = false;
     });
-  });
+
+
+    // Tüm levha markerlarını kaldır
+    Object.values(markersByType).forEach(grup => {
+
+        grup.forEach(item => {
+
+            item.popup.remove();
+            item.marker.remove();
+
+        });
+
+    });
+
+
+    // Cluster verisini tamamen boşalt
+    const source = map.getSource("ilanlar-cluster");
+
+    if (source) {
+
+        source.setData({
+            type: "FeatureCollection",
+            features: []
+        });
+
+    }
+
+
+    // Ekranda kalmış cluster marker varsa kaldır
+    if (typeof clusterMarkersOnScreen !== "undefined") {
+
+        for (const id in clusterMarkersOnScreen) {
+
+            clusterMarkersOnScreen[id].remove();
+
+        }
+
+        clusterMarkersOnScreen = {};
+
+    }
+
+});
 
   // ÜSTTEKİ SİLİNMİŞ OLAN KAPAT/X ve HOME EVENTLERİ
   const sidebar = document.getElementById('sidebar');
