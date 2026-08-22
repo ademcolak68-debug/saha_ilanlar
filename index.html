@@ -1067,12 +1067,15 @@ map.on('load', () => {
 
 const ilanGeoJSON = {
     type: "FeatureCollection",
+
     features: ilanlar.map(ilan => ({
         type: "Feature",
+
         geometry: {
             type: "Point",
             coordinates: ilan.coord
         },
+
         properties: {
             id: ilan.id,
             tip: ilan.tip
@@ -1099,46 +1102,69 @@ function updateClusterMarkers() {
 
     for (const feature of features) {
 
+        const coords = feature.geometry.coordinates;
         const props = feature.properties;
 
+        // Sadece cluster olanları al
         if (!props.cluster) continue;
 
         const id = props.cluster_id;
-        const coords = feature.geometry.coordinates;
         const sayi = props.point_count;
 
         let marker = clusterMarkers[id];
 
+        // Daha önce oluşturulmadıysa oluştur
         if (!marker) {
 
             const el = document.createElement("div");
 
             el.style.width = "42px";
             el.style.height = "42px";
-            el.style.borderRadius = "50% 50% 50% 0";
-            el.style.background = "#1976d2";
+            el.style.background = "#334155";
             el.style.border = "3px solid #fff";
-            el.style.boxShadow = "0 3px 8px rgba(0,0,0,.45)";
+            el.style.borderRadius = "50% 50% 50% 0";
             el.style.display = "flex";
             el.style.alignItems = "center";
             el.style.justifyContent = "center";
-            el.style.transform = "rotate(-45deg)";
+            el.style.boxShadow = "0 3px 8px rgba(0,0,0,.45)";
             el.style.cursor = "pointer";
+            el.style.transform = "rotate(-45deg)";
 
             el.innerHTML = `
                 <span style="
                     transform:rotate(45deg);
                     color:#fff;
-                    font-family:Tahoma;
-                    font-weight:bold;
+                    font-family:Tahoma,sans-serif;
                     font-size:13px;
-                ">${sayi}</span>
+                    font-weight:bold;
+                ">
+                    ${sayi}
+                </span>
             `;
 
             marker = clusterMarkers[id] =
                 new mapboxgl.Marker({
                     element: el
                 }).setLngLat(coords);
+
+            el.addEventListener("click", () => {
+
+                map.getSource("ilanlar-cluster")
+                    .getClusterExpansionZoom(
+                        id,
+                        (err, zoom) => {
+
+                            if (err) return;
+
+                            map.easeTo({
+                                center: coords,
+                                zoom: zoom
+                            });
+
+                        }
+                    );
+
+            });
         }
 
         newMarkers[id] = marker;
@@ -1148,6 +1174,7 @@ function updateClusterMarkers() {
         }
     }
 
+    // Artık görünmeyen clusterları kaldır
     for (const id in clusterMarkersOnScreen) {
 
         if (!newMarkers[id]) {
