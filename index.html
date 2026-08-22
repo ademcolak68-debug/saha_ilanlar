@@ -1102,6 +1102,19 @@ map.addSource("ilanlar-cluster", {
     }
 });
 
+	map.addLayer({
+    id: "ilanlar-cluster-test",
+    type: "circle",
+    source: "ilanlar-cluster",
+    filter: ["has", "point_count"],
+    paint: {
+        "circle-color": "#1976d2",
+        "circle-radius": 25,
+        "circle-stroke-width": 3,
+        "circle-stroke-color": "#ffffff"
+    }
+});
+
 	const clusterMarkers = {};
 let clusterMarkersOnScreen = {};
 
