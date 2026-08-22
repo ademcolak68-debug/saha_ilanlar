@@ -1107,28 +1107,31 @@ map.addSource("ilanlar-cluster", {
 	const clusterMarkers = {};
 	let clusterMarkersOnScreen = {};
 
-function updateClusterMarkers() {
+	function updateClusterMarkers() {
 
     const newMarkers = {};
 
+    // Ekranda görünen cluster'ları al
     const features = map.queryRenderedFeatures(
-	    { layers: ["ilanlar-cluster-hit"] }
-	);
+        { layers: ["ilanlar-cluster-hit"] }
+    );
+
+    // Cluster içinde bulunan ilan ID'lerini tutacağız
+    const clusteredPointIds = new Set();
 
     for (const feature of features) {
 
         const coords = feature.geometry.coordinates;
         const props = feature.properties;
 
-        // Sadece cluster olanları al
         if (!props.cluster) continue;
 
-        const id = props.cluster_id;
+        const clusterId = props.cluster_id;
         const sayi = props.point_count;
 
-        let marker = clusterMarkers[id];
+        let marker = clusterMarkers[clusterId];
 
-        // Daha önce oluşturulmadıysa oluştur
+        // Cluster marker daha önce oluşturulmadıysa
         if (!marker) {
 
             const el = document.createElement("div");
@@ -1157,16 +1160,18 @@ function updateClusterMarkers() {
                 </span>
             `;
 
-            marker = clusterMarkers[id] =
-                new mapboxgl.Marker({
-                    element: el
-                }).setLngLat(coords);
+            marker = new mapboxgl.Marker({
+                element: el
+            })
+            .setLngLat(coords);
+
+            clusterMarkers[clusterId] = marker;
 
             el.addEventListener("click", () => {
 
                 map.getSource("ilanlar-cluster")
                     .getClusterExpansionZoom(
-                        id,
+                        clusterId,
                         (err, zoom) => {
 
                             if (err) return;
@@ -1182,12 +1187,77 @@ function updateClusterMarkers() {
             });
         }
 
-        newMarkers[id] = marker;
+        // Cluster koordinatı değişmiş olabilir
+        marker.setLngLat(coords);
 
-        if (!clusterMarkersOnScreen[id]) {
+        newMarkers[clusterId] = marker;
+
+        if (!clusterMarkersOnScreen[clusterId]) {
             marker.addTo(map);
         }
+
+        // Bu cluster'ın içindeki gerçek ilanları al
+        map.getSource("ilanlar-cluster")
+            .getClusterLeaves(
+                clusterId,
+                sayi,
+                0,
+                (err, leaves) => {
+
+                    if (err || !leaves) return;
+
+                    leaves.forEach(leaf => {
+
+                        const ilanId = String(
+                            leaf.properties.id
+                        );
+
+                        clusteredPointIds.add(ilanId);
+
+                    });
+
+                    // Cluster içindeki normal markerları gizle
+                    ilanMarkerlar.forEach(item => {
+
+                        if (
+                            clusteredPointIds.has(
+                                String(item.id)
+                            )
+                        ) {
+                            item.marker.remove();
+                        }
+
+                    });
+
+                }
+            );
     }
+
+    // Artık görünmeyen clusterları kaldır
+    for (const id in clusterMarkersOnScreen) {
+
+        if (!newMarkers[id]) {
+            clusterMarkersOnScreen[id].remove();
+        }
+    }
+
+    clusterMarkersOnScreen = newMarkers;
+
+    // Cluster içinde olmayan ilan markerlarını göster
+    ilanMarkerlar.forEach(item => {
+
+        const ilanId = String(item.id);
+
+        if (!clusteredPointIds.has(ilanId)) {
+
+            if (!item.marker.getElement().parentNode) {
+                item.marker.addTo(map);
+            }
+
+        }
+
+    });
+}
 
     // Artık görünmeyen clusterları kaldır
     for (const id in clusterMarkersOnScreen) {
@@ -1318,6 +1388,7 @@ map.on("render", () => {
       .addTo(map);
 
 	  ilanMarkerlar.push({
+		    id: ilan.id,
 		    marker: marker,
 		    coord: ilan.coord
 		});
