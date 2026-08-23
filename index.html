@@ -924,10 +924,10 @@ const zoomGosterge = document.createElement("div");
 zoomGosterge.id = "zoomGosterge";
 
 zoomGosterge.style.cssText = `
-    position: absolute;
+    position: fixed;
     left: 10px;
     bottom: 10px;
-    z-index: 10;
+    z-index: 9999;
     background: rgba(0,0,0,0.75);
     color: #fff;
     padding: 8px 12px;
@@ -942,20 +942,8 @@ function zoomBilgisiniGuncelle() {
 
     const zoom = map.getZoom();
 
-    let clusterSayisi = 0;
-
-    if (map.getLayer("ilanlar-cluster-circles")) {
-
-        const features = map.queryRenderedFeatures({
-            layers: ["ilanlar-cluster-circles"]
-        });
-
-        clusterSayisi = features.length;
-    }
-
     zoomGosterge.innerHTML =
-        "Zoom: " + zoom.toFixed(2) +
-        "<br>Cluster: " + clusterSayisi;
+        "Zoom: " + zoom.toFixed(2);
 }
 
 
@@ -967,8 +955,7 @@ map.on("zoom", () => {
 
 map.on("moveend", () => {
     zoomBilgisiniGuncelle();
-});
-	
+});	
 
  // 1. Google UYDU Kaynağı
   map.addSource('google-tiles', {
