@@ -606,45 +606,5 @@ const ilanlarVerisi = [
         "Eşyalı mı?": "",
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": ""
-    },
-    {
-        "id": 1787516240279,
-        "baslik": "Sağlık Kasabasında İmarlı",
-        "durum": "satilik",
-        "tip": "Arsa",
-        "konutTipi": "",
-        "konutSekli": "",
-        "il": "Aksaray",
-        "ilce": "Merkez",
-        "mahalle": "Sağlık Kasabası",
-        "fiyat": "2.200.000",
-        "paraBirimi": "TL",
-        "aciklama": "",
-        "koor": "34.056169,38.293515",
-        "klasorIsmi": "saglik-611-11",
-        "resimler": [
-            "images/saglik-611-11/1.png",
-            "images/saglik-611-11/2.png",
-            "images/saglik-611-11/3.png"
-        ],
-        "videoUrl": "",
-        "İlan Tarihi": "2026-08-23",
-        "yetki": {
-            "durum": true,
-            "yetkiNo": "NET-YTK-1787516240280"
-        },
-        "ilanAktif": true,
-        "danisman": "",
-        "M²": "690",
-        "Ada": "611",
-        "Parsel": "11",
-        "Oda Sayısı": "",
-        "Bina Yaşı": "",
-        "Bulunduğu Kat": "",
-        "Kat Sayısı": "",
-        "Isıtma": "",
-        "Eşyalı mı?": "",
-        "Kullanım Durumu": "",
-        "Site İçerisinde?": ""
     }
 ];
