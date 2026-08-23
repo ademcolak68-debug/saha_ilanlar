@@ -852,8 +852,8 @@ font-weight:bold;
 
     gap: 20px;
 
-    padding: 7px 12px;
-    margin-top: 15px;
+    padding: 0 12px;
+    margin: 0;
 
     box-sizing: border-box;
 
@@ -1585,7 +1585,7 @@ async function ilanPaylas(){
 			const bitmap =
 			    await createImageBitmap(blob);
 			
-			const maxWidth = 1200;
+			const maxWidth = 500;
 			
 			const oran =
 			    Math.min(
@@ -1621,7 +1621,7 @@ async function ilanPaylas(){
 			        canvas.toBlob(
 			            resolve,
 			            "image/jpeg",
-			            0.82
+			            0.6
 			        )
 			    );
 			
