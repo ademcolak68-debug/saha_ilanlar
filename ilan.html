@@ -843,8 +843,10 @@ font-weight:bold;
 }
 
 .danisman-butonlari {
-    position: relative;
-    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 
     display: flex;
     align-items: center;
@@ -852,12 +854,13 @@ font-weight:bold;
 
     gap: 20px;
 
-    padding: 0 12px;
+    padding: 7px 12px;
     margin: 0;
 
     box-sizing: border-box;
 
     background: white;
+    z-index: 9999;
 }
 
 .danisman-butonlari button {
@@ -1585,7 +1588,7 @@ async function ilanPaylas(){
 			const bitmap =
 			    await createImageBitmap(blob);
 			
-			const maxWidth = 500;
+			const maxWidth = 400;
 			
 			const oran =
 			    Math.min(
@@ -1621,7 +1624,7 @@ async function ilanPaylas(){
 			        canvas.toBlob(
 			            resolve,
 			            "image/jpeg",
-			            0.6
+			            0.5
 			        )
 			    );
 			
