@@ -1217,23 +1217,27 @@ if(d.fiyat){
 }
 
     const gosterilecekler = [
-        "İlan Tarihi",
-        "M²",
-        "Ada",
-        "Parsel",
-        "Oda Sayısı",
-        "Bina Yaşı",
-        "Bulunduğu Kat",
-        "Kat Sayısı",
-        "Isıtma",
-        "Eşyalı mı",
-        "Kullanım Durumu",
-        "Site İçerisinde"
-    ];
-
-    gosterilecekler.forEach(key=>{
-        if(d[key]) ozellikler += row(key,d[key]);
-    });
+	    "İlan Tarihi",
+	    "M²",
+	    "Ada",
+	    "Parsel",
+	    "İmar Durumu",
+	    "Kaks (Emsal)",
+	    "Gabari",
+	    "Tapu Durumu",
+	    "Oda Sayısı",
+	    "Bina Yaşı",
+	    "Bulunduğu Kat",
+	    "Kat Sayısı",
+	    "Isıtma",
+	    "Eşyalı mı?",
+	    "Kullanım Durumu",
+	    "Site İçerisinde?"
+	];
+	
+	gosterilecekler.forEach(key => {
+	    if(d[key]) ozellikler += row(key, d[key]);
+	});
 
 
     detayIndex = 0;
