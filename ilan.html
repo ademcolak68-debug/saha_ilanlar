@@ -1535,10 +1535,101 @@ async function ilanPaylas(){
     const link =
         url.toString();
 
-	console.log(
-	    "PAYLAŞILAN LİNK:",
-	    link
-	);
+    console.log(
+        "PAYLAŞILAN LİNK:",
+        link
+    );
+
+
+    // İlan ID'sini al
+    const ilanId =
+        new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+
+    // İlanı bul
+    const ilan =
+        ilanlarVerisi.find(
+            x => String(x.id) === String(ilanId)
+        );
+
+
+    // İlk resmi al
+    const ilkResim =
+        ilan &&
+        Array.isArray(ilan.resimler) &&
+        ilan.resimler.length > 0
+            ? ilan.resimler[0]
+            : null;
+
+
+    // =====================================
+    // FOTOĞRAFLI PAYLAŞIM
+    // =====================================
+
+    if (
+        ilkResim &&
+        navigator.share &&
+        navigator.canShare
+    ){
+
+        try{
+
+            const response =
+                await fetch(ilkResim);
+
+            const blob =
+                await response.blob();
+
+
+            const dosya =
+                new File(
+                    [blob],
+                    "ilan-fotografi.jpg",
+                    {
+                        type: blob.type || "image/jpeg"
+                    }
+                );
+
+
+            if(
+                navigator.canShare({
+                    files: [dosya]
+                })
+            ){
+
+                await navigator.share({
+
+                    title:
+                        baslik,
+
+                    text:
+                        metin + "\n\n" + link,
+
+                    files:
+                        [dosya]
+
+                });
+
+                return;
+            }
+
+        }catch(e){
+
+            console.log(
+                "Fotoğraflı paylaşım başarısız:",
+                e
+            );
+
+        }
+
+    }
+
+
+    // =====================================
+    // NORMAL PAYLAŞIM
+    // =====================================
 
     if(navigator.share){
 
