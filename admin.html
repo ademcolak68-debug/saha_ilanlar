@@ -580,6 +580,9 @@ button {
 		</div>
 		<div class="field"><label>Ada</label><input id="ada" type="text"></div>
 		<div class="field"><label>Parsel</label><input id="parsel" type="text"></div>
+		<div class="field"><label>İmar Durumu</label><input id="imarDurumu" type="text"></div>
+		<div class="field"><label>Kaks (Emsal)</label><input id="kaksEmsal" type="number" step="0.01"></div>
+		<div class="field"><label>Gabari</label><input id="gabari" type="number" step="0.01"></div>
 		<div class="field"><label>Oda Sayısı</label><input id="oda" type="text"></div>
 		<div class="field"><label>Bina Yaşı</label><input id="binaYasi" type="number"></div>
 		<div class="field"><label>Bulunduğu Kat</label><input id="kat" type="text"></div>
@@ -608,6 +611,16 @@ button {
 				<option value="Evet">Evet</option>
 				<option value="Hayır">Hayır</option>
 			</select>
+		</div>
+		<div class="field">
+		    <label>Tapu Durumu</label>
+		    <select id="tapuDurumu">
+		        <option value="">Seçiniz</option>
+		        <option value="Kat Mülkiyetli">Kat Mülkiyetli</option>
+		        <option value="Kat İrtifakı">Kat İrtifakı</option>
+		        <option value="Müstakil Tapulu">Müstakil Tapulu</option>
+		        <option value="Hisseli">Hisseli</option>
+		    </select>
 		</div>
 	
 	</div>
@@ -746,6 +759,9 @@ function getFormData() {
         "M²": document.getElementById('m2').value,
 		"Ada": document.getElementById('ada').value,
         "Parsel": document.getElementById('parsel').value,
+		"İmar Durumu": document.getElementById('imarDurumu').value,
+        "Kaks (Emsal)": document.getElementById('kaksEmsal').value,
+        "Gabari": document.getElementById('gabari').value,
         "Oda Sayısı": document.getElementById('oda').value,
         "Bina Yaşı": document.getElementById('binaYasi').value,
         "Bulunduğu Kat": document.getElementById('kat').value,
@@ -812,6 +828,9 @@ function formDoldur(id) {
     document.getElementById('m2').value = ilan["M²"] || "";
 	document.getElementById('ada').value = ilan["Ada"] || "";
     document.getElementById('parsel').value = ilan["Parsel"] || "";
+	document.getElementById('imarDurumu').value = ilan["İmar Durumu"] || "";
+	document.getElementById('kaksEmsal').value = ilan["Kaks (Emsal)"] || "";
+	document.getElementById('gabari').value = ilan["Gabari"] || "";
     document.getElementById('oda').value = ilan["Oda Sayısı"] || "";
     document.getElementById('binaYasi').value = ilan["Bina Yaşı"] || "";
     document.getElementById('kat').value = ilan["Bulunduğu Kat"] || "";
@@ -820,6 +839,7 @@ function formDoldur(id) {
     document.getElementById('esyalimi').value = ilan["Eşyalı mı?"] || "";
     document.getElementById('kullanimDurumu').value = ilan["Kullanım Durumu"] || "";
     document.getElementById('siteIci').value = ilan["Site İçerisinde?"] || "";
+	document.getElementById('tapuDurumu').value = ilan["Tapu Durumu"] || "";
 	
 
     duzenlenenId = ilan.id;
