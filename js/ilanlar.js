@@ -421,7 +421,7 @@ const ilanlarVerisi = [
         "il": "Aksaray",
         "ilce": "Merkez",
         "mahalle": "Yeni",
-        "fiyat": "4.967",
+        "fiyat": "6.100.000",
         "paraBirimi": "TL",
         "aciklama": "SATILIK DİĞER PARSELLER,\n7276/17 ( 768.61 m2 ),\n7276/18 ( 700 m2 ),\n7276/19 ( 775 m2 )\n",
         "koor": "33.969544, 38.405846",
@@ -443,6 +443,7 @@ const ilanlarVerisi = [
             "yetkiNo": "NET-YTK-1786435581411"
         },
         "ilanAktif": true,
+        "danisman": "",
         "M²": "1228.28",
         "Ada": "7276",
         "Parsel": "16",
