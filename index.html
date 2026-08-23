@@ -1185,7 +1185,11 @@ map.on("moveend", () => {
    marker.togglePopup(); // Levhayı otomatik aç
 
     if (!markersByType[ilan.tip]) markersByType[ilan.tip] = [];
-    markersByType[ilan.tip].push({ marker, popup });
+	    markersByType[ilan.tip].push({
+	    marker,
+	    popup,
+	    ilanId: String(ilan.id)
+	});
 
   });
 
@@ -1317,7 +1321,7 @@ map.on("moveend", () => {
 	// SIDEBAR FİLTRESİNE UYUMLU
 	// ==========================================
 	
-	function clusterLevhaKontrol() {
+	async function clusterLevhaKontrol() {
 
     // Sidebar'da açık olan tipleri bul
     const aktifTipler = new Set();
@@ -1334,7 +1338,70 @@ map.on("moveend", () => {
 
 
     // --------------------------------------
-    // HER İLANI KENDİ KONUMUNDA KONTROL ET
+    // EKRANDAKİ GERÇEK CLUSTERLARI AL
+    // --------------------------------------
+
+    const clusterFeatures = map.queryRenderedFeatures({
+        layers: ["ilanlar-cluster-circles"]
+    });
+
+    const source = map.getSource("ilanlar-cluster");
+
+    if (!source) return;
+
+
+    // Gerçekten cluster içinde bulunan ilanlar
+    const clusteredIlanlar = new Set();
+
+
+    // --------------------------------------
+    // HER CLUSTER'IN GERÇEK İLANLARINI BUL
+    // --------------------------------------
+
+    for (const cluster of clusterFeatures) {
+
+        const clusterId = cluster.properties.cluster_id;
+
+        await new Promise(resolve => {
+
+            source.getClusterLeaves(
+                clusterId,
+                10000,
+                0,
+                (err, leaves) => {
+
+                    if (!err && leaves) {
+
+                        leaves.forEach(ilan => {
+
+                            if (
+                                ilan.properties &&
+                                ilan.properties.id
+                            ) {
+
+                                clusteredIlanlar.add(
+                                    String(ilan.properties.id)
+                                );
+
+                            }
+
+                        });
+
+                    }
+
+                    resolve();
+
+                }
+            );
+
+        });
+
+    }
+
+
+    // --------------------------------------
+    // MARKERLARI GERÇEK CLUSTER DURUMUNA GÖRE
+    // GÖSTER / GİZLE
     // --------------------------------------
 
     Object.entries(markersByType).forEach(
@@ -1352,32 +1419,11 @@ map.on("moveend", () => {
                 }
 
 
-                // İlanın ekrandaki koordinatı
-                const nokta = map.project(
-                    item.marker.getLngLat()
-                );
-
-
-                // İlanın çevresinde cluster var mı?
-                const clusterFeatures =
-                    map.queryRenderedFeatures(
-                        [
-                            [nokta.x - 70, nokta.y - 70],
-                            [nokta.x + 70, nokta.y + 70]
-                        ],
-                        {
-                            layers: [
-                                "ilanlar-cluster-circles"
-                            ]
-                        }
-                    );
-
-
                 // --------------------------------------
-                // CLUSTER İÇİNDEYSE
+                // GERÇEKTEN CLUSTER İÇİNDEYSE
                 // --------------------------------------
 
-                if (clusterFeatures.length > 0) {
+                if (clusteredIlanlar.has(item.ilanId)) {
 
                     item.popup.remove();
                     item.marker.remove();
@@ -1410,21 +1456,9 @@ map.on("moveend", () => {
 // ZOOM DEĞİŞİNCE KONTROL
 // --------------------------------------
 
-let clusterKontrolBekliyor = false;
+map.on("zoomend", () => {
 
-map.on("render", () => {
-
-    if (clusterKontrolBekliyor) return;
-
-    clusterKontrolBekliyor = true;
-
-    requestAnimationFrame(() => {
-
-        clusterKontrolBekliyor = false;
-
-        clusterLevhaKontrol();
-
-    });
+    clusterLevhaKontrol();
 
 });
 
@@ -1435,15 +1469,7 @@ map.once("idle", () => {
 });
 
 
-// --------------------------------------
-// HARİTA HAZIR OLDUĞUNDA KONTROL
-// --------------------------------------
 
-map.once("idle", () => {
-
-    clusterLevhaKontrol();
-
-});
   // Sidebar sayaçlarını güncelleme
   Object.keys(markersByType).forEach(tip => {
     const el = document.getElementById(`count-${tip}`);
