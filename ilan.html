@@ -843,10 +843,8 @@ font-weight:bold;
 }
 
 .danisman-butonlari {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    width: 100%;
 
     display: flex;
     align-items: center;
@@ -855,10 +853,11 @@ font-weight:bold;
     gap: 20px;
 
     padding: 7px 12px;
+    margin-top: 15px;
+
     box-sizing: border-box;
 
     background: white;
-    z-index: 9999;
 }
 
 .danisman-butonlari button {
@@ -1583,14 +1582,63 @@ async function ilanPaylas(){
                 await response.blob();
 
 
-            const dosya =
-                new File(
-                    [blob],
-                    "ilan-fotografi.jpg",
-                    {
-                        type: blob.type || "image/jpeg"
-                    }
-                );
+            const response =
+			    await fetch(ilkResim);
+			
+			const blob =
+			    await response.blob();
+			
+			const bitmap =
+			    await createImageBitmap(blob);
+			
+			const maxWidth = 1200;
+			
+			const oran =
+			    Math.min(
+			        1,
+			        maxWidth / bitmap.width
+			    );
+			
+			const yeniWidth =
+			    Math.round(bitmap.width * oran);
+			
+			const yeniHeight =
+			    Math.round(bitmap.height * oran);
+			
+			const canvas =
+			    document.createElement("canvas");
+			
+			canvas.width = yeniWidth;
+			canvas.height = yeniHeight;
+			
+			const ctx =
+			    canvas.getContext("2d");
+			
+			ctx.drawImage(
+			    bitmap,
+			    0,
+			    0,
+			    yeniWidth,
+			    yeniHeight
+			);
+			
+			const kucukBlob =
+			    await new Promise(resolve =>
+			        canvas.toBlob(
+			            resolve,
+			            "image/jpeg",
+			            0.82
+			        )
+			    );
+			
+			const dosya =
+			    new File(
+			        [kucukBlob],
+			        "ilan-fotografi.jpg",
+			        {
+			            type: "image/jpeg"
+			        }
+			    );
 
 
             if(
