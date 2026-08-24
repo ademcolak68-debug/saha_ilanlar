@@ -1519,6 +1519,21 @@ async function ilanPaylas(){
     const baslik =
         document.title;
 
+
+    // =====================================
+    // İLAN ID'SİNİ AL
+    // =====================================
+
+    const ilanId =
+        new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+
+    // =====================================
+    // PAYLAŞIM LİNKİNİ OLUŞTUR
+    // =====================================
+
     const url =
         new URL(
             window.location.href
@@ -1532,20 +1547,11 @@ async function ilanPaylas(){
     const link =
         url.toString();
 
+
     console.log(
         "PAYLAŞILAN LİNK:",
         link
     );
-
-
-    // =====================================
-    // İLAN ID'SİNİ AL
-    // =====================================
-
-    const ilanId =
-        new URLSearchParams(
-            window.location.search
-        ).get("id");
 
 
     // =====================================
@@ -1554,7 +1560,9 @@ async function ilanPaylas(){
 
     const ilan =
         ilanlarVerisi.find(
-            x => String(x.id) === String(ilanId)
+            x =>
+                String(x.id) ===
+                String(ilanId)
         );
 
 
@@ -1564,7 +1572,9 @@ async function ilanPaylas(){
 
     const ilkResim =
         ilan &&
-        Array.isArray(ilan.resimler) &&
+        Array.isArray(
+            ilan.resimler
+        ) &&
         ilan.resimler.length > 0
             ? ilan.resimler[0]
             : null;
@@ -1587,8 +1597,10 @@ async function ilanPaylas(){
                     ilkResim
                 );
 
+
             const blob =
                 await response.blob();
+
 
             const bitmap =
                 await createImageBitmap(
@@ -1611,6 +1623,7 @@ async function ilanPaylas(){
                 document.createElement(
                     "canvas"
                 );
+
 
             canvas.width =
                 kartWidth;
@@ -1644,12 +1657,6 @@ async function ilanPaylas(){
             // FOTOĞRAF ALANI
             // =====================================
 
-            const fotoX =
-                0;
-
-            const fotoY =
-                0;
-
             const fotoWidth =
                 kartWidth;
 
@@ -1660,6 +1667,7 @@ async function ilanPaylas(){
             const fotoOran =
                 bitmap.width /
                 bitmap.height;
+
 
             const alanOran =
                 fotoWidth /
@@ -1684,12 +1692,14 @@ async function ilanPaylas(){
             // =====================================
 
             if (
-                fotoOran > alanOran
+                fotoOran >
+                alanOran
             ){
 
                 sourceWidth =
                     bitmap.height *
                     alanOran;
+
 
                 sourceX =
                     (
@@ -1702,6 +1712,7 @@ async function ilanPaylas(){
                 sourceHeight =
                     bitmap.width /
                     alanOran;
+
 
                 sourceY =
                     (
@@ -1726,8 +1737,8 @@ async function ilanPaylas(){
                 sourceWidth,
                 sourceHeight,
 
-                fotoX,
-                fotoY,
+                0,
+                0,
 
                 fotoWidth,
                 fotoHeight
@@ -1736,7 +1747,7 @@ async function ilanPaylas(){
 
 
             // =====================================
-            // ALT BEYAZ ALAN
+            // FOTOĞRAF ALTINDAKİ ALAN
             // =====================================
 
             const kartY =
@@ -1746,11 +1757,16 @@ async function ilanPaylas(){
             ctx.fillStyle =
                 "#ffffff";
 
+
             ctx.fillRect(
+
                 0,
                 kartY,
+
                 kartWidth,
-                kartHeight - kartY
+                kartHeight -
+                kartY
+
             );
 
 
@@ -1761,17 +1777,23 @@ async function ilanPaylas(){
             ctx.fillStyle =
                 "#1f2933";
 
+
             ctx.font =
                 "bold 34px Arial";
+
 
             ctx.textAlign =
                 "left";
 
 
             ctx.fillText(
+
                 "NETmax Gayrimenkul",
+
                 30,
+
                 kartY + 55
+
             );
 
 
@@ -1791,8 +1813,10 @@ async function ilanPaylas(){
                 const kelimeler =
                     metin.split(" ");
 
+
                 const satirlar =
                     [];
+
 
                 let satir =
                     "";
@@ -1826,6 +1850,7 @@ async function ilanPaylas(){
 
                             }
 
+
                             satir =
                                 kelime;
 
@@ -1858,8 +1883,11 @@ async function ilanPaylas(){
 
             const baslikSatirlari =
                 metniSatirlaraBol(
+
                     baslik,
+
                     kartWidth - 60
+
                 );
 
 
@@ -1873,10 +1901,15 @@ async function ilanPaylas(){
                     satir => {
 
                         ctx.fillText(
+
                             satir,
+
                             30,
+
                             y
+
                         );
+
 
                         y += 50;
 
@@ -1885,23 +1918,54 @@ async function ilanPaylas(){
 
 
             // =====================================
+            // İLAN ID ALANI
+            // =====================================
+
+            y += 35;
+
+
+            ctx.fillStyle =
+                "#6b7280";
+
+
+            ctx.font =
+                "bold 28px Arial";
+
+
+            ctx.fillText(
+
+                "İlan ID: " +
+                ilanId,
+
+                30,
+
+                y
+
+            );
+
+
+            // =====================================
             // İLAN LİNKİ
             // =====================================
 
-            y += 25;
+            y += 45;
 
 
             ctx.fillStyle =
                 "#2563eb";
 
+
             ctx.font =
-                "26px Arial";
+                "24px Arial";
 
 
             const linkSatirlari =
                 metniSatirlaraBol(
+
                     link,
+
                     kartWidth - 60
+
                 );
 
 
@@ -1911,12 +1975,17 @@ async function ilanPaylas(){
                     satir => {
 
                         ctx.fillText(
+
                             satir,
+
                             30,
+
                             y
+
                         );
 
-                        y += 38;
+
+                        y += 35;
 
                     }
                 );
@@ -1931,22 +2000,34 @@ async function ilanPaylas(){
                     resolve =>
 
                         canvas.toBlob(
+
                             resolve,
+
                             "image/jpeg",
+
                             0.85
+
                         )
 
                 );
 
 
+            // =====================================
+            // DOSYA OLUŞTUR
+            // =====================================
+
             const dosya =
                 new File(
+
                     [kucukBlob],
+
                     "netmax-ilan.jpg",
+
                     {
                         type:
                             "image/jpeg"
                     }
+
                 );
 
 
@@ -1973,6 +2054,7 @@ async function ilanPaylas(){
 
                 });
 
+
                 return;
 
             }
@@ -1980,8 +2062,11 @@ async function ilanPaylas(){
         }catch(e){
 
             console.log(
+
                 "Fotoğraflı paylaşım başarısız:",
+
                 e
+
             );
 
         }
@@ -1989,6 +2074,7 @@ async function ilanPaylas(){
     }
 
 }
+	
 async function konumPaylas(){
 
     const url="https://www.google.com/maps?q=NETmax+Gayrimenkul+Aksaray";
