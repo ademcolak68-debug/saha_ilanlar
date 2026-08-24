@@ -1516,8 +1516,15 @@ function menuKapat(){
 
 async function ilanPaylas(){
 
-    const baslik =
-        document.title;
+    // =====================================
+    // İLAN BAŞLIĞI
+    // =====================================
+
+    let baslik =
+        document.title
+            .replace(/NETmax Gayrimenkul/gi, "")
+            .replace(/[-|]/g, "")
+            .trim();
 
 
     // =====================================
@@ -1539,10 +1546,7 @@ async function ilanPaylas(){
             window.location.href
         );
 
-    url.searchParams.set(
-        "paylasim",
-        "1"
-    );
+    url.searchParams.delete("paylasim");
 
     const link =
         url.toString();
@@ -1586,6 +1590,10 @@ async function ilanPaylas(){
 
         try{
 
+            // =====================================
+            // RESMİ AL
+            // =====================================
+
             const response =
                 await fetch(
                     ilkResim
@@ -1603,7 +1611,7 @@ async function ilanPaylas(){
 
 
             // =====================================
-            // KART
+            // KART ÖLÇÜLERİ
             // =====================================
 
             const kartWidth =
@@ -1681,6 +1689,10 @@ async function ilanPaylas(){
                 bitmap.height;
 
 
+            // =====================================
+            // FOTOĞRAF CROP
+            // =====================================
+
             if (
                 fotoOran >
                 alanOran
@@ -1689,7 +1701,6 @@ async function ilanPaylas(){
                 sourceWidth =
                     bitmap.height *
                     alanOran;
-
 
                 sourceX =
                     (
@@ -1703,7 +1714,6 @@ async function ilanPaylas(){
                     bitmap.width /
                     alanOran;
 
-
                 sourceY =
                     (
                         bitmap.height -
@@ -1713,13 +1723,16 @@ async function ilanPaylas(){
             }
 
 
+            // =====================================
+            // FOTOĞRAFI ÇİZ
+            // =====================================
+
             ctx.drawImage(
 
                 bitmap,
 
                 sourceX,
                 sourceY,
-
                 sourceWidth,
                 sourceHeight,
 
@@ -1733,7 +1746,6 @@ async function ilanPaylas(){
 
 
             // =====================================
-            // FOTOĞRAF ALTINA
             // NETmax GAYRİMENKUL
             // =====================================
 
@@ -1757,7 +1769,7 @@ async function ilanPaylas(){
 
 
             // =====================================
-            // İLAN TITLE
+            // İLAN BAŞLIĞI
             // =====================================
 
             ctx.font =
@@ -1772,8 +1784,10 @@ async function ilanPaylas(){
                 const kelimeler =
                     metin.split(" ");
 
+
                 const satirlar =
                     [];
+
 
                 let satir =
                     "";
@@ -1849,6 +1863,10 @@ async function ilanPaylas(){
                 680;
 
 
+            // =====================================
+            // EN FAZLA 3 SATIR
+            // =====================================
+
             baslikSatirlari
                 .slice(0, 3)
                 .forEach(
@@ -1860,32 +1878,11 @@ async function ilanPaylas(){
                             y
                         );
 
+
                         y += 52;
 
                     }
                 );
-
-
-            // =====================================
-            // İLAN ID
-            // =====================================
-
-            y += 35;
-
-
-            ctx.fillStyle =
-                "#2563eb";
-
-
-            ctx.font =
-                "bold 30px Arial";
-
-
-            ctx.fillText(
-                String(ilanId),
-                30,
-                y
-            );
 
 
             // =====================================
@@ -1901,7 +1898,6 @@ async function ilanPaylas(){
                             "image/jpeg",
                             0.85
                         )
-
                 );
 
 
@@ -1921,7 +1917,7 @@ async function ilanPaylas(){
 
 
             // =====================================
-            // PAYLAŞ
+            // DOSYA PAYLAŞILABİLİYOR MU?
             // =====================================
 
             if (
@@ -1929,6 +1925,10 @@ async function ilanPaylas(){
                     files: [dosya]
                 })
             ){
+
+                // =====================================
+                // PAYLAŞ
+                // =====================================
 
                 await navigator.share({
 
@@ -1943,9 +1943,11 @@ async function ilanPaylas(){
 
                 });
 
+
                 return;
 
             }
+
 
         }catch(e){
 
