@@ -1516,19 +1516,13 @@ function menuKapat(){
 
 async function ilanPaylas(){
 
-    // =====================================
-    // İLAN ID
-    // =====================================
+    const baslik =
+        document.title;
 
-    const ilanId =
-        new URLSearchParams(
-            window.location.search
-        ).get("id");
-
-
-    // =====================================
-    // İLAN URL
-    // =====================================
+    const metin =
+        document.querySelector(
+            ".header-top"
+        ).innerText;
 
     const url =
         new URL(
@@ -1543,533 +1537,454 @@ async function ilanPaylas(){
     const link =
         url.toString();
 
+    console.log(
+        "PAYLAŞILAN LİNK:",
+        link
+    );
 
-    // =====================================
-    // İLANI BUL
-    // =====================================
 
+    // İlan ID'sini al
+    const ilanId =
+        new URLSearchParams(
+            window.location.search
+        ).get("id");
+
+
+    // İlanı bul
     const ilan =
         ilanlarVerisi.find(
-            x =>
-                String(x.id) ===
-                String(ilanId)
+            x => String(x.id) === String(ilanId)
         );
 
 
-    // =====================================
-    // İLAN BULUNAMADI
-    // =====================================
-
-    if (!ilan){
-
-        console.log(
-            "İlan bulunamadı."
-        );
-
-        return;
-
-    }
-
-
-    // =====================================
-    // İLAN BAŞLIĞI
-    // =====================================
-
-    const baslik =
-        ilan.baslik ||
-        document.title;
-
-
-    // =====================================
-    // İLK RESİM
-    // =====================================
-
+    // İlk resmi al
     const ilkResim =
         ilan &&
-        Array.isArray(
-            ilan.resimler
-        ) &&
+        Array.isArray(ilan.resimler) &&
         ilan.resimler.length > 0
             ? ilan.resimler[0]
             : null;
 
 
-    // =====================================
-    // FOTOĞRAFLI PAYLAŞIM
-    // =====================================
+// =====================================
+// FOTOĞRAFLI PAYLAŞIM
+// =====================================
 
-    if (
-        ilkResim &&
-        navigator.share &&
-        navigator.canShare
-    ){
+if (
+    ilkResim &&
+    navigator.share &&
+    navigator.canShare
+){
 
-        try{
+    try{
 
-            // =====================================
-            // RESMİ AL
-            // =====================================
+        const response =
+            await fetch(ilkResim);
 
-            const response =
-                await fetch(
-                    ilkResim
-                );
+        const blob =
+            await response.blob();
 
-
-            const blob =
-                await response.blob();
+        const bitmap =
+            await createImageBitmap(blob);
 
 
-            const bitmap =
-                await createImageBitmap(
-                    blob
-                );
+        // =====================================
+        // KART BOYUTU
+        // =====================================
+
+        const kartWidth = 700;
+        const kartHeight = 1000;
+
+        const canvas =
+            document.createElement("canvas");
+
+        canvas.width =
+            kartWidth;
+
+        canvas.height =
+            kartHeight;
+
+        const ctx =
+            canvas.getContext("2d");
 
 
-            // =====================================
-            // KART GENİŞLİĞİ
-            // =====================================
+        // =====================================
+        // GENEL ZEMİN
+        // =====================================
 
-            const kartWidth =
-                700;
+        ctx.fillStyle =
+            "#eeeeee";
 
-
-            // =====================================
-            // FOTOĞRAF ÖLÇÜSÜ
-            // =====================================
-
-            const fotoWidth =
-                kartWidth;
-
-            const fotoHeight =
-                560;
+        ctx.fillRect(
+            0,
+            0,
+            kartWidth,
+            kartHeight
+        );
 
 
-            // =====================================
-            // BAŞLIK FONTLARI
-            // =====================================
+        // =====================================
+        // FOTOĞRAF ALANI
+        // =====================================
 
-            const netmaxFontSize =
-                34;
+        const fotoX = 0;
+        const fotoY = 0;
 
-            const baslikFontSize =
-                38;
+        const fotoWidth =
+            kartWidth;
 
-
-            const solBosluk =
-                30;
-
-            const sagBosluk =
-                30;
+        const fotoHeight =
+            560;
 
 
-            const metinMaxWidth =
-                kartWidth -
-                solBosluk -
-                sagBosluk;
+        // Fotoğrafı oranını bozmadan
+        // alanı tamamen doldur
+
+        const fotoOran =
+            bitmap.width /
+            bitmap.height;
+
+        const alanOran =
+            fotoWidth /
+            fotoHeight;
+
+        let sourceX = 0;
+        let sourceY = 0;
+
+        let sourceWidth =
+            bitmap.width;
+
+        let sourceHeight =
+            bitmap.height;
 
 
-            // =====================================
-            // CANVAS GEÇİCİ YÜKSEKLİK
-            // =====================================
+        if(
+            fotoOran > alanOran
+        ){
 
-            const canvas =
-                document.createElement(
-                    "canvas"
-                );
+            sourceWidth =
+                bitmap.height *
+                alanOran;
 
+            sourceX =
+                (
+                    bitmap.width -
+                    sourceWidth
+                ) / 2;
 
-            canvas.width =
-                kartWidth;
+        }else{
 
-            canvas.height =
-                1500;
-
-
-            const ctx =
-                canvas.getContext(
-                    "2d"
-                );
-
-
-            // =====================================
-            // BEYAZ ZEMİN
-            // =====================================
-
-            ctx.fillStyle =
-                "#ffffff";
-
-            ctx.fillRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-
-            // =====================================
-            // FOTOĞRAF CROP
-            // =====================================
-
-            const fotoOran =
+            sourceHeight =
                 bitmap.width /
-                bitmap.height;
+                alanOran;
+
+            sourceY =
+                (
+                    bitmap.height -
+                    sourceHeight
+                ) / 2;
+
+        }
 
 
-            const alanOran =
-                fotoWidth /
-                fotoHeight;
+        // FOTOĞRAFI ÇİZ
+
+        ctx.drawImage(
+
+            bitmap,
+
+            sourceX,
+            sourceY,
+
+            sourceWidth,
+            sourceHeight,
+
+            fotoX,
+            fotoY,
+
+            fotoWidth,
+            fotoHeight
+
+        );
 
 
-            let sourceX =
-                0;
+        // =====================================
+        // ALT KART ALANI
+        // =====================================
 
-            let sourceY =
-                0;
+        const kartY =
+            fotoHeight;
 
-            let sourceWidth =
-                bitmap.width;
+        ctx.fillStyle =
+            "#f4f4f4";
 
-            let sourceHeight =
-                bitmap.height;
-
-
-            if (
-                fotoOran >
-                alanOran
-            ){
-
-                sourceWidth =
-                    bitmap.height *
-                    alanOran;
-
-                sourceX =
-                    (
-                        bitmap.width -
-                        sourceWidth
-                    ) / 2;
-
-            }else{
-
-                sourceHeight =
-                    bitmap.width /
-                    alanOran;
-
-                sourceY =
-                    (
-                        bitmap.height -
-                        sourceHeight
-                    ) / 2;
-
-            }
+        ctx.fillRect(
+            0,
+            kartY,
+            kartWidth,
+            kartHeight - kartY
+        );
 
 
-            // =====================================
-            // FOTOĞRAFI ÇİZ
-            // =====================================
+        // =====================================
+        // BAŞLIK
+        // =====================================
 
-            ctx.drawImage(
+        ctx.fillStyle =
+            "#1f2933";
 
-                bitmap,
+        ctx.font =
+            "bold 38px Arial";
 
-                sourceX,
-                sourceY,
-                sourceWidth,
-                sourceHeight,
-
-                0,
-                0,
-                fotoWidth,
-                fotoHeight
-
-            );
+        ctx.textAlign =
+            "left";
 
 
-            // =====================================
-            // NETmax GAYRİMENKUL
-            // =====================================
+        // Başlığı satırlara böl
 
-            ctx.fillStyle =
-                "#1f2933";
+        function metniSatirlaraBol(
+            metin,
+            maxWidth
+        ){
 
+            const kelimeler =
+                metin.split(" ");
 
-            ctx.font =
-                "bold " +
-                netmaxFontSize +
-                "px Arial";
+            const satirlar = [];
 
-
-            ctx.textAlign =
-                "left";
+            let satir = "";
 
 
-            ctx.fillText(
-                "NETmax Gayrimenkul",
-                solBosluk,
-                620
-            );
+            kelimeler.forEach(
+                kelime => {
+
+                    const test =
+                        satir
+                            ? satir + " " + kelime
+                            : kelime;
 
 
-            // =====================================
-            // İLAN BAŞLIĞI
-            // =====================================
+                    if(
+                        ctx.measureText(
+                            test
+                        ).width > maxWidth
+                    ){
 
-            ctx.font =
-                "bold " +
-                baslikFontSize +
-                "px Arial";
+                        if(satir){
 
-
-            function metniSatirlaraBol(
-                metin,
-                maxWidth
-            ){
-
-                const kelimeler =
-                    String(metin)
-                        .trim()
-                        .split(/\s+/);
-
-
-                const satirlar =
-                    [];
-
-
-                let satir =
-                    "";
-
-
-                kelimeler.forEach(
-                    kelime => {
-
-                        const test =
-                            satir
-                                ? satir +
-                                  " " +
-                                  kelime
-                                : kelime;
-
-
-                        if (
-                            ctx.measureText(
-                                test
-                            ).width >
-                            maxWidth
-                        ){
-
-                            if (
+                            satirlar.push(
                                 satir
-                            ){
-
-                                satirlar.push(
-                                    satir
-                                );
-
-                            }
-
-
-                            satir =
-                                kelime;
-
-                        }else{
-
-                            satir =
-                                test;
+                            );
 
                         }
 
+                        satir =
+                            kelime;
+
+                    }else{
+
+                        satir =
+                            test;
+
                     }
-                );
-
-
-                if (
-                    satir
-                ){
-
-                    satirlar.push(
-                        satir
-                    );
 
                 }
+            );
 
 
-                return satirlar;
+            if(satir){
+
+                satirlar.push(
+                    satir
+                );
 
             }
 
 
-            const baslikSatirlari =
-                metniSatirlaraBol(
-                    baslik,
-                    metinMaxWidth
-                );
-
-
-            // =====================================
-            // NETmax İLE BAŞLIK ARASI
-            // AZ BOŞLUK
-            // =====================================
-
-            let y =
-                675;
-
-
-            // =====================================
-            // İLAN BAŞLIĞINI YAZ
-            // =====================================
-
-            baslikSatirlari
-                .slice(0, 3)
-                .forEach(
-                    satir => {
-
-                        ctx.fillText(
-                            satir,
-                            solBosluk,
-                            y
-                        );
-
-
-                        y += 50;
-
-                    }
-                );
-
-
-            // =====================================
-            // ALT BOŞLUK
-            // =====================================
-
-            const altBosluk =
-                25;
-
-
-            const kartHeight =
-                y +
-                altBosluk;
-
-
-            // =====================================
-            // CANVAS'I GEREKLİ YÜKSEKLİĞE KES
-            // =====================================
-
-            const finalCanvas =
-                document.createElement(
-                    "canvas"
-                );
-
-
-            finalCanvas.width =
-                kartWidth;
-
-            finalCanvas.height =
-                kartHeight;
-
-
-            const finalCtx =
-                finalCanvas.getContext(
-                    "2d"
-                );
-
-
-            // =====================================
-            // BEYAZ ZEMİN
-            // =====================================
-
-            finalCtx.fillStyle =
-                "#ffffff";
-
-            finalCtx.fillRect(
-                0,
-                0,
-                kartWidth,
-                kartHeight
-            );
-
-
-            // =====================================
-            // HAZIR KARTI AKTAR
-            // =====================================
-
-            finalCtx.drawImage(
-                canvas,
-                0,
-                0
-            );
-
-
-            // =====================================
-            // JPEG OLUŞTUR
-            // =====================================
-
-            const kucukBlob =
-                await new Promise(
-                    resolve =>
-
-                        finalCanvas.toBlob(
-                            resolve,
-                            "image/jpeg",
-                            0.85
-                        )
-                );
-
-
-            // =====================================
-            // DOSYA
-            // =====================================
-
-            const dosya =
-                new File(
-                    [kucukBlob],
-                    "netmax-ilan.jpg",
-                    {
-                        type:
-                            "image/jpeg"
-                    }
-                );
-
-
-            // =====================================
-            // DOSYA PAYLAŞILABİLİYOR MU?
-            // =====================================
-
-            if (
-                navigator.canShare({
-                    files: [dosya]
-                })
-            ){
-
-                // =====================================
-                // PAYLAŞ
-                // =====================================
-
-                await navigator.share({
-
-                    title:
-                        baslik,
-
-                    text:
-                        link,
-
-                    files:
-                        [dosya]
-
-                });
-
-
-                return;
-
-            }
-
-
-        }catch(e){
-
-            console.log(
-                "Fotoğraflı paylaşım başarısız:",
-                e
-            );
+            return satirlar;
 
         }
+
+
+        const baslikSatirlari =
+            metniSatirlaraBol(
+                baslik,
+                kartWidth - 60
+            );
+
+
+        let y =
+            kartY + 65;
+
+
+        baslikSatirlari
+            .slice(0, 3)
+            .forEach(
+                satir => {
+
+                    ctx.fillText(
+                        satir,
+                        30,
+                        y
+                    );
+
+                    y += 52;
+
+                }
+            );
+
+
+        // =====================================
+        // AÇIKLAMA
+        // =====================================
+
+        y += 25;
+
+        ctx.fillStyle =
+            "#6b7280";
+
+        ctx.font =
+            "30px Arial";
+
+
+        const temizMetin =
+            metin
+                .replace(
+                    /\n/g,
+                    " "
+                )
+                .trim();
+
+
+        const aciklamaSatirlari =
+            metniSatirlaraBol(
+                temizMetin,
+                kartWidth - 60
+            );
+
+
+        aciklamaSatirlari
+            .slice(0, 3)
+            .forEach(
+                satir => {
+
+                    ctx.fillText(
+                        satir,
+                        30,
+                        y
+                    );
+
+                    y += 43;
+
+                }
+            );
+
+
+        // =====================================
+        // ALT ÇİZGİ
+        // =====================================
+
+        const footerY =
+            kartHeight - 90;
+
+        ctx.strokeStyle =
+            "#dddddd";
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            30,
+            footerY - 25
+        );
+
+        ctx.lineTo(
+            kartWidth - 30,
+            footerY - 25
+        );
+
+        ctx.stroke();
+
+
+        // =====================================
+        // ALT MARKA YAZISI
+        // =====================================
+
+        ctx.fillStyle =
+            "#1f2933";
+
+        ctx.font =
+            "32px Arial";
+
+        ctx.fillText(
+            "🔗  NETmax İlanlar",
+            30,
+            footerY + 20
+        );
+
+
+        // =====================================
+        // JPEG OLUŞTUR
+        // =====================================
+
+        const kucukBlob =
+            await new Promise(
+                resolve =>
+
+                    canvas.toBlob(
+                        resolve,
+                        "image/jpeg",
+                        0.85
+                    )
+
+            );
+
+
+        const dosya =
+            new File(
+                [kucukBlob],
+                "netmax-ilan.jpg",
+                {
+                    type:
+                        "image/jpeg"
+                }
+            );
+
+
+        // =====================================
+        // PAYLAŞ
+        // =====================================
+
+        if(
+            navigator.canShare({
+                files: [dosya]
+            })
+        ){
+
+            await navigator.share({
+
+                title:
+                    baslik,
+
+                text:
+                    metin + "\n\n" + link,
+
+                files:
+                    [dosya]
+
+            });
+
+            return;
+
+        }
+
+    }catch(e){
+
+        console.log(
+            "Fotoğraflı paylaşım başarısız:",
+            e
+        );
 
     }
 
