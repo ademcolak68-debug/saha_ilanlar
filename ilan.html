@@ -1516,46 +1516,22 @@ function menuKapat(){
 
 async function ilanPaylas(){
 
-    const baslik =
-        document.title;
+    const baslik = document.title;
+    const metin = document.querySelector(".header-top").innerText;
 
-    const metin =
-        document.querySelector(
-            ".header-top"
-        ).innerText;
+    const url = new URL(window.location.href);
+    url.searchParams.set("paylasim", "1");
+    const link = url.toString();
 
-    const url =
-        new URL(
-            window.location.href
-        );
-
-    url.searchParams.set(
-        "paylasim",
-        "1"
-    );
-
-    const link =
-        url.toString();
-
-    console.log(
-        "PAYLAŞILAN LİNK:",
-        link
-    );
-
+    console.log("PAYLAŞILAN LİNK:", link);
 
     // İlan ID'sini al
-    const ilanId =
-        new URLSearchParams(
-            window.location.search
-        ).get("id");
-
+    const ilanId = new URLSearchParams(window.location.search).get("id");
 
     // İlanı bul
-    const ilan =
-        ilanlarVerisi.find(
-            x => String(x.id) === String(ilanId)
-        );
-
+    const ilan = ilanlarVerisi.find(
+        x => String(x.id) === String(ilanId)
+    );
 
     // İlk resmi al
     const ilkResim =
@@ -1564,7 +1540,6 @@ async function ilanPaylas(){
         ilan.resimler.length > 0
             ? ilan.resimler[0]
             : null;
-
 
 // =====================================
 // FOTOĞRAFLI PAYLAŞIM
@@ -1578,50 +1553,29 @@ if (
 
     try{
 
-        const response =
-            await fetch(ilkResim);
-
-        const blob =
-            await response.blob();
-
-        const bitmap =
-            await createImageBitmap(blob);
-
+        const response = await fetch(ilkResim);
+        const blob = await response.blob();
+        const bitmap = await createImageBitmap(blob);
 
         // =====================================
-        // KART BOYUTU
+        // KART BOYUTU (Daha kompakt hale getirildi)
         // =====================================
 
         const kartWidth = 700;
-        const kartHeight = 1000;
+        const kartHeight = 720; // Yükseklik azaltıldı
 
-        const canvas =
-            document.createElement("canvas");
+        const canvas = document.createElement("canvas");
+        canvas.width = kartWidth;
+        canvas.height = kartHeight;
 
-        canvas.width =
-            kartWidth;
-
-        canvas.height =
-            kartHeight;
-
-        const ctx =
-            canvas.getContext("2d");
-
+        const ctx = canvas.getContext("2d");
 
         // =====================================
         // GENEL ZEMİN
         // =====================================
 
-        ctx.fillStyle =
-            "#eeeeee";
-
-        ctx.fillRect(
-            0,
-            0,
-            kartWidth,
-            kartHeight
-        );
-
+        ctx.fillStyle = "#eeeeee";
+        ctx.fillRect(0, 0, kartWidth, kartHeight);
 
         // =====================================
         // FOTOĞRAF ALANI
@@ -1629,95 +1583,45 @@ if (
 
         const fotoX = 0;
         const fotoY = 0;
+        const fotoWidth = kartWidth;
+        const fotoHeight = 540; // Fotoğrafa daha fazla alan bırakıldı
 
-        const fotoWidth =
-            kartWidth;
-
-        const fotoHeight =
-            560;
-
-
-        // Fotoğrafı oranını bozmadan
-        // alanı tamamen doldur
-
-        const fotoOran =
-            bitmap.width /
-            bitmap.height;
-
-        const alanOran =
-            fotoWidth /
-            fotoHeight;
+        const fotoOran = bitmap.width / bitmap.height;
+        const alanOran = fotoWidth / fotoHeight;
 
         let sourceX = 0;
         let sourceY = 0;
+        let sourceWidth = bitmap.width;
+        let sourceHeight = bitmap.height;
 
-        let sourceWidth =
-            bitmap.width;
-
-        let sourceHeight =
-            bitmap.height;
-
-
-        if(
-            fotoOran > alanOran
-        ){
-
-            sourceWidth =
-                bitmap.height *
-                alanOran;
-
-            sourceX =
-                (
-                    bitmap.width -
-                    sourceWidth
-                ) / 2;
-
+        if(fotoOran > alanOran){
+            sourceWidth = bitmap.height * alanOran;
+            sourceX = (bitmap.width - sourceWidth) / 2;
         }else{
-
-            sourceHeight =
-                bitmap.width /
-                alanOran;
-
-            sourceY =
-                (
-                    bitmap.height -
-                    sourceHeight
-                ) / 2;
-
+            sourceHeight = bitmap.width / alanOran;
+            sourceY = (bitmap.height - sourceHeight) / 2;
         }
 
-
         // FOTOĞRAFI ÇİZ
-
         ctx.drawImage(
-
             bitmap,
-
             sourceX,
             sourceY,
-
             sourceWidth,
             sourceHeight,
-
             fotoX,
             fotoY,
-
             fotoWidth,
             fotoHeight
-
         );
-
 
         // =====================================
         // ALT KART ALANI
         // =====================================
 
-        const kartY =
-            fotoHeight;
+        const kartY = fotoHeight;
 
-        ctx.fillStyle =
-            "#f4f4f4";
-
+        ctx.fillStyle = "#f4f4f4";
         ctx.fillRect(
             0,
             kartY,
@@ -1725,232 +1629,53 @@ if (
             kartHeight - kartY
         );
 
-
-        // =====================================
-        // BAŞLIK
-        // =====================================
-
-        ctx.fillStyle =
-            "#1f2933";
-
-        ctx.font =
-            "bold 38px Arial";
-
-        ctx.textAlign =
-            "left";
-
-
-        // Başlığı satırlara böl
-
-        function metniSatirlaraBol(
-            metin,
-            maxWidth
-        ){
-
-            const kelimeler =
-                metin.split(" ");
-
-            const satirlar = [];
-
-            let satir = "";
-
-
-            kelimeler.forEach(
-                kelime => {
-
-                    const test =
-                        satir
-                            ? satir + " " + kelime
-                            : kelime;
-
-
-                    if(
-                        ctx.measureText(
-                            test
-                        ).width > maxWidth
-                    ){
-
-                        if(satir){
-
-                            satirlar.push(
-                                satir
-                            );
-
-                        }
-
-                        satir =
-                            kelime;
-
-                    }else{
-
-                        satir =
-                            test;
-
-                    }
-
-                }
-            );
-
-
-            if(satir){
-
-                satirlar.push(
-                    satir
-                );
-
-            }
-
-
-            return satirlar;
-
-        }
-
-
-        const baslikSatirlari =
-            metniSatirlaraBol(
-                baslik,
-                kartWidth - 60
-            );
-
-
-        let y =
-            kartY + 65;
-
-
-        baslikSatirlari
-            .slice(0, 3)
-            .forEach(
-                satir => {
-
-                    ctx.fillText(
-                        satir,
-                        30,
-                        y
-                    );
-
-                    y += 52;
-
-                }
-            );
-
-
-        // =====================================
-        // AÇIKLAMA
-        // =====================================
-
-        y += 25;
-
-        ctx.fillStyle =
-            "#6b7280";
-
-        ctx.font =
-            "30px Arial";
-
-
-        const temizMetin =
-            metin
-                .replace(
-                    /\n/g,
-                    " "
-                )
-                .trim();
-
-
-        const aciklamaSatirlari =
-            metniSatirlaraBol(
-                temizMetin,
-                kartWidth - 60
-            );
-
-
-        aciklamaSatirlari
-            .slice(0, 3)
-            .forEach(
-                satir => {
-
-                    ctx.fillText(
-                        satir,
-                        30,
-                        y
-                    );
-
-                    y += 43;
-
-                }
-            );
-
-
         // =====================================
         // ALT ÇİZGİ
         // =====================================
 
-        const footerY =
-            kartHeight - 90;
+        const footerY = kartHeight - 60;
 
-        ctx.strokeStyle =
-            "#dddddd";
-
+        ctx.strokeStyle = "#dddddd";
         ctx.lineWidth = 2;
 
         ctx.beginPath();
-
-        ctx.moveTo(
-            30,
-            footerY - 25
-        );
-
-        ctx.lineTo(
-            kartWidth - 30,
-            footerY - 25
-        );
-
+        ctx.moveTo(30, footerY - 20);
+        ctx.lineTo(kartWidth - 30, footerY - 20);
         ctx.stroke();
 
-
         // =====================================
-        // ALT MARKA YAZISI
+        // ALT MARKA YAZISI (İkon, Başlık ve Link)
         // =====================================
 
-        ctx.fillStyle =
-            "#1f2933";
-
-        ctx.font =
-            "32px Arial";
+        ctx.fillStyle = "#1f2933";
+        ctx.font = "30px Arial";
 
         ctx.fillText(
-            "🔗  NETmax İlanlar",
+            "🔗 NETmax İlanlar",
             30,
             footerY + 20
         );
-
 
         // =====================================
         // JPEG OLUŞTUR
         // =====================================
 
-        const kucukBlob =
-            await new Promise(
-                resolve =>
+        const kucukBlob = await new Promise(
+            resolve =>
+                canvas.toBlob(
+                    resolve,
+                    "image/jpeg",
+                    0.85
+                )
+        );
 
-                    canvas.toBlob(
-                        resolve,
-                        "image/jpeg",
-                        0.85
-                    )
-
-            );
-
-
-        const dosya =
-            new File(
-                [kucukBlob],
-                "netmax-ilan.jpg",
-                {
-                    type:
-                        "image/jpeg"
-                }
-            );
-
+        const dosya = new File(
+            [kucukBlob],
+            "netmax-ilan.jpg",
+            {
+                type: "image/jpeg"
+            }
+        );
 
         // =====================================
         // PAYLAŞ
@@ -1963,16 +1688,9 @@ if (
         ){
 
             await navigator.share({
-
-                title:
-                    baslik,
-
-                text:
-                    metin + "\n\n" + link,
-
-                files:
-                    [dosya]
-
+                title: baslik,
+                text: metin + "\n\n" + link,
+                files: [dosya]
             });
 
             return;
