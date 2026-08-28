@@ -3018,19 +3018,23 @@ async function yöneticiBildirimIzniVeTokenAl() {
             return;
         }
 
+
         const registration =
             await navigator.serviceWorker.register(
                 "/saha_ilanlar/firebase-messaging-sw.js"
             );
+
 
         const token =
             await getToken(
                 messaging,
                 {
                     vapidKey: "BCUzED_1H6uzNTnwPtd_MYNiKA6SrHglTcoSrUtnamOrU57z0S3agRc8iLl59EvzEmlJLXd2x25_vmYabHW7iqg",
-                    serviceWorkerRegistration: registration
+                    serviceWorkerRegistration:
+                        registration
                 }
             );
+
 
         if (!token) {
 
@@ -3041,9 +3045,51 @@ async function yöneticiBildirimIzniVeTokenAl() {
             return;
         }
 
+
         console.log(
             "YÖNETİCİ FCM TOKEN:",
             token
+        );
+
+
+        /*
+        =====================================================
+        YÖNETİCİ FCM TOKENINI FIREBASE'E KAYDET
+        =====================================================
+        */
+
+        const user =
+            auth.currentUser;
+
+
+        if (!user) {
+
+            console.log(
+                "YÖNETİCİ KULLANICISI BULUNAMADI"
+            );
+
+            return;
+        }
+
+
+        await set(
+            ref(
+                database,
+                "fcmTokenlari/" +
+                user.uid
+            ),
+            {
+                token:
+                    token,
+
+                zaman:
+                    Date.now()
+            }
+        );
+
+
+        console.log(
+            "YÖNETİCİ FCM TOKENI FIREBASE'E KAYDEDİLDİ"
         );
 
     }
