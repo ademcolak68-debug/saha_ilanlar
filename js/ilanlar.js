@@ -709,5 +709,50 @@ const ilanlarVerisi = [
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": "Hayır",
         "Tapu Durumu": "Kat Mülkiyetli"
+    },
+    {
+        "id": 1787946385778,
+        "baslik": "Topakkaya Kasabasında İmarlı",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Topakkaya Kasabası",
+        "fiyat": "2.620.000",
+        "paraBirimi": "TL",
+        "aciklama": "",
+        "koor": "33.93599,38.452349",
+        "klasorIsmi": "topakkaya-366-9",
+        "resimler": [
+            "images/topakkaya-366-9/1.png",
+            "images/topakkaya-366-9/2.png",
+            "images/topakkaya-366-9/3.jpeg",
+            "images/topakkaya-366-9/4.png"
+        ],
+        "videoUrl": "",
+        "İlan Tarihi": "2026-08-28",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1787946385779"
+        },
+        "ilanAktif": true,
+        "danisman": "Ekrem Deniz",
+        "M²": "730",
+        "Ada": "366",
+        "Parsel": "9",
+        "İmar Durumu": "Konut Alanı",
+        "Kaks (Emsal)": "0.30",
+        "Gabari": "6.50",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": "",
+        "Tapu Durumu": "Müstakil Tapulu"
     }
 ];
