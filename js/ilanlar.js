@@ -754,5 +754,49 @@ const ilanlarVerisi = [
         "Kullanım Durumu": "",
         "Site İçerisinde?": "",
         "Tapu Durumu": "Müstakil Tapulu"
+    },
+    {
+        "id": 1788027586440,
+        "baslik": "İsmailağatolunda",
+        "durum": "satilik",
+        "tip": "Tarla",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "İsmailağatolu",
+        "fiyat": "17.400.000",
+        "paraBirimi": "TL",
+        "aciklama": "",
+        "koor": "33.955618,38.418385",
+        "klasorIsmi": "ismailagatolu-130-7",
+        "resimler": [
+            "images/ismailagatolu-130-7/1.png",
+            "images/ismailagatolu-130-7/2.png",
+            "images/ismailagatolu-130-7/3.png"
+        ],
+        "videoUrl": "",
+        "İlan Tarihi": "2026-08-29",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1788027586440"
+        },
+        "ilanAktif": true,
+        "danisman": "",
+        "M²": "16561",
+        "Ada": "130",
+        "Parsel": "7",
+        "İmar Durumu": "",
+        "Kaks (Emsal)": "",
+        "Gabari": "",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": "",
+        "Tapu Durumu": "Müstakil Tapulu"
     }
 ];
