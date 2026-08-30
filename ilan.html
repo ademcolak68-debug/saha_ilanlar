@@ -2701,6 +2701,20 @@ function mesajBildiriminiGoster() {
     );
 
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    if(params.get("kategoriler") === "1"){
+
+        ilanlariAc();
+
+    }
+
+});
+	
 </script>
 	
 </body>
