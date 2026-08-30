@@ -1048,70 +1048,72 @@ font-weight:bold;
 	danismanScript.src = "js/danismanlar.js?t=" + new Date().getTime();
 	
 	danismanScript.onload = () => {
-	
-	    const script = document.createElement('script');
-	    script.src = "js/ilanlar.js?t=" + new Date().getTime();
-	
-	    script.onload = () => {
-	
-	        const id = Number(
-	            new URLSearchParams(location.search).get("id")
-	        );
-	
-	        const d =
-	            (typeof ilanlarVerisi !== 'undefined'
-	                ? ilanlarVerisi
-	                : []
-	            ).find(x => x.id === id);
-	
-	        if (d) {
+ 
+    const script = document.createElement('script');
+    script.src = "js/ilanlar.js?t=" + new Date().getTime();
+ 
+    script.onload = () => {
+ 
+        const id = Number(
+            new URLSearchParams(location.search).get("id")
+        );
+ 
+        const d =
+            (typeof ilanlarVerisi !== 'undefined'
+                ? ilanlarVerisi
+                : []
+            ).find(x => x.id === id);
+ 
+        if (d) {
 
-			    render(d);
+            render(d);
 
-				// =====================================
-		        // QR İLE ANA KATEGORİLERİ AÇ
-		        // =====================================
-		
-		        const urlParams =
-		            new URLSearchParams(window.location.search);
-		
-		        if(urlParams.get("kategoriler") === "1"){
-		
-		            setTimeout(function(){
-		
-		                ilanlariAc();
-		
-		            }, 2501);
-		
-		        }
-			
-			    const aktifIlanSayisi =
-			        ilanlarVerisi.filter(
-			            ilan => ilan.ilanAktif !== false
-			        ).length;
-			
-			    const sayiAlani =
-			        document.getElementById("yayindaIlanSayisi");
-			
-			    if (sayiAlani) {
-			
-			        sayiAlani.textContent =
-			            aktifIlanSayisi + " İlan Yayında";
-			
-			    }
-			
-			    setTimeout(() =>
-			        document.getElementById("acilisEkrani").style.display = "none",
-			        2500
-			    );
-			
-			}
-	
-	    };
-	
-	    document.head.appendChild(script);
-	
-	};
+            const aktifIlanSayisi =
+                ilanlarVerisi.filter(
+                    ilan => ilan.ilanAktif !== false
+                ).length;
+
+            const sayiAlani =
+                document.getElementById("yayindaIlanSayisi");
+
+            if (sayiAlani) {
+
+                sayiAlani.textContent =
+                    aktifIlanSayisi + " İlan Yayında";
+
+            }
+
+            setTimeout(() =>
+                document.getElementById("acilisEkrani").style.display = "none",
+                2500
+            );
+
+        }
+
+
+        // =====================================
+        // QR İLE ANA KATEGORİLERİ AÇ
+        // =====================================
+
+        const urlParams =
+            new URLSearchParams(window.location.search);
+
+        if(urlParams.get("kategoriler") === "1"){
+
+            setTimeout(function(){
+
+                ilanlariAc();
+
+            }, 2501);
+
+        }
+
+ 
+    };
+ 
+    document.head.appendChild(script);
+ 
+};
 	
 	document.head.appendChild(danismanScript);
 
