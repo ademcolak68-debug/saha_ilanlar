@@ -1067,6 +1067,23 @@ font-weight:bold;
 	        if (d) {
 
 			    render(d);
+
+				// =====================================
+		        // QR İLE ANA KATEGORİLERİ AÇ
+		        // =====================================
+		
+		        const urlParams =
+		            new URLSearchParams(window.location.search);
+		
+		        if(urlParams.get("kategoriler") === "1"){
+		
+		            setTimeout(function(){
+		
+		                ilanlariAc();
+		
+		            }, 100);
+		
+		        }
 			
 			    const aktifIlanSayisi =
 			        ilanlarVerisi.filter(
@@ -2702,18 +2719,7 @@ function mesajBildiriminiGoster() {
 
 }
 
-document.addEventListener("DOMContentLoaded", function(){
 
-    const params =
-        new URLSearchParams(window.location.search);
-
-    if(params.get("kategoriler") === "1"){
-
-        ilanlariAc();
-
-    }
-
-});
 	
 </script>
 	
