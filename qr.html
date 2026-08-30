@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+<title>NETmax İlan QR</title>
+
+<!-- QR KOD KÜTÜPHANESİ -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+</script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #e5e7eb;
+    font-family: Tahoma, Arial, sans-serif;
+}
+
+
+/* =====================================================
+   A4
+===================================================== */
+
+.a4 {
+    width: 210mm;
+    min-height: 297mm;
+
+    margin: 20px auto;
+
+    background: #ffffff;
+
+    padding: 25mm;
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,.20);
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   BAŞLIK
+===================================================== */
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+
+    margin-bottom: 10mm;
+
+    letter-spacing: 1px;
+}
+
+
+.baslik {
+    font-size: 24px;
+    font-weight: bold;
+
+    margin-bottom: 8mm;
+}
+
+
+.aciklama {
+    font-size: 16px;
+
+    margin-bottom: 12mm;
+
+    color: #444;
+}
+
+
+/* =====================================================
+   QR
+===================================================== */
+
+#qrcode {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin: 0 auto 12mm;
+}
+
+
+#qrcode img,
+#qrcode canvas {
+
+    width: 70mm !important;
+    height: 70mm !important;
+
+}
+
+
+/* =====================================================
+   İLAN BİLGİSİ
+===================================================== */
+
+.ilan-id {
+
+    font-size: 15px;
+
+    color: #555;
+
+    margin-bottom: 8mm;
+}
+
+
+.alt-yazi {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-top: 10mm;
+
+}
+
+
+/* =====================================================
+   YAZDIR BUTONU
+===================================================== */
+
+.yazdir {
+
+    margin-top: 15mm;
+
+    padding: 12px 30px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #1e3a8a;
+
+    color: #fff;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.yazdir:hover {
+    opacity: .9;
+}
+
+
+/* =====================================================
+   YAZDIRMA
+===================================================== */
+
+@media print {
+
+    body {
+        background: #fff;
+    }
+
+    .a4 {
+
+        width: 210mm;
+        min-height: 297mm;
+
+        margin: 0;
+
+        padding: 25mm;
+
+        box-shadow: none;
+
+    }
+
+    .yazdir {
+        display: none;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="a4">
+
+```
+<div class="logo">
+    NETmax GAYRİMENKUL
+</div>
+
+
+<div class="baslik">
+    İLANI GÖRÜNTÜLE
+</div>
+
+
+<div class="aciklama">
+    İlanı telefonunuzdan görüntülemek için
+    QR kodu okutunuz.
+</div>
+
+
+<div id="qrcode"></div>
+
+
+<div
+    class="ilan-id"
+    id="ilanID">
+</div>
+
+
+<div class="alt-yazi">
+    Telefonunuzun kamerasıyla okutabilirsiniz.
+</div>
+
+
+<button
+    class="yazdir"
+    onclick="window.print()">
+
+    A4 OLARAK YAZDIR
+
+</button>
+```
+
+</div>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /*
+        =====================================================
+        URL'DEN İLAN ID AL
+        =====================================================
+        */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const ilanID =
+            params.get("id");
+
+
+        if (!ilanID) {
+
+            document.getElementById(
+                "ilanID"
+            ).textContent =
+                "İlan ID bulunamadı.";
+
+            return;
+
+        }
+
+
+        /*
+        =====================================================
+        İLAN ADRESİ
+        =====================================================
+        */
+
+        const ilanURL =
+            new URL(
+                "ilan.html",
+                window.location.href
+            );
+
+
+        ilanURL.searchParams.set(
+            "id",
+            ilanID
+        );
+
+
+        /*
+        =====================================================
+        İLAN ID GÖSTER
+        =====================================================
+        */
+
+        document.getElementById(
+            "ilanID"
+        ).textContent =
+            "İlan No: " + ilanID;
+
+
+        /*
+        =====================================================
+        QR OLUŞTUR
+        =====================================================
+        */
+
+        new QRCode(
+            document.getElementById(
+                "qrcode"
+            ),
+            {
+                text:
+                    ilanURL.href,
+
+                width:
+                    500,
+
+                height:
+                    500,
+
+                correctLevel:
+                    QRCode.CorrectLevel.H
+            }
+        );
+
+    }
+
+);
+
+</script>
+
+</body>
+</html>
