@@ -6,17 +6,11 @@
 
 <meta charset="UTF-8">
 
-<title>NETmax İlan QR Kodu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+<title>ENNETmax İlan QR</title>
 
->
-
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 
@@ -25,84 +19,113 @@ content="width=device-width, initial-scale=1.0"
     margin: 0;
 }
 
-
 * {
     box-sizing: border-box;
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
 
 body {
-
-    margin: 0;
-
-    background: #eee;
-
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-
+    background: #e5e7eb;
+    font-family: Tahoma, Arial, sans-serif;
 }
 
 
+/* =====================================================
+   A4 SAYFA
+===================================================== */
+
 .a4 {
-
     width: 210mm;
-
     height: 297mm;
 
     margin: 20px auto;
 
-    background: #fff;
+    background: #ffffff;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
 
     text-align: center;
 
-    padding-top: 35mm;
+    padding: 25mm 20mm;
 
+    box-shadow: 0 5px 25px rgba(0,0,0,.18);
+
+    position: relative;
 }
 
+
+/* =====================================================
+   ÜST BAŞLIK
+===================================================== */
 
 .logo {
-
     font-size: 30px;
-
     font-weight: bold;
 
-    margin-bottom: 18mm;
+    letter-spacing: 1px;
 
+    margin-top: 5mm;
+    margin-bottom: 18mm;
 }
 
 
+/* =====================================================
+   ANA BAŞLIK
+===================================================== */
+
 .baslik {
-
-    font-size: 28px;
-
+    font-size: 30px;
     font-weight: bold;
 
-    margin-bottom: 8mm;
-
+    margin-bottom: 7mm;
 }
 
 
 .aciklama {
+    font-size: 17px;
 
-    font-size: 18px;
+    line-height: 1.6;
+
+    color: #444;
 
     margin-bottom: 15mm;
+}
 
+
+/* =====================================================
+   QR ALANI
+===================================================== */
+
+.qr-cerceve {
+
+    padding: 8mm;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 }
 
 
 #qrcode {
 
     width: 90mm;
-
     height: 90mm;
 
     display: flex;
@@ -110,22 +133,26 @@ body {
     align-items: center;
 
     justify-content: center;
-
 }
 
 
 #qrcode img {
 
     width: 90mm !important;
-
     height: 90mm !important;
+
+    display: block;
 
 }
 
 
+/* =====================================================
+   İLAN NUMARASI
+===================================================== */
+
 .ilan-no {
 
-    margin-top: 15mm;
+    margin-top: 12mm;
 
     font-size: 18px;
 
@@ -134,20 +161,30 @@ body {
 }
 
 
+/* =====================================================
+   ALT AÇIKLAMA
+===================================================== */
+
 .alt-yazi {
 
-    margin-top: 8mm;
+    margin-top: 7mm;
 
-    font-size: 17px;
+    font-size: 16px;
+
+    color: #555;
 
 }
 
 
+/* =====================================================
+   YAZDIR BUTONU
+===================================================== */
+
 .yazdir {
 
-    margin-top: 20mm;
+    margin-top: 18mm;
 
-    padding: 12px 28px;
+    padding: 13px 32px;
 
     border: none;
 
@@ -155,7 +192,9 @@ body {
 
     background: #1e3a8a;
 
-    color: white;
+    color: #fff;
+
+    font-family: Tahoma, Arial, sans-serif;
 
     font-size: 16px;
 
@@ -166,22 +205,41 @@ body {
 }
 
 
+.yazdir:hover {
+
+    opacity: .9;
+
+}
+
+
+/* =====================================================
+   YAZDIRMA
+===================================================== */
+
 @media print {
 
+    html,
     body {
 
-        background: white;
+        width: 210mm;
+        height: 297mm;
+
+        margin: 0;
+        padding: 0;
+
+        background: #fff;
 
     }
 
 
     .a4 {
 
+        width: 210mm;
+        height: 297mm;
+
         margin: 0;
 
-        width: 210mm;
-
-        height: 297mm;
+        padding: 25mm 20mm;
 
         box-shadow: none;
 
@@ -204,7 +262,7 @@ body {
 
 <div class="a4">
 
-```
+
 <div class="logo">
 
     NETmax GAYRİMENKUL
@@ -222,12 +280,17 @@ body {
 <div class="aciklama">
 
     İlanı telefonunuzdan görüntülemek için<br>
-    QR kodu okutunuz.
+
+    aşağıdaki QR kodu okutunuz.
 
 </div>
 
 
-<div id="qrcode"></div>
+<div class="qr-cerceve">
+
+    <div id="qrcode"></div>
+
+</div>
 
 
 <div class="ilan-no">
@@ -251,52 +314,45 @@ body {
     A4 OLARAK YAZDIR
 
 </button>
-```
+
 
 </div>
 
 <script>
 
 
-/*
-=====================================================
-BU QR KODUNUN AÇACAĞI İLAN
-=====================================================
-*/
-
+/* =====================================================
+   İLAN ID
+===================================================== */
 
 const ilanID =
     "1785871007246";
 
+
+/* =====================================================
+   QR'IN AÇACAĞI ADRES
+===================================================== */
 
 const ilanURL =
     "https://ademcolak68-debug.github.io/saha_ilanlar/ilan.html?id="
     + ilanID;
 
 
-/*
-=====================================================
-QR KODU OLUŞTUR
-=====================================================
-*/
-
+/* =====================================================
+   QR OLUŞTUR
+===================================================== */
 
 new QRCode(
 
-    document.getElementById(
-        "qrcode"
-    ),
+    document.getElementById("qrcode"),
 
     {
 
-        text:
-            ilanURL,
+        text: ilanURL,
 
-        width:
-            500,
+        width: 500,
 
-        height:
-            500,
+        height: 500,
 
         correctLevel:
             QRCode.CorrectLevel.H
