@@ -816,7 +816,7 @@ const ilanlarVerisi = [
         "fiyat": "10.000",
         "paraBirimi": "TL",
         "aciklama": "Yüksek Giriş,\nKapalı ve Açık Otopark,\nÇelik Kapı,\nMutfak Dolabı,\n3 lü Ankastre Seti,\nBanyo Dolabı,\nDuşakabin",
-        "koor": "33.977081, 38.345136",
+        "koor": "33.977172, 38.345196",
         "klasorIsmi": "bayram-kav-universite-kiralik",
         "resimler": [
             "images/bayram-kav-universite-kiralik/1.jpeg",
