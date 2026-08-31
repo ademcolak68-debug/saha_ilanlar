@@ -802,5 +802,57 @@ const ilanlarVerisi = [
         "Kullanım Durumu": "",
         "Site İçerisinde?": "",
         "Tapu Durumu": "Müstakil Tapulu"
+    },
+    {
+        "id": 1788173627141,
+        "baslik": "Üniversite ASÜ Market Arkasında",
+        "durum": "kiralik",
+        "tip": "Konut",
+        "konutTipi": "Apartman Dairesi",
+        "konutSekli": "Daire",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Aratol İstiklal",
+        "fiyat": "10.000",
+        "paraBirimi": "TL",
+        "aciklama": "Yüksek Giriş,\nKapalı ve Açık Otopark,\nÇelik Kapı,\nMutfak Dolabı,\n3 lü Ankastre Seti,\nBanyo Dolabı,\nDuşakabin",
+        "koor": "33.977081, 38.345136",
+        "klasorIsmi": "bayram-kav-universite-kiralik",
+        "resimler": [
+            "images/bayram-kav-universite-kiralik/1.jpeg",
+            "images/bayram-kav-universite-kiralik/2.jpeg",
+            "images/bayram-kav-universite-kiralik/3.jpeg",
+            "images/bayram-kav-universite-kiralik/4.jpeg",
+            "images/bayram-kav-universite-kiralik/5.jpeg",
+            "images/bayram-kav-universite-kiralik/6.jpeg",
+            "images/bayram-kav-universite-kiralik/7.jpeg",
+            "images/bayram-kav-universite-kiralik/8.jpeg",
+            "images/bayram-kav-universite-kiralik/9.jpeg"
+        ],
+        "videoUrl": [
+            "images/bayram-kav-universite-kiralik/video_1788173646425_0.mp4"
+        ],
+        "İlan Tarihi": "2026-08-31",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1788173627141"
+        },
+        "ilanAktif": true,
+        "danisman": "Ekrem Deniz",
+        "M²": "40",
+        "Ada": "",
+        "Parsel": "",
+        "İmar Durumu": "",
+        "Kaks (Emsal)": "",
+        "Gabari": "",
+        "Oda Sayısı": "1+1",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "Zemin",
+        "Kat Sayısı": "4",
+        "Isıtma": "Kombi",
+        "Eşyalı mı?": "Evet",
+        "Kullanım Durumu": "Boş",
+        "Site İçerisinde?": "Evet",
+        "Tapu Durumu": "Kat Mülkiyetli"
     }
 ];
