@@ -495,6 +495,9 @@ const ilanlarVerisi = [
         "M²": "40",
         "Ada": "",
         "Parsel": "",
+        "İmar Durumu": "",
+        "Kaks (Emsal)": "",
+        "Gabari": "",
         "Oda Sayısı": "1+1",
         "Bina Yaşı": "",
         "Bulunduğu Kat": "Zemin",
@@ -502,7 +505,8 @@ const ilanlarVerisi = [
         "Isıtma": "Kombi",
         "Eşyalı mı?": "Evet",
         "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Evet"
+        "Site İçerisinde?": "Evet",
+        "Tapu Durumu": "Kat Mülkiyetli"
     },
     {
         "id": 1787396740927,
