@@ -854,5 +854,50 @@ const ilanlarVerisi = [
         "Kullanım Durumu": "Boş",
         "Site İçerisinde?": "Evet",
         "Tapu Durumu": "Kat Mülkiyetli"
+    },
+    {
+        "id": 1789757537283,
+        "baslik": "Yavuz Sultan Selim Mahallesinde İmarlı",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Yavuz Sultan Selim",
+        "fiyat": "3.600.000",
+        "paraBirimi": "TL",
+        "aciklama": "",
+        "koor": "34.029817,38.332892",
+        "klasorIsmi": "saglik-177-14",
+        "resimler": [
+            "images/saglik-177-14/1.png",
+            "images/saglik-177-14/2.png",
+            "images/saglik-177-14/3.png",
+            "images/saglik-177-14/4.png"
+        ],
+        "videoUrl": "",
+        "İlan Tarihi": "2026-09-18",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1789757537284"
+        },
+        "ilanAktif": true,
+        "danisman": "",
+        "M²": "760.67",
+        "Ada": "177",
+        "Parsel": "14",
+        "İmar Durumu": "Konut Alanı",
+        "Kaks (Emsal)": "0.60",
+        "Gabari": "6.50",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": "",
+        "Tapu Durumu": "Müstakil Tapulu"
     }
 ];
