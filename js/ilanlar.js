@@ -899,5 +899,50 @@ const ilanlarVerisi = [
         "Kullanım Durumu": "",
         "Site İçerisinde?": "",
         "Tapu Durumu": "Müstakil Tapulu"
+    },
+    {
+        "id": 1789990848326,
+        "baslik": "Sağlık Kasabasında İmarlı",
+        "durum": "satilik",
+        "tip": "Arsa",
+        "konutTipi": "",
+        "konutSekli": "",
+        "il": "Aksaray",
+        "ilce": "Merkez",
+        "mahalle": "Sağlık Kasabası",
+        "fiyat": "1.600.000",
+        "paraBirimi": "TL",
+        "aciklama": "Sağlık Kasabası  -> Organize Sanayi Yolu Üzerinde",
+        "koor": "34.058093,38.293243",
+        "klasorIsmi": "saglik-614-10",
+        "resimler": [
+            "images/saglik-614-10/1.png",
+            "images/saglik-614-10/2.png",
+            "images/saglik-614-10/3.png",
+            "images/saglik-614-10/4.png"
+        ],
+        "videoUrl": "",
+        "İlan Tarihi": "2026-09-21",
+        "yetki": {
+            "durum": true,
+            "yetkiNo": "NET-YTK-1789990848326"
+        },
+        "ilanAktif": true,
+        "danisman": "",
+        "M²": "557.86",
+        "Ada": "614",
+        "Parsel": "10",
+        "İmar Durumu": "Konut Alanı",
+        "Kaks (Emsal)": "0.50",
+        "Gabari": "6.50",
+        "Oda Sayısı": "",
+        "Bina Yaşı": "",
+        "Bulunduğu Kat": "",
+        "Kat Sayısı": "",
+        "Isıtma": "",
+        "Eşyalı mı?": "",
+        "Kullanım Durumu": "",
+        "Site İçerisinde?": "",
+        "Tapu Durumu": "Müstakil Tapulu"
     }
 ];
