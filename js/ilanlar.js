@@ -518,7 +518,7 @@ const ilanlarVerisi = [
         "il": "Aksaray",
         "ilce": "Merkez",
         "mahalle": "Coğlakı",
-        "fiyat": "3.550.000",
+        "fiyat": "3.400.000",
         "paraBirimi": "TL",
         "aciklama": "",
         "koor": "34.032504, 38.373489",
@@ -548,6 +548,9 @@ const ilanlarVerisi = [
         "M²": "150",
         "Ada": "",
         "Parsel": "",
+        "İmar Durumu": "",
+        "Kaks (Emsal)": "",
+        "Gabari": "",
         "Oda Sayısı": "3+1",
         "Bina Yaşı": "",
         "Bulunduğu Kat": "Zemin",
@@ -555,7 +558,8 @@ const ilanlarVerisi = [
         "Isıtma": "Kombi",
         "Eşyalı mı?": "Hayır",
         "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Hayır"
+        "Site İçerisinde?": "Hayır",
+        "Tapu Durumu": ""
     },
     {
         "id": 1787400082068,
