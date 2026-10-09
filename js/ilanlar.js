@@ -457,58 +457,6 @@ const ilanlarVerisi = [
         "Site İçerisinde?": ""
     },
     {
-        "id": 1786471692153,
-        "baslik": "Üniversite ASÜ Market Arkasında",
-        "durum": "satilik",
-        "tip": "Konut",
-        "konutTipi": "Apartman Dairesi",
-        "konutSekli": "Daire",
-        "il": "Aksaray",
-        "ilce": "Merkez",
-        "mahalle": "Aratol İstiklal",
-        "fiyat": "1.150.000",
-        "paraBirimi": "TL",
-        "aciklama": "Yüksek Giriş,\nKapalı ve Açık Otopark,\nÇelik Kapı,\nMutfak Dolabı,\n3 lü Ankastre Seti,\nBanyo Dolabı,\nDuşakabin",
-        "koor": "33.977081, 38.345136",
-        "klasorIsmi": "bayram-kav-universite",
-        "resimler": [
-            "images/bayram-kav-universite/1.jpeg",
-            "images/bayram-kav-universite/2.jpeg",
-            "images/bayram-kav-universite/3.jpeg",
-            "images/bayram-kav-universite/4.jpeg",
-            "images/bayram-kav-universite/5.jpeg",
-            "images/bayram-kav-universite/6.jpeg",
-            "images/bayram-kav-universite/7.jpeg",
-            "images/bayram-kav-universite/8.jpeg",
-            "images/bayram-kav-universite/9.jpeg"
-        ],
-        "videoUrl": [
-            "images/bayram-kav-universite/video_1786471711065_0.mp4"
-        ],
-        "İlan Tarihi": "2026-08-11",
-        "yetki": {
-            "durum": true,
-            "yetkiNo": "NET-YTK-1786471692153"
-        },
-        "ilanAktif": true,
-        "danisman": "Ekrem Deniz",
-        "M²": "40",
-        "Ada": "",
-        "Parsel": "",
-        "İmar Durumu": "",
-        "Kaks (Emsal)": "",
-        "Gabari": "",
-        "Oda Sayısı": "1+1",
-        "Bina Yaşı": "",
-        "Bulunduğu Kat": "Zemin",
-        "Kat Sayısı": "4",
-        "Isıtma": "Kombi",
-        "Eşyalı mı?": "Evet",
-        "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Evet",
-        "Tapu Durumu": "Kat Mülkiyetli"
-    },
-    {
         "id": 1787396740927,
         "baslik": "Coğlakı Mahallesinde Haluk Kırtasiye Karşısında",
         "durum": "satilik",
