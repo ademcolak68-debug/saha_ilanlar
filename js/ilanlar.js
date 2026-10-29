@@ -147,7 +147,7 @@ const ilanlarVerisi = [
         "il": "Aksaray",
         "ilce": "Merkez",
         "mahalle": "Paşacıkk",
-        "fiyat": "20.000",
+        "fiyat": "19.500",
         "paraBirimi": "TL",
         "aciklama": "Gülümse Parkı Civarında,Zemin kat üstü ",
         "koor": "34.018623, 38.355615",
@@ -173,9 +173,13 @@ const ilanlarVerisi = [
             "yetkiNo": "NET-YTK-1785874099365"
         },
         "ilanAktif": true,
+        "danisman": "",
         "M²": "80",
         "Ada": "",
         "Parsel": "",
+        "İmar Durumu": "",
+        "Kaks (Emsal)": "",
+        "Gabari": "",
         "Oda Sayısı": "2+1",
         "Bina Yaşı": "1",
         "Bulunduğu Kat": "1",
@@ -183,7 +187,8 @@ const ilanlarVerisi = [
         "Isıtma": "Kombi",
         "Eşyalı mı?": "Hayır",
         "Kullanım Durumu": "Boş",
-        "Site İçerisinde?": "Hayır"
+        "Site İçerisinde?": "Hayır",
+        "Tapu Durumu": ""
     },
     {
         "id": 1786029925787,
