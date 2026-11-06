@@ -822,7 +822,7 @@ const ilanlarVerisi = [
         "il": "Aksaray",
         "ilce": "Merkez",
         "mahalle": "Yavuz Sultan Selim",
-        "fiyat": "3.600.000",
+        "fiyat": "3.200.000",
         "paraBirimi": "TL",
         "aciklama": "",
         "koor": "34.029817,38.332892",
@@ -837,7 +837,7 @@ const ilanlarVerisi = [
         "İlan Tarihi": "2026-09-18",
         "yetki": {
             "durum": true,
-            "yetkiNo": "NET-YTK-1789757537284"
+            "yetkiNo": "NET-YTK-1789757537283"
         },
         "ilanAktif": true,
         "danisman": "",
